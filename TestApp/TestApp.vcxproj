@@ -105,7 +105,8 @@
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(HOME_FREEGLUT_WINDOWS)\Build-Windows\bin\$(Configuration)\*.dll" /y "$(LocalDebuggerWorkingDirectory)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,7 +126,8 @@
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(HOME_FREEGLUT_WINDOWS)\Build-Windows\bin\$(Configuration)\*.dll" /y "$(LocalDebuggerWorkingDirectory)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,7 +149,8 @@
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(HOME_FREEGLUT_WINDOWS)\Build-Windows\bin\$(Configuration)\*.dll" /y "$(LocalDebuggerWorkingDirectory)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -169,7 +172,8 @@
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(HOME_FREEGLUT_WINDOWS)\Build-Windows\bin\$(Configuration)\*.dll" /y "$(LocalDebuggerWorkingDirectory)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
