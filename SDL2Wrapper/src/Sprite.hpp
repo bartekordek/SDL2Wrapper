@@ -3,8 +3,10 @@
 #include <memory>
 #include <mutex>
 struct SDL_Texture;
+
 namespace SDL2W
 {
+	class TextureWrapper;
 	class Sprite : public IObject
 	{
 	public:
@@ -21,18 +23,17 @@ namespace SDL2W
 
 		void setPosition( const CUL::Math::Vector3Di& newPosition ) override;
 		void move( const CUL::Math::Vector3Di& moveVect ) override;
-		void setScale( const CUL::Math::Vector3Du& scale ) override;
+		void setScale( const CUL::Math::Vector3Dd& scale ) override;
 
 	protected:
 	private:
 		void calculateSizes();
 
-		std::mutex mtx;
-		static void deleteTexture( SDL_Texture* texture );
-		std::shared_ptr<SDL_Texture> texture;
+		mutable std::mutex mtx;
+		std::shared_ptr<TextureWrapper> texture;
 		CUL::Math::Vector3Di position;
 		CUL::Math::Vector3Du size;
 		CUL::Math::Vector3Du realSize;
-		CUL::Math::Vector3Du scale = CUL::Math::Vector3Du( 1, 1, 0 );
+		CUL::Math::Vector3Dd scale = CUL::Math::Vector3Dd( 1, 1, 0 );
 	};
 }

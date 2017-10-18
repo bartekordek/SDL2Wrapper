@@ -13,7 +13,7 @@ namespace SDL2W
 		virtual void setPosition( const CUL::Math::Vector3Di& newPosition ) = 0;
 		virtual void move( const CUL::Math::Vector3Di& moveVect ) = 0;
 
-		virtual void setScale( const CUL::Math::Vector3Du& scale ) = 0;
+		virtual void setScale( const CUL::Math::Vector3Dd& scale ) = 0;
 
 		virtual const CUL::Math::Vector3Di& getPosition()const = 0;
 		virtual const CUL::Math::Vector3Du& getSize()const = 0;

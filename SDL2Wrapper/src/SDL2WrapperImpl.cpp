@@ -3,11 +3,14 @@
 #include <SDL.h>
 #include <set>
 
+#include <boost/assert.hpp>
+
 using namespace SDL2W;
 
 SDL2WrapperImpl::SDL2WrapperImpl()
 {
-	SDL_Init( SDL_INIT_EVERYTHING );
+	const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
+	BOOST_ASSERT_MSG( 0 == sdlInitSuccess, "Cannot initialize SDL subsystem" );
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()

@@ -1,12 +1,12 @@
 #include "Sprite.hpp"
 #include <SDL.h>
-#include <SDL_render.h>
+#include <boost/assert.hpp>
+#include "TextureWrapper.hpp"
 
 using namespace SDL2W;
 
 Sprite::Sprite()
 {
-
 }
 
 Sprite::~Sprite()
@@ -15,22 +15,27 @@ Sprite::~Sprite()
 
 const SDL_Texture* Sprite::getTexture()const
 {
-	return this->texture.get();
+	return this->texture->getTexture();
 }
 
 void Sprite::setTexture( SDL_Texture* inputTexture )
 {
 	std::lock_guard<std::mutex> lock( this->mtx );
-	this->texture.reset( inputTexture, Sprite::deleteTexture);
+	this->texture.reset( new TextureWrapper() );
+	this->texture->setTexture( inputTexture );
 	int w, h;
-	SDL_QueryTexture( inputTexture, nullptr, nullptr, &w, &h );
+	const auto sdlQuerySuccess = SDL_QueryTexture( 
+		inputTexture, 
+		nullptr, 
+		nullptr, 
+		&w, 
+		&h );
+	BOOST_ASSERT_MSG( 
+		0 == sdlQuerySuccess, 
+		"Cannot initialize SDL subsystem" );
+	
 	this->size.setXYZ( w, h, 0 );
 	calculateSizes();
-}
-
-void Sprite::deleteTexture( SDL_Texture* texture )
-{
-	SDL_DestroyTexture( texture );
 }
 
 const IObject::Type Sprite::getType()const
@@ -40,16 +45,19 @@ const IObject::Type Sprite::getType()const
 
 const CUL::Math::Vector3Di& Sprite::getPosition()const
 {
+	std::lock_guard<std::mutex> lock( this->mtx );
 	return this->position;
 }
 
 const CUL::Math::Vector3Du& Sprite::getSize()const
 {
+	std::lock_guard<std::mutex> lock( this->mtx );
 	return this->size;
 }
 
 const CUL::Math::Vector3Du& Sprite::getSizeAbs()const
 {
+	std::lock_guard<std::mutex> lock( this->mtx );
 	return this->realSize;
 }
 
@@ -65,7 +73,7 @@ void Sprite::move( const CUL::Math::Vector3Di& moveVect )
 	this->position += moveVect;
 }
 
-void Sprite::setScale( const CUL::Math::Vector3Du& scnewScale )
+void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
 {
 	std::lock_guard<std::mutex> lock( this->mtx );
 	this->scale = scnewScale;

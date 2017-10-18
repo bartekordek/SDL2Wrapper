@@ -253,6 +253,7 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
     <ClInclude Include="src\RegularSDL2Window.hpp" />
     <ClInclude Include="src\SDL2WrapperImpl.hpp" />
     <ClInclude Include="src\Sprite.hpp" />
+    <ClInclude Include="src\TextureWrapper.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IObject.cpp" />
@@ -262,6 +263,7 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
     <ClCompile Include="src\SDL2Wrapper.cpp" />
     <ClCompile Include="src\SDL2WrapperImpl.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\TextureWrapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
