@@ -82,5 +82,13 @@ void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
 
 void Sprite::calculateSizes()
 {
-	this->realSize = this->size * this->scale;
+	const CUL::Math::Vector3Dd sizeAsDouble( 
+		this->size.getX(),
+		this->size.getY(), 0 );
+	const auto realSizeD = sizeAsDouble * this->scale;
+	this->realSize.setXYZ(
+		static_cast<unsigned>( realSizeD.getX() ),
+		static_cast<unsigned>( realSizeD.getY() ),
+		0
+	);
 }
