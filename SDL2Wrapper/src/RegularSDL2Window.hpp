@@ -29,6 +29,7 @@ namespace SDL2W
 
 		void refreshScreen() override;
 		void renderAllObjects() override;
+		void clear() override;
 			
 	protected:
 	private:

@@ -15,6 +15,7 @@ namespace SDL2W
 			const std::string& winName = "" ) = 0;
 		virtual void refreshScreen() = 0;
 		virtual void renderFrame() = 0;
+		virtual void clearWindows() = 0;
 
 	protected:
 	private:

@@ -24,6 +24,7 @@ namespace SDL2W
 			const IObject::Type type = IObject::Type::SPRITE )const = 0;
 
 		virtual void renderNext() = 0;
+		virtual void clear() = 0;
 
 		IWindow& operator=( const IWindow& window );
 

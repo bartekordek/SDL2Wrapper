@@ -45,3 +45,11 @@ void SDL2WrapperImpl::renderFrame()
 		window.second->renderAllObjects();
 	}
 }
+
+void SDL2WrapperImpl::clearWindows()
+{
+	for( auto& window : this->windows )
+	{
+		window.second->clear();
+	}
+}

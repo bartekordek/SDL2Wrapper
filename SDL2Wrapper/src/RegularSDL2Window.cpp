@@ -158,4 +158,9 @@ void RegularSDL2Window::renderAllObjects()
 	}
 }
 
+void RegularSDL2Window::clear()
+{
+	SDL_RenderClear( this->renderer.get() );
+}
+
 __pragma( warning( pop ) )
