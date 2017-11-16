@@ -3,6 +3,7 @@
 *.bin
 *.check_cache
 *.cmake
+*.d
 *.dll
 *.exe
 *.exp
@@ -12,8 +13,11 @@
 *.iobj
 *.ipch
 *.ipdb
+*.la
+*.lai
 *.lastcodeanalysisissucceded
 *.lib
+*.lo
 *.log
 *.make
 *.marks
