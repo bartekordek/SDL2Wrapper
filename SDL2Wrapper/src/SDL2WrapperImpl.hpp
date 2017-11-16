@@ -17,7 +17,9 @@ namespace SDL2W
 			const std::string& winName = "" ) override;
 
 		void refreshScreen() override;
-		void renderFrame() override;
+		void renderFrame( 
+			const bool clearContext = true,
+			const bool refreshWindow = true ) override;
 		void clearWindows() override;
 
 	protected:

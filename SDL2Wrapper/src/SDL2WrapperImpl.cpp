@@ -25,24 +25,29 @@ std::shared_ptr<IWindow> SDL2WrapperImpl::createWindow(
 {
 	std::shared_ptr<IWindow> result;
 	result.reset(
-		new RegularSDL2Window( pos, size, winName ) );
+		new RegularSDL2Window( 
+			pos, size, winName ) );
 	this->windows[winName] = result;
 	return result;
 }
 
-void SDL2WrapperImpl::refreshScreen()
+void SDL2WrapperImpl::renderFrame( 
+	const bool clearContext,
+	const bool refreshWindow )
 {
-	for( auto& window: this->windows )
+	if( true == clearContext )
 	{
-		window.second->refreshScreen();
+		clearWindows();
 	}
-}
 
-void SDL2WrapperImpl::renderFrame()
-{
 	for( auto& window : this->windows )
 	{
 		window.second->renderAllObjects();
+	}
+
+	if( true == refreshWindow )
+	{
+		refreshScreen();
 	}
 }
 
@@ -51,5 +56,13 @@ void SDL2WrapperImpl::clearWindows()
 	for( auto& window : this->windows )
 	{
 		window.second->clear();
+	}
+}
+
+void SDL2WrapperImpl::refreshScreen()
+{
+	for( auto& window : this->windows )
+	{
+		window.second->refreshScreen();
 	}
 }

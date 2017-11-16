@@ -14,7 +14,9 @@ namespace SDL2W
 			const CUL::Size<unsigned>& size = CUL::Size<unsigned>(),
 			const std::string& winName = "" ) = 0;
 		virtual void refreshScreen() = 0;
-		virtual void renderFrame() = 0;
+		virtual void renderFrame( 
+			const bool clearContext = true,
+			const bool refreshWindow = true ) = 0;
 		virtual void clearWindows() = 0;
 
 	protected:
