@@ -4,7 +4,6 @@
 *.check_cache
 *.cmake
 *.d
-*.dll
 *.exe
 *.exp
 *.idb
@@ -16,7 +15,6 @@
 *.la
 *.lai
 *.lastcodeanalysisissucceded
-*.lib
 *.lo
 *.log
 *.make
@@ -32,6 +30,3 @@
 *.user
 *cache
 *~ml
-CMakeFiles/
-Tetris/nbproject/private/
-MogeLib/nbproject/private/
