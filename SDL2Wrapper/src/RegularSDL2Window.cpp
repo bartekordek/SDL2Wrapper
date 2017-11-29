@@ -99,8 +99,11 @@ SDL_Surface* RegularSDL2Window::createSurface( const CUL::FS::Path& path )
 	BOOST_ASSERT( result != nullptr );
 	return result;
 }
+#ifdef _MSC_VER
 __pragma( warning( push ) ) \
 __pragma( warning( disable:4189 ) )
+#endif
+
 void RegularSDL2Window::renderNext()
 {
 	objects->getRandomIteratorPtr()->hasNext();
@@ -163,4 +166,6 @@ void RegularSDL2Window::clear()
 	SDL_RenderClear( this->renderer.get() );
 }
 
+#ifdef _MSC_VER
 __pragma( warning( pop ) )
+#endif
