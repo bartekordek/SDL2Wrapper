@@ -63,17 +63,17 @@ LDLIBSOPTIONS=../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a ../deps/SDL2-2.0.7/B
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a
+../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a
+../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/CUL/build/Cygwin-Windows-Release/libcul.a
+../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/CUL/build/Cygwin-Windows-Release/libcul.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
+../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ${OBJECTFILES}
+	${MKDIR} -p ../build/${CND_PLATFORM}-${CND_CONF}
+	${LINK.cc} -o ../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a -shared
 
 ${OBJECTDIR}/src/IObject.o: src/IObject.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src

@@ -65,11 +65,13 @@
           <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>
+          <output>../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}</output>
           <linkerLibItems>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
           </linkerLibItems>
+          <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
       </compileType>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
@@ -137,12 +139,14 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}</output>
           <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
           </linkerLibItems>
+          <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
       </compileType>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
