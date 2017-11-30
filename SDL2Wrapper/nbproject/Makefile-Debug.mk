@@ -49,8 +49,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-pedantic
+CXXFLAGS=-pedantic
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -59,11 +59,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
+LDLIBSOPTIONS=../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
 

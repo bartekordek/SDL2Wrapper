@@ -58,6 +58,7 @@
             <pElem>../deps/SDL2-2.0.7/include</pElem>
             <pElem>../deps/boost_1_64_0</pElem>
           </incDir>
+          <commandLine>-pedantic</commandLine>
           <preprocessorList>
             <Elem>SDL2Wrapper_DYNAMIC</Elem>
           </preprocessorList>
@@ -65,6 +66,8 @@
         </ccTool>
         <linkerTool>
           <linkerLibItems>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
@@ -121,6 +124,7 @@
             <pElem>../deps/SDL2-2.0.7/include</pElem>
             <pElem>../deps/boost_1_64_0</pElem>
           </incDir>
+          <commandLine>-pedantic -Ofast</commandLine>
           <preprocessorList>
             <Elem>SDL2Wrapper_DYNAMIC</Elem>
           </preprocessorList>
@@ -135,6 +139,8 @@
         <linkerTool>
           <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
