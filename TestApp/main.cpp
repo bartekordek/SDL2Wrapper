@@ -1,6 +1,8 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
-//#include "CUL"
+#include "CUL/Math/XYPosition.hpp"
+#include "CUL/Math/Size.hpp"
 #include <thread>
+#include <cmath>
 
 int main( int argc, char** argv )
 {
