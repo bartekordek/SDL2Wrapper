@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>inc/SDL2Wrapper/IObject.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/ISDL2Wrapper.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/SDL2Wrapper.hpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/IObject.cpp</itemPath>
+      <itemPath>src/ISDL2Wrapper.cpp</itemPath>
+      <itemPath>src/IWindow.cpp</itemPath>
+      <itemPath>src/RegularSDL2Window.cpp</itemPath>
+      <itemPath>src/RegularSDL2Window.hpp</itemPath>
+      <itemPath>src/SDL2Wrapper.cpp</itemPath>
+      <itemPath>src/SDL2WrapperImpl.cpp</itemPath>
+      <itemPath>src/SDL2WrapperImpl.hpp</itemPath>
+      <itemPath>src/Sprite.cpp</itemPath>
+      <itemPath>src/Sprite.hpp</itemPath>
+      <itemPath>src/TextureWrapper.cpp</itemPath>
+      <itemPath>src/TextureWrapper.hpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>SDL2Wrapper-Makefile.mk</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>SDL2Wrapper-Makefile.mk</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>11</standard>
+          <incDir>
+            <pElem>inc</pElem>
+            <pElem>../deps/CUL</pElem>
+            <pElem>../deps/SDL2-2.0.7/include</pElem>
+            <pElem>../deps/boost_1_64_0</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>SDL2Wrapper_DYNAMIC</Elem>
+          </preprocessorList>
+          <warningLevel>3</warningLevel>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/IObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ISDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/IWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RegularSDL2Window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RegularSDL2Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SDL2WrapperImpl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SDL2WrapperImpl.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Sprite.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Sprite.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/TextureWrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/TextureWrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>11</standard>
+          <incDir>
+            <pElem>inc</pElem>
+            <pElem>../deps/CUL</pElem>
+            <pElem>../deps/SDL2-2.0.7/include</pElem>
+            <pElem>../deps/boost_1_64_0</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>SDL2Wrapper_DYNAMIC</Elem>
+          </preprocessorList>
+          <warningLevel>3</warningLevel>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <linkerCopySharedLibs>true</linkerCopySharedLibs>
+          <linkerLibItems>
+            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/IObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ISDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/IWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RegularSDL2Window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RegularSDL2Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SDL2WrapperImpl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SDL2WrapperImpl.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Sprite.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Sprite.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/TextureWrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/TextureWrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
