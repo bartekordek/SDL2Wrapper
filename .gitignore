@@ -30,3 +30,5 @@
 *.user
 *cache
 *~ml
+build
+SDL2Wrapper/dist
