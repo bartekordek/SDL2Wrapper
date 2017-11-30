@@ -8,17 +8,17 @@ CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=testapp
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/testapp
+CND_ARTIFACT_DIR_Debug=../build/Cygwin-Windows-Debug
+CND_ARTIFACT_NAME_Debug=TestApp
+CND_ARTIFACT_PATH_Debug=../build/Cygwin-Windows-Debug/TestApp
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
 CND_PACKAGE_NAME_Debug=testapp.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/testapp.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=testapp
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/testapp
+CND_ARTIFACT_DIR_Release=../build/Cygwin-Windows-Release
+CND_ARTIFACT_NAME_Release=TestApp
+CND_ARTIFACT_PATH_Release=../build/Cygwin-Windows-Release/TestApp
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
 CND_PACKAGE_NAME_Release=testapp.tar
 CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/testapp.tar

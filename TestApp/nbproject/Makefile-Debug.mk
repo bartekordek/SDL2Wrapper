@@ -56,15 +56,15 @@ LDLIBSOPTIONS=../build/Cygwin-Windows-Debug/libSDL2Wrapper.a ../deps/CUL/build/C
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/testapp.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/testapp.exe: ../build/Cygwin-Windows-Debug/libSDL2Wrapper.a
+../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../build/Cygwin-Windows-Debug/libSDL2Wrapper.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/testapp.exe: ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
+../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/testapp.exe: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/testapp ${OBJECTFILES} ${LDLIBSOPTIONS}
+../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ${OBJECTFILES}
+	${MKDIR} -p ../build/${CND_PLATFORM}-${CND_CONF}
+	${LINK.cc} -o ../build/${CND_PLATFORM}-${CND_CONF}/TestApp ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

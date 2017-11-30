@@ -43,6 +43,7 @@
           <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>
+          <output>../build/${CND_PLATFORM}-${CND_CONF}/TestApp</output>
           <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
             <linkerLibFileItem>../build/Cygwin-Windows-Debug/libSDL2Wrapper.a</linkerLibFileItem>
@@ -78,6 +79,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>../build/${CND_PLATFORM}-${CND_CONF}/TestApp</output>
           <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
             <linkerLibFileItem>../build/Cygwin-Windows-Release/libSDL2Wrapper.a</linkerLibFileItem>
