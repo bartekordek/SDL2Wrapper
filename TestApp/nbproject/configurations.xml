@@ -48,9 +48,34 @@
           <linkerLibItems>
             <linkerLibFileItem>../build/Cygwin-Windows-Debug/libSDL2Wrapper.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
+            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll</linkerLibFileItem>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
+                            from="${OUTPUT_PATH}.exe"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -84,9 +109,34 @@
           <linkerLibItems>
             <linkerLibFileItem>../build/Cygwin-Windows-Release/libSDL2Wrapper.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
+            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.dll</linkerLibFileItem>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
+                            from="${OUTPUT_PATH}.exe"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>

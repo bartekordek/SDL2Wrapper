@@ -70,6 +70,7 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
 	const CUL::FS::Path& objPath,
 	const IObject::Type type ) const
 {
+    BOOST_ASSERT_MSG( objPath.exists(), "File " + objPath.getPath() + " does not exist." );
 	std::shared_ptr<IObject> result;
 	if(IObject::Type::SPRITE == type)
 	{
@@ -86,6 +87,7 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
 
 SDL_Surface* RegularSDL2Window::createSurface( const CUL::FS::Path& path )
 {
+    BOOST_ASSERT_MSG( objPath.exists(), "File " + objPath.getPath() + " does not exist." );
 	SDL_Surface* result = nullptr;
 	if( ".bmp" == path.getExtension() )
 	{

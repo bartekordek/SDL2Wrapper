@@ -52,15 +52,21 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../build/Cygwin-Windows-Debug/libSDL2Wrapper.a ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
+LDLIBSOPTIONS=../build/Cygwin-Windows-Debug/libSDL2Wrapper.a ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a ../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe
+	${CP} ../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}
+	${CP} ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll ../build/${CND_PLATFORM}-${CND_CONF}
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../build/Cygwin-Windows-Debug/libSDL2Wrapper.a
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
+
+../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll
+
+../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ${OBJECTFILES}
 	${MKDIR} -p ../build/${CND_PLATFORM}-${CND_CONF}
@@ -77,6 +83,8 @@ ${OBJECTDIR}/main.o: main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} -r ../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll
+	${RM} ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe
 
 # Subprojects
 .clean-subprojects:
