@@ -52,13 +52,14 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../build/Cygwin-Windows-Release/libSDL2Wrapper.a ../deps/CUL/build/Cygwin-Windows-Release/libcul.a ../deps/CUL/build/Cygwin-Windows-Release/libcul.dll ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll
+LDLIBSOPTIONS=../build/Cygwin-Windows-Release/libSDL2Wrapper.a ../deps/CUL/build/Cygwin-Windows-Release/libcul.a ../deps/CUL/build/Cygwin-Windows-Release/libcul.dll ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll -L../SDL2Wrapper/../build/Cygwin-Windows-Release -lSDL2Wrapper
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe
 	${CP} ../deps/CUL/build/Cygwin-Windows-Release/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}
 	${CP} ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll ../build/${CND_PLATFORM}-${CND_CONF}
+	${CP} ../SDL2Wrapper/../build/Cygwin-Windows-Release/libSDL2Wrapper.dll ../build/${CND_PLATFORM}-${CND_CONF}
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../build/Cygwin-Windows-Release/libSDL2Wrapper.a
 
@@ -67,6 +68,8 @@ LDLIBSOPTIONS=../build/Cygwin-Windows-Release/libSDL2Wrapper.a ../deps/CUL/build
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../deps/CUL/build/Cygwin-Windows-Release/libcul.dll
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll
+
+../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../SDL2Wrapper/../build/Cygwin-Windows-Release/libSDL2Wrapper.dll
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ${OBJECTFILES}
 	${MKDIR} -p ../build/${CND_PLATFORM}-${CND_CONF}
@@ -79,15 +82,17 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../SDL2Wrapper && ${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Release
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} -r ../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll
+	${RM} -r ../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll ../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.dll
 	${RM} ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe
 
 # Subprojects
 .clean-subprojects:
+	cd ../SDL2Wrapper && ${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

@@ -32,7 +32,7 @@
       <toolsSet>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
+        <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -50,6 +50,18 @@
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../SDL2Wrapper"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../SDL2Wrapper"
+                            BC="${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Debug"
+                            CC="${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Debug clean"
+                            OP="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -65,6 +77,30 @@
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
                             from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
+                            from="${OUTPUT_PATH}.exe"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libSDL2Wrapper.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.dll"
                             perm="755"
                             owner="root"
                             group="bin"/>
@@ -111,6 +147,18 @@
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.dll</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../SDL2Wrapper"
+                            CT="2"
+                            CN="Release"
+                            AC="false"
+                            BL="true"
+                            WD="../SDL2Wrapper"
+                            BC="${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Release"
+                            CC="${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Release clean"
+                            OP="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -126,6 +174,30 @@
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
                             from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
+                            from="${OUTPUT_PATH}.exe"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libSDL2Wrapper.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.dll"
                             perm="755"
                             owner="root"
                             group="bin"/>

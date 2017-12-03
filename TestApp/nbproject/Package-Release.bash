@@ -71,6 +71,22 @@ cd "${TOP}"
 makeDirectory "${NBTMPDIR}/testapp/bin"
 copyFileToTmpDir "${OUTPUT_PATH}.exe" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe" 0755
 
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/testapp/bin"
+copyFileToTmpDir "../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libcul.dll" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/testapp/bin"
+copyFileToTmpDir "../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/SDL2.dll" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/testapp/bin"
+copyFileToTmpDir "../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.dll" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libSDL2Wrapper.dll" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/testapp/bin"
+copyFileToTmpDir "${OUTPUT_PATH}.exe" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe" 0755
+
 
 # Generate tar file
 cd "${TOP}"

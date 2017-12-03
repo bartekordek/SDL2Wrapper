@@ -54,12 +54,11 @@ CCADMIN=CCadmin
 build: .build-post
 
 .build-pre:
-	echo "PLAT = ${CND_PLATFORM_${CONF}}"
-	cp -v ../deps/CUL/build/${CND_PLATFORM_${CONF}}-${CONF}/libcul.dll ../build/${CND_PLATFORM_${CONF}}-${CONF}/
 
 .build-post: .build-impl
 # Add your post 'build' code here...
-
+	echo "PLAT = ${CND_PLATFORM_${CONF}}"
+	cp -v ../deps/CUL/build/${CND_PLATFORM_${CONF}}-${CONF}/libcul.dll ../build/${CND_PLATFORM_${CONF}}-${CONF}/
 
 # clean
 clean: .clean-post
