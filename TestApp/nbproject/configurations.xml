@@ -44,7 +44,6 @@
         </ccTool>
         <linkerTool>
           <output>../build/${CND_PLATFORM}-${CND_CONF}/TestApp</output>
-          <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
             <linkerLibFileItem>../build/Cygwin-Windows-Debug/libSDL2Wrapper.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
@@ -87,24 +86,6 @@
                             owner="root"
                             group="bin"/>
           <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/libcul.dll"
-                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
-                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/libSDL2Wrapper.dll"
-                            from="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.dll"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
                             from="${OUTPUT_PATH}.exe"
                             perm="755"
@@ -141,7 +122,6 @@
         </asmTool>
         <linkerTool>
           <output>../build/${CND_PLATFORM}-${CND_CONF}/TestApp</output>
-          <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
             <linkerLibFileItem>../build/Cygwin-Windows-Release/libSDL2Wrapper.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
@@ -180,24 +160,6 @@
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
                             from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/libcul.dll"
-                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
-                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/libSDL2Wrapper.dll"
-                            from="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.dll"
                             perm="755"
                             owner="root"
                             group="bin"/>

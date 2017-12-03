@@ -57,9 +57,6 @@ LDLIBSOPTIONS=../build/Cygwin-Windows-Debug/libSDL2Wrapper.a ../deps/CUL/build/C
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe
-	${CP} ../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}
-	${CP} ../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll ../build/${CND_PLATFORM}-${CND_CONF}
-	${CP} ../SDL2Wrapper/../build/Cygwin-Windows-Debug/libSDL2Wrapper.dll ../build/${CND_PLATFORM}-${CND_CONF}
 
 ../build/${CND_PLATFORM}-${CND_CONF}/TestApp.exe: ../build/Cygwin-Windows-Debug/libSDL2Wrapper.a
 
