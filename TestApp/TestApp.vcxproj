@@ -95,12 +95,14 @@
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Submodules\CUL;$(HOME_CUL_WINDOWS);$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL;$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>SDL2Wrapper_DYNAMIC;CULLib_DYNAMIC;CULLib_EXPORT;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -116,12 +118,14 @@
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Submodules\CUL;$(HOME_CUL_WINDOWS);$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL;$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>SDL2Wrapper_DYNAMIC;CULLib_DYNAMIC;CULLib_EXPORT;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -138,13 +142,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Submodules\CUL;$(HOME_CUL_WINDOWS);$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL;$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SDL2Wrapper_DYNAMIC;CULLib_DYNAMIC;CULLib_EXPORT;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -161,13 +167,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Submodules\CUL;$(HOME_CUL_WINDOWS);$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL;$(SolutionDir)$(SolutionName)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SDL2Wrapper_DYNAMIC;CULLib_DYNAMIC;CULLib_EXPORT;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>SDL2WrapperDynamic.lib;CULdynamic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

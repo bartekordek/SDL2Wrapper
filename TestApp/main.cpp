@@ -11,8 +11,7 @@ int main( int argc, char** argv )
         CUL::XYPosition<int>( 256, 256 ), 
         CUL::Size<unsigned>( 800, 600 ), 
         "Windows 1" );
-    
-    
+
     auto obj = window->createObject( CUL::FS::Path( "../../Media/pikaczu.bmp") );
     obj->setScale( CUL::Math::Vector3Dd( 0.0, 0.0, 0.0 ) );
 

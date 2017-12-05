@@ -95,7 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Deps\SDL2\SDL2-2.0.5\include;$(HOME_BOOST_WINDOWS);$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -103,7 +103,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(HOME_BOOST_WINDOWS)\Build-Windows\lib;$(SolutionDir)Build\$(Platform)_$(Configuration);$(HOME_CUL_WINDOWS)\build\$(Platform)_$(Configuration);$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\boost_1_64_0\Build-Windows;$(SolutionDir)Build\$(Platform)_$(Configuration);$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;CULdynamic.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
@@ -111,9 +111,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
+      <Command>xcopy "$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
     </PostBuildEvent>
     <ProjectReference />
     <Lib>
@@ -135,7 +135,7 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Deps\SDL2\SDL2-2.0.5\include;$(HOME_BOOST_WINDOWS);$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -143,7 +143,7 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(HOME_BOOST_WINDOWS)\Build-Windows\lib;$(SolutionDir)Build\$(Platform)_$(Configuration);$(HOME_CUL_WINDOWS)\build\$(Platform)_$(Configuration);$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\boost_1_64_0\Build-Windows;$(SolutionDir)Build\$(Platform)_$(Configuration);$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;CULdynamic.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
@@ -151,9 +151,9 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
+      <Command>xcopy "$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
     </PostBuildEvent>
     <ProjectReference />
     <Lib>
@@ -176,22 +176,22 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Deps\SDL2\SDL2-2.0.5\include;$(HOME_BOOST_WINDOWS);$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(HOME_BOOST_WINDOWS)\Build-Windows\lib;$(SolutionDir)Build\$(Platform)_$(Configuration);$(HOME_CUL_WINDOWS)\build\$(Platform)_$(Configuration);$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\boost_1_64_0\Build-Windows;$(SolutionDir)Build\$(Platform)_$(Configuration);$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;CULdynamic.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
+      <Command>xcopy "$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
     </PostBuildEvent>
     <ProjectReference />
     <Lib>
@@ -213,22 +213,22 @@ xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Deps\SDL2\SDL2-2.0.5\include;$(HOME_BOOST_WINDOWS);$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(HOME_BOOST_WINDOWS)\Build-Windows\lib;$(SolutionDir)Build\$(Platform)_$(Configuration);$(HOME_CUL_WINDOWS)\build\$(Platform)_$(Configuration);$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\boost_1_64_0\Build-Windows;$(SolutionDir)Build\$(Platform)_$(Configuration);$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;CULdynamic.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)Deps\SDL2\SDL2-2.0.5\Build-Windows-$(PlatformToolset)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(HOME_CUL_WINDOWS)\Build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
+      <Command>xcopy "$(SolutionDir)deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y</Command>
     </PostBuildEvent>
     <ProjectReference />
     <Lib>
