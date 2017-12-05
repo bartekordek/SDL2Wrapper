@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 14 for Windows Desktop
+# Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestApp", "TestApp\TestApp.vcxproj", "{75FF01A3-E575-4661-B75B-3AA935B46F2F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{946707F5-BE49-4A7F-9CD9-0BFF983CE298} = {946707F5-BE49-4A7F-9CD9-0BFF983CE298}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL2WrapperDynamic", "SDL2Wrapper\SDL2WrapperDynamic.vcxproj", "{946707F5-BE49-4A7F-9CD9-0BFF983CE298}"
 EndProject

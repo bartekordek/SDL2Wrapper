@@ -2,6 +2,7 @@
 #include "Sprite.hpp"
 
 #include "CUL/ListFactory.hpp"
+#include "CUL/FS.hpp"
 
 #include <SDL.h>
 #include <SDL_video.h>
@@ -70,6 +71,7 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
 	const CUL::FS::Path& objPath,
 	const IObject::Type type ) const
 {
+	auto cwd = CUL::FS::FSApi::getCurrentDir();
 	bool pathExist = objPath.exists();
 	if( false == pathExist )
 	{
@@ -77,18 +79,18 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
 		BOOST_ASSERT_MSG( false, msg.c_str() );
 	}
     
-	std::shared_ptr<IObject> result;
-	if(IObject::Type::SPRITE == type)
-	{
-		SDL_Surface* surface = createSurface( objPath );
-		auto tex = SDL_CreateTextureFromSurface( this->renderer.get(), surface );
-		auto sprite = new Sprite();
-		sprite->setTexture( tex );
-		result.reset( sprite );
-		
-	}
-	this->objects->pushBack( result );
-	return result;
+    std::shared_ptr<IObject> result;
+    if( IObject::Type::SPRITE == type )
+    {
+        SDL_Surface* surface = createSurface( objPath );
+        auto tex = SDL_CreateTextureFromSurface( this->renderer.get(), surface );
+        auto sprite = new Sprite();
+        sprite->setTexture( tex );
+        result.reset( sprite );
+
+    }
+    this->objects->pushBack( result );
+    return result;
 }
 
 SDL_Surface* RegularSDL2Window::createSurface( const CUL::FS::Path& path )
