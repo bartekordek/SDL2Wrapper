@@ -1,0 +1,8 @@
+../src/ConsoleUtilities.cpp
+../src/FileRegular.cpp
+../src/FileRegularImpl.cpp
+../src/FS.cpp
+../src/IFile.cpp
+../src/Path.cpp
+../Tests/IteratorTests.cpp
+../Tests/main.cpp

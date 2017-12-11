@@ -1,0 +1,7 @@
+[../CUL/IteratorListLinked.hpp:7]: (warning) The class 'IteratorListLinked' has 'operator=' but lack of 'copy constructor'.
+[../CUL/IteratorListVector.hpp:7]: (warning) The class 'IteratorListVector' has 'operator=' but lack of 'copy constructor'.
+[../CUL/Path.hpp:12]: (style) Class 'Path' has a constructor with 1 argument that is not explicit.
+[../CUL/IFile.hpp:13]: (style) Class 'IFile' has a constructor with 1 argument that is not explicit.
+[../src/ConsoleUtilities.cpp:7]: (style) The function 'PrintInputParameters' is never used.
+[../src/Path.cpp:100]: (style) The function 'operator+' is never used.
+(information) Cppcheck cannot find all the include files (use --check-config for details)
