@@ -77,27 +77,27 @@ LDLIBSOPTIONS=-L../../build/Cygwin_${CND_CONF} ../../deps/gtest/Build-Cygwin/lib
 ${OBJECTDIR}/_ext/5c0/FileTest.o: ../FileTest.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/FileTest.o ../FileTest.cpp
+	$(COMPILE.cc) -O2 -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/FileTest.o ../FileTest.cpp
 
 ${OBJECTDIR}/_ext/5c0/IteratorTests.o: ../IteratorTests.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/IteratorTests.o ../IteratorTests.cpp
+	$(COMPILE.cc) -O2 -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/IteratorTests.o ../IteratorTests.cpp
 
 ${OBJECTDIR}/_ext/5c0/PathTests.o: ../PathTests.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/PathTests.o ../PathTests.cpp
+	$(COMPILE.cc) -O2 -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/PathTests.o ../PathTests.cpp
 
 ${OBJECTDIR}/_ext/5c0/Vector3DTests.o: ../Vector3DTests.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/Vector3DTests.o ../Vector3DTests.cpp
+	$(COMPILE.cc) -O2 -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/Vector3DTests.o ../Vector3DTests.cpp
 
 ${OBJECTDIR}/_ext/5c0/main.o: ../main.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/main.o ../main.cpp
+	$(COMPILE.cc) -O2 -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/main.o ../main.cpp
 
 # Subprojects
 .build-subprojects:

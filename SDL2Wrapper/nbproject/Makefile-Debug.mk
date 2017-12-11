@@ -59,7 +59,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
+LDLIBSOPTIONS=../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a -L../deps/CUL/CUL/libcul/../../build/Cygwin-Windows-Debug -lcul -L../deps/CUL/CUL/libcul/../../build/Cygwin-Windows-Release -lcul
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -69,7 +69,9 @@ LDLIBSOPTIONS=../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a ../deps/SDL2-2.0.7/B
 
 ../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a
 
-../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/CUL/build/Cygwin-Windows-Debug/libcul.a
+../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/CUL/CUL/libcul/../../build/Cygwin-Windows-Debug/libcul.dll
+
+../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ../deps/CUL/CUL/libcul/../../build/Cygwin-Windows-Release/libcul.dll
 
 ../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ../build/${CND_PLATFORM}-${CND_CONF}
@@ -78,52 +80,58 @@ LDLIBSOPTIONS=../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a ../deps/SDL2-2.0.7/B
 ${OBJECTDIR}/src/IObject.o: src/IObject.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/IObject.o src/IObject.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/IObject.o src/IObject.cpp
 
 ${OBJECTDIR}/src/ISDL2Wrapper.o: src/ISDL2Wrapper.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ISDL2Wrapper.o src/ISDL2Wrapper.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ISDL2Wrapper.o src/ISDL2Wrapper.cpp
 
 ${OBJECTDIR}/src/IWindow.o: src/IWindow.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/IWindow.o src/IWindow.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/IWindow.o src/IWindow.cpp
 
 ${OBJECTDIR}/src/RegularSDL2Window.o: src/RegularSDL2Window.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RegularSDL2Window.o src/RegularSDL2Window.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RegularSDL2Window.o src/RegularSDL2Window.cpp
 
 ${OBJECTDIR}/src/SDL2Wrapper.o: src/SDL2Wrapper.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SDL2Wrapper.o src/SDL2Wrapper.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SDL2Wrapper.o src/SDL2Wrapper.cpp
 
 ${OBJECTDIR}/src/SDL2WrapperImpl.o: src/SDL2WrapperImpl.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SDL2WrapperImpl.o src/SDL2WrapperImpl.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SDL2WrapperImpl.o src/SDL2WrapperImpl.cpp
 
 ${OBJECTDIR}/src/Sprite.o: src/Sprite.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sprite.o src/Sprite.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Sprite.o src/Sprite.cpp
 
 ${OBJECTDIR}/src/TextureWrapper.o: src/TextureWrapper.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL -I../deps/SDL2-2.0.7/include -I../deps/boost_1_64_0 -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/TextureWrapper.o src/TextureWrapper.cpp
+	$(COMPILE.cc) -g -Werror -DSDL2Wrapper_DYNAMIC -Iinc -I../deps/CUL/CUL -I../deps/CUL/deps/boost_1_64_0 -I../deps/SDL2-2.0.7/include -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/TextureWrapper.o src/TextureWrapper.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../deps/CUL/CUL/libcul && ${MAKE} -j8 -f Makefile CONF=Debug
+	cd ../deps/CUL/CUL/libcul && ${MAKE} -j8 -f Makefile CONF=Release
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} -r ../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll ../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll
+	${RM} ../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}
 
 # Subprojects
 .clean-subprojects:
+	cd ../deps/CUL/CUL/libcul && ${MAKE} -j8 -f Makefile CONF=Debug clean
+	cd ../deps/CUL/CUL/libcul && ${MAKE} -j8 -f Makefile CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

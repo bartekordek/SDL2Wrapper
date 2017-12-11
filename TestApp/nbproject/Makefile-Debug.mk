@@ -75,7 +75,7 @@ LDLIBSOPTIONS=../build/Cygwin-Windows-Debug/libSDL2Wrapper.a ../deps/CUL/build/C
 ${OBJECTDIR}/main.o: main.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -I../SDL2Wrapper/inc -I../deps/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -Werror -I../SDL2Wrapper/inc -I../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

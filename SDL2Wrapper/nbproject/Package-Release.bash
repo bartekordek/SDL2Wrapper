@@ -61,6 +61,14 @@ mkdir -p ${NBTMPDIR}
 # Copy files and create directories and links
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/libSDL2Wrapper.dll/lib"
+copyFileToTmpDir "../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll" "${NBTMPDIR}/${PACKAGE_TOP_DIR}lib/libcul.dll" 0644
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/libSDL2Wrapper.dll/lib"
+copyFileToTmpDir "../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll" "${NBTMPDIR}/${PACKAGE_TOP_DIR}lib/libcul.dll" 0644
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/libSDL2Wrapper.dll/lib"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}" 0644
 
 

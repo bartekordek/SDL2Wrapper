@@ -78,27 +78,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/Tests.exe: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/5c0/FileTest.o: ../FileTest.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/FileTest.o ../FileTest.cpp
+	$(COMPILE.cc) -g -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/FileTest.o ../FileTest.cpp
 
 ${OBJECTDIR}/_ext/5c0/IteratorTests.o: ../IteratorTests.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/IteratorTests.o ../IteratorTests.cpp
+	$(COMPILE.cc) -g -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/IteratorTests.o ../IteratorTests.cpp
 
 ${OBJECTDIR}/_ext/5c0/PathTests.o: ../PathTests.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/PathTests.o ../PathTests.cpp
+	$(COMPILE.cc) -g -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/PathTests.o ../PathTests.cpp
 
 ${OBJECTDIR}/_ext/5c0/Vector3DTests.o: ../Vector3DTests.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/Vector3DTests.o ../Vector3DTests.cpp
+	$(COMPILE.cc) -g -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/Vector3DTests.o ../Vector3DTests.cpp
 
 ${OBJECTDIR}/_ext/5c0/main.o: ../main.cpp nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/main.o ../main.cpp
+	$(COMPILE.cc) -g -Werror -I.. -I../../deps/gtest/googletest/include -I../../deps/gtest/googlemock/include -I../../deps/CUL/CUL -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/main.o ../main.cpp
 
 # Subprojects
 .build-subprojects:

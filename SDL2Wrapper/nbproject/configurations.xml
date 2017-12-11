@@ -40,6 +40,18 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>SDL2Wrapper-Makefile.mk</itemPath>
     </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>SDL2Wrapper-Makefile.mk</itemPath>
+    </logicalFolder>
+    <itemPath>../downloadDeps.sh</itemPath>
   </logicalFolder>
   <projectmakefile>SDL2Wrapper-Makefile.mk</projectmakefile>
   <confs>
@@ -54,9 +66,9 @@
           <standard>11</standard>
           <incDir>
             <pElem>inc</pElem>
-            <pElem>../deps/CUL</pElem>
+            <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../deps/CUL/deps/boost_1_64_0</pElem>
             <pElem>../deps/SDL2-2.0.7/include</pElem>
-            <pElem>../deps/boost_1_64_0</pElem>
           </incDir>
           <commandLine>-pedantic</commandLine>
           <preprocessorList>
@@ -69,7 +81,30 @@
           <linkerLibItems>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
-            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../deps/CUL/CUL/libcul"
+                            CT="2"
+                            CN="Debug"
+                            AC="false"
+                            BL="true"
+                            WD="../deps/CUL/CUL/libcul"
+                            BC="${MAKE} -j8 -f Makefile CONF=Debug"
+                            CC="${MAKE} -j8 -f Makefile CONF=Debug clean"
+                            OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../deps/CUL/CUL/libcul"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../deps/CUL/CUL/libcul"
+                            BC="${MAKE} -j8 -f Makefile CONF=Release"
+                            CC="${MAKE} -j8 -f Makefile CONF=Release clean"
+                            OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
           <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
@@ -122,9 +157,9 @@
           <standard>11</standard>
           <incDir>
             <pElem>inc</pElem>
-            <pElem>../deps/CUL</pElem>
+            <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../deps/CUL/deps/boost_1_64_0</pElem>
             <pElem>../deps/SDL2-2.0.7/include</pElem>
-            <pElem>../deps/boost_1_64_0</pElem>
           </incDir>
           <commandLine>-pedantic -Ofast</commandLine>
           <preprocessorList>
@@ -144,11 +179,57 @@
           <linkerLibItems>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
-            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../deps/CUL/CUL/libcul"
+                            CT="2"
+                            CN="Debug"
+                            AC="false"
+                            BL="true"
+                            WD="../deps/CUL/CUL/libcul"
+                            BC="${MAKE} -j8 -f Makefile CONF=Debug"
+                            CC="${MAKE} -j8 -f Makefile CONF=Debug clean"
+                            OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../deps/CUL/CUL/libcul"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../deps/CUL/CUL/libcul"
+                            BC="${MAKE} -j8 -f Makefile CONF=Release"
+                            CC="${MAKE} -j8 -f Makefile CONF=Release clean"
+                            OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
           <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">

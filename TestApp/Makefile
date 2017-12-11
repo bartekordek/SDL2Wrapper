@@ -59,7 +59,6 @@ build: .build-post
 # Add your post 'build' code here...
 	echo "PLAT = ${CND_PLATFORM_${CONF}}"
 	cp -v ../deps/CUL/build/${CND_PLATFORM_${CONF}}-${CONF}/libcul.dll ../build/${CND_PLATFORM_${CONF}}-${CONF}/
-	cp -v ../deps/cygdlls/*.dll ../build/${CND_PLATFORM_${CONF}}-${CONF}/
 
 # clean
 clean: .clean-post
