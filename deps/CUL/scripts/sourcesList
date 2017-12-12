@@ -1,1 +1,0 @@
-./src/ConsoleUtilities.cpp ./src/FileRegular.cpp ./src/FileRegularImpl.cpp ./src/FS.cpp ./src/IFile.cpp ./src/IPositionFactory.cpp ./src/MyString.cpp ./src/Named.cpp ./src/Path.cpp ./src/XYPosition.cpp ./Tests/IteratorTests.cpp ./Tests/main.cpp ./Tests/Vector3DTests.cpp 

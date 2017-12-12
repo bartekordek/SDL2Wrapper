@@ -1,3 +1,3 @@
-[submodule "Submodules/CUL"]
-	path = Submodules/CUL
+[submodule "deps/CUL"]
+	path = deps/CUL
 	url = https://github.com/bartekordek/CUL.git
