@@ -10,7 +10,7 @@ int main( int argc, char** argv )
 {
 	auto cwd = CUL::FS::FSApi::getCurrentDir();
 	std::cout << "Working directory: " << cwd;
-	auto file = CUL::FS::Path( "../Media/pikaczu.bmp");
+	auto file = CUL::FS::Path( "../media/pikaczu.bmp");
 	if( file.exists() )
 	{
 		auto sdlW = SDL2W::getSDL2Wrapper();
