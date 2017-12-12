@@ -95,7 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL\deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -135,7 +135,7 @@ xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(Targe
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL\deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -176,7 +176,7 @@ xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(Targe
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL\deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -213,7 +213,7 @@ xcopy "$(SolutionDir)deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(Targe
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\CUL\deps\boost_1_64_0;$(SolutionDir)deps\SDL2-2.0.7\include;$(SolutionDir)deps\CUL;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2Wrapper_DYNAMIC;CULLib_EXPORT;CULLib_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
