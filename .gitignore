@@ -33,3 +33,4 @@ build
 SDL2Wrapper/dist
 SDL2Wrapper/nbproject/private/private.xml
 SDL2Wrapper/nbproject/Package-*
+TestApp/nbproject/Package-*
