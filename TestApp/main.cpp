@@ -19,14 +19,21 @@ int main( int argc, char** argv )
 			CUL::Size<unsigned>( 800, 600 ), 
 			"Windows 1" );
 
-		auto obj = window->createObject( file );
-		obj->setScale( CUL::Math::Vector3Dd( 0.0, 0.0, 0.0 ) );
+		auto obj1 = window->createObject( file );
+		CUL::Math::Vector3Dd obj1Scale;
+		obj1->setScale( obj1Scale );
+		
+		auto obj2 = window->createObject( file );
+		
+		CUL::Math::Vector3Di obj2Pos0( 450, 100, 0 ), obj2Pos;
+		obj2->setPosition( obj2Pos0 );
 
 		unsigned timeInSeconds = 60;
 		unsigned iterations = 8192;
 		auto sleepTimeS = static_cast<double>(
 			timeInSeconds * 1.0 / iterations * 1.0 );
 		unsigned sleepTimeinMs = static_cast<unsigned>( 1000 * sleepTimeS );
+		
 		for( double i = 0; i < timeInSeconds; i += sleepTimeS )
 		{
 			sdlW->renderFrame();
@@ -34,8 +41,13 @@ int main( int argc, char** argv )
 				std::chrono::milliseconds( sleepTimeinMs ) );
 			auto xScale = (sin( i ) + 1.0) * 0.5;
 			auto yScale = (cos( i ) + 1.0) * 0.5;
-			obj->setScale(
-				CUL::Math::Vector3Dd( xScale, yScale, 0 ) );
+			obj1Scale.setXYZ( xScale, yScale, 0 );
+			obj1->setScale( obj1Scale );
+
+			auto amp = 64;
+			obj2Pos.setX( obj2Pos0.getX() + sin( i ) * amp );
+			obj2Pos.setY( obj2Pos0.getY() + cos( i ) * amp );
+			obj2->setPosition( obj2Pos );
 		}
 		return 0;
 	}
