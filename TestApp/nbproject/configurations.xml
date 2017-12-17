@@ -7,8 +7,7 @@
     </logicalFolder>
     <logicalFolder name="f1"
                    displayName="Other important files"
-                   projectFiles="true"
-                   kind="ROOT">
+                   projectFiles="true">
       <itemPath>../.gitignore</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -168,6 +167,12 @@
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
                             from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
+                            from="${OUTPUT_PATH}.exe"
                             perm="755"
                             owner="root"
                             group="bin"/>
