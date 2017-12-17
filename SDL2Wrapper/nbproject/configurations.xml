@@ -9,6 +9,12 @@
       <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/SDL2Wrapper.hpp</itemPath>
     </logicalFolder>
+    <logicalFolder name="f1"
+                   displayName="Other important files"
+                   projectFiles="true"
+                   kind="ROOT">
+      <itemPath>../.gitignore</itemPath>
+    </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
@@ -98,6 +104,8 @@
           <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
       </compileType>
+      <item path="../.gitignore" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
@@ -219,6 +227,8 @@
                             group="bin"/>
         </packFileList>
       </packaging>
+      <item path="../.gitignore" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
