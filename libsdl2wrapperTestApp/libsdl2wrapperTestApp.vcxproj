@@ -103,7 +103,7 @@
       <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -126,7 +126,7 @@
       <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -151,7 +151,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -176,7 +176,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(SolutionDir)Build\$(Platform)_$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\build\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
