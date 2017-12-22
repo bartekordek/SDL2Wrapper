@@ -45,8 +45,8 @@ int main( int argc, char** argv )
 			obj1->setScale( obj1Scale );
 
 			auto amp = 64;
-			obj2Pos.setX( obj2Pos0.getX() + sin( i ) * amp );
-			obj2Pos.setY( obj2Pos0.getY() + cos( i ) * amp );
+			obj2Pos.setX( static_cast<const int>( obj2Pos0.getX() + sin( i ) * amp ) );
+			obj2Pos.setY( static_cast<const int>( obj2Pos0.getY() + cos( i ) * amp ) );
 			obj2->setPosition( obj2Pos );
 		}
 		return 0;
