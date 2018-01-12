@@ -36,7 +36,5 @@ libsdl2wrapper/nbproject/Package*
 libsdl2wrapperTestApp/nbproject/Makefile-*
 libsdl2wrapperTestApp/nbproject/Package-*
 libsdl2wrapper/nbproject/private/*
-SDL2Wrapper/dist
-SDL2Wrapper/nbproject/private/private.xml
-SDL2Wrapper/nbproject/Package-*
-TestApp/nbproject/Package-*
+libsdl2wrapperTestApp/nbproject/private/
+libsdl2wrapperTestApp/nbproject/Package-*
