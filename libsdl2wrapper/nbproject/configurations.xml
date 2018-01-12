@@ -62,7 +62,7 @@
           <standard>11</standard>
           <incDir>
             <pElem>inc</pElem>
-            <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../deps/CUL/CUL/inc</pElem>
             <pElem>../deps/CUL/deps/boost_1_64_0</pElem>
             <pElem>../deps/SDL2-2.0.7/include</pElem>
           </incDir>
@@ -155,7 +155,7 @@
           <standard>11</standard>
           <incDir>
             <pElem>inc</pElem>
-            <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../deps/CUL/CUL/inc</pElem>
             <pElem>../deps/CUL/deps/boost_1_64_0</pElem>
             <pElem>../deps/SDL2-2.0.7/include</pElem>
           </incDir>
