@@ -13,7 +13,7 @@ using namespace SDL2W;
 using namespace CUL;
 
 RegularSDL2Window::RegularSDL2Window( 
-	const CUL::XYPosition<int>& pos,
+	const CUL::Position2D<int>& pos,
 	const CUL::Size<unsigned>& size,
 	const std::string& name ): IWindow( pos, size, name )
 {
@@ -22,8 +22,8 @@ RegularSDL2Window::RegularSDL2Window(
 			this->getName().c_str(),
 			static_cast<int>( this->getPos().x ),
 			static_cast<int>( this->getPos().y ),
-			static_cast<int>( this->getSize().GetWidth() ),
-			static_cast<int>( this->getSize().GetWidth() ),
+			static_cast<int>( this->getSize().getWidth() ),
+			static_cast<int>( this->getSize().getWidth() ),
 			SDL_WINDOW_SHOWN ), RegularSDL2Window::windowDeleter );
 
 	this->renderer.reset(

@@ -12,7 +12,7 @@ namespace SDL2W
 		virtual ~SDL2WrapperImpl();
 
 		std::shared_ptr<IWindow> createWindow( 
-			const CUL::XYPosition<int>& pos = CUL::XYPosition<int>(),
+			const CUL::Position2D<int>& pos = CUL::Position2D<int>(),
 			const CUL::Size<unsigned>& size = CUL::Size<unsigned>(),
 			const std::string& winName = "" ) override;
 

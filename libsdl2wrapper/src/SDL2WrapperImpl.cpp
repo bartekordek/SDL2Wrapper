@@ -19,7 +19,7 @@ SDL2WrapperImpl::~SDL2WrapperImpl()
 }
 
 std::shared_ptr<IWindow> SDL2WrapperImpl::createWindow(
-	const CUL::XYPosition<int>& pos,
+	const CUL::Position2D<int>& pos,
 	const CUL::Size<unsigned>& size,
 	const std::string& winName )
 {

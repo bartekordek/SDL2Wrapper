@@ -12,7 +12,7 @@ namespace SDL2W
 	{
 	public:
 		RegularSDL2Window( 
-			const CUL::XYPosition<int>& pos,
+			const CUL::Position2D<int>& pos,
 			const CUL::Size<unsigned>& size,
 			const std::string& name );
 		RegularSDL2Window( const RegularSDL2Window& win );

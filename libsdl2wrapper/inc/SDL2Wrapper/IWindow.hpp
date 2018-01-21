@@ -13,7 +13,7 @@ namespace SDL2W
 	{
 	public:
 		IWindow(
-			const CUL::XYPosition<int>& pos,
+			const CUL::Position2DI& pos,
 			const CUL::Size<unsigned>& size,
 			const std::string& name );
 		IWindow( const IWindow& wind );
@@ -28,8 +28,8 @@ namespace SDL2W
 
 		IWindow& operator=( const IWindow& window );
 
-		const CUL::XYPosition<int>& getPos()const;
-		void setPos( const CUL::XYPosition<int>& pos );
+		const CUL::Position2DI& getPos()const;
+		void setPos( const CUL::Position2DI& pos );
 
 		const CUL::Size<unsigned>& getSize()const;
 		void setSize( const CUL::Size<unsigned>& size );
@@ -43,7 +43,7 @@ namespace SDL2W
 		virtual ~IWindow();
 	protected:
 	private:
-		CUL::XYPosition<int> position;
+		CUL::Position2DI position;
 		CUL::Size<unsigned> m_size;
 		std::string name;
 	};
