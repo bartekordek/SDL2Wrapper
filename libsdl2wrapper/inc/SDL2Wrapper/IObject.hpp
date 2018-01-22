@@ -1,5 +1,6 @@
 #pragma once
 #include "CUL/Math/Vector3D.hpp"
+#include "CUL/IPivot.hpp"
 namespace SDL2W
 {
 	class IObject
@@ -21,6 +22,9 @@ namespace SDL2W
 
 		virtual const Type getType()const = 0;
 		virtual const bool operator==( const IObject& right )const;
+        
+        virtual const CUL::IPivot* getPivot()const = 0;
+        
 	protected:
 	private:
 	};
