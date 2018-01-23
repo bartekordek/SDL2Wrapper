@@ -80,10 +80,11 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
 	}
     
     std::shared_ptr<IObject> result;
-    if( IObject::Type::SPRITE == type )
+    auto rendererPtr = this->renderer.get();
+    if( rendererPtr && IObject::Type::SPRITE == type )
     {
         SDL_Surface* surface = createSurface( objPath );
-        auto tex = SDL_CreateTextureFromSurface( this->renderer.get(), surface );
+        auto tex = SDL_CreateTextureFromSurface( rendererPtr, surface );
         auto sprite = new Sprite();
         sprite->setTexture( tex );
         result.reset( sprite );
