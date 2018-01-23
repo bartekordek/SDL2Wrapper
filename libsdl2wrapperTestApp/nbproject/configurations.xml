@@ -42,8 +42,8 @@
       <compileType>
         <ccTool>
           <incDir>
-            <pElem>../SDL2Wrapper/inc</pElem>
             <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../libsdl2wrapper/inc</pElem>
           </incDir>
           <warningLevel>3</warningLevel>
         </ccTool>
@@ -90,18 +90,6 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
@@ -122,8 +110,8 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <incDir>
-            <pElem>../SDL2Wrapper/inc</pElem>
             <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../libsdl2wrapper/inc</pElem>
           </incDir>
           <warningLevel>3</warningLevel>
         </ccTool>
@@ -167,54 +155,6 @@
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/SDL2.dll"
                             from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
-                            perm="755"
-                            owner="root"
-                            group="bin"/>
-          <packFileListElem type="File"
-                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe"
-                            from="${OUTPUT_PATH}.exe"
                             perm="755"
                             owner="root"
                             group="bin"/>
