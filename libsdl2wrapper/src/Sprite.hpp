@@ -21,6 +21,7 @@ namespace SDL2W
         const CUL::Math::Vector3Di& getPosition()const override;
         const CUL::Math::Vector3Du& getSize()const override;
         const CUL::Math::Vector3Du& getSizeAbs()const override;
+        const CUL::Math::Vector3Di& getRenderPosition()const override;
 
         void setPosition( const CUL::Math::Vector3Di& newPosition ) override;
         void move( const CUL::Math::Vector3Di& moveVect ) override;
@@ -34,6 +35,7 @@ namespace SDL2W
     protected:
     private:
         void calculateSizes();
+        void calculatePositionOffset();
 
         mutable std::mutex mtx;
         std::shared_ptr<TextureWrapper> texture;

@@ -50,6 +50,12 @@ const CUL::Math::Vector3Di& Sprite::getPosition()const
 	return this->position;
 }
 
+const CUL::Math::Vector3Di& Sprite::getRenderPosition()const
+{
+    std::lock_guard<std::mutex> lock( this->mtx );
+    return this->positionWithOffset;
+}
+
 const CUL::Math::Vector3Du& Sprite::getSize()const
 {
 	std::lock_guard<std::mutex> lock( this->mtx );
@@ -66,12 +72,14 @@ void Sprite::setPosition( const CUL::Math::Vector3Di& newPosition )
 {
 	std::lock_guard<std::mutex> lock( this->mtx );
 	this->position = newPosition;
+    calculatePositionOffset();
 }
 
 void Sprite::move( const CUL::Math::Vector3Di& moveVect )
 {
 	std::lock_guard<std::mutex> lock( this->mtx );
 	this->position += moveVect;
+    calculatePositionOffset();
 }
 
 void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
@@ -102,7 +110,12 @@ void Sprite::calculateSizes()
 
 void Sprite::pivotHasBeenChanged()
 {
-    auto pivotAsInteger = static_cast<CUL::Math::Vector3Di>( 
-        this->m_pivot->getPivot( CUL::IPivot::PivotType::ABSOLUTE ) );
+    calculatePositionOffset();
+}
+
+void Sprite::calculatePositionOffset()
+{
+    auto pivotAsInteger = static_cast<CUL::Math::Vector3Di>(
+        this->m_pivot->getPivot( CUL::IPivot::PivotType::ABSOLUTE ));
     this->positionWithOffset = this->position - pivotAsInteger;
 }
