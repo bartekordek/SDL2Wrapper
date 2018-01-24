@@ -154,19 +154,31 @@ void RegularSDL2Window::renderAllObjects()
             auto* sprite = static_cast<Sprite*>( object.get() );
             auto& pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
+            auto pivot = object->getPivot()->getPivot( CUL::IPivot::PivotType::ABSOLUTE );
 
             SDL_Rect renderQuad;
             renderQuad.x = static_cast<int>( pos.getX() );
             renderQuad.y = static_cast<int>( pos.getY() );
             renderQuad.w = static_cast<int>( size.getX() );
             renderQuad.h = static_cast<int>( size.getY() );
+
             std::unique_ptr<SDL_Rect> srcRect;
+
             auto tex = const_cast<SDL_Texture*>( sprite->getTexture() );
-            SDL_RenderCopy( 
+
+            const double angle = 0.0;
+
+            SDL_Point center;
+            center.x = static_cast<int>( pivot.getX() );
+            center.y = static_cast<int>( pivot.getY() );
+
+            auto result = SDL_RenderCopyEx(
                 this->renderer.get(), 
                 tex, 
                 srcRect.get(), 
-                &renderQuad );
+                &renderQuad,
+                angle, &center, SDL_RendererFlip::SDL_FLIP_NONE );
+            BOOST_ASSERT_MSG( result == 0, "Cannot render SDL texture..." );
         }
     }
 }
