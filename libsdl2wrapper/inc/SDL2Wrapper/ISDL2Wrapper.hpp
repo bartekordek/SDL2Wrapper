@@ -1,7 +1,9 @@
 #pragma once
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
+#include "SDL2Wrapper/IKey.hpp"
 #include <memory>
+#include <functional>
 namespace SDL2W
 {
     class SDL2WrapperAPI ISDL2Wrapper
@@ -24,6 +26,7 @@ namespace SDL2W
         */
         virtual void runEventLoop() = 0;
         virtual void stopEventLoop() = 0;
+        virtual void addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) = 0;
 
     protected:
     private:

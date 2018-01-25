@@ -1,8 +1,8 @@
 #include "SDL2WrapperImpl.hpp"
 #include "RegularSDL2Window.hpp"
+#include "KeySDL.hpp"
 #include <SDL.h>
 #include <set>
-
 #include <boost/assert.hpp>
 
 using namespace SDL2W;
@@ -11,6 +11,35 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 {
     const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
     BOOST_ASSERT_MSG( 0 == sdlInitSuccess, "Cannot initialize SDL subsystem" );
+    this->m_keys = createKeys();
+}
+
+const std::map<unsigned int, std::shared_ptr<IKey>> SDL2WrapperImpl::createKeys() const
+{
+    auto kbrdState = SDL_GetKeyboardState( nullptr );
+    std::map<unsigned int, std::shared_ptr<IKey>> result;
+    for( int i = SDL_SCANCODE_A; i < SDL_NUM_SCANCODES; ++i )
+    {
+        const auto key = createKey( i, kbrdState );
+        if( "" == key->getKeyName() )
+        {
+            delete key;
+        }
+        else
+        {
+            result[i] = std::unique_ptr<IKey>( key );
+        }
+    }
+    return result;
+}
+
+IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* sdlKey ) const
+{
+    IKey* result = new KeySDL();
+    SDL_Scancode scanCode = static_cast<SDL_Scancode>( keySignature );
+    result->setKeyName( SDL_GetScancodeName( scanCode ) );
+    result->setKeyIsDown( ( 0 == sdlKey[scanCode] ) ? false : true );
+    return result;
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
@@ -70,9 +99,40 @@ void SDL2WrapperImpl::refreshScreen()
 void SDL2WrapperImpl::runEventLoop()
 {
     SDL_Event event;
+    while( this->eventLoopActive )
+    {
+        if( SDL_WaitEvent( &event ) > 0 )
+        {
+            if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
+            {
+                auto scancode = SDL_GetScancodeFromKey( event.key.keysym.sym );
+                if( SDL_SCANCODE_UNKNOWN != scancode )
+                {
+                    const bool keyIsDown = ( SDL_KEYDOWN == event.type ) ? true : false;
+                    const auto keyIndex = static_cast<unsigned int>( scancode );
+                    auto& key = this->m_keys.at( keyIndex );
+                    key->setKeyIsDown( keyIsDown );
+                    notifyCallbacks( *key );
+                }
+            }
+        }
+    }
+}
+
+void SDL2WrapperImpl::notifyCallbacks( const IKey& key )
+{
+    for( auto callback: this->m_keyCallbacks )
+    {
+        callback( key );
+    }
+}
+
+void SDL2WrapperImpl::addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback )
+{
+    this->m_keyCallbacks.push_back( callback );
 }
 
 void SDL2WrapperImpl::stopEventLoop()
 {
-    SDL_Event event;
+    this->eventLoopActive = false;
 }
