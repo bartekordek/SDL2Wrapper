@@ -12,4 +12,9 @@ namespace SDL2W
 		}
 		return sdlWrapper;
 	}
+
+    void destroySDL2Wrapper()
+    {
+        delete sdlWrapper;
+    }
 }

@@ -33,4 +33,5 @@ namespace SDL2W
     };
 
     SDL2WrapperAPI ISDL2Wrapper* getSDL2Wrapper();
+    SDL2WrapperAPI void destroySDL2Wrapper();
 }

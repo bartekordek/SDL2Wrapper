@@ -35,7 +35,7 @@ int main( int argc, char** argv )
         sdlW->runEventLoop();
 
         objectsThread.join();
-
+        SDL2W::destroySDL2Wrapper();
     }
     return 0;
 }
