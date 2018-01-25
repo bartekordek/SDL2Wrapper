@@ -11,13 +11,12 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 {
     const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
     BOOST_ASSERT_MSG( 0 == sdlInitSuccess, "Cannot initialize SDL subsystem" );
-    this->m_keys = createKeys();
+    createKeys();
 }
 
-const std::map<unsigned int, std::shared_ptr<IKey>> SDL2WrapperImpl::createKeys() const
+void SDL2WrapperImpl::createKeys()
 {
     auto kbrdState = SDL_GetKeyboardState( nullptr );
-    std::map<unsigned int, std::shared_ptr<IKey>> result;
     for( int i = SDL_SCANCODE_A; i < SDL_NUM_SCANCODES; ++i )
     {
         const auto key = createKey( i, kbrdState );
@@ -27,10 +26,9 @@ const std::map<unsigned int, std::shared_ptr<IKey>> SDL2WrapperImpl::createKeys(
         }
         else
         {
-            result[i] = std::unique_ptr<IKey>( key );
+            this->m_keys[i] = std::unique_ptr<IKey>( key );
         }
     }
-    return result;
 }
 
 IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* sdlKey ) const
@@ -44,6 +42,7 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
 {
+    this->m_keys.clear();
     SDL_Quit();
 }
 

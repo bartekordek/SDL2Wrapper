@@ -7,6 +7,7 @@
 struct SDL_Surface;
 namespace SDL2W
 {
+    using Keys = std::map<unsigned int, std::unique_ptr<IKey>>;
     class SDL2WrapperImpl: public ISDL2Wrapper
     {
     public:
@@ -30,13 +31,13 @@ namespace SDL2W
 
     protected:
     private:
-        const std::map<unsigned int, std::shared_ptr<IKey>> createKeys()const;
+        void createKeys();
         IKey* createKey( const int keySignature, const unsigned char* sdlKey )const;
         void notifyCallbacks( const IKey& key );
 
         std::map<std::string, std::shared_ptr<IWindow>> windows;
         CUL::LckPrim<bool> eventLoopActive{ true };
-        std::map<unsigned int, std::shared_ptr<IKey>> m_keys;
+        Keys m_keys;
         std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
     };
 }
