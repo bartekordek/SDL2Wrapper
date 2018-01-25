@@ -8,9 +8,8 @@ namespace SDL2W
     class SDL2WrapperAPI IKey
     {
     public:
-        IKey() = default;
-        virtual ~IKey() = default;
-
+        IKey();
+        virtual ~IKey();
         virtual void setKeyName( const std::string& keyName ) = 0;
         virtual const std::string& getKeyName()const = 0;
         virtual const bool getKeyIsDown()const = 0;

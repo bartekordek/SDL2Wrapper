@@ -271,6 +271,7 @@ xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration
     <ClInclude Include="src\TextureWrapper.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\IKey.cpp" />
     <ClCompile Include="src\IObject.cpp" />
     <ClCompile Include="src\ISDL2Wrapper.cpp" />
     <ClCompile Include="src\IWindow.cpp" />
