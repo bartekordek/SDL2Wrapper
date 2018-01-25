@@ -24,6 +24,8 @@
       <itemPath>src/IObject.cpp</itemPath>
       <itemPath>src/ISDL2Wrapper.cpp</itemPath>
       <itemPath>src/IWindow.cpp</itemPath>
+      <itemPath>src/KeySDL.cpp</itemPath>
+      <itemPath>src/KeySDL.hpp</itemPath>
       <itemPath>src/RegularSDL2Window.cpp</itemPath>
       <itemPath>src/RegularSDL2Window.hpp</itemPath>
       <itemPath>src/SDL2Wrapper.cpp</itemPath>
@@ -120,6 +122,10 @@
       <item path="src/ISDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/IWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/KeySDL.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/KeySDL.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/RegularSDL2Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -261,6 +267,10 @@
       <item path="src/ISDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/IWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/KeySDL.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/KeySDL.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/RegularSDL2Window.cpp" ex="false" tool="1" flavor2="0">
       </item>

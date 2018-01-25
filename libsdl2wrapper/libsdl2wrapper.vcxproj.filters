@@ -42,6 +42,12 @@
     <ClInclude Include="src\TextureWrapper.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IKey.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\KeySDL.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">
@@ -66,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextureWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\KeySDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
