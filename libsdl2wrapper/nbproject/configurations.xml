@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>inc/SDL2Wrapper/IKey.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/IKeyboardObserver.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IObject.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/ISDL2Wrapper.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
@@ -21,6 +23,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/IKey.cpp</itemPath>
       <itemPath>src/IObject.cpp</itemPath>
       <itemPath>src/ISDL2Wrapper.cpp</itemPath>
       <itemPath>src/IWindow.cpp</itemPath>
@@ -70,6 +73,8 @@
           </incDir>
           <commandLine>-pedantic</commandLine>
           <preprocessorList>
+            <Elem>CULLib_EXPORT</Elem>
+            <Elem>CUL_DYNAMIC</Elem>
             <Elem>SDL2Wrapper_DYNAMIC</Elem>
           </preprocessorList>
           <warningLevel>3</warningLevel>
@@ -91,23 +96,18 @@
                             OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../deps/CUL/CUL/libcul"
-                            CT="2"
-                            CN="Release"
-                            AC="true"
-                            BL="true"
-                            WD="../deps/CUL/CUL/libcul"
-                            BC="${MAKE} -j8 -f Makefile CONF=Release"
-                            CC="${MAKE} -j8 -f Makefile CONF=Release clean"
-                            OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
           </linkerLibItems>
           <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
       </compileType>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IKey.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IKeyboardObserver.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -116,6 +116,8 @@
       <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/IKey.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/IObject.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -167,6 +169,8 @@
           </incDir>
           <commandLine>-pedantic -Ofast</commandLine>
           <preprocessorList>
+            <Elem>CULLib_EXPORT</Elem>
+            <Elem>CUL_DYNAMIC</Elem>
             <Elem>SDL2Wrapper_DYNAMIC</Elem>
           </preprocessorList>
           <warningLevel>3</warningLevel>
@@ -180,21 +184,10 @@
         <linkerTool>
           <output>../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}</output>
           <linkerCopySharedLibs>true</linkerCopySharedLibs>
+          <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../deps/CUL/CUL/libcul"
-                            CT="2"
-                            CN="Debug"
-                            AC="false"
-                            BL="true"
-                            WD="../deps/CUL/CUL/libcul"
-                            BC="${MAKE} -j8 -f Makefile CONF=Debug"
-                            CC="${MAKE} -j8 -f Makefile CONF=Debug clean"
-                            OP="../../build/${CND_PLATFORM}-${CND_CONF}/libcul.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../deps/CUL/CUL/libcul"
                             CT="2"
@@ -254,6 +247,13 @@
       </packaging>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/IKey.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IKeyboardObserver.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IObject.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
@@ -261,6 +261,8 @@
       <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/IKey.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/IObject.cpp" ex="false" tool="1" flavor2="0">
       </item>
