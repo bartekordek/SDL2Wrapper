@@ -2,8 +2,6 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "CUL/Path.hpp"
 #include "CUL/CUL.hpp"
-#include "CUL/Math/XYPosition.hpp"
-#include "CUL/Math/Size.hpp"
 #include "SDL2Wrapper/IObject.hpp"
 #include <string>
 #include <memory>
@@ -13,8 +11,8 @@ namespace SDL2W
 	{
 	public:
 		IWindow(
-			const CUL::Position2DI& pos,
-			const CUL::Size<unsigned>& size,
+			const CUL::Math::Vector3Di& pos,
+			const CUL::Math::Vector3Du& size,
 			const std::string& name );
 		IWindow( const IWindow& wind );
 		IWindow() = delete;
@@ -28,11 +26,11 @@ namespace SDL2W
 
 		IWindow& operator=( const IWindow& window );
 
-		const CUL::Position2DI& getPos()const;
-		void setPos( const CUL::Position2DI& pos );
+		const CUL::Math::Vector3Di& getPos()const;
+		void setPos( const CUL::Math::Vector3Di& pos );
 
-		const CUL::Size<unsigned>& getSize()const;
-		void setSize( const CUL::Size<unsigned>& size );
+		const CUL::Math::Vector3Du& getSize()const;
+		void setSize( const CUL::Math::Vector3Du& size );
 
 		const std::string& getName()const;
 		void setName( const std::string& name );
@@ -43,8 +41,8 @@ namespace SDL2W
 		virtual ~IWindow();
 	protected:
 	private:
-		CUL::Position2DI position;
-		CUL::Size<unsigned> m_size;
+        CUL::Math::Vector3Di position;
+        CUL::Math::Vector3Du m_size;
 		std::string name;
 	};
 }

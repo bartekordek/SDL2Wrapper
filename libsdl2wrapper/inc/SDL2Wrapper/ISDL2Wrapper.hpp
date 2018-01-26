@@ -12,8 +12,8 @@ namespace SDL2W
         ISDL2Wrapper();
         virtual ~ISDL2Wrapper();
         virtual std::shared_ptr<IWindow> createWindow(
-            const CUL::Position2D<int>& pos = CUL::Position2D<int>(),
-            const CUL::Size<unsigned>& size = CUL::Size<unsigned>(),
+            const CUL::Math::Vector3Di& pos = CUL::Math::Vector3Di(),
+            const CUL::Math::Vector3Du& size = CUL::Math::Vector3Du(),
             const std::string& winName = "" ) = 0;
         virtual void refreshScreen() = 0;
         virtual void renderFrame( 

@@ -14,9 +14,9 @@ namespace SDL2W
         SDL2WrapperImpl();
         virtual ~SDL2WrapperImpl();
 
-        std::shared_ptr<IWindow> createWindow( 
-            const CUL::Position2D<int>& pos = CUL::Position2D<int>(),
-            const CUL::Size<unsigned>& size = CUL::Size<unsigned>(),
+        std::shared_ptr<IWindow> createWindow(
+            const CUL::Math::Vector3Di& pos = CUL::Math::Vector3Di(),
+            const CUL::Math::Vector3Du& size = CUL::Math::Vector3Du(),
             const std::string& winName = "" ) override;
 
         void refreshScreen() override;

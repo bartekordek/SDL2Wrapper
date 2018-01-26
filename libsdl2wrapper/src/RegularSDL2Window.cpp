@@ -13,17 +13,17 @@ using namespace SDL2W;
 using namespace CUL;
 
 RegularSDL2Window::RegularSDL2Window( 
-    const CUL::Position2D<int>& pos,
-    const CUL::Size<unsigned>& size,
+    const CUL::Math::Vector3Di& pos,
+    const CUL::Math::Vector3Du& size,
     const std::string& name ): IWindow( pos, size, name )
 {
     this->window.reset(
         SDL_CreateWindow(
             this->getName().c_str(),
-            static_cast<int>( this->getPos().x ),
-            static_cast<int>( this->getPos().y ),
-            static_cast<int>( this->getSize().getWidth() ),
-            static_cast<int>( this->getSize().getWidth() ),
+            static_cast<int>( this->getPos().getX() ),
+            static_cast<int>( this->getPos().getY() ),
+            static_cast<int>( this->getSize().getX() ),
+            static_cast<int>( this->getSize().getY() ),
             SDL_WINDOW_SHOWN ), RegularSDL2Window::windowDeleter );
 
     this->renderer.reset(

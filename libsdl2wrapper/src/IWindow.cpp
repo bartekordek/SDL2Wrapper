@@ -3,8 +3,8 @@
 using namespace SDL2W;
 
 IWindow::IWindow(
-	const CUL::Position2DI& pos,
-	const  CUL::Size<unsigned>& size,
+    const CUL::Math::Vector3Di& pos,
+    const CUL::Math::Vector3Du& size,
 	const std::string& name ):
 		position( pos ),
 		m_size( size ),
@@ -37,22 +37,22 @@ IWindow& IWindow::operator=( const IWindow& window )
 	return *this;
 }
 
-const  CUL::Position2DI& IWindow::getPos()const
+const CUL::Math::Vector3Di& IWindow::getPos()const
 {
 	return this->position;
 }
 
-void IWindow::setPos( const  CUL::Position2DI& pos )
+void IWindow::setPos( const  CUL::Math::Vector3Di& pos )
 {
 	this->position = pos;
 }
 
-const CUL::Size<unsigned>& IWindow::getSize()const
+const CUL::Math::Vector3Du& IWindow::getSize()const
 {
 	return this->m_size;
 }
 
-void IWindow::setSize( const CUL::Size<unsigned>& winSize )
+void IWindow::setSize( const CUL::Math::Vector3Du& winSize )
 {
 	this->m_size = winSize;
 }

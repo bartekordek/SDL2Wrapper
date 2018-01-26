@@ -1,6 +1,4 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
-#include "CUL/Math/XYPosition.hpp"
-#include "CUL/Math/Size.hpp"
 #include "CUL/FS.hpp"
 #include "CUL/LckPrim.hpp"
 #include <thread>
@@ -22,8 +20,8 @@ int main( int argc, char** argv )
     {
         sdlW = SDL2W::getSDL2Wrapper();
         auto window = sdlW->createWindow(
-            CUL::Position2D<int>( 256, 256 ),
-            CUL::Size<unsigned>( 800, 600 ),
+            CUL::Math::Vector3Di( 256, 256, 0 ),
+            CUL::Math::Vector3Du( 800, 600, 0 ),
             "Windows 1" );
 
         auto obj1 = window->createObject( file );
