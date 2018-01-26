@@ -115,6 +115,10 @@ void SDL2WrapperImpl::runEventLoop()
                     notifyKeyboardListeners( *key );
                 }
             }
+            else if( event.type == SDL_MOUSEMOTION )
+            {
+
+            }
         }
     }
 }
