@@ -42,7 +42,7 @@
       <compileType>
         <ccTool>
           <incDir>
-            <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../deps/CUL/CUL/inc</pElem>
             <pElem>../libsdl2wrapper/inc</pElem>
           </incDir>
           <warningLevel>3</warningLevel>
@@ -54,18 +54,6 @@
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../SDL2Wrapper"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../SDL2Wrapper"
-                            BC="${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Debug"
-                            CC="${MAKE} -j -f SDL2Wrapper-Makefile.mk CONF=Debug clean"
-                            OP="../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -110,7 +98,7 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <incDir>
-            <pElem>../deps/CUL/CUL</pElem>
+            <pElem>../deps/CUL/CUL/inc</pElem>
             <pElem>../libsdl2wrapper/inc</pElem>
           </incDir>
           <warningLevel>3</warningLevel>
