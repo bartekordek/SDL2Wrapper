@@ -3,6 +3,7 @@
 #include "SDL2Wrapper/IWindow.hpp"
 #include "CUL/LckPrim.hpp"
 #include <map>
+#include <set>
 #include <vector>
 struct SDL_Surface;
 namespace SDL2W
@@ -29,15 +30,20 @@ namespace SDL2W
 
         void addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) override;
 
+        void registerKeyboardEventListener( IKeyboardObserver* observer ) override;
+        void unregisterKeyboardEventListener( IKeyboardObserver* observer ) override;
+
     protected:
     private:
         void createKeys();
         IKey* createKey( const int keySignature, const unsigned char* sdlKey )const;
-        void notifyCallbacks( const IKey& key );
+        void notifyKeyboardCallbacks( const IKey& key );
+        void notifyKeyboardListeners( const IKey& key );
 
         std::map<std::string, std::shared_ptr<IWindow>> windows;
         CUL::LckPrim<bool> eventLoopActive{ true };
         Keys m_keys;
         std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
+        std::set<IKeyboardObserver*> m_keyboardObservers;
     };
 }

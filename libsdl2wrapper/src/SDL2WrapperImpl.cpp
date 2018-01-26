@@ -104,21 +104,22 @@ void SDL2WrapperImpl::runEventLoop()
         {
             if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
             {
-                auto scancode = SDL_GetScancodeFromKey( event.key.keysym.sym );
-                if( SDL_SCANCODE_UNKNOWN != scancode )
+                auto scancode = event.key.keysym.scancode;
+                if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
                 {
                     const bool keyIsDown = ( SDL_KEYDOWN == event.type ) ? true : false;
                     const auto keyIndex = static_cast<unsigned int>( scancode );
                     auto& key = this->m_keys.at( keyIndex );
                     key->setKeyIsDown( keyIsDown );
-                    notifyCallbacks( *key );
+                    notifyKeyboardCallbacks( *key );
+                    notifyKeyboardListeners( *key );
                 }
             }
         }
     }
 }
 
-void SDL2WrapperImpl::notifyCallbacks( const IKey& key )
+void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
 {
     for( auto callback: this->m_keyCallbacks )
     {
@@ -134,4 +135,22 @@ void SDL2WrapperImpl::addKeyboardEventCallback( const std::function<void( const 
 void SDL2WrapperImpl::stopEventLoop()
 {
     this->eventLoopActive = false;
+}
+
+void SDL2WrapperImpl::registerKeyboardEventListener( IKeyboardObserver* observer )
+{
+    this->m_keyboardObservers.insert( observer );
+}
+
+void SDL2WrapperImpl::unregisterKeyboardEventListener( IKeyboardObserver* observer )
+{
+    this->m_keyboardObservers.erase( observer );
+}
+
+void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
+{
+    for( auto listener : this->m_keyboardObservers )
+    {
+        listener->onKeyBoardEvent( key );
+    }
 }
