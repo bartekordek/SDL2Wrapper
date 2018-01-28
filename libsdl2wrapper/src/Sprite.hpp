@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL2Wrapper/IObject.hpp"
 #include "CUL/IPivotObserver.hpp"
+#include "CUL/Math/Degree.hpp"
 #include <memory>
 #include <mutex>
 struct SDL_Texture;
@@ -32,6 +33,11 @@ namespace SDL2W
 
         void pivotHasBeenChanged() override;
 
+        void rotate( const CUL::Math::IAngle& angle, const RotationType = RotationType::YAW );
+
+        const CUL::Math::IAngle& getAngle(
+            const RotationType = RotationType::YAW )const;
+
     protected:
     private:
         void calculateSizes();
@@ -46,6 +52,6 @@ namespace SDL2W
         CUL::Math::Vector3Dd scale = CUL::Math::Vector3Dd( 1.0, 1.0, 0.0 );
 
         std::unique_ptr<CUL::IPivot> m_pivot;
-
+        CUL::Math::Degree yaw = 0.0;
     };
 }

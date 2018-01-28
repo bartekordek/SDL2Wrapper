@@ -1,6 +1,7 @@
 #pragma once
 #include "CUL/Math/Vector3D.hpp"
 #include "CUL/IPivot.hpp"
+#include "CUL/Math/IAngle.hpp"
 namespace SDL2W
 {
     class IObject
@@ -9,6 +10,13 @@ namespace SDL2W
         enum class Type
         {
             SPRITE = 0
+        };
+
+        enum class RotationType
+        {
+            YAW,
+            PITCH,
+            ROLL
         };
 
         virtual void setPosition( const CUL::Math::Vector3Di& newPosition ) = 0;
@@ -25,7 +33,11 @@ namespace SDL2W
         virtual const bool operator==( const IObject& right )const;
         
         virtual const CUL::IPivot* getPivot()const = 0;
-        
+
+        virtual void rotate( const CUL::Math::IAngle& angle, const RotationType = RotationType::YAW ) = 0;
+        virtual const CUL::Math::IAngle& getAngle( 
+            const RotationType = RotationType::YAW )const = 0;
+
     protected:
     private:
     };

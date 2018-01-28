@@ -119,3 +119,20 @@ void Sprite::calculatePositionOffset()
         this->m_pivot->getPivot( CUL::IPivot::PivotType::ABSOLUTE ));
     this->positionWithOffset = this->position - pivotAsInteger;
 }
+
+void Sprite::rotate(
+    const CUL::Math::IAngle& angle,
+    const RotationType )
+{
+    this->yaw = angle;
+}
+
+const CUL::Math::IAngle& Sprite::getAngle(
+    const RotationType rotationType )const
+{
+    if( RotationType::YAW == rotationType )
+    {
+        return this->yaw;
+    }
+    return this->yaw; // TODO?
+}
