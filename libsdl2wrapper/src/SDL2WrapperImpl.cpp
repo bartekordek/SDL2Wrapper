@@ -1,6 +1,7 @@
 #include "SDL2WrapperImpl.hpp"
 #include "RegularSDL2Window.hpp"
 #include "KeySDL.hpp"
+#include "CUL/ITimer.hpp"
 #include <SDL.h>
 #include <set>
 #include <boost/assert.hpp>
@@ -26,7 +27,7 @@ void SDL2WrapperImpl::createKeys()
         }
         else
         {
-            this->m_keys[i] = std::unique_ptr<IKey>( key );
+            this->m_keys[key->getKeyName()] = std::unique_ptr<IKey>( key );
         }
     }
 }
@@ -42,6 +43,7 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
 {
+    windows.clear();
     this->m_keys.clear();
     SDL_Quit();
 }
@@ -100,7 +102,7 @@ void SDL2WrapperImpl::runEventLoop()
     SDL_Event event;
     while( this->eventLoopActive )
     {
-        if( SDL_WaitEvent( &event ) > 0 )
+        if( SDL_PollEvent( &event ) > 0 )
         {
             if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
             {
@@ -108,8 +110,7 @@ void SDL2WrapperImpl::runEventLoop()
                 if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
                 {
                     const bool keyIsDown = ( SDL_KEYDOWN == event.type ) ? true : false;
-                    const auto keyIndex = static_cast<unsigned int>( scancode );
-                    auto& key = this->m_keys.at( keyIndex );
+                    auto& key = this->m_keys.at( SDL_GetScancodeName( scancode ) );
                     key->setKeyIsDown( keyIsDown );
                     notifyKeyboardCallbacks( *key );
                     notifyKeyboardListeners( *key );
@@ -119,7 +120,12 @@ void SDL2WrapperImpl::runEventLoop()
             {
 
             }
+            else if( event.type == SDL_QUIT )
+            {
+                notifyWindowEventListeners( WindowEventType::CLOSE );
+            }
         }
+        CUL::ITimer::sleepMicroSeconds( this->m_eventLatencyUs );
     }
 }
 
@@ -157,4 +163,32 @@ void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
     {
         listener->onKeyBoardEvent( key );
     }
+}
+
+void SDL2WrapperImpl::registerWindowEventListener( IWindowEventObserver* observer )
+{
+    this->m_windowEventObservers.insert( observer );
+}
+
+void SDL2WrapperImpl::unregisterWindowEventListener( IWindowEventObserver* observer )
+{
+    this->m_windowEventObservers.erase( observer );
+}
+
+void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
+{
+    for( auto listener : this->m_windowEventObservers )
+    {
+        listener->onWindowEvent( e );
+    }
+}
+
+void SDL2WrapperImpl::setInputLatency( const unsigned int latencyInUs )
+{
+    this->m_eventLatencyUs = latencyInUs;
+}
+
+const bool SDL2WrapperImpl::isKeyUp( const std::string& keyName )const
+{
+    return this->m_keys.at( keyName )->getKeyIsDown();
 }

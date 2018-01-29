@@ -6,11 +6,12 @@
 #include <cmath>
 #include <iostream>
 
-class TestApp: public SDL2W::IKeyboardObserver
+class TestApp final: private SDL2W::IKeyboardObserver, private SDL2W::IWindowEventObserver
 {
 public:
     TestApp():
         m_sdlW( SDL2W::getSDL2Wrapper() )
+        
     {
         auto window = this->m_sdlW->createWindow(
             CUL::Math::Vector3Di( 256, 256, 0 ),
@@ -19,9 +20,13 @@ public:
 
         if( this->m_someFile.exists() )
         {
-            this->m_obj1 = window->createObject( this->m_someFile );
-            this->m_obj2 = window->createObject( this->m_someFile );
+            this->m_obj1 = window->createObject( this->m_someFile ).get();
+            this->m_obj2 = window->createObject( this->m_someFile ).get();
+            //this->m_obj3 = window->createObject( this->m_someFile ).get().get();
+            this->m_obj4 = window->createObject( this->m_someFile ).get();
+            this->obj4Pos = this->m_obj4->getPosition();
         }
+        this->m_keyObservable = this->m_sdlW;
     }
 
     ~TestApp()
@@ -36,6 +41,7 @@ public:
     void runMainLoop()
     {
         this->m_sdlW->registerKeyboardEventListener( this );
+        this->m_sdlW->registerWindowEventListener( this );
         m_thread = std::thread( &TestApp::objectManagmentFun, this );
         this->m_sdlW->runEventLoop();
     }
@@ -46,13 +52,46 @@ public:
         {
             return;
         }
+        std::cout << "KEY: " << key.getKeyName() << "\n";
 
-        std::cout << "WTF!!\n";
+        static int delta = 8;
+
+
+        if( m_keyObservable->isKeyUp( "D" ) )
+        {
+            this->obj4Pos.setX( this->obj4Pos.getX() + delta );
+        }
+
+        if( m_keyObservable->isKeyUp( "A" ) )
+        {
+            this->obj4Pos.setX( this->obj4Pos.getX() - delta );
+        }
+        
+        if( m_keyObservable->isKeyUp( "W" ) )
+        {
+            this->obj4Pos.setY( this->obj4Pos.getY() - delta );
+        }
+
+        if( m_keyObservable->isKeyUp( "S" ) )
+        {
+            this->obj4Pos.setY( this->obj4Pos.getY() + delta );
+        }
+
         if( ( key.getKeyName() == "q" ) || ( key.getKeyName() == "Q" ) )
         {
             this->m_sdlW->stopEventLoop();
             this->runLoop = false;
         }
+
+        std::cout
+            << "OBJ4 Pos( "
+            << this->obj4Pos.getX() << ", "
+            << this->obj4Pos.getY() << " )\n";
+    }
+
+    void onWindowEvent( const WindowEventType e )
+    {
+        std::cout << "WAT!!\n";
     }
 
 protected:
@@ -67,11 +106,12 @@ private:
             CUL::Math::Vector3Di obj2Pos0( 450, 100, 0 ), obj2Pos;
             this->m_obj2->setPosition( obj2Pos0 );
 
-            unsigned timeInSeconds = 60;
-            unsigned iterations = 8192;
-            auto sleepTimeS = static_cast< double >(
-                timeInSeconds * 1.0 / iterations * 1.0 );
-            unsigned sleepTimeinMs = static_cast< unsigned >( 1000 * sleepTimeS );
+            CUL::Math::Vector3Dd obj4Scale( 0.25, 0.25, 0.0 );
+            this->m_obj4->setScale( obj4Scale );
+
+            this->m_obj4->setPosition( CUL::Math::Vector3Di( 300, 300, 0 ) );
+
+            unsigned sleepTimeinMs = 8;
             double i = 0.0;
 
             while( this->runLoop )
@@ -83,15 +123,17 @@ private:
                 auto yScale = ( cos( i ) + 1.0 ) * 0.5;
                 obj1Scale.setXYZ( xScale, yScale, 0 );
                 this->m_obj1->setScale( obj1Scale );
+                this->m_obj4->setPosition( this->obj4Pos );
 
                 auto amp = 64;
                 obj2Pos.setX( static_cast< const int >( obj2Pos0.getX() + sin( i ) * amp ) );
                 obj2Pos.setY( static_cast< const int >( obj2Pos0.getY() + cos( i ) * amp ) );
                 this->m_obj2->setPosition( obj2Pos );
-                i += sleepTimeS;
+                i += 0.02;
             }
         }
     }
+    SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
 
     CUL::LckPrim<bool> runLoop{ true };
 
@@ -101,11 +143,14 @@ private:
 
     CUL::FS::Path m_someFile = CUL::FS::Path( "../media/pikaczu.bmp" );
 
-    std::shared_ptr<SDL2W::IObject> m_obj1;
-    std::shared_ptr<SDL2W::IObject> m_obj2;
+    SDL2W::IObject* m_obj1 = nullptr;
+    SDL2W::IObject* m_obj2 = nullptr;
+    //std::shared_ptr<SDL2W::IObject> m_obj3;
+    SDL2W::IObject* m_obj4;
 
     CUL::Math::Vector3Dd obj1Scale;
     CUL::Math::Vector3Di obj2Pos0;
+    CUL::Math::Vector3Di obj4Pos;
 };
 
 int main( int argc, char** argv )
