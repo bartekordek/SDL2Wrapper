@@ -2,13 +2,13 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 #include "SDL2Wrapper/IKey.hpp"
-#include "SDL2Wrapper/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/IWindowEventListener.hpp"
+#include "SDL2Wrapper/IKeyboardObservable.hpp"
 #include <memory>
-#include <functional>
+
 namespace SDL2W
 {
-    class SDL2WrapperAPI ISDL2Wrapper
+    class SDL2WrapperAPI ISDL2Wrapper: public IKeyboardObservable
     {
     public:
         ISDL2Wrapper();
@@ -29,15 +29,10 @@ namespace SDL2W
         virtual void runEventLoop() = 0;
         virtual void stopEventLoop() = 0;
 
-        virtual void addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) = 0;
-
-        virtual void registerKeyboardEventListener( IKeyboardObserver* observer ) = 0;
-        virtual void unregisterKeyboardEventListener( IKeyboardObserver* observer ) = 0;
+        virtual void setInputLatency( const unsigned int latencyInUs ) = 0;
 
         virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
         virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;
-
-        virtual void setInputLatency( const unsigned int latencyInUs ) = 0;
 
     protected:
     private:

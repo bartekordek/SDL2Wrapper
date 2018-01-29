@@ -8,7 +8,7 @@
 struct SDL_Surface;
 namespace SDL2W
 {
-    using Keys = std::map<unsigned int, std::unique_ptr<IKey>>;
+    using Keys = std::map<std::string, std::unique_ptr<IKey>>;
     using WindowEventType = IWindowEventObserver::WindowEventType;
     class SDL2WrapperImpl: public ISDL2Wrapper
     {
@@ -38,6 +38,8 @@ namespace SDL2W
         void unregisterWindowEventListener( IWindowEventObserver* observer ) override;
 
         void setInputLatency( const unsigned int latencyInUs ) override;
+
+        const bool isKeyUp( const std::string& keyName )const;
 
     protected:
     private:

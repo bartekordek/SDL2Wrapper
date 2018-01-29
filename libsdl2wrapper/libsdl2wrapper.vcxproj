@@ -260,6 +260,7 @@ xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\SDL2Wrapper\IKey.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IKeyboardObservable.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IKeyboardObserver.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IObject.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISDL2Wrapper.hpp" />

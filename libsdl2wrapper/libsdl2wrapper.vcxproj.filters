@@ -54,6 +54,9 @@
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IKeyboardObservable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">

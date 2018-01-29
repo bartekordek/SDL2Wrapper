@@ -11,6 +11,7 @@ class TestApp final: private SDL2W::IKeyboardObserver, private SDL2W::IWindowEve
 public:
     TestApp():
         m_sdlW( SDL2W::getSDL2Wrapper() )
+        
     {
         auto window = this->m_sdlW->createWindow(
             CUL::Math::Vector3Di( 256, 256, 0 ),
@@ -25,6 +26,7 @@ public:
             this->m_obj4 = window->createObject( this->m_someFile ).get();
             this->obj4Pos = this->m_obj4->getPosition();
         }
+        this->m_keyObservable = this->m_sdlW;
     }
 
     ~TestApp()
@@ -53,23 +55,29 @@ public:
         std::cout << "KEY: " << key.getKeyName() << "\n";
 
         static int delta = 8;
-        if( "D" == key.getKeyName() )
+
+
+        if( m_keyObservable->isKeyUp( "D" ) )
         {
             this->obj4Pos.setX( this->obj4Pos.getX() + delta );
         }
-        else if( "A" == key.getKeyName() )
+
+        if( m_keyObservable->isKeyUp( "A" ) )
         {
             this->obj4Pos.setX( this->obj4Pos.getX() - delta );
         }
-        else if( "W" == key.getKeyName() )
+        
+        if( m_keyObservable->isKeyUp( "W" ) )
         {
             this->obj4Pos.setY( this->obj4Pos.getY() - delta );
         }
-        else if( "S" == key.getKeyName() )
+
+        if( m_keyObservable->isKeyUp( "S" ) )
         {
             this->obj4Pos.setY( this->obj4Pos.getY() + delta );
         }
-        else if( ( key.getKeyName() == "q" ) || ( key.getKeyName() == "Q" ) )
+
+        if( ( key.getKeyName() == "q" ) || ( key.getKeyName() == "Q" ) )
         {
             this->m_sdlW->stopEventLoop();
             this->runLoop = false;
@@ -125,6 +133,7 @@ private:
             }
         }
     }
+    SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
 
     CUL::LckPrim<bool> runLoop{ true };
 
