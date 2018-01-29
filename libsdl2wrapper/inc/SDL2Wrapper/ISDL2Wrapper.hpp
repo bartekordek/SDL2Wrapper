@@ -37,6 +37,8 @@ namespace SDL2W
         virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
         virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;
 
+        virtual void setInputLatency( const unsigned int latencyInUs ) = 0;
+
     protected:
     private:
     };

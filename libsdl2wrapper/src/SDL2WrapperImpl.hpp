@@ -37,6 +37,8 @@ namespace SDL2W
         void registerWindowEventListener( IWindowEventObserver* observer ) override;
         void unregisterWindowEventListener( IWindowEventObserver* observer ) override;
 
+        void setInputLatency( const unsigned int latencyInUs ) override;
+
     protected:
     private:
         void createKeys();
@@ -47,6 +49,8 @@ namespace SDL2W
 
         std::map<std::string, std::shared_ptr<IWindow>> windows;
         CUL::LckPrim<bool> eventLoopActive{ true };
+        CUL::LckPrim<unsigned int> m_eventLatencyUs{ 256 };
+
         Keys m_keys;
         std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
         std::set<IKeyboardObserver*> m_keyboardObservers;
