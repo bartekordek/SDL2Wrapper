@@ -17,6 +17,8 @@ RegularSDL2Window::RegularSDL2Window(
     const CUL::Math::Vector3Du& size,
     const std::string& name ): IWindow( pos, size, name )
 {
+
+    auto windowFlags = SDL_WINDOW_SHOWN;
     this->window.reset(
         SDL_CreateWindow(
             this->getName().c_str(),
@@ -24,7 +26,7 @@ RegularSDL2Window::RegularSDL2Window(
             static_cast<int>( this->getPos().getY() ),
             static_cast<int>( this->getSize().getX() ),
             static_cast<int>( this->getSize().getY() ),
-            SDL_WINDOW_SHOWN ), RegularSDL2Window::windowDeleter );
+            windowFlags ), RegularSDL2Window::windowDeleter );
 
     this->renderer.reset(
         SDL_CreateRenderer( this->window.get(), -1, SDL_RENDERER_ACCELERATED ), RegularSDL2Window::rendererDeleter );
@@ -121,21 +123,7 @@ void RegularSDL2Window::renderNext()
     if( IObject::Type::SPRITE == obj->getType() )
     {
         auto tex = static_cast<Sprite*>( obj.get() );
-
-        /*SDL_RenderCopy( 
-            this->renderer.get(), 
-            const_cast<SDL_Texture*>( tex->getTexture() ), 
-            srcRect.get(), &renderQuad );*/
     }
-
-    /*auto sdlTexture = static_cast<const TextureSDL*>(&texture);
-    SDL_Rect renderQuad;
-    renderQuad.x = static_cast<int>(position.getX());
-    renderQuad.y = static_cast<int>(position.getY());
-    renderQuad.w = static_cast<int>(targetSize.getX());
-    renderQuad.h = static_cast<int>(targetSize.getY());
-    std::unique_ptr<SDL_Rect> srcRect;
-    */
 }
 
 void RegularSDL2Window::refreshScreen()
@@ -154,11 +142,11 @@ void RegularSDL2Window::renderAllObjects()
             auto* sprite = static_cast<Sprite*>( object.get() );
             auto& pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
-            auto pivot = object->getPivot()->getPivot( CUL::IPivot::PivotType::ABSOLUTE );
+            auto pivot = object->getPivot()->getPivot( IPivot::PivotType::ABSOLUTE );
 
             SDL_Rect renderQuad;
-            renderQuad.x = static_cast<int>( pos.getX() );
-            renderQuad.y = static_cast<int>( pos.getY() );
+            renderQuad.x = pos.getX();
+            renderQuad.y = pos.getY();
             renderQuad.w = static_cast<int>( size.getX() );
             renderQuad.h = static_cast<int>( size.getY() );
 
@@ -166,7 +154,7 @@ void RegularSDL2Window::renderAllObjects()
 
             auto tex = const_cast<SDL_Texture*>( sprite->getTexture() );
 
-            const double angle = 0.0;
+            const double angle = sprite->getAngle().getValueD();
 
             SDL_Point center;
             center.x = static_cast<int>( pivot.getX() );

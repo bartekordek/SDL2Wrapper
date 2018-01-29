@@ -6,7 +6,7 @@
 using namespace SDL2W;
 
 Sprite::Sprite():
-    m_pivot( new CUL::IPivot( this ) )
+    m_pivot( new IPivot( this ) )
 {
 }
 
@@ -89,7 +89,7 @@ void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
 	calculateSizes();
 }
 
-const CUL::IPivot* Sprite::getPivot()const
+const IPivot* Sprite::getPivot()const
 {
     return this->m_pivot.get();
 }
@@ -116,7 +116,7 @@ void Sprite::pivotHasBeenChanged()
 void Sprite::calculatePositionOffset()
 {
     auto pivotAsInteger = static_cast<CUL::Math::Vector3Di>(
-        this->m_pivot->getPivot( CUL::IPivot::PivotType::ABSOLUTE ));
+        this->m_pivot->getPivot( IPivot::PivotType::ABSOLUTE ));
     this->positionWithOffset = this->position - pivotAsInteger;
 }
 

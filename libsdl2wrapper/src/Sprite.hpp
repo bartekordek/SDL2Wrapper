@@ -1,6 +1,6 @@
 #pragma once
 #include "SDL2Wrapper/IObject.hpp"
-#include "CUL/IPivotObserver.hpp"
+#include "CUL/Math/IPivotObserver.hpp"
 #include "CUL/Math/Degree.hpp"
 #include <memory>
 #include <mutex>
@@ -9,7 +9,8 @@ struct SDL_Texture;
 namespace SDL2W
 {
     class TextureWrapper;
-    class Sprite : public IObject, private CUL::IPivotObserver
+    using IPivotObserver = CUL::Math::IPivotObserver;
+    class Sprite : public IObject, private IPivotObserver
     {
     public:
         Sprite();
@@ -29,7 +30,7 @@ namespace SDL2W
         void setScale( const CUL::Math::Vector3Dd& scale ) override;
 
         // TODO: Not yet implemented.
-        const CUL::IPivot* getPivot()const override;
+        const IPivot* getPivot()const override;
 
         void pivotHasBeenChanged() override;
 
@@ -51,7 +52,7 @@ namespace SDL2W
         CUL::Math::Vector3Du realSize;
         CUL::Math::Vector3Dd scale = CUL::Math::Vector3Dd( 1.0, 1.0, 0.0 );
 
-        std::unique_ptr<CUL::IPivot> m_pivot;
+        std::unique_ptr<IPivot> m_pivot;
         CUL::Math::Degree yaw = 0.0;
     };
 }

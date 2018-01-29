@@ -1,9 +1,10 @@
 #pragma once
 #include "CUL/Math/Vector3D.hpp"
-#include "CUL/IPivot.hpp"
+#include "CUL/Math/IPivot.hpp"
 #include "CUL/Math/IAngle.hpp"
 namespace SDL2W
 {
+    using IPivot = CUL::Math::IPivot;
     class IObject
     {
     public:
@@ -32,7 +33,7 @@ namespace SDL2W
         virtual const Type getType()const = 0;
         virtual const bool operator==( const IObject& right )const;
         
-        virtual const CUL::IPivot* getPivot()const = 0;
+        virtual const IPivot* getPivot()const = 0;
 
         virtual void rotate( const CUL::Math::IAngle& angle, const RotationType = RotationType::YAW ) = 0;
         virtual const CUL::Math::IAngle& getAngle( 
