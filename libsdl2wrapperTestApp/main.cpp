@@ -2,16 +2,16 @@
 
 #include "CUL/FS.hpp"
 #include "CUL/LckPrim.hpp"
+#include "CUL/Math/Degree.hpp"
 #include <thread>
 #include <cmath>
 #include <iostream>
 
-class TestApp final: private SDL2W::IKeyboardObserver, private SDL2W::IWindowEventObserver
+class TestApp final: public SDL2W::IKeyboardObserver, private SDL2W::IWindowEventObserver
 {
 public:
     TestApp():
         m_sdlW( SDL2W::getSDL2Wrapper() )
-        
     {
         auto window = this->m_sdlW->createWindow(
             CUL::Math::Vector3Di( 256, 256, 0 ),
@@ -22,7 +22,7 @@ public:
         {
             this->m_obj1 = window->createObject( this->m_someFile ).get();
             this->m_obj2 = window->createObject( this->m_someFile ).get();
-            //this->m_obj3 = window->createObject( this->m_someFile ).get().get();
+            this->m_obj3 = window->createObject( this->m_someFile ).get();
             this->m_obj4 = window->createObject( this->m_someFile ).get();
             this->obj4Pos = this->m_obj4->getPosition();
         }
@@ -82,11 +82,6 @@ public:
             this->m_sdlW->stopEventLoop();
             this->runLoop = false;
         }
-
-        std::cout
-            << "OBJ4 Pos( "
-            << this->obj4Pos.getX() << ", "
-            << this->obj4Pos.getY() << " )\n";
     }
 
     void onWindowEvent( const WindowEventType e )
@@ -100,34 +95,45 @@ private:
     {
         if( this->m_someFile.exists() )
         {
-            CUL::Math::Vector3Dd obj1Scale;
-            this->m_obj1->setScale( obj1Scale );
+            CUL::Math::Vector3Dd someScale;
+            this->m_obj1->setScale( someScale );
 
-            CUL::Math::Vector3Di obj2Pos0( 450, 100, 0 ), obj2Pos;
-            this->m_obj2->setPosition( obj2Pos0 );
+            this->obj3Pos.setXYZ( 300, 300, 0 );
 
-            CUL::Math::Vector3Dd obj4Scale( 0.25, 0.25, 0.0 );
-            this->m_obj4->setScale( obj4Scale );
-
-            this->m_obj4->setPosition( CUL::Math::Vector3Di( 300, 300, 0 ) );
+            CUL::Math::Vector3Di obj1Pos( 100, 100, 0 );
+            CUL::Math::Vector3Di somePosition( 450, 100, 0 );
+            CUL::Math::Vector3Di obj2Pos;
+            this->m_obj1->setPosition( obj1Pos );
+            this->m_obj2->setPosition( somePosition );
+            this->m_obj3->setPosition( obj3Pos );
+            someScale.setXYZ( 0.5, 0.5, 0.0 );
+            this->m_obj3->setScale( someScale );
 
             unsigned sleepTimeinMs = 8;
             double i = 0.0;
+            CUL::Math::Degree obj2Angle;
+            CUL::Math::Degree obj3Angle;
 
             while( this->runLoop )
             {
                 this->m_sdlW->renderFrame();
                 std::this_thread::sleep_for(
                     std::chrono::milliseconds( sleepTimeinMs ) );
-                auto xScale = ( sin( i ) + 1.0 ) * 0.5;
-                auto yScale = ( cos( i ) + 1.0 ) * 0.5;
-                obj1Scale.setXYZ( xScale, yScale, 0 );
-                this->m_obj1->setScale( obj1Scale );
+                auto xScale = ( sin( i ) + 1.0 ) * 0.25;
+                auto yScale = ( cos( i ) + 1.0 ) * 0.25;
+                someScale.setXYZ( xScale, yScale, 0 );
+                this->m_obj1->setScale( someScale );
+                this->m_obj2->setScale( someScale );
+                this->m_obj2->rotate( obj2Angle );
+                this->m_obj3->rotate( obj3Angle );
+
                 this->m_obj4->setPosition( this->obj4Pos );
 
+                obj2Angle -= 1;
+                obj3Angle += 1;
                 auto amp = 64;
-                obj2Pos.setX( static_cast< const int >( obj2Pos0.getX() + sin( i ) * amp ) );
-                obj2Pos.setY( static_cast< const int >( obj2Pos0.getY() + cos( i ) * amp ) );
+                obj2Pos.setX( static_cast< const int >( somePosition.getX() + sin( i ) * amp ) );
+                obj2Pos.setY( static_cast< const int >( somePosition.getY() + cos( i ) * amp ) );
                 this->m_obj2->setPosition( obj2Pos );
                 i += 0.02;
             }
@@ -145,11 +151,12 @@ private:
 
     SDL2W::IObject* m_obj1 = nullptr;
     SDL2W::IObject* m_obj2 = nullptr;
-    //std::shared_ptr<SDL2W::IObject> m_obj3;
-    SDL2W::IObject* m_obj4;
+    SDL2W::IObject* m_obj3 = nullptr;
+    SDL2W::IObject* m_obj4 = nullptr;
 
     CUL::Math::Vector3Dd obj1Scale;
     CUL::Math::Vector3Di obj2Pos0;
+    CUL::Math::Vector3Di obj3Pos;
     CUL::Math::Vector3Di obj4Pos;
 };
 
