@@ -9,6 +9,7 @@ struct SDL_Surface;
 namespace SDL2W
 {
     using Keys = std::map<unsigned int, std::unique_ptr<IKey>>;
+    using WindowEventType = IWindowEventObserver::WindowEventType;
     class SDL2WrapperImpl: public ISDL2Wrapper
     {
     public:
@@ -33,17 +34,22 @@ namespace SDL2W
         void registerKeyboardEventListener( IKeyboardObserver* observer ) override;
         void unregisterKeyboardEventListener( IKeyboardObserver* observer ) override;
 
+        void registerWindowEventListener( IWindowEventObserver* observer ) override;
+        void unregisterWindowEventListener( IWindowEventObserver* observer ) override;
+
     protected:
     private:
         void createKeys();
         IKey* createKey( const int keySignature, const unsigned char* sdlKey )const;
         void notifyKeyboardCallbacks( const IKey& key );
         void notifyKeyboardListeners( const IKey& key );
+        void notifyWindowEventListeners( const WindowEventType e );
 
         std::map<std::string, std::shared_ptr<IWindow>> windows;
         CUL::LckPrim<bool> eventLoopActive{ true };
         Keys m_keys;
         std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
         std::set<IKeyboardObserver*> m_keyboardObservers;
+        std::set<IWindowEventObserver*> m_windowEventObservers;
     };
 }

@@ -119,6 +119,10 @@ void SDL2WrapperImpl::runEventLoop()
             {
 
             }
+            else if( event.type == SDL_QUIT )
+            {
+                notifyWindowEventListeners( WindowEventType::CLOSE );
+            }
         }
     }
 }
@@ -156,5 +160,23 @@ void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
     for( auto listener : this->m_keyboardObservers )
     {
         listener->onKeyBoardEvent( key );
+    }
+}
+
+void SDL2WrapperImpl::registerWindowEventListener( IWindowEventObserver* observer )
+{
+    this->m_windowEventObservers.insert( observer );
+}
+
+void SDL2WrapperImpl::unregisterWindowEventListener( IWindowEventObserver* observer )
+{
+    this->m_windowEventObservers.erase( observer );
+}
+
+void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
+{
+    for( auto listener : this->m_windowEventObservers )
+    {
+        listener->onWindowEvent( e );
     }
 }

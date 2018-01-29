@@ -6,7 +6,7 @@
 #include <cmath>
 #include <iostream>
 
-class TestApp: public SDL2W::IKeyboardObserver
+class TestApp: private SDL2W::IKeyboardObserver, private SDL2W::IWindowEventObserver
 {
 public:
     TestApp():
@@ -36,6 +36,7 @@ public:
     void runMainLoop()
     {
         this->m_sdlW->registerKeyboardEventListener( this );
+        this->m_sdlW->registerWindowEventListener( this );
         m_thread = std::thread( &TestApp::objectManagmentFun, this );
         this->m_sdlW->runEventLoop();
     }
@@ -53,6 +54,11 @@ public:
             this->m_sdlW->stopEventLoop();
             this->runLoop = false;
         }
+    }
+
+    void onWindowEvent( const WindowEventType e )
+    {
+        std::cout << "WAT!!\n";
     }
 
 protected:
