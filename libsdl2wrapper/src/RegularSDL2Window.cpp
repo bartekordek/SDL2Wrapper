@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include <SDL_video.h>
 
+#define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
 #include <boost/assert.hpp>
 
 using namespace SDL2W;

@@ -96,7 +96,7 @@ void SDL2WrapperImpl::refreshScreen()
         window.second->refreshScreen();
     }
 }
-
+#include <iostream>
 void SDL2WrapperImpl::runEventLoop()
 {
     SDL_Event event;
@@ -123,6 +123,10 @@ void SDL2WrapperImpl::runEventLoop()
             else if( event.type == SDL_QUIT )
             {
                 notifyWindowEventListeners( WindowEventType::CLOSE );
+            }
+            else
+            {
+                std::cout << "WTF\n";
             }
         }
         CUL::ITimer::sleepMicroSeconds( this->m_eventLatencyUs );
