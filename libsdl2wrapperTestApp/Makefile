@@ -1,131 +1,97 @@
-#
-#  There exist several targets which are by default empty and which can be 
-#  used for execution of your targets. These targets are usually executed 
-#  before and after some main targets. They are: 
-#
-#     .build-pre:              called before 'build' target
-#     .build-post:             called after 'build' target
-#     .clean-pre:              called before 'clean' target
-#     .clean-post:             called after 'clean' target
-#     .clobber-pre:            called before 'clobber' target
-#     .clobber-post:           called after 'clobber' target
-#     .all-pre:                called before 'all' target
-#     .all-post:               called after 'all' target
-#     .help-pre:               called before 'help' target
-#     .help-post:              called after 'help' target
-#
-#  Targets beginning with '.' are not intended to be called on their own.
-#
-#  Main targets can be executed directly, and they are:
-#  
-#     build                    build a specific configuration
-#     clean                    remove built files from a configuration
-#     clobber                  remove all built files
-#     all                      build all configurations
-#     help                     print help mesage
-#  
-#  Targets .build-impl, .clean-impl, .clobber-impl, .all-impl, and
-#  .help-impl are implemented in nbproject/makefile-impl.mk.
-#
-#  Available make variables:
-#
-#     CND_BASEDIR                base directory for relative paths
-#     CND_DISTDIR                default top distribution directory (build artifacts)
-#     CND_BUILDDIR               default top build directory (object files, ...)
-#     CONF                       name of current configuration
-#     CND_PLATFORM_${CONF}       platform name (current configuration)
-#     CND_ARTIFACT_DIR_${CONF}   directory of build artifact (current configuration)
-#     CND_ARTIFACT_NAME_${CONF}  name of build artifact (current configuration)
-#     CND_ARTIFACT_PATH_${CONF}  path to build artifact (current configuration)
-#     CND_PACKAGE_DIR_${CONF}    directory of package (current configuration)
-#     CND_PACKAGE_NAME_${CONF}   name of package (current configuration)
-#     CND_PACKAGE_PATH_${CONF}   path to package (current configuration)
-#
-# NOCDDL
+ARCH := $(shell getconf LONG_BIT)
+ifeq ($(OS),Windows_NT)
+DYN_LIB_EXT := .dll
+BUILD_ROOT := Cygwin
+else
+DYN_LIB_EXT := .so
+BUILD_ROOT := Build-Linux
+endif
 
+ifeq ($(ARCH),64)
+ARCH_FLAG := -m64
+else
+ARCH_FLAG := -m32
+endif
 
-# Environment 
-MKDIR=mkdir
-CP=cp
-CCADMIN=CCadmin
+DIAG_FLAG := -fdiagnostics-color=always
+CC := g++ $(ARCH_FLAG) $(DIAG_FLAG)
+CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG)
+CUL_PREPROCESOR_FLAGS := -D CULLib_EXPORT -D CUL_DYNAMIC
+COMPILER_FLAGS = -pedantic -Wall -std=gnu++11 $(CUL_PREPROCESOR_FLAGS) -Wno-ignored-attributes
+DEBUG_FLAGS = -ggdb
+RELEASE_FLAGS = -Ofast
+PROJECT_NAME = Tests
+BINARY_NAME = $(PROJECT_NAME).exe
+OUTPUT_DIR := ../build
+OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
+OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
+RUN_DIR := ../runTests
 
+DEPS_ROOT := ../deps
+ROOT_LIBMOGE := ../libcul
 
-# build
-build: .build-post
+HEADER_INC := -I . -isystem $(GTEST_INCLUDE) -I $(ROOT_LIBMOGE)/inc
+IMPORT_LIBS_DEBUG := -L$(OUTPUT_DIR_DEBUG) -L$(GTEST_LIBRARY_DIR)
+IMPORT_LIBS_RELEASE := -L$(OUTPUT_DIR_RELEASE) -L$(GTEST_LIBRARY_DIR)
+IMPORT_LIBS_FILES := -lgtest -lgtest_main -lcul
 
-.build-pre:
+CPP_FILES := $(wildcard */*.cpp)
+CPP_FILES += $(wildcard *.cpp)
 
-.build-post: .build-impl
-# Add your post 'build' code here...
-	echo "PLAT = ${CND_PLATFORM_${CONF}}"
-	cp -v ../deps/CUL/build/${CND_PLATFORM_${CONF}}-${CONF}/libcul.dll ../build/${CND_PLATFORM_${CONF}}-${CONF}/
-	cp -v ../deps/SDL2-2.0.7/Build-Cygwin/*.dll ../build/${CND_PLATFORM_${CONF}}-${CONF}
-	cp -v ../build/${CND_PLATFORM_${CONF}}-${CONF}/*.dll ../run
-	
+# OBJ:
+OBJ_DEBUG_DIR := $(OUTPUT_DIR_DEBUG)/intermediate_$(PROJECT_NAME)/debug/
+OBJ_RELEASE_DIR := $(OUTPUT_DIR_RELEASE)/intermediate_$(PROJECT_NAME)/release/
+OBJ_DEBUG_FILES := $(addprefix $(OBJ_DEBUG_DIR),$(CPP_FILES:.cpp=.o))
+OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
 
-# clean
-clean: .clean-post
+debug: $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
+release: $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
 
-.clean-pre:
-# Add your pre 'clean' code here...
+run_debug: debug
+	cd $(RUN_DIR);./$(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
 
-.clean-post: .clean-impl
-# Add your post 'clean' code here...
+run_release: release
+	cd $(RUN_DIR);./$(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
 
+$(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): run_debug_deps $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
+	@mkdir -p $(@D)
+	$(CC_LINK) -o $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME) $(OBJ_DEBUG_FILES) $(IMPORT_LIBS_DEBUG) $(IMPORT_LIBS_FILES)
 
-# clobber
-clobber: .clobber-post
+$(OUTPUT_DIR_RELEASE)/$(BINARY_NAME): run_release_deps $(OBJ_RELEASE_FILES) $(OUTPUT_DIR_RELEASE)
+	@mkdir -p $(@D)
+	$(CC_LINK) -o $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME) $(OBJ_RELEASE_FILES) $(IMPORT_LIBS_RELEASE) $(IMPORT_LIBS_FILES)
 
-.clobber-pre:
-# Add your pre 'clobber' code here...
+$(OUTPUT_DIR_DEBUG):
+	mkdir -p $@
 
-.clobber-post: .clobber-impl
-# Add your post 'clobber' code here...
+$(OUTPUT_DIR_RELEASE):
+	mkdir -p $@
 
+$(OBJ_DEBUG_DIR)%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(HEADER_INC) $(COMPILER_FLAGS) $(DEBUG_FLAGS) -c -o $@ $<
 
-# all
-all: .all-post
+$(OBJ_RELEASE_DIR)%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CC) $(HEADER_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
 
-.all-pre:
-# Add your pre 'all' code here...
+clean:
+	make -C $(ROOT_LIBMOGE) clean
+	rm -f $(OBJ_DEBUG_FILES)
+	rm -f $(OBJ_RELEASE_FILES)
+	rm -f $(OUTPUT_DEBUG)
+	rm -f $(OUTPUT_RELEASE)
 
-.all-post: .all-impl
-# Add your post 'all' code here...
+run_debug_deps:
+	make -C $(ROOT_LIBMOGE) debug
 
+run_release_deps:
+	make -C $(ROOT_LIBMOGE) release
 
-# build tests
-build-tests: .build-tests-post
+clear_all:
+	find . -name '*.o' | xargs rm
 
-.build-tests-pre:
-# Add your pre 'build-tests' code here...
-
-.build-tests-post: .build-tests-impl
-# Add your post 'build-tests' code here...
-
-
-# run tests
-test: .test-post
-
-.test-pre: build-tests
-# Add your pre 'test' code here...
-
-.test-post: .test-impl
-# Add your post 'test' code here...
-
-
-# help
-help: .help-post
-
-.help-pre:
-# Add your pre 'help' code here...
-
-.help-post: .help-impl
-# Add your post 'help' code here...
-
-
-
-# include project implementation makefile
-include nbproject/Makefile-impl.mk
-
-# include project make variables
-include nbproject/Makefile-variables.mk
+test:
+	@echo "All .o files: $(OBJ_DEBUG_FILES)"
+	@echo "All .cpp files: $(CPP_FILES)"
+	@echo "ARCH: $(ARCH)"
