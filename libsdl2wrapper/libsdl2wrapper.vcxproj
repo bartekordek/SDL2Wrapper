@@ -117,6 +117,7 @@
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PostBuildEvent>
     <ProjectReference />
@@ -160,6 +161,7 @@ xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PostBuildEvent>
     <ProjectReference />
@@ -201,6 +203,7 @@ xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PostBuildEvent>
     <ProjectReference />
@@ -241,6 +244,7 @@ xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.7\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PostBuildEvent>
     <ProjectReference />
