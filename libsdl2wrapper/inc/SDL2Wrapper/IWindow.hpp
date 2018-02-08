@@ -2,11 +2,14 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "CUL/Path.hpp"
 #include "CUL/CUL.hpp"
+#include "CUL/Color.hpp"
 #include "SDL2Wrapper/IObject.hpp"
 #include <string>
 #include <memory>
 namespace SDL2W
 {
+    using ColorS = CUL::ColorS;
+    using ColorE = CUL::ColorE;
 	class SDL2WrapperAPI IWindow
 	{
 	public:
@@ -37,6 +40,9 @@ namespace SDL2W
 
 		virtual void refreshScreen() = 0;
 		virtual void renderAllObjects() = 0;
+
+        virtual void setBackgroundColor( const ColorS& color ) = 0;
+        virtual void setBackgroundColor( const ColorE color ) = 0;
 
 		virtual ~IWindow();
 	protected:

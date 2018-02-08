@@ -2,6 +2,8 @@
 
 using namespace SDL2W;
 
+
+
 IWindow::IWindow(
     const CUL::Math::Vector3Di& pos,
     const CUL::Math::Vector3Du& size,

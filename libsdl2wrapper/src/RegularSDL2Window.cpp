@@ -115,6 +115,7 @@ SDL_Surface* RegularSDL2Window::createSurface( const CUL::FS::Path& path )
 #ifdef _MSC_VER
 __pragma( warning( push ) ) \
 __pragma( warning( disable:4189 ) )
+__pragma( warning( disable:4100 ) )
 #endif
 
 void RegularSDL2Window::renderNext()
@@ -134,6 +135,13 @@ void RegularSDL2Window::refreshScreen()
 
 void RegularSDL2Window::renderAllObjects()
 {
+    SDL_SetRenderDrawColor( 
+        this->renderer.get(), 
+        this->m_backgroundColor.r,
+        this->m_backgroundColor.g,
+        this->m_backgroundColor.b,
+        this->m_backgroundColor.alpha );
+
     auto& iterator = this->objects->getRandomIterator();
     while( iterator.hasNext() )
     {
@@ -175,6 +183,16 @@ void RegularSDL2Window::renderAllObjects()
 void RegularSDL2Window::clear()
 {
     SDL_RenderClear( this->renderer.get() );
+}
+
+void RegularSDL2Window::setBackgroundColor( const ColorE color )
+{
+    setBackgroundColor( color );
+}
+
+void RegularSDL2Window::setBackgroundColor( const ColorS& color )
+{
+    this->m_backgroundColor = color;
 }
 
 #ifdef _MSC_VER

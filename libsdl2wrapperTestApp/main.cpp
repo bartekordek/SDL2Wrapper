@@ -7,23 +7,25 @@
 #include <cmath>
 #include <iostream>
 
-class TestApp final: public SDL2W::IKeyboardObserver, private SDL2W::IWindowEventObserver
+class TestApp final: 
+    public SDL2W::IKeyboardObserver, 
+    private SDL2W::IWindowEventObserver
 {
 public:
     TestApp():
         m_sdlW( SDL2W::getSDL2Wrapper() )
     {
-        auto window = this->m_sdlW->createWindow(
+        m_activeWindow = this->m_sdlW->createWindow(
             CUL::Math::Vector3Di( 256, 256, 0 ),
             CUL::Math::Vector3Du( 800, 600, 0 ),
-            "Windows 1" );
-
+            "Windows 1" ).get();
+ 
         if( this->m_someFile.exists() )
         {
-            this->m_obj1 = window->createObject( this->m_someFile ).get();
-            this->m_obj2 = window->createObject( this->m_someFile ).get();
-            this->m_obj3 = window->createObject( this->m_someFile ).get();
-            this->m_obj4 = window->createObject( this->m_someFile ).get();
+            this->m_obj1 = m_activeWindow->createObject( this->m_someFile ).get();
+            this->m_obj2 = m_activeWindow->createObject( this->m_someFile ).get();
+            this->m_obj3 = m_activeWindow->createObject( this->m_someFile ).get();
+            this->m_obj4 = m_activeWindow->createObject( this->m_someFile ).get();
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
@@ -135,11 +137,16 @@ private:
                 obj2Pos.setX( static_cast< const int >( somePosition.getX() + sin( i ) * amp ) );
                 obj2Pos.setY( static_cast< const int >( somePosition.getY() + cos( i ) * amp ) );
                 this->m_obj2->setPosition( obj2Pos );
+                this->bckgroundColor.g = static_cast<uint8_t>( 124 * ( 1.0 + sin( i / 2 ) ) );
+                m_activeWindow->setBackgroundColor( this->bckgroundColor );
                 i += 0.02;
             }
         }
     }
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
+    SDL2W::IWindow* m_activeWindow = nullptr;
+
+    SDL2W::ColorS bckgroundColor;
 
     CUL::LckPrim<bool> runLoop{ true };
 

@@ -30,11 +30,15 @@ namespace SDL2W
         void refreshScreen() override;
         void renderAllObjects() override;
         void clear() override;
-            
+
+        void setBackgroundColor( const ColorE color ) override;
+        void setBackgroundColor( const ColorS& color ) override;
+
     protected:
     private:
         static SDL_Surface* createSurface( const CUL::FS::Path& path );
 
+        ColorS m_backgroundColor;
         static void windowDeleter( SDL_Window* win );
         static void rendererDeleter( SDL_Renderer* rend );
         std::shared_ptr<SDL_Window> window;
