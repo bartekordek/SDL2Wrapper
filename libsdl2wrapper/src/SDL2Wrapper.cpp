@@ -2,16 +2,16 @@
 #include "SDL2WrapperImpl.hpp"
 namespace SDL2W
 {
-	ISDL2Wrapper* sdlWrapper = nullptr;
+    ISDL2Wrapper* sdlWrapper = nullptr;
 
-	ISDL2Wrapper* getSDL2Wrapper()
-	{
-		if(nullptr == sdlWrapper)
-		{
-			sdlWrapper = new SDL2WrapperImpl();
-		}
-		return sdlWrapper;
-	}
+    ISDL2Wrapper* getSDL2Wrapper()
+    {
+        if(nullptr == sdlWrapper)
+        {
+            sdlWrapper = new SDL2WrapperImpl();
+        }
+        return sdlWrapper;
+    }
 
     void destroySDL2Wrapper()
     {

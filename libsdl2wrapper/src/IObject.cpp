@@ -4,5 +4,5 @@ using namespace SDL2W;
 
 const bool IObject::operator==( const IObject& right )const
 {
-	return this == &right;
+    return this == &right;
 }
