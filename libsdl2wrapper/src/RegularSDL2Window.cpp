@@ -154,8 +154,8 @@ void RegularSDL2Window::renderAllObjects()
             auto pivot = object->getPivot()->getPivot( IPivot::PivotType::ABSOLUTE );
 
             SDL_Rect renderQuad;
-            renderQuad.x = pos.getX();
-            renderQuad.y = pos.getY();
+            renderQuad.x = static_cast<int>( pos.getX() );
+            renderQuad.y = static_cast<int>( pos.getY() );
             renderQuad.w = static_cast<int>( size.getX() );
             renderQuad.h = static_cast<int>( size.getY() );
 

@@ -25,10 +25,10 @@ namespace SDL2W
 
         virtual void setScale( const CUL::Math::Vector3Dd& scale ) = 0;
 
-        virtual const CUL::Math::Vector3Di& getPosition()const = 0;
-        virtual const CUL::Math::Vector3Di& getRenderPosition()const = 0;
-        virtual const CUL::Math::Vector3Du& getSize()const = 0;
-        virtual const CUL::Math::Vector3Du& getSizeAbs()const = 0;
+        virtual const CUL::Math::Vector3Dd& getPosition()const = 0;
+        virtual const CUL::Math::Vector3Dd& getRenderPosition()const = 0;
+        virtual const CUL::Math::Vector3Dd& getSize()const = 0;
+        virtual const CUL::Math::Vector3Dd& getSizeAbs()const = 0;
 
         virtual const Type getType()const = 0;
         virtual const bool operator==( const IObject& right )const;

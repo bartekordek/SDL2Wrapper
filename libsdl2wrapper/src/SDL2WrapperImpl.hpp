@@ -8,7 +8,6 @@
 struct SDL_Surface;
 namespace SDL2W
 {
-    using Keys = std::map<std::string, std::unique_ptr<IKey>>;
     using WindowEventType = IWindowEventObserver::WindowEventType;
     class SDL2WrapperImpl: public ISDL2Wrapper
     {
@@ -16,7 +15,7 @@ namespace SDL2W
         SDL2WrapperImpl();
         virtual ~SDL2WrapperImpl();
 
-        std::shared_ptr<IWindow> createWindow(
+        IWindow* createWindow(
             const CUL::Math::Vector3Di& pos = CUL::Math::Vector3Di(),
             const CUL::Math::Vector3Du& size = CUL::Math::Vector3Du(),
             const std::string& winName = "" ) override;
@@ -41,6 +40,8 @@ namespace SDL2W
 
         const bool isKeyUp( const std::string& keyName )const;
 
+        Keys& getKeyStates() override;
+
     protected:
     private:
         void createKeys();
@@ -49,7 +50,7 @@ namespace SDL2W
         void notifyKeyboardListeners( const IKey& key );
         void notifyWindowEventListeners( const WindowEventType e );
 
-        std::map<std::string, std::shared_ptr<IWindow>> windows;
+        std::map<const std::string, std::shared_ptr<IWindow>> windows;
         CUL::LckPrim<bool> eventLoopActive{ true };
         CUL::LckPrim<unsigned int> m_eventLatencyUs{ 256 };
 

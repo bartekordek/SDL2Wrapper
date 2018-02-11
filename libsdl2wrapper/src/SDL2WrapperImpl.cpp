@@ -48,17 +48,16 @@ SDL2WrapperImpl::~SDL2WrapperImpl()
     SDL_Quit();
 }
 
-std::shared_ptr<IWindow> SDL2WrapperImpl::createWindow(
+IWindow* SDL2WrapperImpl::createWindow(
     const CUL::Math::Vector3Di& pos,
     const CUL::Math::Vector3Du& size,
     const std::string& winName )
 {
-    std::shared_ptr<IWindow> result;
-    result.reset(
-        new RegularSDL2Window( 
-            pos, size, winName ) );
+    auto window = new RegularSDL2Window(
+        pos, size, winName );
+    std::shared_ptr<IWindow> result( window );
     this->windows[winName] = result;
-    return result;
+    return window;
 }
 
 void SDL2WrapperImpl::renderFrame( 
@@ -195,4 +194,9 @@ void SDL2WrapperImpl::setInputLatency( const unsigned int latencyInUs )
 const bool SDL2WrapperImpl::isKeyUp( const std::string& keyName )const
 {
     return this->m_keys.at( keyName )->getKeyIsDown();
+}
+
+Keys& SDL2WrapperImpl::getKeyStates()
+{
+    return this->m_keys;
 }

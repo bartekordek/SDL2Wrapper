@@ -17,8 +17,8 @@ public:
     {
         m_activeWindow = this->m_sdlW->createWindow(
             CUL::Math::Vector3Di( 256, 256, 0 ),
-            CUL::Math::Vector3Du( 800, 600, 0 ),
-            "Windows 1" ).get();
+            CUL::Math::Vector3Du( 1280, 800, 0 ),
+            "Windows 1" );
  
         if( this->m_someFile.exists() )
         {

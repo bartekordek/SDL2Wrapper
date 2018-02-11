@@ -44,25 +44,25 @@ const IObject::Type Sprite::getType()const
     return IObject::Type::SPRITE;
 }
 
-const CUL::Math::Vector3Di& Sprite::getPosition()const
+const CUL::Math::Vector3Dd& Sprite::getPosition()const
 {
     std::lock_guard<std::mutex> lock( this->mtx );
     return this->position;
 }
 
-const CUL::Math::Vector3Di& Sprite::getRenderPosition()const
+const CUL::Math::Vector3Dd& Sprite::getRenderPosition()const
 {
     std::lock_guard<std::mutex> lock( this->mtx );
     return this->positionWithOffset;
 }
 
-const CUL::Math::Vector3Du& Sprite::getSize()const
+const CUL::Math::Vector3Dd& Sprite::getSize()const
 {
     std::lock_guard<std::mutex> lock( this->mtx );
     return this->size;
 }
 
-const CUL::Math::Vector3Du& Sprite::getSizeAbs()const
+const CUL::Math::Vector3Dd& Sprite::getSizeAbs()const
 {
     std::lock_guard<std::mutex> lock( this->mtx );
     return this->realSize;
