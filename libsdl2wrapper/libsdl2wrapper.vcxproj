@@ -275,6 +275,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\SDL2Wrapper.hpp" />
+    <ClInclude Include="ITexture.hpp" />
     <ClInclude Include="src\KeySDL.hpp" />
     <ClInclude Include="src\RegularSDL2Window.hpp" />
     <ClInclude Include="src\SDL2WrapperImpl.hpp" />

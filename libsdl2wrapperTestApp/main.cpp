@@ -22,10 +22,10 @@ public:
  
         if( this->m_someFile.exists() )
         {
-            this->m_obj1 = m_activeWindow->createObject( this->m_someFile ).get();
-            this->m_obj2 = m_activeWindow->createObject( this->m_someFile ).get();
-            this->m_obj3 = m_activeWindow->createObject( this->m_someFile ).get();
-            this->m_obj4 = m_activeWindow->createObject( this->m_someFile ).get();
+            this->m_obj1 = this->m_activeWindow->createObject( this->m_someFile );
+            this->m_obj2 = this->m_activeWindow->createObject( this->m_someFile );
+            this->m_obj3 = this->m_activeWindow->createObject( this->m_someFile );
+            this->m_obj4 = this->m_activeWindow->createObject( this->m_someFile );
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;

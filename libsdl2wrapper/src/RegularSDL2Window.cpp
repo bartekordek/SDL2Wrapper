@@ -14,11 +14,11 @@ using namespace SDL2W;
 using namespace CUL;
 
 RegularSDL2Window::RegularSDL2Window( 
-    const CUL::Math::Vector3Di& pos,
-    const CUL::Math::Vector3Du& size,
-    const std::string& name ): IWindow( pos, size, name )
+    const Vector3Di& pos,
+    const Vector3Du& size,
+    const std::string& name ):
+        IWindow( pos, size, name )
 {
-
     auto windowFlags = SDL_WINDOW_SHOWN;
     this->window.reset(
         SDL_CreateWindow(
@@ -70,8 +70,8 @@ void RegularSDL2Window::rendererDeleter( SDL_Renderer* rend )
     SDL_DestroyRenderer( rend );
 }
 
-std::shared_ptr<IObject> RegularSDL2Window::createObject(
-    const CUL::FS::Path& objPath,
+IObject* RegularSDL2Window::createObject(
+    const Path& objPath,
     const IObject::Type type ) const
 {
     auto cwd = CUL::FS::FSApi::getCurrentDir();
@@ -83,6 +83,7 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
     }
     
     std::shared_ptr<IObject> result;
+    IObject* objectPtr = nullptr;
     auto rendererPtr = this->renderer.get();
     if( rendererPtr && IObject::Type::SPRITE == type )
     {
@@ -91,13 +92,13 @@ std::shared_ptr<IObject> RegularSDL2Window::createObject(
         auto sprite = new Sprite();
         sprite->setTexture( tex );
         result.reset( sprite );
-
+        objectPtr = sprite;
     }
     this->objects->pushBack( result );
-    return result;
+    return objectPtr;
 }
 
-SDL_Surface* RegularSDL2Window::createSurface( const CUL::FS::Path& path )
+SDL_Surface* RegularSDL2Window::createSurface( const Path& path )
 {
     SDL_Surface* result = nullptr;
     if( ".bmp" == path.getExtension() )

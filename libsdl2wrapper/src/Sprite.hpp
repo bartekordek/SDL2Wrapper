@@ -10,11 +10,12 @@ namespace SDL2W
 {
     class TextureWrapper;
     using IPivotObserver = CUL::Math::IPivotObserver;
-    class Sprite : public IObject, private IPivotObserver
+    class Sprite final: 
+        public IObject, private IPivotObserver
     {
     public:
         Sprite();
-        virtual ~Sprite();
+        ~Sprite();
 
         const SDL_Texture* getTexture()const;
         void setTexture( SDL_Texture* texutre );

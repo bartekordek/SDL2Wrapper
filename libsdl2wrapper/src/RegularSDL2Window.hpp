@@ -8,12 +8,13 @@ struct SDL_Renderer;
 struct SDL_Surface;
 namespace SDL2W
 {
-    class RegularSDL2Window: public IWindow
+    class RegularSDL2Window:
+        public IWindow
     {
     public:
         RegularSDL2Window( 
-            const CUL::Math::Vector3Di& pos,
-            const CUL::Math::Vector3Du& size,
+            const Vector3Di& pos,
+            const Vector3Du& size,
             const std::string& name );
         RegularSDL2Window( const RegularSDL2Window& win );
         RegularSDL2Window() = delete;
@@ -21,8 +22,8 @@ namespace SDL2W
 
         RegularSDL2Window& operator=( const RegularSDL2Window& right );
 
-        std::shared_ptr<IObject> createObject(
-            const CUL::FS::Path& objPath,
+        IObject* createObject(
+            const Path& objPath,
             const IObject::Type type = IObject::Type::SPRITE ) const override;
 
         void renderNext() override;
@@ -36,7 +37,7 @@ namespace SDL2W
 
     protected:
     private:
-        static SDL_Surface* createSurface( const CUL::FS::Path& path );
+        static SDL_Surface* createSurface( const Path& path );
 
         ColorS m_backgroundColor;
         static void windowDeleter( SDL_Window* win );
