@@ -1,3 +1,4 @@
+#include "TextureSDL.hpp"
 #include "RegularSDL2Window.hpp"
 #include "Sprite.hpp"
 
@@ -70,49 +71,94 @@ void RegularSDL2Window::rendererDeleter( SDL_Renderer* rend )
     SDL_DestroyRenderer( rend );
 }
 
-IObject* RegularSDL2Window::createObject(
-    const Path& objPath,
-    const IObject::Type type ) const
+IObject* RegularSDL2Window::createObject( const Path& objPath  )
 {
-    auto cwd = CUL::FS::FSApi::getCurrentDir();
-    bool pathExist = objPath.exists();
-    if( false == pathExist )
+    IObject* result = nullptr;
+
+    auto it = this->m_textures.find( objPath.getPath().c_str() );
+    if ( this->m_textures.end() == it )
     {
-        const std::string msg = "File " + objPath.getPath() + " does not exist.";
-        BOOST_ASSERT_MSG( false, msg.c_str() );
+        bool pathExist = objPath.exists();
+        if ( false == pathExist )
+        {
+            const std::string msg = "File " + objPath.getPath() + " does not exist.";
+            BOOST_ASSERT_MSG( false, msg.c_str() );
+        }
+        auto surface = createSurface( objPath );
+        auto tex = createTexture( surface, objPath );
+        result = createObject( tex );
     }
-    
-    std::shared_ptr<IObject> result;
-    IObject* objectPtr = nullptr;
-    auto rendererPtr = this->renderer.get();
-    if( rendererPtr && IObject::Type::SPRITE == type )
+    else
     {
-        SDL_Surface* surface = createSurface( objPath );
-        auto tex = SDL_CreateTextureFromSurface( rendererPtr, surface );
-        auto sprite = new Sprite();
-        sprite->setTexture( tex );
-        result.reset( sprite );
-        objectPtr = sprite;
+        auto tex = it->second.get();
+        result = createObject( tex );
     }
-    this->objects->pushBack( result );
-    return objectPtr;
+    return result;
+}
+
+IObject* RegularSDL2Window::createObject( const ITexture* tex )
+{
+    IObject* result = nullptr;
+    auto spritePtr = new Sprite();
+    spritePtr->setTexture( tex );
+    std::shared_ptr<IObject> objPtr( spritePtr );
+    if ( 
+        this->objects->end() !=
+        *this->objects->find( objPtr ).get() )
+    {
+        this->objects->pushBack( objPtr );
+    }
+    return result;
 }
 
 SDL_Surface* RegularSDL2Window::createSurface( const Path& path )
 {
     SDL_Surface* result = nullptr;
-    if( ".bmp" == path.getExtension() )
+    if ( ".bmp" == path.getExtension() )
     {
         result = SDL_LoadBMP( path.getPath().c_str() );
     }
 
-    if( ".png" == path.getExtension() )
+    if ( ".png" == path.getExtension() )
     {
         //TODO result = SDL_Load
     }
     BOOST_ASSERT( result != nullptr );
     return result;
 }
+
+ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& path )
+{
+    if ( nullptr == this->renderer.get() )
+    {
+        const std::string msg( "RENDERER NOT READY!\n" );
+        BOOST_ASSERT_MSG( false, msg.c_str() );
+    }
+
+    ITexture* result = nullptr;
+    auto texSDL = new TextureSDL();
+    auto tex = SDL_CreateTextureFromSurface( 
+        this->renderer.get(),
+        surface );
+
+    if ( tex )
+    {
+        texSDL->setTexture( tex, path );
+        result = texSDL;
+        this->m_textures[ path.getPath().c_str() ] =
+            std::make_shared<ITexture>( result );
+    }
+    else
+    {
+        const std::string msg = 
+            "Cannot create texture from " +
+            path.getPath() +
+            " does not exist.";
+        BOOST_ASSERT_MSG( false, msg.c_str() );
+    }
+    return result;
+}
+
 #ifdef _MSC_VER
 __pragma( warning( push ) ) \
 __pragma( warning( disable:4189 ) )

@@ -39,9 +39,6 @@
     <ClInclude Include="src\Sprite.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextureWrapper.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IKey.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,8 +54,11 @@
     <ClInclude Include="inc\SDL2Wrapper\IKeyboardObservable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ITexture.hpp">
+    <ClInclude Include="inc\SDL2Wrapper\ITexture.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureSDL.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,13 +83,16 @@
     <ClCompile Include="src\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\KeySDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IKey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ITexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureSDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

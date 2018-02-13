@@ -1,9 +1,9 @@
 #pragma once
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
-#include "CUL/Path.hpp"
 #include "CUL/CUL.hpp"
 #include "CUL/Color.hpp"
 #include "SDL2Wrapper/IObject.hpp"
+#include "SDL2Wrapper/ITexture.hpp"
 #include <string>
 #include <memory>
 namespace SDL2W
@@ -12,7 +12,6 @@ namespace SDL2W
     using ColorE = CUL::ColorE;
     using Vector3Di = CUL::Math::Vector3Di;
     using Vector3Du = CUL::Math::Vector3Du;
-    using Path = CUL::FS::Path;
     class SDL2WrapperAPI IWindow
     {
     public:
@@ -23,9 +22,8 @@ namespace SDL2W
         IWindow( const IWindow& wind );
         IWindow() = delete;
 
-        virtual IObject* createObject(
-            const Path& path,
-            const IObject::Type type = IObject::Type::SPRITE )const = 0;
+        virtual IObject* createObject( const Path& path ) = 0;
+        virtual IObject* createObject( const ITexture* tex ) = 0;
 
         virtual void renderNext() = 0;
         virtual void clear() = 0;

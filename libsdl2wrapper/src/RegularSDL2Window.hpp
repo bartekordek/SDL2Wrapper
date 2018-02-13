@@ -3,6 +3,7 @@
 #include "CUL/IList.hpp"
 #include <string>
 #include <memory>
+#include <map>
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
@@ -22,9 +23,9 @@ namespace SDL2W
 
         RegularSDL2Window& operator=( const RegularSDL2Window& right );
 
-        IObject* createObject(
-            const Path& objPath,
-            const IObject::Type type = IObject::Type::SPRITE ) const override;
+        IObject* createObject( const Path& objPath ) override;
+
+        IObject* createObject( const ITexture* tex ) override;
 
         void renderNext() override;
 
@@ -38,6 +39,7 @@ namespace SDL2W
     protected:
     private:
         static SDL_Surface* createSurface( const Path& path );
+        ITexture* createTexture( SDL_Surface* surface, const Path& path );
 
         ColorS m_backgroundColor;
         static void windowDeleter( SDL_Window* win );
@@ -45,6 +47,7 @@ namespace SDL2W
         std::shared_ptr<SDL_Window> window;
         std::shared_ptr<SDL_Renderer> renderer;
         std::shared_ptr<CUL::IList<std::shared_ptr<IObject>>> objects;
+        std::map<const char*, std::shared_ptr<ITexture>> m_textures;
 
     };
 }

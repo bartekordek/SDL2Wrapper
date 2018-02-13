@@ -1,14 +1,13 @@
 #pragma once
 #include "SDL2Wrapper/IObject.hpp"
+#include "SDL2Wrapper/ITexture.hpp"
 #include "CUL/Math/IPivotObserver.hpp"
 #include "CUL/Math/Degree.hpp"
 #include <memory>
 #include <mutex>
-struct SDL_Texture;
 
 namespace SDL2W
 {
-    class TextureWrapper;
     using IPivotObserver = CUL::Math::IPivotObserver;
     class Sprite final: 
         public IObject, private IPivotObserver
@@ -17,8 +16,8 @@ namespace SDL2W
         Sprite();
         ~Sprite();
 
-        const SDL_Texture* getTexture()const;
-        void setTexture( SDL_Texture* texutre );
+        const ITexture* getTexture()const;
+        void setTexture( const ITexture* texutre );
         const Type getType()const override;
 
         const CUL::Math::Vector3Dd& getPosition()const override;
@@ -32,11 +31,9 @@ namespace SDL2W
 
   
         const IPivot* getPivot()const override;
-
         void pivotHasBeenChanged() override;
 
         void rotate( const CUL::Math::IAngle& angle, const RotationType = RotationType::YAW );
-
         const CUL::Math::IAngle& getAngle(
             const RotationType = RotationType::YAW )const;
 
@@ -45,8 +42,7 @@ namespace SDL2W
         void calculateSizes();
         void calculatePositionOffset();
 
-        mutable std::mutex mtx;
-        std::shared_ptr<TextureWrapper> texture;
+        ITexture* m_texture = nullptr;
         CUL::Math::Vector3Dd position;
         CUL::Math::Vector3Dd positionWithOffset;
         CUL::Math::Vector3Dd size;
