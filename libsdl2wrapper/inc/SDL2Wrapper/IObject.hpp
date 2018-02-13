@@ -1,11 +1,13 @@
 #pragma once
+#include "SDL2Wrapper.hpp"
 #include "CUL/Math/Vector3D.hpp"
 #include "CUL/Math/IPivot.hpp"
 #include "CUL/Math/IAngle.hpp"
 namespace SDL2W
 {
     using IPivot = CUL::Math::IPivot;
-    class IObject
+    using IAngle = CUL::Math::IAngle;
+    class SDL2WrapperAPI IObject
     {
     public:
         enum class Type
@@ -35,7 +37,9 @@ namespace SDL2W
         
         virtual const IPivot* getPivot()const = 0;
 
-        virtual void rotate( const CUL::Math::IAngle& angle, const RotationType = RotationType::YAW ) = 0;
+        virtual void rotate(
+            const IAngle& angle,
+            const RotationType = RotationType::YAW ) = 0;
         virtual const CUL::Math::IAngle& getAngle( 
             const RotationType = RotationType::YAW )const = 0;
 
