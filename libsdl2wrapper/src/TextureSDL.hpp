@@ -11,7 +11,7 @@ namespace SDL2W
     public:
         TextureSDL();
         virtual ~TextureSDL();
-        const SDL_Texture* getTexture()const;
+        SDL_Texture* getTexture()const;
         void setTexture( const SDL_Texture* texture, const Path& path );
         const Vector3Du& getSize()const override;
         const Path& getPath()const override;

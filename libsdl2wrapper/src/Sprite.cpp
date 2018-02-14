@@ -14,7 +14,7 @@ Sprite::~Sprite()
 {
 }
 
-const ITexture* Sprite::getTexture()const
+ITexture* Sprite::getTexture()const
 {
     return this->m_texture;
 }

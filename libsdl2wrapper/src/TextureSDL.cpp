@@ -14,7 +14,7 @@ TextureSDL::~TextureSDL()
     this->m_texture = nullptr;
 }
 
-const SDL_Texture* TextureSDL::getTexture()const
+SDL_Texture* TextureSDL::getTexture()const
 {
     return this->m_texture;
 }

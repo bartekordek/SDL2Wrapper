@@ -1,6 +1,5 @@
 #pragma once
 #include "SDL2Wrapper/IWindow.hpp"
-#include "CUL/IList.hpp"
 #include <string>
 #include <memory>
 #include <map>
@@ -46,7 +45,7 @@ namespace SDL2W
         static void rendererDeleter( SDL_Renderer* rend );
         std::shared_ptr<SDL_Window> window;
         std::shared_ptr<SDL_Renderer> renderer;
-        std::shared_ptr<CUL::IList<std::shared_ptr<IObject>>> objects;
+        std::map<IObject*, std::shared_ptr<IObject>> objects;
         std::map<const char*, std::shared_ptr<ITexture>> m_textures;
 
     };

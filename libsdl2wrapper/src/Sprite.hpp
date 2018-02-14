@@ -16,7 +16,7 @@ namespace SDL2W
         Sprite();
         ~Sprite();
 
-        const ITexture* getTexture()const;
+        ITexture* getTexture()const;
         void setTexture( const ITexture* texutre );
         const Type getType()const override;
 

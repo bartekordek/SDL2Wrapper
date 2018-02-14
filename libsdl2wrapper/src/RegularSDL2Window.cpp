@@ -1,8 +1,8 @@
 #include "TextureSDL.hpp"
 #include "RegularSDL2Window.hpp"
 #include "Sprite.hpp"
+#include "TextureSDL.hpp"
 
-#include "CUL/ListFactory.hpp"
 #include "CUL/FS.hpp"
 
 #include <SDL.h>
@@ -32,8 +32,6 @@ RegularSDL2Window::RegularSDL2Window(
 
     this->renderer.reset(
         SDL_CreateRenderer( this->window.get(), -1, SDL_RENDERER_ACCELERATED ), RegularSDL2Window::rendererDeleter );
-
-    this->objects.reset( ListFactory::createVectorListPtr<std::shared_ptr<IObject>>() );
 }
 
 RegularSDL2Window::RegularSDL2Window( const RegularSDL2Window& win ):
@@ -98,17 +96,11 @@ IObject* RegularSDL2Window::createObject( const Path& objPath  )
 
 IObject* RegularSDL2Window::createObject( const ITexture* tex )
 {
-    IObject* result = nullptr;
     auto spritePtr = new Sprite();
     spritePtr->setTexture( tex );
     std::shared_ptr<IObject> objPtr( spritePtr );
-    if ( 
-        this->objects->end() !=
-        *this->objects->find( objPtr ).get() )
-    {
-        this->objects->pushBack( objPtr );
-    }
-    return result;
+    this->objects[ spritePtr ] = objPtr;
+    return spritePtr;
 }
 
 SDL_Surface* RegularSDL2Window::createSurface( const Path& path )
@@ -145,8 +137,8 @@ ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& pa
     {
         texSDL->setTexture( tex, path );
         result = texSDL;
-        this->m_textures[ path.getPath().c_str() ] =
-            std::make_shared<ITexture>( result );
+		std::shared_ptr<ITexture> iTexPtr( result );
+        this->m_textures[ path.getPath().c_str() ] = iTexPtr;
     }
     else
     {
@@ -167,12 +159,13 @@ __pragma( warning( disable:4100 ) )
 
 void RegularSDL2Window::renderNext()
 {
-    objects->getRandomIteratorPtr()->hasNext();
-    auto obj = objects->getRandomIteratorPtr()->next();
-    if( IObject::Type::SPRITE == obj->getType() )
-    {
-        auto tex = static_cast<Sprite*>( obj.get() );
-    }
+    /*TODO*/
+    //objects->getRandomIteratorPtr()->hasNext();
+    //auto obj = objects->getRandomIteratorPtr()->next();
+    //if( IObject::Type::SPRITE == obj->getType() )
+    //{
+    //    auto tex = static_cast<Sprite*>( obj.get() );
+    //}
 }
 
 void RegularSDL2Window::refreshScreen()
@@ -189,13 +182,13 @@ void RegularSDL2Window::renderAllObjects()
         this->m_backgroundColor.b,
         this->m_backgroundColor.alpha );
 
-    auto& iterator = this->objects->getRandomIterator();
-    while( iterator.hasNext() )
+    IObject* object = nullptr;
+    for ( auto& objectPair: this->objects  )
     {
-        auto& object = iterator.next();
-        if( IObject::Type::SPRITE == object->getType() )
+        object = objectPair.second.get();
+        if ( IObject::Type::SPRITE == object->getType() )
         {
-            auto* sprite = static_cast<Sprite*>( object.get() );
+            auto* sprite = static_cast<Sprite*>( object );
             auto& pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
             auto pivot = object->getPivot()->getPivot( IPivot::PivotType::ABSOLUTE );
@@ -208,7 +201,8 @@ void RegularSDL2Window::renderAllObjects()
 
             std::unique_ptr<SDL_Rect> srcRect;
 
-            auto tex = const_cast<SDL_Texture*>( sprite->getTexture() );
+            auto tex = sprite->getTexture();
+            auto texSDLW = static_cast< TextureSDL* >( tex );
 
             const double angle = sprite->getAngle().getValueD();
 
@@ -217,9 +211,9 @@ void RegularSDL2Window::renderAllObjects()
             center.y = static_cast<int>( pivot.getY() );
 
             auto result = SDL_RenderCopyEx(
-                this->renderer.get(), 
-                tex, 
-                srcRect.get(), 
+                this->renderer.get(),
+                texSDLW->getTexture(),
+                srcRect.get(),
                 &renderQuad,
                 angle, &center, SDL_RendererFlip::SDL_FLIP_NONE );
             BOOST_ASSERT_MSG( result == 0, "Cannot render SDL texture..." );
