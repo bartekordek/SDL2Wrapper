@@ -76,20 +76,32 @@ IObject* RegularSDL2Window::createObject( const Path& objPath  )
     auto it = this->m_textures.find( objPath.getPath().c_str() );
     if ( this->m_textures.end() == it )
     {
-        bool pathExist = objPath.exists();
-        if ( false == pathExist )
-        {
-            const std::string msg = "File " + objPath.getPath() + " does not exist.";
-            BOOST_ASSERT_MSG( false, msg.c_str() );
-        }
-        auto surface = createSurface( objPath );
-        auto tex = createTexture( surface, objPath );
+        auto tex = createTexture( objPath );
         result = createObject( tex );
     }
     else
     {
         auto tex = it->second.get();
         result = createObject( tex );
+    }
+    return result;
+}
+
+ITexture* RegularSDL2Window::createTexture( const Path& objPath )
+{
+    ITexture* result = nullptr;
+    auto it = this->m_textures.find( objPath.getPath().c_str() );
+    if( this->m_textures.end() == it )
+    {
+        auto surface = createSurface( objPath );
+        auto tex = createTexture( surface, objPath );
+        SDL_FreeSurface( surface );
+        surface = nullptr;
+        result = tex;
+    }
+    else
+    {
+        result = it->second.get();
     }
     return result;
 }
@@ -105,6 +117,13 @@ IObject* RegularSDL2Window::createObject( const ITexture* tex )
 
 SDL_Surface* RegularSDL2Window::createSurface( const Path& path )
 {
+    bool pathExist = path.exists();
+    if( false == pathExist )
+    {
+        const std::string msg = "File " + path.getPath() + " does not exist.";
+        BOOST_ASSERT_MSG( false, msg.c_str() );
+    }
+
     SDL_Surface* result = nullptr;
     if ( ".bmp" == path.getExtension() )
     {

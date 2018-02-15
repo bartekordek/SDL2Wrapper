@@ -23,7 +23,7 @@ namespace SDL2W
         RegularSDL2Window& operator=( const RegularSDL2Window& right );
 
         IObject* createObject( const Path& objPath ) override;
-
+        ITexture* createTexture( const Path& objPath ) override;
         IObject* createObject( const ITexture* tex ) override;
 
         void renderNext() override;

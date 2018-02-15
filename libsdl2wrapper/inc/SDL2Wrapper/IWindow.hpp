@@ -22,6 +22,7 @@ namespace SDL2W
         IWindow( const IWindow& wind );
         IWindow() = delete;
 
+        virtual ITexture* createTexture( const Path& path ) = 0;
         virtual IObject* createObject( const Path& path ) = 0;
         virtual IObject* createObject( const ITexture* tex ) = 0;
 
