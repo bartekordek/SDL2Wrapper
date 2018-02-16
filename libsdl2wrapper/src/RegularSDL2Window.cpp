@@ -106,7 +106,7 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
     return result;
 }
 
-IObject* RegularSDL2Window::createObject( const ITexture* tex )
+IObject* RegularSDL2Window::createObject( ITexture* tex )
 {
     auto spritePtr = new Sprite();
     spritePtr->setTexture( tex );

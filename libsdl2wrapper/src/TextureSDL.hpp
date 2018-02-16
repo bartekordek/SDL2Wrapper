@@ -13,12 +13,12 @@ namespace SDL2W
         virtual ~TextureSDL();
         SDL_Texture* getTexture()const;
         void setTexture( const SDL_Texture* texture, const Path& path );
-        const Vector3Du& getSize()const override;
+        const Vector3Dd& getSize()const override;
         const Path& getPath()const override;
     protected:
     private:
         SDL_Texture* m_texture = nullptr;
-        Vector3Du m_size;
+        Vector3Dd m_size;
         Path m_path;
     };
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL2Wrapper/IObject.hpp"
+#include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/ITexture.hpp"
 #include "CUL/Math/IPivotObserver.hpp"
 #include "CUL/Math/Degree.hpp"
@@ -10,14 +10,15 @@ namespace SDL2W
 {
     using IPivotObserver = CUL::Math::IPivotObserver;
     class Sprite final: 
-        public IObject, private IPivotObserver
+        public ISprite,
+        private IPivotObserver
     {
     public:
         Sprite();
         ~Sprite();
 
-        ITexture* getTexture()const;
-        void setTexture( const ITexture* texutre );
+        ITexture* getTexture() override;
+        void setTexture( ITexture* texutre ) override;
         const Type getType()const override;
 
         const CUL::Math::Vector3Dd& getPosition()const override;

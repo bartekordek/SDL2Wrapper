@@ -14,12 +14,12 @@ Sprite::~Sprite()
 {
 }
 
-ITexture* Sprite::getTexture()const
+ITexture* Sprite::getTexture()
 {
     return this->m_texture;
 }
 
-void Sprite::setTexture( const ITexture* inputTexture )
+void Sprite::setTexture( ITexture* inputTexture )
 {
     this->m_texture = const_cast< ITexture* >( inputTexture );
     this->size = inputTexture->getSize();
@@ -31,7 +31,7 @@ const IObject::Type Sprite::getType()const
     return IObject::Type::SPRITE;
 }
 
-const CUL::Math::Vector3Dd& Sprite::getPosition()const
+    const CUL::Math::Vector3Dd& Sprite::getPosition()const
 {
     return this->position;
 }

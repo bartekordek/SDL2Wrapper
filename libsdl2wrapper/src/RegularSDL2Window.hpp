@@ -24,7 +24,7 @@ namespace SDL2W
 
         IObject* createObject( const Path& objPath ) override;
         ITexture* createTexture( const Path& objPath ) override;
-        IObject* createObject( const ITexture* tex ) override;
+        IObject* createObject( ITexture* tex ) override;
 
         void renderNext() override;
 

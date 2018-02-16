@@ -4,14 +4,14 @@
 #include "CUL/Path.hpp"
 namespace SDL2W
 {
-    using Vector3Du = CUL::Math::Vector3Du;
+    using Vector3Dd = CUL::Math::Vector3Dd;
     using Path = CUL::FS::Path;
     class SDL2WrapperAPI ITexture
     {
     public:
         ITexture();
         virtual ~ITexture();
-        virtual const Vector3Du& getSize()const = 0;
+        virtual const Vector3Dd& getSize()const = 0;
         virtual const Path& getPath()const = 0;
     protected:
     private:

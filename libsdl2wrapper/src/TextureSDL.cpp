@@ -37,7 +37,7 @@ void TextureSDL::setTexture( const SDL_Texture* texture, const Path& path )
     this->m_path = path;
 }
 
-const Vector3Du& TextureSDL::getSize()const
+const Vector3Dd& TextureSDL::getSize()const
 {
     return this->m_size;
 }

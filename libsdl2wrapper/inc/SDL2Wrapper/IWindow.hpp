@@ -24,7 +24,7 @@ namespace SDL2W
 
         virtual ITexture* createTexture( const Path& path ) = 0;
         virtual IObject* createObject( const Path& path ) = 0;
-        virtual IObject* createObject( const ITexture* tex ) = 0;
+        virtual IObject* createObject( ITexture* tex ) = 0;
 
         virtual void renderNext() = 0;
         virtual void clear() = 0;
