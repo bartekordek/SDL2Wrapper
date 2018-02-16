@@ -8,6 +8,7 @@
       <itemPath>inc/SDL2Wrapper/IKeyboardObserver.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IObject.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/ISDL2Wrapper.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/ISprite.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/SDL2Wrapper.hpp</itemPath>
     </logicalFolder>
@@ -26,6 +27,7 @@
       <itemPath>src/IKey.cpp</itemPath>
       <itemPath>src/IObject.cpp</itemPath>
       <itemPath>src/ISDL2Wrapper.cpp</itemPath>
+      <itemPath>src/ISprite.cpp</itemPath>
       <itemPath>src/ITexture.cpp</itemPath>
       <itemPath>src/IWindow.cpp</itemPath>
       <itemPath>src/KeySDL.cpp</itemPath>
@@ -82,14 +84,40 @@
         </ccTool>
         <linkerTool>
           <output>../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.${CND_DLIB_EXT}</output>
+          <linkerCopySharedLibs>true</linkerCopySharedLibs>
           <linkerLibItems>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.a</linkerLibFileItem>
+            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Debug/libcul.dll</linkerLibFileItem>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
           </linkerLibItems>
           <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/IKey.hpp" ex="false" tool="3" flavor2="0">
@@ -103,6 +131,8 @@
       </item>
       <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/ISprite.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
@@ -112,6 +142,8 @@
       <item path="src/IObject.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ISDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ISprite.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ITexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -181,6 +213,8 @@
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2main.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/libSDL2.dll.a</linkerLibFileItem>
             <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.a</linkerLibFileItem>
+            <linkerLibFileItem>../deps/CUL/build/Cygwin-Windows-Release/libcul.dll</linkerLibFileItem>
+            <linkerLibFileItem>../deps/SDL2-2.0.7/Build-Cygwin/SDL2.dll</linkerLibFileItem>
           </linkerLibItems>
           <commandLine>-Wl,--out-implib,../build/${CND_PLATFORM}-${CND_CONF}/libSDL2Wrapper.a</commandLine>
         </linkerTool>
@@ -230,6 +264,30 @@
                             perm="644"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
@@ -245,6 +303,8 @@
       </item>
       <item path="inc/SDL2Wrapper/ISDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/ISprite.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
@@ -254,6 +314,8 @@
       <item path="src/IObject.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ISDL2Wrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ISprite.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ITexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
