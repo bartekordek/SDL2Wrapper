@@ -71,7 +71,7 @@ void RegularSDL2Window::rendererDeleter( SDL_Renderer* rend )
 
 ISprite* RegularSDL2Window::createSprite( const Path& objPath  )
 {
-    IObject* result = nullptr;
+    ISprite* result = nullptr;
 
     auto it = this->m_textures.find( objPath.getPath().c_str() );
     if ( this->m_textures.end() == it )

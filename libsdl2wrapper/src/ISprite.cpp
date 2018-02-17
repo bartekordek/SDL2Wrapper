@@ -7,10 +7,6 @@ ISprite::ISprite()
 	
 }
 
-ISprite::ISprite( const ISprite& orig )
-{
-}
-
 ISprite::~ISprite()
 {
 }

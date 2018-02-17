@@ -60,6 +60,9 @@
     <ClInclude Include="src\TextureSDL.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\ISprite.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextureSDL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ISprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

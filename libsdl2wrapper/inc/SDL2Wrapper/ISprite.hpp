@@ -10,7 +10,6 @@ namespace SDL2W
     {    
     public:
         ISprite();
-        ISprite( const ISprite& orig );
         
         virtual ITexture* getTexture() = 0;
         virtual void setTexture( ITexture* texture ) = 0;
