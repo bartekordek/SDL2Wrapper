@@ -69,7 +69,7 @@ void RegularSDL2Window::rendererDeleter( SDL_Renderer* rend )
     SDL_DestroyRenderer( rend );
 }
 
-IObject* RegularSDL2Window::createObject( const Path& objPath  )
+ISprite* RegularSDL2Window::createSprite( const Path& objPath  )
 {
     IObject* result = nullptr;
 
@@ -77,12 +77,12 @@ IObject* RegularSDL2Window::createObject( const Path& objPath  )
     if ( this->m_textures.end() == it )
     {
         auto tex = createTexture( objPath );
-        result = createObject( tex );
+        result = createSprite( tex );
     }
     else
     {
         auto tex = it->second.get();
-        result = createObject( tex );
+        result = createSprite( tex );
     }
     return result;
 }
@@ -106,7 +106,7 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
     return result;
 }
 
-IObject* RegularSDL2Window::createObject( ITexture* tex )
+ISprite* RegularSDL2Window::createSprite( ITexture* tex )
 {
     auto spritePtr = new Sprite();
     spritePtr->setTexture( tex );

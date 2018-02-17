@@ -2,7 +2,7 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "CUL/CUL.hpp"
 #include "CUL/Color.hpp"
-#include "SDL2Wrapper/IObject.hpp"
+#include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/ITexture.hpp"
 #include <string>
 #include <memory>
@@ -23,8 +23,8 @@ namespace SDL2W
         IWindow() = delete;
 
         virtual ITexture* createTexture( const Path& path ) = 0;
-        virtual IObject* createObject( const Path& path ) = 0;
-        virtual IObject* createObject( ITexture* tex ) = 0;
+        virtual ISprite* createSprite( const Path& path ) = 0;
+        virtual ISprite* createSprite( ITexture* tex ) = 0;
 
         virtual void renderNext() = 0;
         virtual void clear() = 0;

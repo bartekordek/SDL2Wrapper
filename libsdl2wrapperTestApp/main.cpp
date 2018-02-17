@@ -22,10 +22,10 @@ public:
  
         if( this->m_someFile.exists() )
         {
-            this->m_obj1 = this->m_activeWindow->createObject( this->m_someFile );
-            this->m_obj2 = this->m_activeWindow->createObject( this->m_someFile );
-            this->m_obj3 = this->m_activeWindow->createObject( this->m_someFile );
-            this->m_obj4 = this->m_activeWindow->createObject( this->m_someFile );
+            this->m_obj1 = this->m_activeWindow->createSprite( this->m_someFile );
+            this->m_obj2 = this->m_activeWindow->createSprite( this->m_someFile );
+            this->m_obj3 = this->m_activeWindow->createSprite( this->m_someFile );
+            this->m_obj4 = this->m_activeWindow->createSprite( this->m_someFile );
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
@@ -156,10 +156,10 @@ private:
 
     CUL::FS::Path m_someFile = CUL::FS::Path( "../media/pikaczu.bmp" );
 
-    SDL2W::IObject* m_obj1 = nullptr;
-    SDL2W::IObject* m_obj2 = nullptr;
-    SDL2W::IObject* m_obj3 = nullptr;
-    SDL2W::IObject* m_obj4 = nullptr;
+    SDL2W::ISprite* m_obj1 = nullptr;
+    SDL2W::ISprite* m_obj2 = nullptr;
+    SDL2W::ISprite* m_obj3 = nullptr;
+    SDL2W::ISprite* m_obj4 = nullptr;
 
     CUL::Math::Vector3Dd obj1Scale;
     CUL::Math::Vector3Di obj2Pos0;
