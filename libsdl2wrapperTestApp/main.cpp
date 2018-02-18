@@ -86,7 +86,7 @@ public:
         }
     }
 
-    void onWindowEvent( const WindowEventType e )
+    void onWindowEvent( const WindowEventType e ) override
     {
         std::cout << "WAT!!\n";
     }
