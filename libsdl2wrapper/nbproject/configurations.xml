@@ -5,11 +5,14 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>inc/SDL2Wrapper/IKey.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/IKeyboardObservable.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IKeyboardObserver.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IObject.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/ISDL2Wrapper.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/ISprite.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/ITexture.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
+      <itemPath>inc/SDL2Wrapper/IWindowEventListener.hpp</itemPath>
       <itemPath>inc/SDL2Wrapper/SDL2Wrapper.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="f1"
@@ -122,6 +125,11 @@
       </item>
       <item path="inc/SDL2Wrapper/IKey.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/IKeyboardObservable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IKeyboardObserver.hpp"
             ex="false"
             tool="3"
@@ -133,7 +141,14 @@
       </item>
       <item path="inc/SDL2Wrapper/ISprite.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/ITexture.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IWindowEventListener.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -294,6 +309,11 @@
       </item>
       <item path="inc/SDL2Wrapper/IKey.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/IKeyboardObservable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IKeyboardObserver.hpp"
             ex="false"
             tool="3"
@@ -305,7 +325,14 @@
       </item>
       <item path="inc/SDL2Wrapper/ISprite.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/ITexture.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/IWindow.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IWindowEventListener.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
       </item>
