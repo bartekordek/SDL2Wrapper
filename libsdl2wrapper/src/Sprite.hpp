@@ -22,12 +22,17 @@ namespace SDL2W
         const Type getType()const override;
 
         const CUL::Math::Vector3Dd& getPosition()const override;
-        const CUL::Math::Vector3Dd& getSize()const override;
+        const CUL::Math::Vector3Dd& getSizeReal()const override;
         const CUL::Math::Vector3Dd& getSizeAbs()const override;
         const CUL::Math::Vector3Dd& getRenderPosition()const override;
 
         void setPosition( const CUL::Math::Vector3Di& newPosition ) override;
+        void setX( const double val ) override;
+        void setY( const double val ) override;
+        void setZ( const double val ) override;
         void move( const CUL::Math::Vector3Di& moveVect ) override;
+
+        const CUL::Math::Vector3Dd& getScale()const override;
         void setScale( const CUL::Math::Vector3Dd& scale ) override;
 
   

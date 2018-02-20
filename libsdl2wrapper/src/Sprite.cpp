@@ -41,7 +41,7 @@ const CUL::Math::Vector3Dd& Sprite::getRenderPosition()const
     return this->positionWithOffset;
 }
 
-const CUL::Math::Vector3Dd& Sprite::getSize()const
+const CUL::Math::Vector3Dd& Sprite::getSizeReal()const
 {
     return this->size;
 }
@@ -57,10 +57,33 @@ void Sprite::setPosition( const CUL::Math::Vector3Di& newPosition )
     calculatePositionOffset();
 }
 
+void Sprite::setX( const double val )
+{
+    this->position.setX( val );
+    calculatePositionOffset();
+}
+
+void Sprite::setY( const double val )
+{
+    this->position.setY( val );
+    calculatePositionOffset();
+}
+
+void Sprite::setZ( const double val )
+{
+    this->position.setZ( val );
+    calculatePositionOffset();
+}
+
 void Sprite::move( const CUL::Math::Vector3Di& moveVect )
 {
     this->position += moveVect;
     calculatePositionOffset();
+}
+
+const CUL::Math::Vector3Dd& Sprite::getScale()const
+{
+    return this->scale;
 }
 
 void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
@@ -76,16 +99,8 @@ const IPivot* Sprite::getPivot()const
 
 void Sprite::calculateSizes()
 {
-    const CUL::Math::Vector3Dd sizeAsDouble( 
-        this->size.getX(),
-        this->size.getY(), 0 );
-    const auto realSizeD = sizeAsDouble * this->scale;
-        this->realSize.setXYZ(
-        static_cast<unsigned>( realSizeD.getX() ),
-        static_cast<unsigned>( realSizeD.getY() ),
-        0
-    );
-    this->m_pivot->setRealSize( this->realSize );
+    this->realSize = this->scale * this->size;
+    this->m_pivot->setSizeReal( this->realSize );
 }
 
 void Sprite::pivotHasBeenChanged()
@@ -95,9 +110,7 @@ void Sprite::pivotHasBeenChanged()
 
 void Sprite::calculatePositionOffset()
 {
-    auto pivotAsInteger = static_cast<CUL::Math::Vector3Di>(
-        this->m_pivot->getPivot( IPivot::PivotType::ABSOLUTE ));
-    this->positionWithOffset = this->position - pivotAsInteger;
+    this->positionWithOffset = this->position - this->m_pivot->getPivot( IPivot::PivotType::ABSOLUTE );
 }
 
 void Sprite::rotate(

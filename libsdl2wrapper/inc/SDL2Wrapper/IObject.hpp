@@ -23,13 +23,17 @@ namespace SDL2W
         };
 
         virtual void setPosition( const CUL::Math::Vector3Di& newPosition ) = 0;
+        virtual void setX( const double val ) = 0;
+        virtual void setY( const double val ) = 0;
+        virtual void setZ( const double val ) = 0;
         virtual void move( const CUL::Math::Vector3Di& moveVect ) = 0;
 
+        virtual const CUL::Math::Vector3Dd& getScale()const = 0;
         virtual void setScale( const CUL::Math::Vector3Dd& scale ) = 0;
 
         virtual const CUL::Math::Vector3Dd& getPosition()const = 0;
         virtual const CUL::Math::Vector3Dd& getRenderPosition()const = 0;
-        virtual const CUL::Math::Vector3Dd& getSize()const = 0;
+        virtual const CUL::Math::Vector3Dd& getSizeReal()const = 0;
         virtual const CUL::Math::Vector3Dd& getSizeAbs()const = 0;
 
         virtual const Type getType()const = 0;
