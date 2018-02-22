@@ -171,12 +171,6 @@ ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& pa
     return result;
 }
 
-#ifdef _MSC_VER
-__pragma( warning( push ) ) \
-__pragma( warning( disable:4189 ) )
-__pragma( warning( disable:4100 ) )
-#endif
-
 void RegularSDL2Window::renderNext()
 {
     /*TODO*/
@@ -255,7 +249,3 @@ void RegularSDL2Window::setBackgroundColor( const ColorS& color )
 {
     this->m_backgroundColor = color;
 }
-
-#ifdef _MSC_VER
-__pragma( warning( pop ) )
-#endif
