@@ -46,7 +46,6 @@ namespace SDL2W
         std::shared_ptr<SDL_Window> window;
         std::shared_ptr<SDL_Renderer> renderer;
         std::map<IObject*, std::shared_ptr<IObject>> objects;
-        std::map<const char*, std::shared_ptr<ITexture>> m_textures;
-
+        std::map<std::string, std::shared_ptr<ITexture>> m_textures;
     };
 }

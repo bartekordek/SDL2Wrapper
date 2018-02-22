@@ -72,8 +72,8 @@ void RegularSDL2Window::rendererDeleter( SDL_Renderer* rend )
 ISprite* RegularSDL2Window::createSprite( const Path& objPath  )
 {
     ISprite* result = nullptr;
-
-    auto it = this->m_textures.find( objPath.getPath().c_str() );
+    BOOST_ASSERT_MSG( objPath.getPath() != "", "EMTPY PATH." );
+    auto it = this->m_textures.find( objPath.getPath() );
     if ( this->m_textures.end() == it )
     {
         auto tex = createTexture( objPath );
@@ -90,7 +90,8 @@ ISprite* RegularSDL2Window::createSprite( const Path& objPath  )
 ITexture* RegularSDL2Window::createTexture( const Path& objPath )
 {
     ITexture* result = nullptr;
-    auto it = this->m_textures.find( objPath.getPath().c_str() );
+    BOOST_ASSERT_MSG( objPath.getPath() != "", "EMPTY STRING" );
+    auto it = this->m_textures.find( objPath.getPath() );
     if( this->m_textures.end() == it )
     {
         auto surface = createSurface( objPath );
@@ -207,7 +208,7 @@ void RegularSDL2Window::renderAllObjects()
         object = objectPair.second.get();
         if ( IObject::Type::SPRITE == object->getType() )
         {
-            auto* sprite = static_cast<Sprite*>( object );
+            auto sprite = static_cast<Sprite*>( object );
             auto& pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
             auto pivot = object->getPivot()->getPivot( IPivot::PivotType::ABSOLUTE );
