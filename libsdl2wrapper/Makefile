@@ -1,15 +1,40 @@
-CC = g++
-CC_LINK = g++ -shared
+ARCH := $(shell getconf LONG_BIT)
+ifeq ($(OS),Windows_NT)
+DYN_LIB_EXT := .dll
+BUILD_ROOT := Build-Cygwin
+else
+DYN_LIB_EXT := .so
+BUILD_ROOT := Build-Linux
+endif
+
+#ifeq ($(ARCH),64)
+#ARCH_FLAG := -m64
+#else
+#ARCH_FLAG := -m32
+#endif
+
+DIAG_FLAG := -fdiagnostics-color=always
+CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
+CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG) -shared
 COMPILER_FLAGS = -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = libsdl2wrapper
 IMP_LIB_NAME = $(PROJECT_NAME).a
-OUTPUT_DIR_DEBUG = ../Build/Debug
-OUTPUT_DIR_RELEASE = ../Build/Release
-HEADER_INC = -I inc/ -I $(HOME_SDL2_LINUX)/include/ -I $(HOME_BOOST_LINUX)
-IMPORT_LIBS_DEBUG = $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/libSDL2.dll.a $(HOME_BOOST_LINUX)/stage/lib/libboost_filesystem.a $(HOME_BOOST_LINUX)/stage/lib/libboost_system.a
-IMPORT_LIBS_RELEASE = $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/libSDL2.dll.a $(HOME_BOOST_LINUX)/stage/lib/libboost_filesystem.a $(HOME_BOOST_LINUX)/stage/lib/libboost_system.a
+OUTPUT_DIR := ../build
+OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
+OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
+
+#DEPS
+DEPS_HOME := ../deps
+CUL_HOME := $(DEPS_HOME)/CUL
+CUL_INC := $(CUL_HOME)/libcul/inc
+CUL_LIB := $(CUL_HOME)/build
+CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
+CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
+
+HEADERS_INC := -I inc -I $(CUL_INC)
+
 OUTPUT_DEBUG = $(OUTPUT_DIR_DEBUG)/$(DLL_NAME)
 OUTPUT_RELEASE = $(OUTPUT_DIR_RELEASE)/$(DLL_NAME)
 IMP_LIB_DEBUG = $(OUTPUT_DIR_DEBUG)/$(IMP_LIB_NAME)
@@ -44,11 +69,11 @@ $(OUTPUT_RELEASE): $(OBJ_RELEASE_FILES)
 
 $(OBJ_DEBUG_DIR)%.o: %.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(HEADER_INC) $(COMPILER_FLAGS) $(DEBUG_FLAGS) -c -o $@ $<
+	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(DEBUG_FLAGS) -c -o $@ $<
 
 $(OBJ_RELEASE_DIR)%.o: %.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(HEADER_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
+	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
 
 first_run:
 	mkdir -p $(dir $(OBJ_DEBUG_FILES))
