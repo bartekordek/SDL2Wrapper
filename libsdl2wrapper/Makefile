@@ -7,16 +7,18 @@ DYN_LIB_EXT := .so
 BUILD_ROOT := Build-Linux
 endif
 
-#ifeq ($(ARCH),64)
-#ARCH_FLAG := -m64
-#else
-#ARCH_FLAG := -m32
-#endif
+ARCH_FLAG := -m32
+PLATFORM := x86
+ifeq ($(ARCH),64)
+ARCH_FLAG := -m64
+PLATFORM := x64
+endif
 
 DIAG_FLAG := -fdiagnostics-color=always
 CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
 CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG) -shared
-COMPILER_FLAGS = -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
+COMPILER_FLAGS := -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
+COMPILER_FLAGS := $(COMPILER_FLAGS) -D SDL2W_EXPORT -D SDL2W_LINUX
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = libsdl2wrapper
@@ -25,15 +27,24 @@ OUTPUT_DIR := ../build
 OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
 OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
 
-#DEPS
+# DEPS
 DEPS_HOME := ../deps
+# DEPS::CUL
 CUL_HOME := $(DEPS_HOME)/CUL
 CUL_INC := $(CUL_HOME)/libcul/inc
 CUL_LIB := $(CUL_HOME)/build
 CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
 CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
+COMPILER_FLAGS := $(COMPILER_FLAGS) -D CUL_EXPORT -D CUL_LINUX
+# DEPS::SDL2
+SDL_HOME := $(DEPS_HOME)/SDL2-2.0.7
+SDL_INC := $(SDL_HOME)/include
+SDL_LIB := $(SDL_HOME)/$(PLATFORM)
+SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a
+# DEPS::BOOST
+HOME_BOOST := $(CUL_HOME)/deps/boost_1_66_0
 
-HEADERS_INC := -I inc -I $(CUL_INC)
+HEADERS_INC := -I inc -I $(CUL_INC) -I $(SDL_INC) -I $(HOME_BOOST)
 
 OUTPUT_DEBUG = $(OUTPUT_DIR_DEBUG)/$(DLL_NAME)
 OUTPUT_RELEASE = $(OUTPUT_DIR_RELEASE)/$(DLL_NAME)
@@ -60,12 +71,14 @@ debug: $(OUTPUT_DEBUG)
 release: $(OUTPUT_RELEASE)
 
 $(OUTPUT_DEBUG): $(OBJ_DEBUG_FILES)
-	$(CC_LINK) -o $(OUTPUT_DEBUG) $(OBJ_DEBUG_FILES) $(DEBUG_FLAGS) $(IMPORT_LIBS_DEBUG) -Wl,--out-implib,$(OUTPUT_DIR_DEBUG)/$(IMP_LIB_NAME) -Wl,--export-all-symbols -Wl,--enable-auto-import
-	cp -fv $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/*$(DYN_LIB_EXT) $(OUTPUT_DIR_DEBUG)
+	@mkdir -p $(dir $@)
+	$(CC_LINK) -o $@ $(OBJ_DEBUG_FILES) $(DEBUG_FLAGS) $(IMPORT_LIBS_DEBUG)
+	#cp -fv $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/*$(DYN_LIB_EXT) $(OUTPUT_DIR_DEBUG)
 
 $(OUTPUT_RELEASE): $(OBJ_RELEASE_FILES)
-	$(CC_LINK) -o $(OUTPUT_RELEASE) $(OBJ_RELEASE_FILES) $(RELEASE_FLAGS) $(IMPORT_LIBS_RELEASE) -Wl,--out-implib,$(OUTPUT_DIR_RELEASE)/$(IMP_LIB_NAME) -Wl,--export-all-symbols -Wl,--enable-auto-import
-	cp -fv $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/*$(DYN_LIB_EXT) $(OUTPUT_DIR_RELEASE)
+	@mkdir -p $(dir $@)
+	$(CC_LINK) -o $@ $(OBJ_RELEASE_FILES) $(RELEASE_FLAGS) $(IMPORT_LIBS_RELEASE)
+	#cp -fv $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/*$(DYN_LIB_EXT) $(OUTPUT_DIR_RELEASE)
 
 $(OBJ_DEBUG_DIR)%.o: %.cpp
 	mkdir -p $(dir $@)
