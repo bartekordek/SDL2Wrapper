@@ -15,9 +15,10 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
-CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG) -shared
-COMPILER_FLAGS := -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
+CC_STAND := -std=c++11
+CC := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
+CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared
+COMPILER_FLAGS := -pedantic -Wall -D MogeLib_EXPORT="1" -Wno-ignored-attributes
 COMPILER_FLAGS := $(COMPILER_FLAGS) -D SDL2W_EXPORT -D SDL2W_LINUX
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
@@ -39,8 +40,9 @@ COMPILER_FLAGS := $(COMPILER_FLAGS) -D CUL_EXPORT -D CUL_LINUX
 # DEPS::SDL2
 SDL_HOME := $(DEPS_HOME)/SDL2-2.0.7
 SDL_INC := $(SDL_HOME)/include
-SDL_LIB := $(SDL_HOME)/$(PLATFORM)
+SDL_LIB := $(SDL_HOME)/$(BUILD_ROOT)/$(PLATFORM)
 SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a
+SDL_LIB_IMPORT := $(SDL_LIB)/libSDL2-2.0.so.0.7.0
 # DEPS::BOOST
 HOME_BOOST := $(CUL_HOME)/deps/boost_1_66_0
 
@@ -50,6 +52,9 @@ OUTPUT_DEBUG = $(OUTPUT_DIR_DEBUG)/$(DLL_NAME)
 OUTPUT_RELEASE = $(OUTPUT_DIR_RELEASE)/$(DLL_NAME)
 IMP_LIB_DEBUG = $(OUTPUT_DIR_DEBUG)/$(IMP_LIB_NAME)
 IMP_LIB_RELEASE = $(OUTPUT_DIR_RELEASE)/$(IMP_LIB_NAME)
+
+IMPORT_LIBS_DEBUG := $(SDL_LIB_IMPORT) -pthread
+IMPORT_LIBS_RELEASE := $(SDL_LIB_IMPORT) -pthread
 
 CPP_FILES := $(wildcard */*.cpp)
 
@@ -81,18 +86,12 @@ $(OUTPUT_RELEASE): $(OBJ_RELEASE_FILES)
 	#cp -fv $(HOME_SDL2_LINUX)/Build-Linux/build/.libs/*$(DYN_LIB_EXT) $(OUTPUT_DIR_RELEASE)
 
 $(OBJ_DEBUG_DIR)%.o: %.cpp
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(DEBUG_FLAGS) -c -o $@ $<
 
 $(OBJ_RELEASE_DIR)%.o: %.cpp
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
-
-first_run:
-	mkdir -p $(dir $(OBJ_DEBUG_FILES))
-	mkdir -p $(dir $(OUTPUT_DEBUG))
-	mkdir -p $(dir $(OBJ_RELEASE_FILES))
-	mkdir -p $(dir $(OUTPUT_RELEASE))
 
 clean:
 	rm -f $(OBJ_DEBUG_FILES)

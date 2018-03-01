@@ -7,17 +7,18 @@ DYN_LIB_EXT := .so
 BUILD_ROOT := Build-Linux
 endif
 
+ARCH_FLAG := -m32
+PLATFORM := x86
 ifeq ($(ARCH),64)
 ARCH_FLAG := -m64
-else
-ARCH_FLAG := -m32
+PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-CC := g++ $(ARCH_FLAG) $(DIAG_FLAG)
+CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
 CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG)
-CUL_PREPROCESOR_FLAGS := -D CULLib_EXPORT -D CUL_DYNAMIC
-COMPILER_FLAGS = -pedantic -Wall -std=gnu++11 $(CUL_PREPROCESOR_FLAGS) -Wno-ignored-attributes
+COMPILER_FLAGS := -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
+COMPILER_FLAGS := $(COMPILER_FLAGS) -D SDL2W_EXPORT -D SDL2W_LINUX
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = Tests
@@ -27,22 +28,34 @@ OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
 OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
 RUN_DIR := ../runTests
 
-DEPS_ROOT := ../deps
-ROOT_LIBMOGE := ../libcul
+# DEPS
+DEPS_HOME := ../deps
+# DEPS::CUL
+CUL_HOME := $(DEPS_HOME)/CUL
+CUL_INC := $(CUL_HOME)/libcul/inc
+CUL_LIB := $(CUL_HOME)/build
+CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
+CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
+COMPILER_FLAGS := $(COMPILER_FLAGS) -D CUL_EXPORT -D CUL_LINUX
+# DEPS: SDL2W
+SDL2W_HOME := ../libsdl2wrapper
+SDL2W_INC := $(SDL2W_HOME)/inc
+SDL2W_LIB := ../build
+SDL2W_LIB_DEBUG := $(SDL2W_LIB)/Debug
+SDL2W_LIB_RELEASE := $(SDL2W_LIB)/Release
 
-HEADER_INC := -I . -isystem $(GTEST_INCLUDE) -I $(ROOT_LIBMOGE)/inc
-IMPORT_LIBS_DEBUG := -L$(OUTPUT_DIR_DEBUG) -L$(GTEST_LIBRARY_DIR)
-IMPORT_LIBS_RELEASE := -L$(OUTPUT_DIR_RELEASE) -L$(GTEST_LIBRARY_DIR)
-IMPORT_LIBS_FILES := -lgtest -lgtest_main -lcul
+IMPORT_LIBS_DEBUG := $(CUL_LIB_DEBUG) -L $(SDL2W_LIB_DEBUG) -lsdl2wrapper -pthread
+IMPORT_LIBS_RELEASE := $(CUL_LIB_RELEASE) -L $(SDL2W_LIB_RELEASE) -lsdl2wrapper -pthread
 
-CPP_FILES := $(wildcard */*.cpp)
-CPP_FILES += $(wildcard *.cpp)
+CPP_FILES := $(wildcard *.cpp)
 
 # OBJ:
 OBJ_DEBUG_DIR := $(OUTPUT_DIR_DEBUG)/intermediate_$(PROJECT_NAME)/debug/
 OBJ_RELEASE_DIR := $(OUTPUT_DIR_RELEASE)/intermediate_$(PROJECT_NAME)/release/
 OBJ_DEBUG_FILES := $(addprefix $(OBJ_DEBUG_DIR),$(CPP_FILES:.cpp=.o))
 OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
+
+HEADERS_INC := -I $(CUL_INC) -I $(SDL2W_INC)
 
 debug: $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
 release: $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
@@ -53,11 +66,11 @@ run_debug: debug
 run_release: release
 	cd $(RUN_DIR);./$(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
 
-$(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): run_debug_deps $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
+$(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
 	@mkdir -p $(@D)
 	$(CC_LINK) -o $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME) $(OBJ_DEBUG_FILES) $(IMPORT_LIBS_DEBUG) $(IMPORT_LIBS_FILES)
 
-$(OUTPUT_DIR_RELEASE)/$(BINARY_NAME): run_release_deps $(OBJ_RELEASE_FILES) $(OUTPUT_DIR_RELEASE)
+$(OUTPUT_DIR_RELEASE)/$(BINARY_NAME): $(OBJ_RELEASE_FILES) $(OUTPUT_DIR_RELEASE)
 	@mkdir -p $(@D)
 	$(CC_LINK) -o $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME) $(OBJ_RELEASE_FILES) $(IMPORT_LIBS_RELEASE) $(IMPORT_LIBS_FILES)
 
@@ -69,24 +82,17 @@ $(OUTPUT_DIR_RELEASE):
 
 $(OBJ_DEBUG_DIR)%.o: %.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(HEADER_INC) $(COMPILER_FLAGS) $(DEBUG_FLAGS) -c -o $@ $<
+	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(DEBUG_FLAGS) -c -o $@ $<
 
 $(OBJ_RELEASE_DIR)%.o: %.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(HEADER_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
+	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
 
 clean:
-	make -C $(ROOT_LIBMOGE) clean
 	rm -f $(OBJ_DEBUG_FILES)
 	rm -f $(OBJ_RELEASE_FILES)
 	rm -f $(OUTPUT_DEBUG)
 	rm -f $(OUTPUT_RELEASE)
-
-run_debug_deps:
-	make -C $(ROOT_LIBMOGE) debug
-
-run_release_deps:
-	make -C $(ROOT_LIBMOGE) release
 
 clear_all:
 	find . -name '*.o' | xargs rm
