@@ -17,7 +17,6 @@
 #define SDL2Wrapper_TEMPLATE extern
 #endif
 /*TODO: Find a way to tell library name.
-
 #ifdef _MSC_VER && SDL2Wrapper_DYNAMIC
 #pragma comment(lib, "SDL2WrapperDynamic.lib")
 #elif  MSC_VER
