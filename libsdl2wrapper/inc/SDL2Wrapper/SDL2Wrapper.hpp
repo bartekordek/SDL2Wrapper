@@ -1,9 +1,15 @@
 #pragma once
 
+#if _WIN32
+#define SDL2W_WINDOWS
+#else
+#define SDL2W_LINUX
+#endif
+
 #if defined SDL2W_EXPORT && defined SDL2W_LINUX
 #define SDL2WrapperAPI
 #define SDL2Wrapper_TEMPLATE
-#elif SDL2W_EXPORT
+#elif SDL2W_EXPORT && defined SDL2W_WINDOWS
 #define SDL2WrapperAPI __declspec(dllexport)
 #define SDL2Wrapper_TEMPLATE
 #else
