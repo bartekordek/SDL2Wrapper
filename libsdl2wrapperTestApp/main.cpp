@@ -146,7 +146,7 @@ private:
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
     SDL2W::IWindow* m_activeWindow = nullptr;
 
-    SDL2W::ColorS bckgroundColor;
+    SDL2W::ColorSUI bckgroundColor;
 
     CUL::LckPrim<bool> runLoop{ true };
 
