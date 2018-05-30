@@ -33,14 +33,14 @@ namespace SDL2W
         void clear() override;
 
         void setBackgroundColor( const ColorE color ) override;
-        void setBackgroundColor( const ColorSUI& color ) override;
+        void setBackgroundColor( const ColorS& color ) override;
 
     protected:
     private:
         static SDL_Surface* createSurface( const Path& path );
         ITexture* createTexture( SDL_Surface* surface, const Path& path );
 
-        ColorSUI m_backgroundColor;
+        ColorS m_backgroundColor;
         static void windowDeleter( SDL_Window* win );
         static void rendererDeleter( SDL_Renderer* rend );
         std::shared_ptr<SDL_Window> window;

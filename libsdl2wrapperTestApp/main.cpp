@@ -137,7 +137,9 @@ private:
                 obj2Pos.setX( static_cast< const int >( somePosition.getX() + sin( i ) * amp ) );
                 obj2Pos.setY( static_cast< const int >( somePosition.getY() + cos( i ) * amp ) );
                 this->m_obj2->setPosition( obj2Pos );
-                this->bckgroundColor.g = static_cast<uint8_t>( 124 * ( 1.0 + sin( i / 2 ) ) );
+                auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
+                this->bckgroundColor.setGCU( greeVal );
+                std::cout << "GREEN VAL = " << static_cast<double>( greeVal ) << "\n";
                 m_activeWindow->setBackgroundColor( this->bckgroundColor );
                 i += 0.02;
             }
@@ -146,7 +148,7 @@ private:
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
     SDL2W::IWindow* m_activeWindow = nullptr;
 
-    SDL2W::ColorSUI bckgroundColor;
+    SDL2W::ColorS bckgroundColor;
 
     CUL::LckPrim<bool> runLoop{ true };
 

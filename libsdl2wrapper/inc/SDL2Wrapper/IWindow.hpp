@@ -8,7 +8,7 @@
 #include <memory>
 namespace SDL2W
 {
-    using ColorSUI = CUL::ColorSUI;
+    using ColorS = CUL::ColorS;
     using ColorE = CUL::ColorE;
     using Vector3Di = CUL::Math::Vector3Di;
     using Vector3Du = CUL::Math::Vector3Du;
@@ -43,7 +43,7 @@ namespace SDL2W
         virtual void refreshScreen() = 0;
         virtual void renderAllObjects() = 0;
 
-        virtual void setBackgroundColor( const ColorSUI& color ) = 0;
+        virtual void setBackgroundColor( const ColorS& color ) = 0;
         virtual void setBackgroundColor( const ColorE color ) = 0;
 
         virtual ~IWindow();

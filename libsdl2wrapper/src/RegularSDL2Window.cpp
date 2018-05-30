@@ -191,10 +191,10 @@ void RegularSDL2Window::renderAllObjects()
 {
     SDL_SetRenderDrawColor( 
         this->renderer.get(), 
-        this->m_backgroundColor.m_r,
-        this->m_backgroundColor.m_g,
-        this->m_backgroundColor.m_b,
-        this->m_backgroundColor.m_alpha );
+        this->m_backgroundColor.getRUI(),
+        this->m_backgroundColor.getGUI(),
+        this->m_backgroundColor.getBUI(),
+        this->m_backgroundColor.getAUI() );
 
     IObject* object = nullptr;
     for ( auto& objectPair: this->objects  )
@@ -245,7 +245,7 @@ void RegularSDL2Window::setBackgroundColor( const ColorE color )
     setBackgroundColor( color );
 }
 
-void RegularSDL2Window::setBackgroundColor( const ColorSUI& color )
+void RegularSDL2Window::setBackgroundColor( const ColorS& color )
 {
     this->m_backgroundColor = color;
 }
