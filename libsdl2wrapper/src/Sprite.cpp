@@ -5,8 +5,7 @@
 
 using namespace SDL2W;
 
-Sprite::Sprite():
-    m_pivot( new IPivot( this ) )
+Sprite::Sprite()
 {
 }
 
@@ -22,8 +21,9 @@ ITexture* Sprite::getTexture()
 void Sprite::setTexture( ITexture* inputTexture )
 {
     this->m_texture = const_cast< ITexture* >( inputTexture );
-    this->size = inputTexture->getSize();
-    calculateSizes();
+    this->m_textureRealSize = inputTexture->getSize();
+    this->m_textureRealSize.setZ( 1.0 );
+    calculateSpriteAbsoluteSize();
 }
 
 const IObject::Type Sprite::getType()const
@@ -43,12 +43,12 @@ const CUL::Math::Vector3Dd& Sprite::getRenderPosition()const
 
 const CUL::Math::Vector3Dd& Sprite::getSizeReal()const
 {
-    return this->size;
+    return this->m_textureRealSize;
 }
 
 const CUL::Math::Vector3Dd& Sprite::getSizeAbs()const
 {
-    return this->realSize;
+    return this->m_absoluteSize;
 }
 
 void Sprite::setPosition( const CUL::Math::Vector3Di& newPosition )
@@ -89,28 +89,12 @@ const CUL::Math::Vector3Dd& Sprite::getScale()const
 void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
 {
     this->scale = scnewScale;
-    calculateSizes();
-}
-
-const IPivot* Sprite::getPivot()const
-{
-    return this->m_pivot.get();
-}
-
-void Sprite::calculateSizes()
-{
-    this->realSize = this->scale * this->size;
-    this->m_pivot->setSizeReal( this->realSize );
-}
-
-void Sprite::pivotHasBeenChanged()
-{
-    calculatePositionOffset();
+    calculateSpriteAbsoluteSize();
 }
 
 void Sprite::calculatePositionOffset()
 {
-    this->positionWithOffset = this->position - this->m_pivot->getPivot( IPivot::PivotType::ABSOLUTE );
+    this->positionWithOffset = this->position - this->m_pivotAbsolute;
 }
 
 void Sprite::rotate(
@@ -129,3 +113,89 @@ const CUL::Math::IAngle& Sprite::getAngle(
     }
     return this->yaw; // TODO?
 }
+
+void Sprite::setPivot( 
+    const double px, 
+    const double py, 
+    const double pz,
+    const PivotType type )
+{
+    if( PivotType::ABSOLUTE == type )
+    {
+        this->m_pivotAbsolute.setXYZ( px, py, pz );
+        this->m_pivotNormalised = this->m_pivotAbsolute / this->m_textureRealSize;
+    }
+    else
+    {
+        this->m_pivotNormalised.setXYZ( px, py, pz );
+        this->m_pivotAbsolute = this->m_textureRealSize * this->m_pivotNormalised;
+    }
+}
+
+void Sprite::setPivotX( const double val, const PivotType type )
+{
+    if( PivotType::ABSOLUTE == type )
+    {
+        this->m_pivotAbsolute.setX( val );
+        this->calculatePivotNormalised();
+    }
+    else
+    {
+        this->m_pivotNormalised.setX( val );
+        this->calculatePivotAbsolute();
+    }
+}
+
+void Sprite::setPivotY( const double val, const PivotType type )
+{
+    if( PivotType::ABSOLUTE == type )
+    {
+        this->m_pivotAbsolute.setY( val );
+        this->calculatePivotNormalised();
+    }
+    else
+    {
+        this->m_pivotNormalised.setY( val );
+        this->calculatePivotAbsolute();
+    }
+}
+
+void Sprite::setPivotZ( const double val, const PivotType type )
+{
+    if( PivotType::ABSOLUTE == type )
+    {
+        this->m_pivotAbsolute.setZ( val );
+        this->calculatePivotNormalised();
+    }
+    else
+    {
+        this->m_pivotNormalised.setZ( val );
+        this->calculatePivotAbsolute();
+    }
+}
+
+const Vector3Dd& Sprite::getPivot( const PivotType type )const
+{
+    if( PivotType::ABSOLUTE == type )
+    {
+        return this->m_pivotAbsolute;
+    }
+    return this->m_pivotNormalised;
+}
+
+void Sprite::calculateSpriteAbsoluteSize()
+{
+    this->m_absoluteSize = this->m_textureRealSize * this->scale;
+    calculatePivotAbsolute();
+}
+
+void Sprite::calculatePivotAbsolute()
+{
+    this->m_pivotAbsolute = m_pivotNormalised * m_absoluteSize;
+}
+
+void Sprite::calculatePivotNormalised()
+{
+    this->m_pivotNormalised = this->m_pivotAbsolute / this->m_absoluteSize;
+}
+

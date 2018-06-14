@@ -8,10 +8,9 @@
 
 namespace SDL2W
 {
-    using IPivotObserver = CUL::Math::IPivotObserver;
+    using PivotType = CUL::Math::IPivot::PivotType;
     class Sprite final: 
-        public ISprite,
-        private IPivotObserver
+        public ISprite
     {
     public:
         Sprite();
@@ -35,27 +34,33 @@ namespace SDL2W
         const CUL::Math::Vector3Dd& getScale()const override;
         void setScale( const CUL::Math::Vector3Dd& scale ) override;
 
-  
-        const IPivot* getPivot()const override;
-        void pivotHasBeenChanged() override;
-
         void rotate( const CUL::Math::IAngle& angle, const RotationType = RotationType::YAW );
         const CUL::Math::IAngle& getAngle(
             const RotationType = RotationType::YAW )const;
 
+        void setPivot( const double px, const double py, const double pz, const PivotType type = PivotType::NORMALIZED ) override;
+        void setPivotX( const double val, const PivotType type = PivotType::NORMALIZED ) override;
+        void setPivotY( const double val, const PivotType type = PivotType::NORMALIZED ) override;
+        void setPivotZ( const double val, const PivotType type = PivotType::NORMALIZED ) override;
+
+        const Vector3Dd& getPivot( const PivotType type = PivotType::NORMALIZED )const override;
+
+
     protected:
     private:
-        void calculateSizes();
         void calculatePositionOffset();
+        void calculatePivotAbsolute();
+        void calculatePivotNormalised();
+        void calculateSpriteAbsoluteSize();
 
         ITexture* m_texture = nullptr;
         CUL::Math::Vector3Dd position;
         CUL::Math::Vector3Dd positionWithOffset;
-        CUL::Math::Vector3Dd size;
-        CUL::Math::Vector3Dd realSize;
+        CUL::Math::Vector3Dd m_textureRealSize;
+        CUL::Math::Vector3Dd m_absoluteSize;
         CUL::Math::Vector3Dd scale = CUL::Math::Vector3Dd( 1.0, 1.0, 0.0 );
-
-        std::unique_ptr<IPivot> m_pivot;
+        CUL::Math::Vector3Dd m_pivotNormalised = CUL::Math::Vector3Dd( 0.5, 0.5, 0.5 );
+        CUL::Math::Vector3Dd m_pivotAbsolute = CUL::Math::Vector3Dd( 0.5, 0.5, 0.5 );
         CUL::Math::Degree yaw = 0.0;
     };
 }

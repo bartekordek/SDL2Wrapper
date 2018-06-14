@@ -103,11 +103,14 @@ private:
             this->obj3Pos.setXYZ( 300, 300, 0 );
 
             CUL::Math::Vector3Di obj1Pos( 100, 100, 0 );
-            CUL::Math::Vector3Di somePosition( 450, 100, 0 );
+            CUL::Math::Vector3Di somePosition1( 450, 100, 0 );
+            CUL::Math::Vector3Di somePosition2( 600, 600, 0 );
+            CUL::Math::Vector3Di somePosition3( 800, 500, 0 );
             CUL::Math::Vector3Di obj2Pos;
             this->m_obj1->setPosition( obj1Pos );
-            this->m_obj2->setPosition( somePosition );
-            this->m_obj3->setPosition( obj3Pos );
+            this->m_obj2->setPosition( somePosition2 );
+            this->m_obj3->setPivotX( 0.1 );
+            this->m_obj3->setPosition( somePosition3 );
             someScale.setXYZ( 0.5, 0.5, 0.0 );
             this->m_obj3->setScale( someScale );
 
@@ -134,9 +137,9 @@ private:
                 obj2Angle -= 1;
                 obj3Angle += 1;
                 auto amp = 64;
-                obj2Pos.setX( static_cast< const int >( somePosition.getX() + sin( i ) * amp ) );
-                obj2Pos.setY( static_cast< const int >( somePosition.getY() + cos( i ) * amp ) );
-                this->m_obj2->setPosition( obj2Pos );
+                obj2Pos.setX( static_cast< const int >( somePosition1.getX() + sin( i ) * amp ) );
+                obj2Pos.setY( static_cast< const int >( somePosition1.getY() + cos( i ) * amp ) );
+                //this->m_obj2->setPosition( obj2Pos );
                 auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
                 this->bckgroundColor.setGCU( greeVal );
                 std::cout << "GREEN VAL = " << static_cast<double>( greeVal ) << "\n";
