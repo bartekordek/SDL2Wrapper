@@ -205,7 +205,7 @@ void RegularSDL2Window::renderAllObjects()
             auto sprite = static_cast<Sprite*>( object );
             auto& pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
-            auto pivot = object->getPivot()->getPivot( IPivot::PivotType::ABSOLUTE );
+            auto pivot = object->getPivot( IPivot::PivotType::ABSOLUTE );
 
             SDL_Rect renderQuad;
             renderQuad.x = static_cast<int>( pos.getX() );
