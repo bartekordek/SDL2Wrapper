@@ -21,7 +21,7 @@ RegularSDL2Window::RegularSDL2Window(
         IWindow( pos, size, name )
 {
     auto windowFlags = SDL_WINDOW_SHOWN;
-    this->window.reset(
+    this->m_window.reset(
         SDL_CreateWindow(
             this->getName().c_str(),
             static_cast<int>( this->getPos().getX() ),
@@ -31,12 +31,12 @@ RegularSDL2Window::RegularSDL2Window(
             windowFlags ), RegularSDL2Window::windowDeleter );
 
     this->renderer.reset(
-        SDL_CreateRenderer( this->window.get(), -1, SDL_RENDERER_ACCELERATED ), RegularSDL2Window::rendererDeleter );
+        SDL_CreateRenderer( this->m_window.get(), -1, SDL_RENDERER_ACCELERATED ), RegularSDL2Window::rendererDeleter );
 }
 
 RegularSDL2Window::RegularSDL2Window( const RegularSDL2Window& win ):
     IWindow( win.getPos(), win.getSize(), win.getName() ),
-    window( win.window ),
+    m_window( win.m_window ),
     renderer( win.renderer ),
     objects( win.objects )
 {
@@ -53,7 +53,7 @@ RegularSDL2Window& RegularSDL2Window::operator=( const RegularSDL2Window& right 
         this->setPos( right.getPos() );
         this->setSize( right.getSize() );
         this->setName( right.getName() );
-        this->window = right.window;
+        this->m_window = right.m_window;
         this->renderer = right.renderer;
     }
     return *this;
@@ -185,6 +185,7 @@ void RegularSDL2Window::renderNext()
 void RegularSDL2Window::refreshScreen()
 {
     SDL_RenderPresent( this->renderer.get() );
+    SDL_GL_SwapWindow( this->m_window.get() );
 }
 
 void RegularSDL2Window::renderAllObjects()

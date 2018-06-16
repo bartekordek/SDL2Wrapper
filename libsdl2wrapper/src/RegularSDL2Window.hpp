@@ -43,7 +43,7 @@ namespace SDL2W
         ColorS m_backgroundColor;
         static void windowDeleter( SDL_Window* win );
         static void rendererDeleter( SDL_Renderer* rend );
-        std::shared_ptr<SDL_Window> window;
+        std::shared_ptr<SDL_Window> m_window;
         std::shared_ptr<SDL_Renderer> renderer;
         std::map<IObject*, std::shared_ptr<IObject>> objects;
         std::map<std::string, std::shared_ptr<ITexture>> m_textures;
