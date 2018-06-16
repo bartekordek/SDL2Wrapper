@@ -114,7 +114,7 @@ private:
             someScale.setXYZ( 0.5, 0.5, 0.0 );
             this->m_obj3->setScale( someScale );
 
-            unsigned sleepTimeinMs = 8;
+            unsigned sleepTimeinMs = 18;
             double i = 0.0;
             CUL::Math::Degree obj2Angle;
             CUL::Math::Degree obj3Angle;
