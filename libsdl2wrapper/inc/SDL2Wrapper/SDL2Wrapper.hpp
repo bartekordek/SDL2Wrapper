@@ -10,10 +10,10 @@
 #define SDL2WrapperAPI
 #define SDL2Wrapper_TEMPLATE
 #elif SDL2W_EXPORT && defined SDL2W_WINDOWS
-#define SDL2WrapperAPI __declspec(dllexport)
+#define SDL2WAPI _declspec(dllexport)
 #define SDL2Wrapper_TEMPLATE
 #else
-#define SDL2WrapperAPI __declspec(dllimport)
+#define SDL2WAPI _declspec(dllimport)
 #define SDL2Wrapper_TEMPLATE extern
 #endif
 /*TODO: Find a way to tell library name.

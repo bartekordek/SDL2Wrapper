@@ -1,6 +1,6 @@
 #include "Sprite.hpp"
-#include <SDL.h>
-#include <boost/assert.hpp>
+#include "SDL2Wrapper/IMPORT_SDL.hpp"
+#include "CUL/IMPORT_boost_asset.hpp"
 #include "TextureSDL.hpp"
 
 using namespace SDL2W;

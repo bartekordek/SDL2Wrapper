@@ -1,15 +1,21 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2WrapperImpl.hpp"
+#include "CUL/SimpleAssert.hpp"
 namespace SDL2W
 {
     ISDL2Wrapper* sdlWrapper = nullptr;
 
+    ISDL2Wrapper* createSDL2Wrapper( const Vector3Di& pos,
+                                     const Vector3Du& size,
+                                     CnstStr& winName )
+    {
+        CUL::Assert::simple( sdlWrapper == nullptr, "SDL2Wrapper already constructed." );
+        sdlWrapper = new SDL2WrapperImpl( pos, size, winName );
+    }
+
     ISDL2Wrapper* getSDL2Wrapper()
     {
-        if(nullptr == sdlWrapper)
-        {
-            sdlWrapper = new SDL2WrapperImpl();
-        }
+        CUL::Assert::simple( sdlWrapper != nullptr, "SDL2Wrapper was not constructed yet." );
         return sdlWrapper;
     }
 

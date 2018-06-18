@@ -5,7 +5,7 @@
 
 namespace SDL2W
 {
-    class SDL2WrapperAPI IKeyboardObserver
+    class SDL2WAPI IKeyboardObserver
     {
     public:
         IKeyboardObserver() = default;

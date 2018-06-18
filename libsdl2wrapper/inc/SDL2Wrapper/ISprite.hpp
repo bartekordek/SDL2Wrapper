@@ -5,7 +5,7 @@
 
 namespace SDL2W
 {
-    class SDL2WrapperAPI ISprite:
+    class SDL2WAPI ISprite:
         public IObject
     {    
     public:

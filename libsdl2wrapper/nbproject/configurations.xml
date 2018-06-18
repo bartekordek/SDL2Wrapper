@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <itemPath>inc/SDL2Wrapper/IKey.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/IKeyboardObservable.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/IKeyboardObserver.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/IObject.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/ISDL2Wrapper.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/ISprite.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/ITexture.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/IWindowEventListener.hpp</itemPath>
-      <itemPath>inc/SDL2Wrapper/SDL2Wrapper.hpp</itemPath>
+    <logicalFolder name="inc" displayName="inc" projectFiles="true">
+      <logicalFolder name="SDL2Wrapper" displayName="SDL2Wrapper" projectFiles="true">
+        <itemPath>inc/SDL2Wrapper/IKey.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IKeyboardObservable.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IKeyboardObserver.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IMPORT_SDL.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IMPORT_SDL_renderer.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IMPORT_sdl_video.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IObject.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/ISDL2Wrapper.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/ISprite.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/ITexture.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IWindow.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IWindowEventListener.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/IWindowFactory.hpp</itemPath>
+        <itemPath>inc/SDL2Wrapper/SDL2Wrapper.hpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="f1"
                    displayName="Other important files"
@@ -24,15 +28,14 @@
                    displayName="Resource Files"
                    projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="src" displayName="src" projectFiles="true">
       <itemPath>src/IKey.cpp</itemPath>
       <itemPath>src/IObject.cpp</itemPath>
       <itemPath>src/ISDL2Wrapper.cpp</itemPath>
       <itemPath>src/ISprite.cpp</itemPath>
       <itemPath>src/ITexture.cpp</itemPath>
       <itemPath>src/IWindow.cpp</itemPath>
+      <itemPath>src/IWindowFactory.cpp</itemPath>
       <itemPath>src/KeySDL.cpp</itemPath>
       <itemPath>src/KeySDL.hpp</itemPath>
       <itemPath>src/RegularSDL2Window.cpp</itemPath>
@@ -44,6 +47,8 @@
       <itemPath>src/Sprite.hpp</itemPath>
       <itemPath>src/TextureSDL.cpp</itemPath>
       <itemPath>src/TextureSDL.hpp</itemPath>
+      <itemPath>src/WindowFactoryConcrete.cpp</itemPath>
+      <itemPath>src/WindowFactoryConcrete.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -60,6 +65,10 @@
     </logicalFolder>
     <itemPath>../downloadDeps.sh</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>inc</Elem>
+    <Elem>src</Elem>
+  </sourceRootList>
   <projectmakefile>SDL2Wrapper-Makefile.mk</projectmakefile>
   <confs>
     <conf name="Debug" type="2">
@@ -119,6 +128,24 @@
                             perm="644"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
@@ -131,6 +158,18 @@
             flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/IKeyboardObserver.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IMPORT_SDL.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IMPORT_SDL_renderer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IMPORT_sdl_video.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -150,6 +189,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/IWindowFactory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/IKey.cpp" ex="false" tool="1" flavor2="0">
@@ -163,6 +204,8 @@
       <item path="src/ITexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/IWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/IWindowFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/KeySDL.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -185,6 +228,10 @@
       <item path="src/TextureSDL.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/TextureSDL.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/WindowFactoryConcrete.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/WindowFactoryConcrete.hpp" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -303,6 +350,24 @@
                             perm="644"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/libcul.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/libcul.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/SDL2.dll"
+                            from="../build/${CND_PLATFORM}-${CND_CONF}/SDL2.dll"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="../.gitignore" ex="false" tool="3" flavor2="0">
@@ -315,6 +380,18 @@
             flavor2="0">
       </item>
       <item path="inc/SDL2Wrapper/IKeyboardObserver.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IMPORT_SDL.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IMPORT_SDL_renderer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="inc/SDL2Wrapper/IMPORT_sdl_video.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -334,6 +411,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="inc/SDL2Wrapper/IWindowFactory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/SDL2Wrapper/SDL2Wrapper.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/IKey.cpp" ex="false" tool="1" flavor2="0">
@@ -347,6 +426,8 @@
       <item path="src/ITexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/IWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/IWindowFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/KeySDL.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -369,6 +450,10 @@
       <item path="src/TextureSDL.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/TextureSDL.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/WindowFactoryConcrete.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/WindowFactoryConcrete.hpp" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

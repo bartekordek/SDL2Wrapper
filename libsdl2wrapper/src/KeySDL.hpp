@@ -1,10 +1,14 @@
 #pragma once
 
 #include "SDL2Wrapper/IKey.hpp"
-#include <string>
+#include "CUL/STD_string.hpp"
 
 namespace SDL2W
 {
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable: 4820 )
+#endif
     class KeySDL: public IKey
     {
     public:
@@ -22,4 +26,7 @@ namespace SDL2W
         std::string keyName;
         bool m_keyIsDown = false;
     };
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 }

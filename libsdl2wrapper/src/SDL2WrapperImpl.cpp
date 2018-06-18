@@ -1,18 +1,32 @@
 #include "SDL2WrapperImpl.hpp"
 #include "RegularSDL2Window.hpp"
 #include "KeySDL.hpp"
+#include "Sprite.hpp"
+#include "TextureSDL.hpp"
+
+#include "SDL2Wrapper/IMPORT_SDL.hpp"
+#include "WindowFactoryConcrete.hpp"
+#include "CUL/SimpleAssert.hpp"
 #include "CUL/ITimer.hpp"
-#include <SDL.h>
-#include <set>
-#include <boost/assert.hpp>
 
 using namespace SDL2W;
 
-SDL2WrapperImpl::SDL2WrapperImpl()
+SDL2WrapperImpl::SDL2WrapperImpl(
+    const Vector3Di& pos,
+    const Vector3Du& size,
+    CnstStr& winName )
 {
     const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
-    BOOST_ASSERT_MSG( 0 == sdlInitSuccess, "Cannot initialize SDL subsystem" );
+    CUL::Assert::simple( 0 == sdlInitSuccess, "Cannot initialize SDL subsystem" );
+    this->m_windowFactory = new WindowCreatorConcrete( pos, size, winName );
     createKeys();
+}
+
+SDL2WrapperImpl::~SDL2WrapperImpl()
+{
+    delete this->m_windowFactory;
+    this->m_keys.clear();
+    SDL_Quit();
 }
 
 void SDL2WrapperImpl::createKeys()
@@ -41,43 +55,29 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     return result;
 }
 
-SDL2WrapperImpl::~SDL2WrapperImpl()
-{
-    windows.clear();
-    this->m_keys.clear();
-    SDL_Quit();
-}
-
-IWindow* SDL2WrapperImpl::createWindow(
-    const CUL::Math::Vector3Di& pos,
-    const CUL::Math::Vector3Du& size,
-    const std::string& winName )
-{
-    auto window = new RegularSDL2Window(
-        pos, size, winName );
-    std::shared_ptr<IWindow> result( window );
-    this->windows[winName] = result;
-    return window;
-}
 
 void SDL2WrapperImpl::renderFrame( 
     const bool clearContext,
     const bool refreshWindow )
 {
-    if( true == clearContext )
+    for( size_t i = 0; i < length; i++ )
     {
-        clearWindows();
-    }
 
-    for( auto& window : this->windows )
-    {
-        window.second->renderAllObjects();
     }
+    //if( true == clearContext )
+    //{
+    //    clearWindows();
+    //}
 
-    if( true == refreshWindow )
-    {
-        refreshScreen();
-    }
+    //for( auto& window : this->windows )
+    //{
+    //    window.second->renderAllObjects();
+    //}
+
+    //if( true == refreshWindow )
+    //{
+    //    refreshScreen();
+    //}
 }
 
 void SDL2WrapperImpl::clearWindows()
@@ -95,7 +95,7 @@ void SDL2WrapperImpl::refreshScreen()
         window.second->refreshScreen();
     }
 }
-#include <iostream>
+#include "CUL/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {
     SDL_Event event;
@@ -140,7 +140,8 @@ void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
     }
 }
 
-void SDL2WrapperImpl::addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback )
+void SDL2WrapperImpl::addKeyboardEventCallback(
+    const std::function<void( const IKey& key )>& callback )
 {
     this->m_keyCallbacks.push_back( callback );
 }
@@ -150,12 +151,14 @@ void SDL2WrapperImpl::stopEventLoop()
     this->eventLoopActive = false;
 }
 
-void SDL2WrapperImpl::registerKeyboardEventListener( IKeyboardObserver* observer )
+void SDL2WrapperImpl::registerKeyboardEventListener(
+    IKeyboardObserver* observer )
 {
     this->m_keyboardObservers.insert( observer );
 }
 
-void SDL2WrapperImpl::unregisterKeyboardEventListener( IKeyboardObserver* observer )
+void SDL2WrapperImpl::unregisterKeyboardEventListener(
+    IKeyboardObserver* observer )
 {
     this->m_keyboardObservers.erase( observer );
 }
@@ -168,12 +171,14 @@ void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
     }
 }
 
-void SDL2WrapperImpl::registerWindowEventListener( IWindowEventObserver* observer )
+void SDL2WrapperImpl::registerWindowEventListener(
+    IWindowEventObserver* observer )
 {
     this->m_windowEventObservers.insert( observer );
 }
 
-void SDL2WrapperImpl::unregisterWindowEventListener( IWindowEventObserver* observer )
+void SDL2WrapperImpl::unregisterWindowEventListener(
+    IWindowEventObserver* observer )
 {
     this->m_windowEventObservers.erase( observer );
 }
@@ -199,4 +204,43 @@ const bool SDL2WrapperImpl::isKeyUp( const std::string& keyName )const
 Keys& SDL2WrapperImpl::getKeyStates()
 {
     return this->m_keys;
+}
+
+IWindowFactory* SDL2W::SDL2WrapperImpl::getWindowFactory()
+{
+    CUL::Assert::simple( this->m_windowFactory, "Windows Factory not yet constructed." );
+    return this->m_windowFactory;
+}
+
+ISprite* SDL2WrapperImpl::createSprite( const Path& objPath,
+                                        IWindow* targetWindow )
+{
+    if( IWindow::Type::SDL_WIN == targetWindow->getType() )
+    {
+        auto sdlWin = static_cast<RegularSDL2Window*>( targetWindow );
+        return sdlWin->createSprite( objPath );
+    }
+    return nullptr;
+}
+
+ITexture* SDL2WrapperImpl::createTexture( const Path& objPath,
+                                          IWindow* targetWindow )
+{
+    if( IWindow::Type::SDL_WIN == targetWindow->getType() )
+    {
+        auto sdlWin = static_cast<RegularSDL2Window*>( targetWindow );
+        return sdlWin->createTexture( objPath );
+    }
+    return nullptr;
+}
+
+ISprite* SDL2WrapperImpl::createSprite( ITexture* tex,
+                                        IWindow* targetWindow )
+{
+    if( IWindow::Type::SDL_WIN == targetWindow->getType() )
+    {
+        auto sdlWin = static_cast<RegularSDL2Window*>( targetWindow );
+        return sdlWin->createSprite( tex );
+    }
+    return nullptr;
 }

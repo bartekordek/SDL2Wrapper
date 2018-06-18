@@ -2,7 +2,7 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 namespace SDL2W
 {
-    class SDL2WrapperAPI IWindowEventObserver
+    class SDL2WAPI IWindowEventObserver
     {
     public:
         enum class WindowEventType: short

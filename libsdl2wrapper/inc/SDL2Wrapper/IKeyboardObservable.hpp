@@ -1,10 +1,10 @@
 #pragma once
 #include "SDL2Wrapper/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/IKey.hpp"
-#include <functional>
+#include "CUL/STD_functional.hpp"
 namespace SDL2W
 {
-    class SDL2WrapperAPI IKeyboardObservable
+    class SDL2WAPI IKeyboardObservable
     {
     public:
         IKeyboardObservable() = default;

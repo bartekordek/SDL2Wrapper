@@ -2,23 +2,21 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 #include "CUL/LckPrim.hpp"
-#include <map>
-#include <set>
-#include <vector>
+#include "CUL/STD_vector.hpp"
+#include "CUL/STD_set.hpp"
 struct SDL_Surface;
 namespace SDL2W
 {
     using WindowEventType = IWindowEventObserver::WindowEventType;
-    class SDL2WrapperImpl: public ISDL2Wrapper
+    class SDL2WrapperImpl:
+        public ISDL2Wrapper
     {
     public:
-        SDL2WrapperImpl();
+        SDL2WrapperImpl(
+            const Vector3Di& pos = Vector3Di(),
+            const Vector3Du& size = Vector3Du(),
+            CnstStr& winName = "" );
         virtual ~SDL2WrapperImpl();
-
-        IWindow* createWindow(
-            const CUL::Math::Vector3Di& pos = CUL::Math::Vector3Di(),
-            const CUL::Math::Vector3Du& size = CUL::Math::Vector3Du(),
-            const std::string& winName = "" ) override;
 
         void refreshScreen() override;
         void renderFrame( 
@@ -28,19 +26,30 @@ namespace SDL2W
         void runEventLoop() override;
         void stopEventLoop() override;
 
-        void addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) override;
+        void addKeyboardEventCallback( 
+            const std::function<void( const IKey& key )>& callback ) override;
 
-        void registerKeyboardEventListener( IKeyboardObserver* observer ) override;
+        void registerKeyboardEventListener( 
+            IKeyboardObserver* observer ) override;
         void unregisterKeyboardEventListener( IKeyboardObserver* observer ) override;
 
-        void registerWindowEventListener( IWindowEventObserver* observer ) override;
-        void unregisterWindowEventListener( IWindowEventObserver* observer ) override;
+        void registerWindowEventListener( 
+            IWindowEventObserver* observer ) override;
+        void unregisterWindowEventListener( 
+            IWindowEventObserver* observer ) override;
 
         void setInputLatency( const unsigned int latencyInUs ) override;
-
-        const bool isKeyUp( const std::string& keyName )const;
-
+        const bool isKeyUp( CnstStr& keyName )const;
         Keys& getKeyStates() override;
+
+        IWindowFactory* getWindowFactory() override;
+
+        ITexture* createTexture( const Path& path,
+                                 IWindow* targetWindow ) override;
+        ISprite* createSprite( const Path& path,
+                               IWindow* targetWindow ) override;
+        ISprite* createSprite( ITexture* tex,
+                               IWindow* targetWindow ) override;
 
     protected:
     private:
@@ -50,7 +59,8 @@ namespace SDL2W
         void notifyKeyboardListeners( const IKey& key );
         void notifyWindowEventListeners( const WindowEventType e );
 
-        std::map<const std::string, std::shared_ptr<IWindow>> windows;
+        IWindowFactory* m_windowFactory = nullptr;
+
         CUL::LckPrim<bool> eventLoopActive{ true };
         CUL::LckPrim<unsigned int> m_eventLatencyUs{ 256 };
 
@@ -58,5 +68,6 @@ namespace SDL2W
         std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
         std::set<IKeyboardObserver*> m_keyboardObservers;
         std::set<IWindowEventObserver*> m_windowEventObservers;
+        
     };
 }

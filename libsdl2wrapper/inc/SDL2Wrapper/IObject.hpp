@@ -7,7 +7,9 @@ namespace SDL2W
 {
     using IPivot = CUL::Math::IPivot;
     using IAngle = CUL::Math::IAngle;
-    class SDL2WrapperAPI IObject:
+    using Vector3Dd = CUL::Math::Vector3Dd;
+    using Vector3Di = CUL::Math::Vector3Di;
+    class SDL2WAPI IObject:
         public IPivot
     {
     public:
@@ -23,19 +25,19 @@ namespace SDL2W
             ROLL
         };
 
-        virtual void setPosition( const CUL::Math::Vector3Di& newPosition ) = 0;
+        virtual void setPosition( const Vector3Di& newPosition ) = 0;
         virtual void setX( const double val ) = 0;
         virtual void setY( const double val ) = 0;
         virtual void setZ( const double val ) = 0;
-        virtual void move( const CUL::Math::Vector3Di& moveVect ) = 0;
+        virtual void move( const Vector3Di& moveVect ) = 0;
 
-        virtual const CUL::Math::Vector3Dd& getScale()const = 0;
+        virtual const Vector3Dd& getScale()const = 0;
         virtual void setScale( const CUL::Math::Vector3Dd& scale ) = 0;
 
-        virtual const CUL::Math::Vector3Dd& getPosition()const = 0;
-        virtual const CUL::Math::Vector3Dd& getRenderPosition()const = 0;
-        virtual const CUL::Math::Vector3Dd& getSizeReal()const = 0;
-        virtual const CUL::Math::Vector3Dd& getSizeAbs()const = 0;
+        virtual const Vector3Dd& getPosition()const = 0;
+        virtual const Vector3Dd& getRenderPosition()const = 0;
+        virtual const Vector3Dd& getSizeReal()const = 0;
+        virtual const Vector3Dd& getSizeAbs()const = 0;
 
         virtual const Type getType()const = 0;
         virtual const bool operator==( const IObject& right )const;

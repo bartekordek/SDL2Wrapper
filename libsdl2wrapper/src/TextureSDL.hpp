@@ -1,8 +1,8 @@
 #pragma once
 #include "SDL2Wrapper/ITexture.hpp"
-#include <SDL_render.h>
-#include <memory>
-#include <mutex>
+#include "SDL2Wrapper/IMPORT_SDL_renderer.hpp"
+#include <CUL/STD_memory.hpp>
+#include <CUL/STD_mutex.hpp>
 namespace SDL2W
 {
     class TextureSDL:

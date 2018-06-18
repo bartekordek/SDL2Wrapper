@@ -1,11 +1,11 @@
 #pragma once
 
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
-#include <string>
+#include "CUL/STD_string.hpp"
 
 namespace SDL2W
 {
-    class SDL2WrapperAPI IKey
+    class SDL2WAPI IKey
     {
     public:
         IKey();
@@ -16,6 +16,5 @@ namespace SDL2W
         virtual void setKeyIsDown( const bool isDown ) = 0;
     protected:
     private:
-        
     };
 }

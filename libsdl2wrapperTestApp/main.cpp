@@ -3,9 +3,9 @@
 #include "CUL/FS.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/Math/Degree.hpp"
-#include <thread>
-#include <cmath>
-#include <iostream>
+#include "CUL/STD_thread.hpp"
+#include "CUL/STD_cmath.hpp"
+#include "CUL/STD_iostream.hpp"
 
 class TestApp final: 
     public SDL2W::IKeyboardObserver, 
@@ -13,23 +13,23 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::getSDL2Wrapper() )
+        m_sdlW( SDL2W::createSDL2Wrapper() )
     {
-        m_activeWindow = this->m_sdlW->createWindow(
-            CUL::Math::Vector3Di( 256, 256, 0 ),
-            CUL::Math::Vector3Du( 1280, 800, 0 ),
-            "Windows 1" );
+        this->m_windowFactory = this->m_sdlW->getWindowFactory();
+        this->m_activeWindow = this->m_windowFactory->getMainWindow();
  
         if( this->m_someFile.exists() )
         {
-            this->m_obj1 = this->m_activeWindow->createSprite( this->m_someFile );
-            this->m_obj2 = this->m_activeWindow->createSprite( this->m_someFile );
-            this->m_obj3 = this->m_activeWindow->createSprite( this->m_someFile );
-            this->m_obj4 = this->m_activeWindow->createSprite( this->m_someFile );
+            this->m_obj1 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
+            this->m_obj2 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
+            this->m_obj3 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
+            this->m_obj4 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
     }
+
+    TestApp( const TestApp& rhv ) = delete;
 
     ~TestApp()
     {
@@ -39,6 +39,8 @@ public:
         }
         SDL2W::destroySDL2Wrapper();
     }
+
+    TestApp& operator=( const TestApp& rhv ) = delete;
 
     void runMainLoop()
     {
@@ -86,9 +88,9 @@ public:
         }
     }
 
-    void onWindowEvent( const WindowEventType e ) override
+    void onWindowEvent( const WindowEventType windowEventType ) override
     {
-        std::cout << "WAT!!\n";
+        std::cout << "Event Type: " << static_cast<short>( windowEventType ) << "WAT!!\n";
     }
 
 protected:
@@ -139,16 +141,15 @@ private:
                 auto amp = 64;
                 obj2Pos.setX( static_cast< const int >( somePosition1.getX() + sin( i ) * amp ) );
                 obj2Pos.setY( static_cast< const int >( somePosition1.getY() + cos( i ) * amp ) );
-                //this->m_obj2->setPosition( obj2Pos );
                 auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
                 this->bckgroundColor.setGCU( greeVal );
-                std::cout << "GREEN VAL = " << static_cast<double>( greeVal ) << "\n";
                 m_activeWindow->setBackgroundColor( this->bckgroundColor );
                 i += 0.02;
             }
         }
     }
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
+    SDL2W::IWindowFactory* m_windowFactory = nullptr;
     SDL2W::IWindow* m_activeWindow = nullptr;
 
     SDL2W::ColorS bckgroundColor;
@@ -172,9 +173,16 @@ private:
     CUL::Math::Vector3Di obj4Pos;
 };
 
+#if _MSC_VER
+#pragma warning( push )
+#pragma warning( disable: 4100 )
+#endif
 int main( int argc, char** argv )
 {
     TestApp testApp;
     testApp.runMainLoop();
     return 0;
 }
+#if _MSC_VER
+#pragma warning( pop )
+#endif

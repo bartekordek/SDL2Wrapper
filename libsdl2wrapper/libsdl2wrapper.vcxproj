@@ -91,7 +91,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -140,7 +140,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -189,7 +189,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -235,7 +235,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -286,11 +286,16 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="inc\SDL2Wrapper\IKey.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IKeyboardObservable.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IKeyboardObserver.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_renderer.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_sdl_video.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IObject.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IRender.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISDL2Wrapper.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISprite.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ITexture.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IWindowFactory.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\SDL2Wrapper.hpp" />
     <ClInclude Include="src\KeySDL.hpp" />
@@ -298,20 +303,24 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="src\SDL2WrapperImpl.hpp" />
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\TextureSDL.hpp" />
+    <ClInclude Include="src\WindowFactoryConcrete.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IKey.cpp" />
     <ClCompile Include="src\IObject.cpp" />
+    <ClCompile Include="src\IRender.cpp" />
     <ClCompile Include="src\ISDL2Wrapper.cpp" />
     <ClCompile Include="src\ISprite.cpp" />
     <ClCompile Include="src\ITexture.cpp" />
     <ClCompile Include="src\IWindow.cpp" />
+    <ClCompile Include="src\IWindowFactory.cpp" />
     <ClCompile Include="src\KeySDL.cpp" />
     <ClCompile Include="src\RegularSDL2Window.cpp" />
     <ClCompile Include="src\SDL2Wrapper.cpp" />
     <ClCompile Include="src\SDL2WrapperImpl.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\TextureSDL.cpp" />
+    <ClCompile Include="src\WindowFactoryConcrete.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.git\config" />

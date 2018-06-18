@@ -1,5 +1,5 @@
 #include "TextureSDL.hpp"
-#include <boost/assert.hpp>
+#include "CUL/SimpleAssert.hpp"
 
 using namespace SDL2W;
 
@@ -29,7 +29,7 @@ void TextureSDL::setTexture( const SDL_Texture* texture, const Path& path )
         nullptr,
         &w,
         &h );
-    BOOST_ASSERT_MSG(
+    CUL::Assert::simple(
         0 == sdlQuerySuccess,
         "Cannot initialize SDL subsystem" );
     this->m_size.setX( static_cast<unsigned>( w ) );

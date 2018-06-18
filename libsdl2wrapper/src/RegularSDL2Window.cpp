@@ -1,15 +1,13 @@
-#include "TextureSDL.hpp"
 #include "RegularSDL2Window.hpp"
+#include "TextureSDL.hpp"
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 
 #include "CUL/FS.hpp"
+#include "CUL/SimpleAssert.hpp"
 
-#include <SDL.h>
-#include <SDL_video.h>
-
-#define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE
-#include <boost/assert.hpp>
+#include "SDL2Wrapper/IMPORT_SDL.hpp"
+#include "SDL2Wrapper/IMPORT_sdl_video.hpp"
 
 using namespace SDL2W;
 using namespace CUL;
@@ -17,190 +15,62 @@ using namespace CUL;
 RegularSDL2Window::RegularSDL2Window( 
     const Vector3Di& pos,
     const Vector3Du& size,
-    const std::string& name ):
-        IWindow( pos, size, name )
+    CnstStr& name ):
+        m_position( pos ),
+        m_size( size ),
+        m_name( name )
 {
     auto windowFlags = SDL_WINDOW_SHOWN;
-    this->m_window.reset(
-        SDL_CreateWindow(
-            this->getName().c_str(),
-            static_cast<int>( this->getPos().getX() ),
-            static_cast<int>( this->getPos().getY() ),
-            static_cast<int>( this->getSize().getX() ),
-            static_cast<int>( this->getSize().getY() ),
-            windowFlags ), RegularSDL2Window::windowDeleter );
-
-    this->renderer.reset(
-        SDL_CreateRenderer( this->m_window.get(), -1, SDL_RENDERER_ACCELERATED ), RegularSDL2Window::rendererDeleter );
-}
-
-RegularSDL2Window::RegularSDL2Window( const RegularSDL2Window& win ):
-    IWindow( win.getPos(), win.getSize(), win.getName() ),
-    m_window( win.m_window ),
-    renderer( win.renderer ),
-    objects( win.objects )
-{
+    this->m_window = SDL_CreateWindow(
+        this->getName().c_str(),
+        static_cast<int>( this->getPos().getX() ),
+        static_cast<int>( this->getPos().getY() ),
+        static_cast<int>( this->getSize().getX() ),
+        static_cast<int>( this->getSize().getY() ),
+        windowFlags );
+    this->renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
 }
 
 RegularSDL2Window::~RegularSDL2Window()
 {
+    CUL::Assert::simple( this->m_window, "The Window has been destroyed somwhere else." );
+    CUL::Assert::simple( this->renderer, "The Renderer has been destroyed somwhere else." );
+    SDL_DestroyWindow( this->m_window );
+    SDL_DestroyRenderer( this->renderer );
 }
 
-RegularSDL2Window& RegularSDL2Window::operator=( const RegularSDL2Window& right )
+void RegularSDL2Window::registerObject( IObject* object )
 {
-    if( this != & right)
-    {
-        this->setPos( right.getPos() );
-        this->setSize( right.getSize() );
-        this->setName( right.getName() );
-        this->m_window = right.m_window;
-        this->renderer = right.renderer;
-    }
-    return *this;
+    std::lock_guard<std::mutex> lock( this->m_objectsMtx );
+    this->m_objects.insert( object );
 }
 
-void RegularSDL2Window::windowDeleter( SDL_Window* win )
+void RegularSDL2Window::unregisterObject( IObject* object )
 {
-    SDL_DestroyWindow( win );
+    std::lock_guard<std::mutex> lock( this->m_objectsMtx );
+    this->m_objects.erase( object );
 }
 
-void RegularSDL2Window::rendererDeleter( SDL_Renderer* rend )
+void RegularSDL2Window::updateScreenBuffers()
 {
-    SDL_DestroyRenderer( rend );
+    CUL::Assert::simple( this->renderer, "The Renderer has not been initialized." );
+    CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
+    SDL_RenderPresent( this->renderer );
+    SDL_GL_SwapWindow( this->m_window );
 }
 
-ISprite* RegularSDL2Window::createSprite( const Path& objPath  )
-{
-    ISprite* result = nullptr;
-    BOOST_ASSERT_MSG( objPath.getPath() != "", "EMTPY PATH." );
-    auto it = this->m_textures.find( objPath.getPath() );
-    if ( this->m_textures.end() == it )
-    {
-        auto tex = createTexture( objPath );
-        result = createSprite( tex );
-    }
-    else
-    {
-        auto tex = it->second.get();
-        result = createSprite( tex );
-    }
-    return result;
-}
-
-ITexture* RegularSDL2Window::createTexture( const Path& objPath )
-{
-    ITexture* result = nullptr;
-    BOOST_ASSERT_MSG( objPath.getPath() != "", "EMPTY STRING" );
-    auto it = this->m_textures.find( objPath.getPath() );
-    if( this->m_textures.end() == it )
-    {
-        auto surface = createSurface( objPath );
-        auto tex = createTexture( surface, objPath );
-        SDL_FreeSurface( surface );
-        surface = nullptr;
-        result = tex;
-    }
-    else
-    {
-        result = it->second.get();
-    }
-    return result;
-}
-
-ISprite* RegularSDL2Window::createSprite( ITexture* tex )
-{
-    auto spritePtr = new Sprite();
-    spritePtr->setTexture( tex );
-    std::shared_ptr<IObject> objPtr( spritePtr );
-    this->objects[ spritePtr ] = objPtr;
-    return spritePtr;
-}
-
-SDL_Surface* RegularSDL2Window::createSurface( const Path& path )
-{
-    bool pathExist = path.exists();
-    if( false == pathExist )
-    {
-        const std::string msg = "File " + path.getPath() + " does not exist.";
-        BOOST_ASSERT_MSG( false, msg.c_str() );
-    }
-
-    SDL_Surface* result = nullptr;
-    if ( ".bmp" == path.getExtension() )
-    {
-        result = SDL_LoadBMP( path.getPath().c_str() );
-    }
-
-    if ( ".png" == path.getExtension() )
-    {
-        //TODO result = SDL_Load
-    }
-    BOOST_ASSERT( result != nullptr );
-    return result;
-}
-
-ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& path )
-{
-    if ( nullptr == this->renderer.get() )
-    {
-        const std::string msg( "RENDERER NOT READY!\n" );
-        BOOST_ASSERT_MSG( false, msg.c_str() );
-    }
-
-    ITexture* result = nullptr;
-    auto texSDL = new TextureSDL();
-    auto tex = SDL_CreateTextureFromSurface( 
-        this->renderer.get(),
-        surface );
-
-    if ( tex )
-    {
-        texSDL->setTexture( tex, path );
-        result = texSDL;
-		std::shared_ptr<ITexture> iTexPtr( result );
-        this->m_textures[ path.getPath().c_str() ] = iTexPtr;
-    }
-    else
-    {
-        const std::string msg = 
-            "Cannot create texture from " +
-            path.getPath() +
-            " does not exist.";
-        BOOST_ASSERT_MSG( false, msg.c_str() );
-    }
-    return result;
-}
-
-void RegularSDL2Window::renderNext()
-{
-    /*TODO*/
-    //objects->getRandomIteratorPtr()->hasNext();
-    //auto obj = objects->getRandomIteratorPtr()->next();
-    //if( IObject::Type::SPRITE == obj->getType() )
-    //{
-    //    auto tex = static_cast<Sprite*>( obj.get() );
-    //}
-}
-
-void RegularSDL2Window::refreshScreen()
-{
-    SDL_RenderPresent( this->renderer.get() );
-    SDL_GL_SwapWindow( this->m_window.get() );
-}
-
-void RegularSDL2Window::renderAllObjects()
+void RegularSDL2Window::renderAll()
 {
     SDL_SetRenderDrawColor( 
-        this->renderer.get(), 
+        this->renderer, 
         this->m_backgroundColor.getRUI(),
         this->m_backgroundColor.getGUI(),
         this->m_backgroundColor.getBUI(),
         this->m_backgroundColor.getAUI() );
 
     IObject* object = nullptr;
-    for ( auto& objectPair: this->objects  )
+    for ( auto& object : this->m_objects )
     {
-        object = objectPair.second.get();
         if ( IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
@@ -226,19 +96,14 @@ void RegularSDL2Window::renderAllObjects()
             center.y = static_cast<int>( pivot.getY() );
 
             auto result = SDL_RenderCopyEx(
-                this->renderer.get(),
+                this->renderer,
                 texSDLW->getTexture(),
                 srcRect.get(),
                 &renderQuad,
                 angle, &center, SDL_RendererFlip::SDL_FLIP_NONE );
-            BOOST_ASSERT_MSG( result == 0, "Cannot render SDL texture..." );
+            CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
-}
-
-void RegularSDL2Window::clear()
-{
-    SDL_RenderClear( this->renderer.get() );
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorE color )
@@ -246,7 +111,149 @@ void RegularSDL2Window::setBackgroundColor( const ColorE color )
     setBackgroundColor( color );
 }
 
+void RegularSDL2Window::clearBuffers()
+{
+    CUL::Assert::simple( this->renderer, "The Renderer has been deleted somwhere else." );
+    SDL_RenderClear( this->renderer );
+}
+
 void RegularSDL2Window::setBackgroundColor( const ColorS& color )
 {
     this->m_backgroundColor = color;
+}
+
+const Vector3Di& RegularSDL2Window::getPos()const
+{
+    return this->m_position;
+}
+
+void RegularSDL2Window::setPos( const Vector3Di& pos )
+{
+    this->m_position = pos;
+}
+
+const Vector3Du& RegularSDL2Window::getSize()const
+{
+    return this->m_size;
+}
+
+void RegularSDL2Window::setSize( const Vector3Du& size )
+{
+    this->m_size = size;
+}
+
+CnstStr& RegularSDL2Window::getName()const
+{
+    return this->m_name;
+}
+
+void RegularSDL2Window::setName( CnstStr& name )
+{
+    this->m_name = name;
+}
+
+const IWindow::Type RegularSDL2Window::getType() const
+{
+    return IWindow::Type::SDL_WIN;
+}
+
+ISprite* RegularSDL2Window::createSprite( const Path& objPath )
+{
+    ISprite* result = nullptr;
+    CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
+    auto it = this->m_textures.find( objPath.getPath() );
+    if( this->m_textures.end() == it )
+    {
+        auto tex = createTexture( objPath );
+        result = createSprite( tex );
+    }
+    else
+    {
+        auto tex = it->second.get();
+        result = createSprite( tex );
+    }
+    return nullptr;
+}
+
+ITexture* RegularSDL2Window::createTexture( const Path& objPath )
+{
+    ITexture* result = nullptr;
+    CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
+    auto it = this->m_textures.find( objPath.getPath() );
+    if( this->m_textures.end() == it )
+    {
+        auto surface = createSurface( objPath );
+        auto tex = createTexture( surface, objPath );
+        SDL_FreeSurface( surface );
+        surface = nullptr;
+        result = tex;
+    }
+    else
+    {
+        result = it->second.get();
+    }
+    return result;
+}
+
+ISprite* RegularSDL2Window::createSprite(
+    ITexture* tex )
+{
+    auto spritePtr = new Sprite();
+    spritePtr->setTexture( tex );
+    return spritePtr;
+}
+
+SDL_Surface* RegularSDL2Window::createSurface(
+    const Path& path )
+{
+    if( false == path.exists() )
+    {
+        const std::string msg =
+            "File " +
+            path.getPath() +
+            " does not exist.";
+        CUL::Assert::simple( false, msg.c_str() );
+    }
+
+    SDL_Surface* result = nullptr;
+    if( ".bmp" == path.getExtension() )
+    {
+        result = SDL_LoadBMP( path.getPath().c_str() );
+    }
+
+    if( ".png" == path.getExtension() )
+    {
+        //TODO result = SDL_Load
+    }
+    CUL::Assert::simple(
+        nullptr != result,
+        "Result is nullptr." );
+    return result;
+}
+
+ITexture* RegularSDL2Window::createTexture(
+    SDL_Surface* surface,
+    const Path& path )
+{
+    CUL::Assert::simple( this->renderer, "RENDERER NOT READY!\n" );
+    ITexture* result = nullptr;
+    auto texSDL = new TextureSDL();
+    auto tex = SDL_CreateTextureFromSurface(
+        this->renderer,
+        surface );
+    CUL::Assert::simple( 
+        tex,
+        "Cannot create texture from " +
+        path.getPath() +
+        " does not exist." );
+
+    texSDL->setTexture( tex, path );
+    result = texSDL;
+    this->m_textures[ path.getPath() ] = std::make_unique<ITexture>( result );
+    return result;
+}
+
+const ColorS RegularSDL2Window::getBackgroundColor()const
+{
+    return this->m_backgroundColor;
 }
