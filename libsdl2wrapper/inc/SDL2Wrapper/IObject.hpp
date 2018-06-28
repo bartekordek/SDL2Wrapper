@@ -45,7 +45,7 @@ namespace SDL2W
         virtual void rotate(
             const IAngle& angle,
             const RotationType = RotationType::YAW ) = 0;
-        virtual const CUL::Math::IAngle& getAngle( 
+        virtual const IAngle& getAngle( 
             const RotationType = RotationType::YAW )const = 0;
 
     protected:
