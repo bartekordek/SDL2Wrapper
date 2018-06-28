@@ -15,8 +15,7 @@ namespace SDL2W
 {
     using TextureMap = std::map<std::string, std::unique_ptr<ITexture>>;
     class RegularSDL2Window:
-        public IWindow,
-        public IRender
+        public IWindow
     {
     public:
         RegularSDL2Window() = delete;
@@ -30,8 +29,6 @@ namespace SDL2W
         RegularSDL2Window& operator=(
             const RegularSDL2Window& right ) = delete;
 
-        void setBackgroundColor( const ColorE color ) override;
-        void setBackgroundColor( const ColorS& color ) override;
 
         const Vector3Di& getPos()const override;
         void setPos( const Vector3Di& pos ) override;
@@ -39,12 +36,8 @@ namespace SDL2W
         const Vector3Du& getSize()const override;
         void setSize( const Vector3Du& size ) override;
 
-        CnstStr& getName()const override;
-        void setName( CnstStr& name ) override;
-
-        void registerObject( IObject* object ) override;
-        void unregisterObject( IObject* object ) override;
-
+        void setBackgroundColor( const ColorE color ) override;
+        void setBackgroundColor( const ColorS& color ) override;
         void clearBuffers() override;
         void renderAll() override;
         void updateScreenBuffers() override;
@@ -71,6 +64,5 @@ namespace SDL2W
 
         Vector3Di m_position;
         Vector3Du m_size;
-        std::string m_name;
     };
 }

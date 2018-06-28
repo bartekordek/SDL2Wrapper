@@ -10,7 +10,11 @@ namespace SDL2W
     {
     public:
         TextureSDL();
+        TextureSDL( const TextureSDL& val ) = delete;
         virtual ~TextureSDL();
+
+        TextureSDL& operator=( const TextureSDL& val ) = delete;
+
         SDL_Texture* getTexture()const;
         void setTexture( const SDL_Texture* texture, const Path& path );
         const Vector3Dd& getSize()const override;

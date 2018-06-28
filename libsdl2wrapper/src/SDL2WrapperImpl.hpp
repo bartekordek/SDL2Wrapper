@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
+#include "WindowFactoryConcrete.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/STD_vector.hpp"
 #include "CUL/STD_set.hpp"
@@ -16,7 +17,10 @@ namespace SDL2W
             const Vector3Di& pos = Vector3Di(),
             const Vector3Du& size = Vector3Du(),
             CnstStr& winName = "" );
+        SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
         virtual ~SDL2WrapperImpl();
+
+        SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
 
         void refreshScreen() override;
         void renderFrame( 
@@ -51,6 +55,9 @@ namespace SDL2W
         ISprite* createSprite( ITexture* tex,
                                IWindow* targetWindow ) override;
 
+        void clearWindows() override;
+
+
     protected:
     private:
         void createKeys();
@@ -59,7 +66,7 @@ namespace SDL2W
         void notifyKeyboardListeners( const IKey& key );
         void notifyWindowEventListeners( const WindowEventType e );
 
-        IWindowFactory* m_windowFactory = nullptr;
+        WindowCreatorConcrete* m_windowFactory = nullptr;
 
         CUL::LckPrim<bool> eventLoopActive{ true };
         CUL::LckPrim<unsigned int> m_eventLatencyUs{ 256 };

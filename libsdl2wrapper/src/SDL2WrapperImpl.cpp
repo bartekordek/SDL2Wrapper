@@ -5,7 +5,6 @@
 #include "TextureSDL.hpp"
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
-#include "WindowFactoryConcrete.hpp"
 #include "CUL/SimpleAssert.hpp"
 #include "CUL/ITimer.hpp"
 
@@ -60,24 +59,21 @@ void SDL2WrapperImpl::renderFrame(
     const bool clearContext,
     const bool refreshWindow )
 {
-    for( size_t i = 0; i < length; i++ )
+    auto& windows = this->m_windowFactory->getAllWindows();
+    if( true == clearContext )
     {
-
+        for( auto& window: windows )
+        {
+            window.first->clearBuffers();
+        }
     }
-    //if( true == clearContext )
-    //{
-    //    clearWindows();
-    //}
 
-    //for( auto& window : this->windows )
-    //{
-    //    window.second->renderAllObjects();
-    //}
+    for( auto& window : windows )
+    {
+        window.second->renderAll();
+    }
 
-    //if( true == refreshWindow )
-    //{
-    //    refreshScreen();
-    //}
+    refreshScreen();
 }
 
 void SDL2WrapperImpl::clearWindows()

@@ -11,7 +11,12 @@ namespace SDL2W
     {
     public:
         ITexture();
+        ITexture( const ITexture& val ) = delete;
+
         virtual ~ITexture();
+
+        ITexture& operator=( const ITexture& rhv ) = delete;
+
         virtual const Vector3Dd& getSize()const = 0;
         virtual const Path& getPath()const = 0;
 

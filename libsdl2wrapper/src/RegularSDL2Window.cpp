@@ -17,8 +17,7 @@ RegularSDL2Window::RegularSDL2Window(
     const Vector3Du& size,
     CnstStr& name ):
         m_position( pos ),
-        m_size( size ),
-        m_name( name )
+        m_size( size )
 {
     auto windowFlags = SDL_WINDOW_SHOWN;
     this->m_window = SDL_CreateWindow(
@@ -29,26 +28,14 @@ RegularSDL2Window::RegularSDL2Window(
         static_cast<int>( this->getSize().getY() ),
         windowFlags );
     this->renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
+    setName( name );
 }
-
 RegularSDL2Window::~RegularSDL2Window()
 {
     CUL::Assert::simple( this->m_window, "The Window has been destroyed somwhere else." );
     CUL::Assert::simple( this->renderer, "The Renderer has been destroyed somwhere else." );
     SDL_DestroyWindow( this->m_window );
     SDL_DestroyRenderer( this->renderer );
-}
-
-void RegularSDL2Window::registerObject( IObject* object )
-{
-    std::lock_guard<std::mutex> lock( this->m_objectsMtx );
-    this->m_objects.insert( object );
-}
-
-void RegularSDL2Window::unregisterObject( IObject* object )
-{
-    std::lock_guard<std::mutex> lock( this->m_objectsMtx );
-    this->m_objects.erase( object );
 }
 
 void RegularSDL2Window::updateScreenBuffers()
@@ -68,8 +55,7 @@ void RegularSDL2Window::renderAll()
         this->m_backgroundColor.getBUI(),
         this->m_backgroundColor.getAUI() );
 
-    IObject* object = nullptr;
-    for ( auto& object : this->m_objects )
+    for( auto& object : this->m_objects )
     {
         if ( IObject::Type::SPRITE == object->getType() )
         {
@@ -140,16 +126,6 @@ const Vector3Du& RegularSDL2Window::getSize()const
 void RegularSDL2Window::setSize( const Vector3Du& size )
 {
     this->m_size = size;
-}
-
-CnstStr& RegularSDL2Window::getName()const
-{
-    return this->m_name;
-}
-
-void RegularSDL2Window::setName( CnstStr& name )
-{
-    this->m_name = name;
 }
 
 const IWindow::Type RegularSDL2Window::getType() const
@@ -236,8 +212,8 @@ ITexture* RegularSDL2Window::createTexture(
     const Path& path )
 {
     CUL::Assert::simple( this->renderer, "RENDERER NOT READY!\n" );
-    ITexture* result = nullptr;
     auto texSDL = new TextureSDL();
+
     auto tex = SDL_CreateTextureFromSurface(
         this->renderer,
         surface );
@@ -248,9 +224,8 @@ ITexture* RegularSDL2Window::createTexture(
         " does not exist." );
 
     texSDL->setTexture( tex, path );
-    result = texSDL;
-    this->m_textures[ path.getPath() ] = std::make_unique<ITexture>( result );
-    return result;
+    this->m_textures[ path.getPath() ] = std::unique_ptr<ITexture>( texSDL );
+    return texSDL;
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor()const

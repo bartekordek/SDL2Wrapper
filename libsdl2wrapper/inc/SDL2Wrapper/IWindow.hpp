@@ -3,16 +3,23 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/ITexture.hpp"
+#include "SDL2Wrapper/IRender.hpp"
 #include "CUL/STD_string.hpp"
 #include "CUL/Color.hpp"
+#include "CUL/IName.hpp"
 
 namespace SDL2W
 {
+    class SDL2WAPI CUL::IName;
     using Vector3Di = CUL::Math::Vector3Di;
     using Vector3Du = CUL::Math::Vector3Du;
     using ColorS = CUL::ColorS;
     using ColorE = CUL::ColorE;
-    class SDL2WAPI IWindow
+    using IName = CUL::IName;
+
+    class SDL2WAPI IWindow:
+        public IRender,
+        public IName
     {
     public:
         enum class Type: char
@@ -33,16 +40,7 @@ namespace SDL2W
         virtual const Vector3Du& getSize()const = 0;
         virtual void setSize( const Vector3Du& size ) = 0;
 
-        virtual CnstStr& getName()const = 0;
-        virtual void setName( CnstStr& name ) = 0;
-
-        virtual void registerObject( IObject* object ) = 0;
-        virtual void unregisterObject( IObject* object ) = 0;
-
         virtual const Type getType() const = 0;
-
-        virtual const ColorS getBackgroundColor()const = 0;
-        virtual void setBackgroundColor( const ColorS& color ) = 0;
 
     protected:
     private:

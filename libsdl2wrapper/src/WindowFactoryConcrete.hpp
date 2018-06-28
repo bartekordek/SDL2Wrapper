@@ -26,6 +26,7 @@ namespace SDL2W
 
         IWindow* getMainWindow() override;
         IWindow* getWindow( const char* winName ) override;
+        WindowCollection& getAllWindows();
 
     protected:
     private:

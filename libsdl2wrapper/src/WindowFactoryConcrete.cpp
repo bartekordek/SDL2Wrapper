@@ -35,7 +35,8 @@ IWindow* WindowCreatorConcrete::createWindow(
     return window;
 }
 
-IWindow* WindowCreatorConcrete::getWindow( const char* winName )
+IWindow* WindowCreatorConcrete::getWindow(
+    const char* winName )
 {
     for( auto& windows : this->m_windows )
     {
@@ -45,4 +46,9 @@ IWindow* WindowCreatorConcrete::getWindow( const char* winName )
         }
     }
     return nullptr;
+}
+
+WindowCollection & SDL2W::WindowCreatorConcrete::getAllWindows()
+{
+    return this->m_windows;
 }
