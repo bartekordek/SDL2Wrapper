@@ -11,6 +11,7 @@ namespace SDL2W
     {
         CUL::Assert::simple( sdlWrapper == nullptr, "SDL2Wrapper already constructed." );
         sdlWrapper = new SDL2WrapperImpl( pos, size, winName );
+        return sdlWrapper;
     }
 
     ISDL2Wrapper* getSDL2Wrapper()

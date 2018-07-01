@@ -30,12 +30,17 @@ RegularSDL2Window::RegularSDL2Window(
     this->renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
     setName( name );
 }
+
 RegularSDL2Window::~RegularSDL2Window()
 {
+    std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
+    this->m_textures.clear();
     CUL::Assert::simple( this->m_window, "The Window has been destroyed somwhere else." );
     CUL::Assert::simple( this->renderer, "The Renderer has been destroyed somwhere else." );
-    SDL_DestroyWindow( this->m_window );
     SDL_DestroyRenderer( this->renderer );
+    this->renderer = nullptr;
+    SDL_DestroyWindow( this->m_window );
+    this->m_window = nullptr;
 }
 
 void RegularSDL2Window::updateScreenBuffers()
@@ -48,15 +53,15 @@ void RegularSDL2Window::updateScreenBuffers()
 
 void RegularSDL2Window::renderAll()
 {
-    SDL_SetRenderDrawColor( 
+     SDL_SetRenderDrawColor( 
         this->renderer, 
         this->m_backgroundColor.getRUI(),
         this->m_backgroundColor.getGUI(),
         this->m_backgroundColor.getBUI(),
         this->m_backgroundColor.getAUI() );
-
-    for( auto& object : this->m_objects )
-    {
+     std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
+     for( auto& object : this->m_objects )
+     {
         if ( IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
@@ -148,7 +153,7 @@ ISprite* RegularSDL2Window::createSprite( const Path& objPath )
         auto tex = it->second.get();
         result = createSprite( tex );
     }
-    return nullptr;
+    return result;
 }
 
 ITexture* RegularSDL2Window::createTexture( const Path& objPath )
@@ -176,6 +181,7 @@ ISprite* RegularSDL2Window::createSprite(
 {
     auto spritePtr = new Sprite();
     spritePtr->setTexture( tex );
+    addObject( spritePtr );
     return spritePtr;
 }
 
@@ -226,6 +232,18 @@ ITexture* RegularSDL2Window::createTexture(
     texSDL->setTexture( tex, path );
     this->m_textures[ path.getPath() ] = std::unique_ptr<ITexture>( texSDL );
     return texSDL;
+}
+
+void RegularSDL2Window::addObject( IObject* object )
+{
+    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
+    this->m_objects.insert( object );
+}
+
+void RegularSDL2Window::removeObject( IObject* object )
+{
+    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
+    this->m_objects.erase( object );
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor()const

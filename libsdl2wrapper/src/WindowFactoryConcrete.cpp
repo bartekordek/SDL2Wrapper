@@ -31,7 +31,7 @@ IWindow* WindowCreatorConcrete::createWindow(
 {
     auto window = new RegularSDL2Window(
         pos, size, winName );
-    this->m_windows[ window ] = std::make_unique<IWindow>( window );
+    this->m_windows[ window ] = std::unique_ptr<IWindow>( window );
     return window;
 }
 
@@ -48,7 +48,7 @@ IWindow* WindowCreatorConcrete::getWindow(
     return nullptr;
 }
 
-WindowCollection & SDL2W::WindowCreatorConcrete::getAllWindows()
+WindowCollection& SDL2W::WindowCreatorConcrete::getAllWindows()
 {
     return this->m_windows;
 }

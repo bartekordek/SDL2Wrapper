@@ -288,8 +288,9 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="inc\SDL2Wrapper\IKeyboardObserver.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_renderer.hpp" />
-    <ClInclude Include="inc\SDL2Wrapper\IMPORT_sdl_video.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_video.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IObject.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IObjectRegister.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IRender.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISDL2Wrapper.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISprite.hpp" />

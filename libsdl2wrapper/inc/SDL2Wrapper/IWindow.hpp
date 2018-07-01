@@ -4,6 +4,7 @@
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/ITexture.hpp"
 #include "SDL2Wrapper/IRender.hpp"
+#include "SDL2Wrapper/IObjectRegister.hpp"
 #include "CUL/STD_string.hpp"
 #include "CUL/Color.hpp"
 #include "CUL/IName.hpp"
@@ -19,7 +20,8 @@ namespace SDL2W
 
     class SDL2WAPI IWindow:
         public IRender,
-        public IName
+        public IName,
+        public IObjectRegister
     {
     public:
         enum class Type: char

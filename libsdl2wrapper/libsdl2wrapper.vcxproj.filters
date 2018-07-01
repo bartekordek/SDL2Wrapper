@@ -66,9 +66,6 @@
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IMPORT_sdl_video.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -79,6 +76,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IRender.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_video.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IObjectRegister.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

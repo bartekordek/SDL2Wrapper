@@ -55,9 +55,6 @@ namespace SDL2W
         ISprite* createSprite( ITexture* tex,
                                IWindow* targetWindow ) override;
 
-        void clearWindows() override;
-
-
     protected:
     private:
         void createKeys();
@@ -75,6 +72,7 @@ namespace SDL2W
         std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
         std::set<IKeyboardObserver*> m_keyboardObservers;
         std::set<IWindowEventObserver*> m_windowEventObservers;
-        
+        WindowCollection* m_windows = nullptr;
+
     };
 }

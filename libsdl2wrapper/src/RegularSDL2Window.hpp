@@ -55,6 +55,10 @@ namespace SDL2W
         SDL_Surface * createSurface( const Path& path );
         ITexture* createTexture( SDL_Surface* surface, const Path& path );
 
+        // Inherited via IWindow
+        virtual void addObject( IObject * object ) override;
+        virtual void removeObject( IObject * object ) override;
+
         ColorS m_backgroundColor;
         SDL_Window* m_window = nullptr;
         SDL_Renderer* renderer = nullptr;

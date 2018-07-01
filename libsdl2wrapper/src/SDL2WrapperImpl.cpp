@@ -54,43 +54,43 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     return result;
 }
 
-
 void SDL2WrapperImpl::renderFrame( 
     const bool clearContext,
     const bool refreshWindow )
 {
-    auto& windows = this->m_windowFactory->getAllWindows();
+    this->m_windows = &this->m_windowFactory->getAllWindows();
     if( true == clearContext )
     {
-        for( auto& window: windows )
-        {
-            window.first->clearBuffers();
-        }
+        clearWindows();
     }
 
-    for( auto& window : windows )
+    for( auto& window : *this->m_windows )
     {
         window.second->renderAll();
     }
 
-    refreshScreen();
+    if( true == refreshWindow )
+    {
+        refreshScreen();
+    }
 }
 
 void SDL2WrapperImpl::clearWindows()
 {
-    for( auto& window : this->windows )
+    for( auto& window : *this->m_windows )
     {
-        window.second->clear();
+        window.first->clearBuffers();
     }
 }
 
 void SDL2WrapperImpl::refreshScreen()
 {
-    for( auto& window : this->windows )
+    for( auto& window : *this->m_windows )
     {
-        window.second->refreshScreen();
+        window.first->updateScreenBuffers();
     }
 }
+
 #include "CUL/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {

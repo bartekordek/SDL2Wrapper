@@ -13,7 +13,7 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper() )
+        m_sdlW( SDL2W::createSDL2Wrapper( SDL2W::Vector3Di( 200, 200, 0 ) ) )
     {
         this->m_windowFactory = this->m_sdlW->getWindowFactory();
         this->m_activeWindow = this->m_windowFactory->getMainWindow();
