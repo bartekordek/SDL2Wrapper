@@ -6,7 +6,7 @@ namespace SDL2W
 {
     using Vector3Dd = CUL::Math::Vector3Dd;
     using Path = CUL::FS::Path;
-    //using WindowsList = std::map
+
     class SDL2WAPI ITexture
     {
     public:
