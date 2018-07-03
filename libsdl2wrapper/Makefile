@@ -17,9 +17,9 @@ endif
 DIAG_FLAG := -fdiagnostics-color=always
 CC_STAND := -std=c++11
 CC := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
-CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared
-COMPILER_FLAGS := -pedantic -Wall -D MogeLib_EXPORT="1" -Wno-ignored-attributes
-COMPILER_FLAGS := $(COMPILER_FLAGS) -D SDL2W_EXPORT -D SDL2W_LINUX
+CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared -fPIC
+COMPILER_FLAGS := -pedantic -Wall -DSDL2W_EXPORT -Wno-ignored-attributes
+COMPILER_FLAGS := $(COMPILER_FLAGS) -D SDL2W_EXPORT
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = libsdl2wrapper
@@ -34,17 +34,16 @@ DEPS_HOME := ../deps
 CUL_HOME := $(DEPS_HOME)/CUL
 CUL_INC := $(CUL_HOME)/libcul/inc
 CUL_LIB := $(CUL_HOME)/build
-CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
-CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
-COMPILER_FLAGS := $(COMPILER_FLAGS) -D CUL_EXPORT -D CUL_LINUX
+CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so -ldl
+CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so -ldl
+COMPILER_FLAGS := $(COMPILER_FLAGS) -D CUL_EXPORT
 # DEPS::SDL2
 SDL_HOME := $(DEPS_HOME)/SDL2-2.0.7
 SDL_INC := $(SDL_HOME)/include
 SDL_LIB := $(SDL_HOME)/$(BUILD_ROOT)/$(PLATFORM)
 SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a
-SDL_LIB_IMPORT := $(SDL_LIB)/libSDL2-2.0.so.0.7.0
 # DEPS::BOOST
-HOME_BOOST := $(CUL_HOME)/deps/boost_1_66_0
+HOME_BOOST := $(CUL_HOME)/deps/boost_1_67_0
 
 HEADERS_INC := -I inc -I $(CUL_INC) -I $(SDL_INC) -I $(HOME_BOOST)
 
@@ -53,8 +52,8 @@ OUTPUT_RELEASE = $(OUTPUT_DIR_RELEASE)/$(DLL_NAME)
 IMP_LIB_DEBUG = $(OUTPUT_DIR_DEBUG)/$(IMP_LIB_NAME)
 IMP_LIB_RELEASE = $(OUTPUT_DIR_RELEASE)/$(IMP_LIB_NAME)
 
-IMPORT_LIBS_DEBUG := $(SDL_LIB_IMPORT) -pthread
-IMPORT_LIBS_RELEASE := $(SDL_LIB_IMPORT) -pthread
+IMPORT_LIBS_DEBUG := $(SDL_LIB_FILES) -pthread
+IMPORT_LIBS_RELEASE := $(SDL_LIB_FILES) -pthread
 
 CPP_FILES := $(wildcard */*.cpp)
 

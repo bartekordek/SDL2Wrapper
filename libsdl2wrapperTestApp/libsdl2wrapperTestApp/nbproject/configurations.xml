@@ -41,8 +41,8 @@
             <pElem>../../deps/CUL/libcul/inc</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>CULLib_EXPORT</Elem>
-            <Elem>CUL_DYNAMIC</Elem>
+            <Elem>CUL_EXPORT</Elem>
+            <Elem>SDL2W_EXPORT</Elem>
           </preprocessorList>
         </ccTool>
         <linkerTool>

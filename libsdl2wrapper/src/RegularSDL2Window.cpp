@@ -7,7 +7,7 @@
 #include "CUL/SimpleAssert.hpp"
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
-#include "SDL2Wrapper/IMPORT_sdl_video.hpp"
+#include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 
 using namespace SDL2W;
 using namespace CUL;

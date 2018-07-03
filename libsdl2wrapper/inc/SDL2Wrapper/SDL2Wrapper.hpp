@@ -7,7 +7,7 @@
 #endif
 
 #if defined SDL2W_EXPORT && defined SDL2W_LINUX
-#define SDL2WrapperAPI
+#define SDL2WAPI
 #define SDL2Wrapper_TEMPLATE
 #elif SDL2W_EXPORT && defined SDL2W_WINDOWS
 #define SDL2WAPI _declspec(dllexport)

@@ -3,6 +3,7 @@
 #include "SDL2Wrapper/IWindowFactory.hpp"
 #include "CUL/STD_map.hpp"
 #include "CUL/STD_vector.hpp"
+#include "CUL/STD_memory.hpp"
 
 namespace SDL2W
 {
