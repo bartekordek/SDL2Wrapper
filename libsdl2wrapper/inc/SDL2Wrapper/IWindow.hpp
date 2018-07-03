@@ -11,7 +11,9 @@
 
 namespace SDL2W
 {
+#ifdef _MSC_VER
     class SDL2WAPI CUL::IName;
+#endif
     using Vector3Di = CUL::Math::Vector3Di;
     using Vector3Du = CUL::Math::Vector3Du;
     using ColorS = CUL::ColorS;
