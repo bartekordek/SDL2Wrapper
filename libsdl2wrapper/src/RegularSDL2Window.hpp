@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SDL2Wrapper/IWindow.hpp"
 #include "SDL2Wrapper/IRender.hpp"
 
@@ -19,7 +20,7 @@ namespace SDL2W
     {
     public:
         RegularSDL2Window() = delete;
-        RegularSDL2Window( 
+        RegularSDL2Window(
             const Vector3Di& pos,
             const Vector3Du& size,
             CnstStr& name );
@@ -61,7 +62,7 @@ namespace SDL2W
 
         ColorS m_backgroundColor;
         SDL_Window* m_window = nullptr;
-        SDL_Renderer* renderer = nullptr;
+        SDL_Renderer* m_renderer = nullptr;
         std::set<IObject*> m_objects;
         std::mutex m_objectsMtx;
         TextureMap m_textures;

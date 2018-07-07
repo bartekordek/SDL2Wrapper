@@ -3,11 +3,11 @@
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 
-#include "CUL/FS.hpp"
-#include "CUL/SimpleAssert.hpp"
-
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
+
+#include "CUL/FS.hpp"
+#include "CUL/SimpleAssert.hpp"
 
 using namespace SDL2W;
 using namespace CUL;
@@ -19,7 +19,7 @@ RegularSDL2Window::RegularSDL2Window(
         m_position( pos ),
         m_size( size )
 {
-    auto windowFlags = SDL_WINDOW_SHOWN;
+    Uint32 windowFlags = SDL_WINDOW_SHOWN;
     this->m_window = SDL_CreateWindow(
         this->getName().c_str(),
         static_cast<int>( this->getPos().getX() ),
@@ -27,34 +27,34 @@ RegularSDL2Window::RegularSDL2Window(
         static_cast<int>( this->getSize().getX() ),
         static_cast<int>( this->getSize().getY() ),
         windowFlags );
-    this->renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
+    this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
     setName( name );
 }
 
 RegularSDL2Window::~RegularSDL2Window()
 {
-    std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
+    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_textures.clear();
     CUL::Assert::simple( this->m_window, "The Window has been destroyed somwhere else." );
-    CUL::Assert::simple( this->renderer, "The Renderer has been destroyed somwhere else." );
-    SDL_DestroyRenderer( this->renderer );
-    this->renderer = nullptr;
+    CUL::Assert::simple( this->m_renderer, "The Renderer has been destroyed somwhere else." );
+    SDL_DestroyRenderer( this->m_renderer );
+    this->m_renderer = nullptr;
     SDL_DestroyWindow( this->m_window );
     this->m_window = nullptr;
 }
 
 void RegularSDL2Window::updateScreenBuffers()
 {
-    CUL::Assert::simple( this->renderer, "The Renderer has not been initialized." );
+    CUL::Assert::simple( this->m_renderer, "The Renderer has not been initialized." );
     CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
-    SDL_RenderPresent( this->renderer );
+    SDL_RenderPresent( this->m_renderer );
     SDL_GL_SwapWindow( this->m_window );
 }
 
 void RegularSDL2Window::renderAll()
 {
      SDL_SetRenderDrawColor( 
-        this->renderer, 
+        this->m_renderer, 
         this->m_backgroundColor.getRUI(),
         this->m_backgroundColor.getGUI(),
         this->m_backgroundColor.getBUI(),
@@ -87,7 +87,7 @@ void RegularSDL2Window::renderAll()
             center.y = static_cast<int>( pivot.getY() );
 
             auto result = SDL_RenderCopyEx(
-                this->renderer,
+                this->m_renderer,
                 texSDLW->getTexture(),
                 srcRect.get(),
                 &renderQuad,
@@ -104,8 +104,8 @@ void RegularSDL2Window::setBackgroundColor( const ColorE color )
 
 void RegularSDL2Window::clearBuffers()
 {
-    CUL::Assert::simple( this->renderer, "The Renderer has been deleted somwhere else." );
-    SDL_RenderClear( this->renderer );
+    CUL::Assert::simple( this->m_renderer, "The Renderer has been deleted somwhere else." );
+    SDL_RenderClear( this->m_renderer );
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorS& color )
@@ -217,11 +217,11 @@ ITexture* RegularSDL2Window::createTexture(
     SDL_Surface* surface,
     const Path& path )
 {
-    CUL::Assert::simple( this->renderer, "RENDERER NOT READY!\n" );
+    CUL::Assert::simple( this->m_renderer, "RENDERER NOT READY!\n" );
     auto texSDL = new TextureSDL();
 
     auto tex = SDL_CreateTextureFromSurface(
-        this->renderer,
+        this->m_renderer,
         surface );
     CUL::Assert::simple( 
         tex,
