@@ -29,7 +29,8 @@ namespace SDL2W
         enum class Type: char
         {
             NONE = 0,
-            SDL_WIN
+            SDL_WIN,
+            SDL_OPENGL
         };
 
         IWindow();

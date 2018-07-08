@@ -1,4 +1,4 @@
-#include "RegularSDL2Window.hpp"
+#include "WindowWithOpenGL.hpp"
 #include "TextureSDL.hpp"
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
@@ -11,13 +11,16 @@
 
 using namespace SDL2W;
 
-RegularSDL2Window::RegularSDL2Window( 
+WindowWithOpenGL::WindowWithOpenGL(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& name ):
-        m_position( pos ),
-        m_size( size )
+    CnstStr& name,
+    const int major, const int minor ):
+    m_position( pos ),
+    m_size( size )
 {
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, major );
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, minor );
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     this->m_window = SDL_CreateWindow(
         this->getName().c_str(),
@@ -30,7 +33,7 @@ RegularSDL2Window::RegularSDL2Window(
     setName( name );
 }
 
-RegularSDL2Window::~RegularSDL2Window()
+WindowWithOpenGL::~WindowWithOpenGL()
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_textures.clear();
@@ -46,7 +49,7 @@ RegularSDL2Window::~RegularSDL2Window()
     this->m_window = nullptr;
 }
 
-void RegularSDL2Window::updateScreenBuffers()
+void WindowWithOpenGL::updateScreenBuffers()
 {
     CUL::Assert::simple( this->m_renderer, "The Renderer has not been initialized." );
     CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
@@ -54,23 +57,23 @@ void RegularSDL2Window::updateScreenBuffers()
     SDL_GL_SwapWindow( this->m_window );
 }
 
-void RegularSDL2Window::renderAll()
+void WindowWithOpenGL::renderAll()
 {
-     SDL_SetRenderDrawColor( 
-        this->m_renderer, 
+    SDL_SetRenderDrawColor(
+        this->m_renderer,
         this->m_backgroundColor.getRUI(),
         this->m_backgroundColor.getGUI(),
         this->m_backgroundColor.getBUI(),
         this->m_backgroundColor.getAUI() );
-     std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
-     for( auto& object : this->m_objects )
-     {
-        if ( IObject::Type::SPRITE == object->getType() )
+    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
+    for( auto& object : this->m_objects )
+    {
+        if( IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
             auto& pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
-            auto pivot = object->getPivot( IPivot::PivotType::ABSOLUTE );
+            auto pivot = object->getPivot( PivotType::ABSOLUTE );
 
             SDL_Rect renderQuad;
             renderQuad.x = static_cast<int>( pos.getX() );
@@ -100,48 +103,48 @@ void RegularSDL2Window::renderAll()
     }
 }
 
-void RegularSDL2Window::setBackgroundColor( const ColorE color )
+void WindowWithOpenGL::setBackgroundColor( const ColorE color )
 {
     setBackgroundColor( color );
 }
 
-void RegularSDL2Window::clearBuffers()
+void WindowWithOpenGL::clearBuffers()
 {
     CUL::Assert::simple( this->m_renderer, "The Renderer has been deleted somwhere else." );
     SDL_RenderClear( this->m_renderer );
 }
 
-void RegularSDL2Window::setBackgroundColor( const ColorS& color )
+void WindowWithOpenGL::setBackgroundColor( const ColorS& color )
 {
     this->m_backgroundColor = color;
 }
 
-const Vector3Di& RegularSDL2Window::getPos()const
+const Vector3Di& WindowWithOpenGL::getPos()const
 {
     return this->m_position;
 }
 
-void RegularSDL2Window::setPos( const Vector3Di& pos )
+void WindowWithOpenGL::setPos( const Vector3Di& pos )
 {
     this->m_position = pos;
 }
 
-const Vector3Du& RegularSDL2Window::getSize()const
+const Vector3Du& WindowWithOpenGL::getSize()const
 {
     return this->m_size;
 }
 
-void RegularSDL2Window::setSize( const Vector3Du& size )
+void WindowWithOpenGL::setSize( const Vector3Du& size )
 {
     this->m_size = size;
 }
 
-const IWindow::Type RegularSDL2Window::getType() const
+const IWindow::Type WindowWithOpenGL::getType() const
 {
     return IWindow::Type::SDL_WIN;
 }
 
-ISprite* RegularSDL2Window::createSprite( const Path& objPath )
+ISprite* WindowWithOpenGL::createSprite( const Path& objPath )
 {
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
@@ -159,7 +162,7 @@ ISprite* RegularSDL2Window::createSprite( const Path& objPath )
     return result;
 }
 
-ITexture* RegularSDL2Window::createTexture( const Path& objPath )
+ITexture* WindowWithOpenGL::createTexture( const Path& objPath )
 {
     ITexture* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
@@ -179,7 +182,7 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
     return result;
 }
 
-ISprite* RegularSDL2Window::createSprite(
+ISprite* WindowWithOpenGL::createSprite(
     ITexture* tex )
 {
     auto spritePtr = new Sprite();
@@ -188,7 +191,7 @@ ISprite* RegularSDL2Window::createSprite(
     return spritePtr;
 }
 
-SDL_Surface* RegularSDL2Window::createSurface(
+SDL_Surface* WindowWithOpenGL::createSurface(
     const Path& path )
 {
     if( false == path.exists() )
@@ -216,7 +219,7 @@ SDL_Surface* RegularSDL2Window::createSurface(
     return result;
 }
 
-ITexture* RegularSDL2Window::createTexture(
+ITexture* WindowWithOpenGL::createTexture(
     SDL_Surface* surface,
     const Path& path )
 {
@@ -226,30 +229,30 @@ ITexture* RegularSDL2Window::createTexture(
     auto tex = SDL_CreateTextureFromSurface(
         this->m_renderer,
         surface );
-    CUL::Assert::simple( 
+    CUL::Assert::simple(
         tex,
         "Cannot create texture from " +
         path.getPath() +
         " does not exist." );
 
     texSDL->setTexture( tex, path );
-    this->m_textures[ path.getPath() ] = std::unique_ptr<ITexture>( texSDL );
+    this->m_textures[path.getPath()] = std::unique_ptr<ITexture>( texSDL );
     return texSDL;
 }
 
-void RegularSDL2Window::addObject( IObject* object )
+void WindowWithOpenGL::addObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_objects.insert( object );
 }
 
-void RegularSDL2Window::removeObject( IObject* object )
+void WindowWithOpenGL::removeObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_objects.erase( object );
 }
 
-const ColorS RegularSDL2Window::getBackgroundColor()const
+const ColorS WindowWithOpenGL::getBackgroundColor()const
 {
     return this->m_backgroundColor;
 }

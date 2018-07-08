@@ -13,17 +13,20 @@ namespace SDL2W
     {
     public:
         WindowCreatorConcrete(
-            const Vector3Di& pos,
-            const Vector3Du& size,
-            CnstStr& winName);
+            const Vector3Di& pos, const Vector3Du& size,
+            CnstStr& winName );
         WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
         ~WindowCreatorConcrete();
         WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
 
         IWindow* createWindow(
-            const Vector3Di& pos,
-            const Vector3Du& size,
+            const Vector3Di& pos, const Vector3Du& size,
             CnstStr& winName ) override;
+
+        IWindow* createWindowOGL(
+            const Vector3Di& pos, const Vector3Du& size,
+            CnstStr& winName,
+            const int major = 2, const int minor = 1 ) override;
 
         IWindow* getMainWindow() override;
         IWindow* getWindow( const char* winName ) override;

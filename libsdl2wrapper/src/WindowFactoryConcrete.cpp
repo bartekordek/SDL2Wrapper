@@ -1,5 +1,6 @@
 #include "WindowFactoryConcrete.hpp"
 #include "RegularSDL2Window.hpp"
+#include "WindowWithOpenGL.hpp"
 #include "CUL/SimpleAssert.hpp"
 #include "CUL/STD_cstring.hpp"
 
@@ -34,7 +35,25 @@ IWindow* WindowCreatorConcrete::createWindow(
     this->m_windows[ window ] = std::unique_ptr<IWindow>( window );
     return window;
 }
-
+#if _MSC_VER
+#pragma warning( push, 0 )
+#endif
+IWindow* SDL2W::WindowCreatorConcrete::createWindowOGL( 
+    const Vector3Di & pos, const Vector3Du & size,
+    CnstStr& winName,
+    const int major, const int minor )
+{
+  /*  auto window = new WindowWithOpenGL( 
+        pos, size,
+        winName,
+        major, minor );
+    this->m_windows[window] = std::unique_ptr<IWindow>( window );
+    return window;*/
+    return nullptr;
+}
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 IWindow* WindowCreatorConcrete::getWindow(
     const char* winName )
 {
