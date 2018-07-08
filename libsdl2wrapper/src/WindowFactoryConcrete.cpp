@@ -9,9 +9,21 @@ using namespace SDL2W;
 WindowCreatorConcrete::WindowCreatorConcrete(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& winName )
+    CnstStr& winName,
+    const bool opengl )
 {
-    this->m_mainWindow = createWindow( pos, size, winName );
+    if( opengl )
+    {
+        const int openglVersionMajor = 2;
+        const int openglVersionMinor = 1;
+        this->m_mainWindow = createWindowOGL( pos, size, winName,
+                                              openglVersionMajor,
+                                              openglVersionMinor );
+    }
+    else
+    {
+        this->m_mainWindow = createWindow( pos, size, winName );
+    }
 }
 
 WindowCreatorConcrete::~WindowCreatorConcrete()
@@ -35,25 +47,20 @@ IWindow* WindowCreatorConcrete::createWindow(
     this->m_windows[ window ] = std::unique_ptr<IWindow>( window );
     return window;
 }
-#if _MSC_VER
-#pragma warning( push, 0 )
-#endif
-IWindow* SDL2W::WindowCreatorConcrete::createWindowOGL( 
+
+IWindow* WindowCreatorConcrete::createWindowOGL(
     const Vector3Di & pos, const Vector3Du & size,
     CnstStr& winName,
     const int major, const int minor )
 {
-  /*  auto window = new WindowWithOpenGL( 
+    auto window = new WindowWithOpenGL( 
         pos, size,
         winName,
         major, minor );
     this->m_windows[window] = std::unique_ptr<IWindow>( window );
-    return window;*/
-    return nullptr;
+    return window;
 }
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif
+
 IWindow* WindowCreatorConcrete::getWindow(
     const char* winName )
 {

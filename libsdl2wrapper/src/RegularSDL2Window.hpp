@@ -45,9 +45,9 @@ namespace SDL2W
 
         const IWindow::Type getType() const override;
 
-        ITexture* createTexture( const Path& path );
-        ISprite* createSprite( const Path& path );
-        ISprite* createSprite( ITexture* tex );
+        ITexture* createTexture( const Path& path ) override;
+        ISprite* createSprite( const Path& path ) override;
+        ISprite* createSprite( ITexture* tex ) override;
 
         const ColorS getBackgroundColor()const override;
 

@@ -1,5 +1,5 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
-
+#include "CUL/IThreadUtility.hpp"
 #include "CUL/FS.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/Math/Degree.hpp"
@@ -13,10 +13,15 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper( SDL2W::Vector3Di( 200, 200, 0 ) ) )
+        m_sdlW( SDL2W::createSDL2Wrapper( 
+        SDL2W::Vector3Di( 200, 200, 0 ),
+        SDL2W::Vector3Du( 1024, 768, 0 ),
+        "Test app.",
+        true ) )
     {
         this->m_windowFactory = this->m_sdlW->getWindowFactory();
         this->m_activeWindow = this->m_windowFactory->getMainWindow();
+        this->m_sdlW->setInputLatency( 1024 );
  
         if( this->m_someFile.exists() )
         {
@@ -27,6 +32,7 @@ public:
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
+        m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
     }
 
     TestApp( const TestApp& rhv ) = delete;
@@ -97,6 +103,7 @@ protected:
 private:
     void objectManagmentFun()
     {
+        m_threadUtil->setCurrentThreadName( "TestApp::objectManagmentFun" );
         if( this->m_someFile.exists() )
         {
             CUL::Math::Vector3Dd someScale;
@@ -171,6 +178,8 @@ private:
     CUL::Math::Vector3Di obj2Pos0;
     CUL::Math::Vector3Di obj3Pos;
     CUL::Math::Vector3Di obj4Pos;
+
+    std::shared_ptr<CUL::IThreadUtility> m_threadUtil;
 };
 
 #if _MSC_VER

@@ -14,7 +14,8 @@ namespace SDL2W
     public:
         WindowCreatorConcrete(
             const Vector3Di& pos, const Vector3Du& size,
-            CnstStr& winName );
+            CnstStr& winName,
+            const bool opengl = false );
         WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
         ~WindowCreatorConcrete();
         WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;

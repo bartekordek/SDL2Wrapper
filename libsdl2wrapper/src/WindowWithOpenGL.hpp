@@ -8,7 +8,7 @@
 #include "CUL/STD_map.hpp"
 #include "CUL/STD_mutex.hpp"
 
-#include "IMPORT_SDL_opengl.hpp"
+#include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -48,9 +48,9 @@ namespace SDL2W
 
         const IWindow::Type getType() const override;
 
-        ITexture* createTexture( const Path& path );
-        ISprite* createSprite( const Path& path );
-        ISprite* createSprite( ITexture* tex );
+        ITexture* createTexture( const Path& path ) override;
+        ISprite* createSprite( const Path& path ) override;
+        ISprite* createSprite( ITexture* tex ) override;
 
         const ColorS getBackgroundColor()const override;
 
@@ -66,7 +66,7 @@ namespace SDL2W
         ColorS m_backgroundColor;
         SDL_Window* m_window = nullptr;
         SDL_Renderer* m_renderer = nullptr;
-        //SDL_GLContext m_oglContext;
+        SDL_GLContext m_oglContext;
         std::set<IObject*> m_objects;
         std::mutex m_objectsMtx;
         TextureMap m_textures;

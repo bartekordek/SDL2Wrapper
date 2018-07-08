@@ -47,6 +47,10 @@ namespace SDL2W
 
         virtual const Type getType() const = 0;
 
+        virtual ITexture* createTexture( const Path& path ) = 0;
+        virtual ISprite* createSprite( const Path& path ) = 0;
+        virtual ISprite* createSprite( ITexture* tex ) = 0;
+
     protected:
     private:
     };

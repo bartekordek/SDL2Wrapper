@@ -6,6 +6,7 @@
 #include "SDL2Wrapper/ITexture.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
+#include "CUL/IThreadUtility.hpp"
 #include "CUL/STD_memory.hpp"
 #include "CUL/STD_map.hpp"
 
@@ -43,6 +44,7 @@ namespace SDL2W
         virtual void runEventLoop() = 0;
         virtual void stopEventLoop() = 0;
 
+        virtual cunt getInputLatency()const = 0;
         virtual void setInputLatency( cunt latencyInUs ) = 0;
 
         virtual void registerWindowEventListener(
@@ -58,7 +60,8 @@ namespace SDL2W
 
     SDL2WAPI ISDL2Wrapper* createSDL2Wrapper( const Vector3Di& pos = Vector3Di(),
                                               const Vector3Du& size = Vector3Du( 800, 600, 0 ),
-                                              CnstStr& winName = "" );
+                                              CnstStr& winName = "",
+                                              const bool opengl = false );
     SDL2WAPI ISDL2Wrapper* getSDL2Wrapper();
     void SDL2WAPI destroySDL2Wrapper();
 }

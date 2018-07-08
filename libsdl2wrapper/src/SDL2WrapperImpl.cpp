@@ -8,17 +8,25 @@
 #include "CUL/SimpleAssert.hpp"
 #include "CUL/ITimer.hpp"
 
+#include "CUL/STD_iostream.hpp"
+
 using namespace SDL2W;
 
 SDL2WrapperImpl::SDL2WrapperImpl(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& winName )
+    CnstStr& winName,
+    const bool opengl )
 {
     const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
-    CUL::Assert::simple( 0 == sdlInitSuccess, "Cannot initialize SDL subsystem" );
-    this->m_windowFactory = new WindowCreatorConcrete( pos, size, winName );
+    if( 0 != sdlInitSuccess )
+    {
+        CUL::Assert::simple( 0, SDL_GetError() );
+    }
+    
+    this->m_windowFactory = new WindowCreatorConcrete( pos, size, winName, opengl );
     createKeys();
+    this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
@@ -94,6 +102,7 @@ void SDL2WrapperImpl::refreshScreen()
 #include "CUL/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {
+    this->m_threadUtil->setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()" );
     SDL_Event event;
     while( this->eventLoopActive )
     {
@@ -107,6 +116,8 @@ void SDL2WrapperImpl::runEventLoop()
                     const bool keyIsDown = ( SDL_KEYDOWN == event.type ) ? true : false;
                     auto& key = this->m_keys.at( SDL_GetScancodeName( scancode ) );
                     key->setKeyIsDown( keyIsDown );
+                    std::cout << "EVENT: Key press/release, key: " << key->getKeyName() << "\n";
+                    std::cout << "EVENT: Key press/release, keyID: " << event.key.keysym.scancode << "\n";
                     notifyKeyboardCallbacks( *key );
                     notifyKeyboardListeners( *key );
                 }
@@ -121,7 +132,7 @@ void SDL2WrapperImpl::runEventLoop()
             }
             else
             {
-                std::cout << "WTF\n";
+                std::cout << "UNKOWN EVENT: " << event.type << "\n";
             }
         }
         CUL::ITimer::sleepMicroSeconds( this->m_eventLatencyUs );
@@ -187,7 +198,12 @@ void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
     }
 }
 
-void SDL2WrapperImpl::setInputLatency( const unsigned int latencyInUs )
+cunt SDL2WrapperImpl::getInputLatency()const
+{
+    return this->m_eventLatencyUs.getValCopy();
+}
+
+void SDL2WrapperImpl::setInputLatency( cunt latencyInUs )
 {
     this->m_eventLatencyUs = latencyInUs;
 }
@@ -211,12 +227,7 @@ IWindowFactory* SDL2W::SDL2WrapperImpl::getWindowFactory()
 ISprite* SDL2WrapperImpl::createSprite( const Path& objPath,
                                         IWindow* targetWindow )
 {
-    if( IWindow::Type::SDL_WIN == targetWindow->getType() )
-    {
-        auto sdlWin = static_cast<RegularSDL2Window*>( targetWindow );
-        return sdlWin->createSprite( objPath );
-    }
-    return nullptr;
+    return targetWindow->createSprite( objPath );
 }
 
 ITexture* SDL2WrapperImpl::createTexture( const Path& objPath,

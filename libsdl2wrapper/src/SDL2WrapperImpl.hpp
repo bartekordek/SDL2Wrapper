@@ -2,6 +2,7 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 #include "WindowFactoryConcrete.hpp"
+#include "CUL/IThreadUtility.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/STD_vector.hpp"
 #include "CUL/STD_set.hpp"
@@ -9,6 +10,7 @@ struct SDL_Surface;
 namespace SDL2W
 {
     using WindowEventType = IWindowEventObserver::WindowEventType;
+    using IThreadUtil = CUL::IThreadUtility;
     class SDL2WrapperImpl:
         public ISDL2Wrapper
     {
@@ -16,7 +18,8 @@ namespace SDL2W
         SDL2WrapperImpl(
             const Vector3Di& pos = Vector3Di(),
             const Vector3Du& size = Vector3Du(),
-            CnstStr& winName = "" );
+            CnstStr& winName = "",
+            const bool opengl = false);
         SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
         virtual ~SDL2WrapperImpl();
 
@@ -42,6 +45,7 @@ namespace SDL2W
         void unregisterWindowEventListener( 
             IWindowEventObserver* observer ) override;
 
+        cunt getInputLatency()const override;
         void setInputLatency( const unsigned int latencyInUs ) override;
         const bool isKeyUp( CnstStr& keyName )const;
         Keys& getKeyStates() override;
@@ -73,6 +77,7 @@ namespace SDL2W
         std::set<IKeyboardObserver*> m_keyboardObservers;
         std::set<IWindowEventObserver*> m_windowEventObservers;
         WindowCollection* m_windows = nullptr;
+        std::shared_ptr<IThreadUtil> m_threadUtil;
 
     };
 }

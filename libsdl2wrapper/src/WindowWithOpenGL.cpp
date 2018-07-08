@@ -30,6 +30,7 @@ WindowWithOpenGL::WindowWithOpenGL(
         static_cast<int>( this->getSize().getY() ),
         windowFlags );
     this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
+    this->m_oglContext = SDL_GL_CreateContext( this->m_window );
     setName( name );
 }
 
