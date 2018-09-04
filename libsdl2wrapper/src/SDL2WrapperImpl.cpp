@@ -27,6 +27,7 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     this->m_windowFactory = new WindowCreatorConcrete( pos, size, winName, opengl );
     createKeys();
     this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
+    this->m_windows = &this->m_windowFactory->getAllWindows();
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
@@ -66,7 +67,6 @@ void SDL2WrapperImpl::renderFrame(
     const bool clearContext,
     const bool refreshWindow )
 {
-    this->m_windows = &this->m_windowFactory->getAllWindows();
     if( true == clearContext )
     {
         clearWindows();
