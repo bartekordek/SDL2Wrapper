@@ -31,6 +31,7 @@
 *~ml
 build
 run
+runTests
 libsdl2wrapper/nbproject/Makefile-*
 libsdl2wrapper/nbproject/Package*
 libsdl2wrapperTestApp/nbproject/Makefile-*
