@@ -28,6 +28,8 @@ RegularSDL2Window::RegularSDL2Window(
         windowFlags );
     this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
     setName( name );
+    this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
+    this->m_fpsCounter->start();
 }
 
 RegularSDL2Window::~RegularSDL2Window()
@@ -98,6 +100,7 @@ void RegularSDL2Window::renderAll()
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
+     this->m_fpsCounter->increase();
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorE color )
@@ -247,6 +250,21 @@ void RegularSDL2Window::removeObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_objects.erase( object );
+}
+
+CDbl RegularSDL2Window::getFpsAverage()
+{
+    return this->m_fpsCounter->getAverageFps();
+}
+
+void RegularSDL2Window::setAverageFpsSampleSize( SmallCount sampleSize )
+{
+    this->m_fpsCounter->setSampleSize( sampleSize );
+}
+
+CDbl RegularSDL2Window::getFpsLast()
+{
+    return this->m_fpsCounter->getCurrentFps();
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor()const

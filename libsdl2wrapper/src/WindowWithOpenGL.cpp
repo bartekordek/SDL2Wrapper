@@ -32,6 +32,8 @@ WindowWithOpenGL::WindowWithOpenGL(
     this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
     this->m_oglContext = SDL_GL_CreateContext( this->m_window );
     setName( name );
+    this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
+    this->m_fpsCounter->start();
 }
 
 WindowWithOpenGL::~WindowWithOpenGL()
@@ -102,6 +104,7 @@ void WindowWithOpenGL::renderAll()
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
+    this->m_fpsCounter->increase();
 }
 
 void WindowWithOpenGL::setBackgroundColor( const ColorE color )
@@ -251,6 +254,21 @@ void WindowWithOpenGL::removeObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_objects.erase( object );
+}
+
+CDbl WindowWithOpenGL::getFpsAverage()
+{
+    return this->m_fpsCounter->getAverageFps();
+}
+
+void WindowWithOpenGL::setAverageFpsSampleSize( SmallCount sampleSize )
+{
+    this->m_fpsCounter->setSampleSize( sampleSize );
+}
+
+CDbl WindowWithOpenGL::getFpsLast()
+{
+    return this->m_fpsCounter->getCurrentFps();
 }
 
 const ColorS WindowWithOpenGL::getBackgroundColor()const
