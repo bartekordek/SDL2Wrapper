@@ -7,6 +7,7 @@
 #include "CUL/STD_set.hpp"
 #include "CUL/STD_map.hpp"
 #include "CUL/STD_mutex.hpp"
+#include "CUL/Video/IFPSCounter.hpp"
 
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 
@@ -54,6 +55,10 @@ namespace SDL2W
 
         const ColorS getBackgroundColor()const override;
 
+        CDbl getFpsAverage() override;
+        void setAverageFpsSampleSize( SmallCount sampleSize ) override;
+        CDbl getFpsLast() override;
+
     protected:
     private:
         SDL_Surface * createSurface( const Path& path );
@@ -70,6 +75,7 @@ namespace SDL2W
         std::set<IObject*> m_objects;
         std::mutex m_objectsMtx;
         TextureMap m_textures;
+        std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
 
         Vector3Di m_position;
         Vector3Du m_size;

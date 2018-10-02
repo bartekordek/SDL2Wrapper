@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 14 for Windows Desktop
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Express 15 for Windows Desktop
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcul", "deps\CUL\CUL\libcul.vcxproj", "{A44B1777-B335-4580-AE9E-89CB3779F81E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libculTests", "deps\CUL\tests\libculTests.vcxproj", "{6B7FF520-98CF-4132-813C-0F205C22152F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A44B1777-B335-4580-AE9E-89CB3779F81E} = {A44B1777-B335-4580-AE9E-89CB3779F81E}
@@ -20,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsdl2wrapperTestApp", "li
 		{946707F5-BE49-4A7F-9CD9-0BFF983CE298} = {946707F5-BE49-4A7F-9CD9-0BFF983CE298}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcul", "..\CUL\libcul\libcul.vcxproj", "{A44B1777-B335-4580-AE9E-89CB3779F81E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -28,14 +28,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x64.ActiveCfg = Debug|x64
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x64.Build.0 = Debug|x64
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x86.ActiveCfg = Debug|Win32
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x86.Build.0 = Debug|Win32
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x64.ActiveCfg = Release|x64
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x64.Build.0 = Release|x64
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x86.ActiveCfg = Release|Win32
-		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x86.Build.0 = Release|Win32
 		{6B7FF520-98CF-4132-813C-0F205C22152F}.Debug|x64.ActiveCfg = Debug|x64
 		{6B7FF520-98CF-4132-813C-0F205C22152F}.Debug|x64.Build.0 = Debug|x64
 		{6B7FF520-98CF-4132-813C-0F205C22152F}.Debug|x86.ActiveCfg = Debug|Win32
@@ -60,8 +52,19 @@ Global
 		{75FF01A3-E575-4661-B75B-3AA935B46F2F}.Release|x64.Build.0 = Release|x64
 		{75FF01A3-E575-4661-B75B-3AA935B46F2F}.Release|x86.ActiveCfg = Release|Win32
 		{75FF01A3-E575-4661-B75B-3AA935B46F2F}.Release|x86.Build.0 = Release|Win32
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x64.ActiveCfg = Debug|x64
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x64.Build.0 = Debug|x64
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x86.ActiveCfg = Debug|Win32
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Debug|x86.Build.0 = Debug|Win32
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x64.ActiveCfg = Release|x64
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x64.Build.0 = Release|x64
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x86.ActiveCfg = Release|Win32
+		{A44B1777-B335-4580-AE9E-89CB3779F81E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90EE09B5-0B86-4D4D-AD5E-C5F3BFF4CDAC}
 	EndGlobalSection
 EndGlobal
