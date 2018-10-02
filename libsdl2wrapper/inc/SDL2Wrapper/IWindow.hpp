@@ -11,6 +11,10 @@
 
 namespace SDL2W
 {
+    using CDbl = const double;
+    using CShrt = const unsigned short;
+    using SmallCount = CShrt;
+
 #ifdef _MSC_VER
     class SDL2WAPI CUL::IName;
 #endif
@@ -50,6 +54,10 @@ namespace SDL2W
         virtual ITexture* createTexture( const Path& path ) = 0;
         virtual ISprite* createSprite( const Path& path ) = 0;
         virtual ISprite* createSprite( ITexture* tex ) = 0;
+
+        virtual CDbl getFpsAverage() = 0;
+        virtual void setAverageFpsSampleSize( SmallCount sampleSize ) = 0;
+        virtual CDbl getFpsLast() = 0;
 
     protected:
     private:

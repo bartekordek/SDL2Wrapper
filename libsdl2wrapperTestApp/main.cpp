@@ -1,4 +1,5 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
+#include "CUL/ITimer.hpp"
 #include "CUL/IThreadUtility.hpp"
 #include "CUL/FS.hpp"
 #include "CUL/LckPrim.hpp"
@@ -39,10 +40,16 @@ public:
 
     ~TestApp()
     {
-        if( this->m_thread.joinable() )
+        if( this->m_objectMoveThread.joinable() )
         {
-            this->m_thread.join();
+            this->m_objectMoveThread.join();
         }
+
+        if( this->m_dataInfoThread.joinable() )
+        {
+            this->m_dataInfoThread.join();
+        }
+
         SDL2W::destroySDL2Wrapper();
     }
 
@@ -52,7 +59,8 @@ public:
     {
         this->m_sdlW->registerKeyboardEventListener( this );
         this->m_sdlW->registerWindowEventListener( this );
-        m_thread = std::thread( &TestApp::objectManagmentFun, this );
+        this->m_objectMoveThread = std::thread( &TestApp::objectManagmentFun, this );
+        this->m_dataInfoThread = std::thread( &TestApp::dataPrintFun, this );
         this->m_sdlW->runEventLoop();
     }
 
@@ -101,6 +109,16 @@ public:
 
 protected:
 private:
+    void dataPrintFun()
+    {
+        while( this->runLoop )
+        {
+            CUL::ITimer::sleepSeconds( 2 );
+            auto fpsCount = this->m_activeWindow->getFpsLast();
+            std::cout << "CURRENT FPS: " << fpsCount << "\n";
+        }
+    }
+
     void objectManagmentFun()
     {
         m_threadUtil->setCurrentThreadName( "TestApp::objectManagmentFun" );
@@ -131,8 +149,7 @@ private:
             while( this->runLoop )
             {
                 this->m_sdlW->renderFrame();
-                std::this_thread::sleep_for(
-                    std::chrono::milliseconds( sleepTimeinMs ) );
+                CUL::ITimer::sleepMiliSeconds( sleepTimeinMs );
                 auto xScale = ( sin( i ) + 1.0 ) * 0.25;
                 auto yScale = ( cos( i ) + 1.0 ) * 0.25;
                 someScale.setXYZ( xScale, yScale, 0 );
@@ -165,7 +182,8 @@ private:
 
     SDL2W::ISDL2Wrapper* m_sdlW = nullptr;
 
-    std::thread m_thread;
+    std::thread m_objectMoveThread;
+    std::thread m_dataInfoThread;
 
     CUL::FS::Path m_someFile = CUL::FS::Path( "../media/pikaczu.bmp" );
 
