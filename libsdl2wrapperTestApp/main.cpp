@@ -24,12 +24,12 @@ public:
         this->m_activeWindow = this->m_windowFactory->getMainWindow();
         this->m_sdlW->setInputLatency( 1024 );
  
-        if( this->m_someFile.exists() )
+        if( this->m_pikachuBmp.exists() )
         {
-            this->m_obj1 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
-            this->m_obj2 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
-            this->m_obj3 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
-            this->m_obj4 = m_sdlW->createSprite( this->m_someFile, this->m_activeWindow );
+            this->m_obj1 = m_sdlW->createSprite( this->m_pikachuPng, this->m_activeWindow );
+            this->m_obj2 = m_sdlW->createSprite( this->m_pikachuPng, this->m_activeWindow );
+            this->m_obj3 = m_sdlW->createSprite( this->m_pikachuBmp, this->m_activeWindow );
+            this->m_obj4 = m_sdlW->createSprite( this->m_pikachuBmp, this->m_activeWindow );
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
@@ -122,7 +122,7 @@ private:
     void objectManagmentFun()
     {
         m_threadUtil->setCurrentThreadName( "TestApp::objectManagmentFun" );
-        if( this->m_someFile.exists() )
+        if( this->m_pikachuBmp.exists() )
         {
             CUL::Math::Vector3Dd someScale;
             this->m_obj1->setScale( someScale );
@@ -185,7 +185,8 @@ private:
     std::thread m_objectMoveThread;
     std::thread m_dataInfoThread;
 
-    CUL::FS::Path m_someFile = CUL::FS::Path( "../media/pikaczu.bmp" );
+    CUL::FS::Path m_pikachuBmp = CUL::FS::Path( "../media/pikaczu.bmp" );
+    CUL::FS::Path m_pikachuPng = CUL::FS::Path( "../media/pikaczu.png" );
 
     SDL2W::ISprite* m_obj1 = nullptr;
     SDL2W::ISprite* m_obj2 = nullptr;

@@ -5,6 +5,7 @@
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
+#include "IMPORT_SDL_image.hpp"
 
 #include "CUL/FS.hpp"
 #include "CUL/SimpleAssert.hpp"
@@ -215,7 +216,7 @@ SDL_Surface* WindowWithOpenGL::createSurface(
 
     if( ".png" == path.getExtension() )
     {
-        //TODO result = SDL_Load
+        result = IMG_Load( path.getPath().c_str() );
     }
     CUL::Assert::simple(
         nullptr != result,

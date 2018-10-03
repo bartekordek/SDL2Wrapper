@@ -90,6 +90,9 @@
     <ClInclude Include="src\IMPORT_SDL_opengl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\IMPORT_SDL_image.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">
