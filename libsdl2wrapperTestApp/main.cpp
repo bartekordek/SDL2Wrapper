@@ -74,7 +74,6 @@ public:
 
         static int delta = 8;
 
-
         if( m_keyObservable->isKeyUp( "D" ) )
         {
             this->obj4Pos.setX( this->obj4Pos.getX() + delta );

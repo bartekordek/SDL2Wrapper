@@ -10,6 +10,8 @@
 #include "CUL/FS.hpp"
 #include "CUL/SimpleAssert.hpp"
 
+#include "IMPORT_SDL_opengl.hpp"
+
 using namespace SDL2W;
 
 WindowWithOpenGL::WindowWithOpenGL(
@@ -22,7 +24,7 @@ WindowWithOpenGL::WindowWithOpenGL(
 {
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, major );
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, minor );
-    Uint32 windowFlags = SDL_WINDOW_SHOWN;
+    Uint32 windowFlags = SDL_WINDOW_OPENGL;
     this->m_window = SDL_CreateWindow(
         this->getName().c_str(),
         static_cast<int>( this->getPos().getX() ),
@@ -35,6 +37,12 @@ WindowWithOpenGL::WindowWithOpenGL(
     setName( name );
     this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
     this->m_fpsCounter->start();
+
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+    glClearColor( 0.f, 0.f, 0.f, 1.f );
 }
 
 WindowWithOpenGL::~WindowWithOpenGL()
@@ -105,6 +113,8 @@ void WindowWithOpenGL::renderAll()
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
+    SDL_GL_SwapWindow( this->m_window );
+
     this->m_fpsCounter->increase();
 }
 

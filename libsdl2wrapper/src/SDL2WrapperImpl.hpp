@@ -7,6 +7,7 @@
 #include "CUL/STD_vector.hpp"
 #include "CUL/STD_set.hpp"
 struct SDL_Surface;
+union SDL_Event;
 namespace SDL2W
 {
     using WindowEventType = IWindowEventObserver::WindowEventType;
@@ -59,6 +60,8 @@ namespace SDL2W
         ISprite* createSprite( ITexture* tex,
                                IWindow* targetWindow ) override;
 
+        IWindow* getMainWindow() override;
+
     protected:
     private:
         void createKeys();
@@ -66,6 +69,9 @@ namespace SDL2W
         void notifyKeyboardCallbacks( const IKey& key );
         void notifyKeyboardListeners( const IKey& key );
         void notifyWindowEventListeners( const WindowEventType e );
+        void handleEveent( SDL_Event& event );
+
+        void handleKeyboardEvent( SDL_Event& sdlEvent );
 
         WindowCreatorConcrete* m_windowFactory = nullptr;
 
@@ -77,6 +83,7 @@ namespace SDL2W
         std::set<IKeyboardObserver*> m_keyboardObservers;
         std::set<IWindowEventObserver*> m_windowEventObservers;
         WindowCollection* m_windows = nullptr;
+        IWindow* m_mainWindow = nullptr;
         std::shared_ptr<IThreadUtil> m_threadUtil;
 
     };

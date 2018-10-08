@@ -15,7 +15,8 @@ namespace SDL2W
     public:
         enum class Type
         {
-            SPRITE = 0
+            SPRITE = 0,
+            PRIMITIVE
         };
 
         enum class RotationType

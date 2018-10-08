@@ -25,6 +25,7 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     }
     
     this->m_windowFactory = new WindowCreatorConcrete( pos, size, winName, opengl );
+    this->m_mainWindow = this->m_windowFactory->getMainWindow();
     createKeys();
     this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
     this->m_windows = &this->m_windowFactory->getAllWindows();
@@ -108,35 +109,44 @@ void SDL2WrapperImpl::runEventLoop()
     {
         if( SDL_PollEvent( &event ) > 0 )
         {
-            if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
-            {
-                auto scancode = event.key.keysym.scancode;
-                if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
-                {
-                    const bool keyIsDown = ( SDL_KEYDOWN == event.type ) ? true : false;
-                    auto& key = this->m_keys.at( SDL_GetScancodeName( scancode ) );
-                    key->setKeyIsDown( keyIsDown );
-                    std::cout << "EVENT: Key press/release, key: " << key->getKeyName() << "\n";
-                    std::cout << "EVENT: Key press/release, keyID: " << event.key.keysym.scancode << "\n";
-                    notifyKeyboardCallbacks( *key );
-                    notifyKeyboardListeners( *key );
-                }
-            }
-            else if( event.type == SDL_MOUSEMOTION )
-            {
-
-            }
-            else if( event.type == SDL_QUIT )
-            {
-                notifyWindowEventListeners( WindowEventType::CLOSE );
-            }
-            else
-            {
-                std::cout << "UNKOWN EVENT: " << event.type << "\n";
-            }
+            handleEveent( event );
         }
         CUL::ITimer::sleepMicroSeconds( this->m_eventLatencyUs );
     }
+}
+
+void SDL2WrapperImpl::handleEveent( SDL_Event &event )
+{
+    if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
+    {
+        if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
+        {
+            handleKeyboardEvent( event );
+        }
+    }
+    else if( event.type == SDL_MOUSEMOTION )
+    {
+
+    }
+    else if( event.type == SDL_QUIT )
+    {
+        notifyWindowEventListeners( WindowEventType::CLOSE );
+    }
+    else
+    {
+        std::cout << "UNKOWN EVENT: " << event.type << "\n";
+    }
+}
+
+void SDL2WrapperImpl::handleKeyboardEvent( SDL_Event& sdlEvent )
+{
+    const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
+    auto& key = this->m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
+    key->setKeyIsDown( keyIsDown );
+    std::cout << "EVENT: Key press/release, key: " << key->getKeyName() << "\n";
+    std::cout << "EVENT: Key press/release, keyID: " << sdlEvent.key.keysym.scancode << "\n";
+    notifyKeyboardCallbacks( *key );
+    notifyKeyboardListeners( *key );
 }
 
 void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
@@ -250,4 +260,9 @@ ISprite* SDL2WrapperImpl::createSprite( ITexture* tex,
         return sdlWin->createSprite( tex );
     }
     return nullptr;
+}
+
+IWindow* SDL2WrapperImpl::getMainWindow()
+{
+    return this->m_mainWindow;
 }

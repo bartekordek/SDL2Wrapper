@@ -93,6 +93,9 @@
     <ClInclude Include="src\IMPORT_SDL_image.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">
