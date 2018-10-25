@@ -18,12 +18,12 @@ namespace SDL2W
         KeySDL& operator=( const KeySDL& key );
 
         void setKeyName( const std::string& keyName ) override;
-        const std::string& getKeyName()const override;
+        CUL::CnstMyStr& getKeyName()const override;
         void setKeyIsDown( const bool keyIsDown ) override;
         const bool getKeyIsDown()const override;
     protected:
     private:
-        std::string keyName;
+        CUL::MyString keyName;
         bool m_keyIsDown = false;
     };
 #ifdef _MSC_VER

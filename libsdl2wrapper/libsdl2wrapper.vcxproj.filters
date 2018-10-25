@@ -149,5 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.git\config" />
+    <None Include="Makefile" />
   </ItemGroup>
 </Project>

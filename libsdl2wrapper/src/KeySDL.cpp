@@ -30,7 +30,7 @@ namespace SDL2W
         this->keyName = name;
     }
 
-    const std::string& KeySDL::getKeyName() const
+    CUL::CnstMyStr& KeySDL::getKeyName() const
     {
         return this->keyName;
     }

@@ -17,7 +17,7 @@ using namespace SDL2W;
 WindowWithOpenGL::WindowWithOpenGL(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& name,
+    CUL::CnstMyStr& name,
     const int major, const int minor ):
     m_position( pos ),
     m_size( size )
@@ -26,7 +26,7 @@ WindowWithOpenGL::WindowWithOpenGL(
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, minor );
     Uint32 windowFlags = SDL_WINDOW_OPENGL;
     this->m_window = SDL_CreateWindow(
-        this->getName().c_str(),
+        this->getName().cStr(),
         static_cast<int>( this->getPos().getX() ),
         static_cast<int>( this->getPos().getY() ),
         static_cast<int>( this->getSize().getX() ),
@@ -211,22 +211,22 @@ SDL_Surface* WindowWithOpenGL::createSurface(
 {
     if( false == path.exists() )
     {
-        const std::string msg =
+        CUL::CnstMyStr msg =
             "File " +
             path.getPath() +
             " does not exist.";
-        CUL::Assert::simple( false, msg.c_str() );
+        CUL::Assert::simple( false, msg.cStr() );
     }
 
     SDL_Surface* result = nullptr;
     if( ".bmp" == path.getExtension() )
     {
-        result = SDL_LoadBMP( path.getPath().c_str() );
+        result = SDL_LoadBMP( path.getPath().cStr() );
     }
 
     if( ".png" == path.getExtension() )
     {
-        result = IMG_Load( path.getPath().c_str() );
+        result = IMG_Load( path.getPath().cStr() );
     }
     CUL::Assert::simple(
         nullptr != result,

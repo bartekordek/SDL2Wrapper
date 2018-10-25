@@ -15,7 +15,7 @@ using namespace SDL2W;
 SDL2WrapperImpl::SDL2WrapperImpl(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& winName,
+    CUL::CnstMyStr& winName,
     const bool opengl )
 {
     const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
@@ -50,7 +50,8 @@ void SDL2WrapperImpl::createKeys()
         }
         else
         {
-            this->m_keys[key->getKeyName()] = std::unique_ptr<IKey>( key );
+            const auto keyName = key->getKeyName();
+            this->m_keys[ keyName ] = std::unique_ptr<IKey>( key );
         }
     }
 }
@@ -143,7 +144,7 @@ void SDL2WrapperImpl::handleKeyboardEvent( SDL_Event& sdlEvent )
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
     auto& key = this->m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
     key->setKeyIsDown( keyIsDown );
-    std::cout << "EVENT: Key press/release, key: " << key->getKeyName() << "\n";
+    std::cout << "EVENT: Key press/release, key: " << key->getKeyName().string() << "\n";
     std::cout << "EVENT: Key press/release, keyID: " << sdlEvent.key.keysym.scancode << "\n";
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
@@ -218,7 +219,7 @@ void SDL2WrapperImpl::setInputLatency( cunt latencyInUs )
     this->m_eventLatencyUs = latencyInUs;
 }
 
-const bool SDL2WrapperImpl::isKeyUp( const std::string& keyName )const
+const bool SDL2WrapperImpl::isKeyUp( CUL::CnstMyStr& keyName )const
 {
     return this->m_keys.at( keyName )->getKeyIsDown();
 }

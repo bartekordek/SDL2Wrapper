@@ -3,6 +3,8 @@
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 
+#include "CUL/MyString.hpp"
+
 namespace SDL2W
 {
     class SDL2WAPI IWindowFactory
@@ -16,11 +18,11 @@ namespace SDL2W
 
         virtual IWindow* createWindow(
             const Vector3Di& pos, const Vector3Du& size,
-            CnstStr& winName ) = 0;
+            CUL::CnstMyStr& winName ) = 0;
 
         virtual IWindow* createWindowOGL(
             const Vector3Di& pos, const Vector3Du& size,
-            CnstStr& winName,
+            CUL::CnstMyStr& winName,
             const int major = 2, const int minor = 1 ) = 0;
 
         virtual IWindow* getMainWindow() = 0;

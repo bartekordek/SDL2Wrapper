@@ -9,7 +9,7 @@ using namespace SDL2W;
 WindowCreatorConcrete::WindowCreatorConcrete(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& winName,
+    CUL::CnstMyStr& winName,
     const bool opengl )
 {
     if( opengl )
@@ -40,7 +40,7 @@ IWindow* WindowCreatorConcrete::getMainWindow()
 IWindow* WindowCreatorConcrete::createWindow(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& winName )
+    CUL::CnstMyStr& winName )
 {
     auto window = new RegularSDL2Window(
         pos, size, winName );
@@ -50,7 +50,7 @@ IWindow* WindowCreatorConcrete::createWindow(
 
 IWindow* WindowCreatorConcrete::createWindowOGL(
     const Vector3Di & pos, const Vector3Du & size,
-    CnstStr& winName,
+    CUL::CnstMyStr& winName,
     const int major, const int minor )
 {
     auto window = new WindowWithOpenGL( 
@@ -66,7 +66,7 @@ IWindow* WindowCreatorConcrete::getWindow(
 {
     for( auto& windows : this->m_windows )
     {
-        if( std::strcmp( windows.first->getName().c_str(), winName ) == 0 )
+        if( std::strcmp( windows.first->getName().cStr(), winName ) == 0 )
         {
             return windows.first;
         }

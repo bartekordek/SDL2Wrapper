@@ -14,7 +14,7 @@
 NAMESPACE_BEGIN( SDL2W )
 
 using cunt = const unsigned int;
-using Keys = std::map<std::string, std::unique_ptr<IKey>>;
+using Keys = std::map<CUL::MyString, std::unique_ptr<IKey>>;
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
     public IEventLoop
@@ -58,7 +58,7 @@ private:
 SDL2WAPI ISDL2Wrapper* createSDL2Wrapper(
     const Vector3Di& pos = Vector3Di(),
     const Vector3Du& size = Vector3Du( 800, 600, 0 ),
-    CnstStr& winName = "",
+    CUL::CnstMyStr& winName = "",
     const bool opengl = false );
 SDL2WAPI ISDL2Wrapper* getSDL2Wrapper();
 void SDL2WAPI destroySDL2Wrapper();

@@ -98,7 +98,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\deps\boost_1_67_0;$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2-2.0.8\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
-      <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2W_EXPORT;CUL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>
       </ProgramDataBaseFileName>
@@ -148,7 +148,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\deps\boost_1_67_0;$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2-2.0.8\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
-      <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2W_EXPORT;CUL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>
       </ProgramDataBaseFileName>
@@ -198,7 +198,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\deps\boost_1_67_0;$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2-2.0.8\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2W_EXPORT;CUL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -245,7 +245,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\deps\boost_1_67_0;$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2-2.0.8\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINDLL;_MBCS;SDL2W_EXPORT;CUL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -334,6 +334,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.git\config" />
+    <None Include="Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

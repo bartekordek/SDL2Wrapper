@@ -14,7 +14,7 @@ namespace SDL2W
     public:
         WindowCreatorConcrete(
             const Vector3Di& pos, const Vector3Du& size,
-            CnstStr& winName,
+            CUL::CnstMyStr& winName,
             const bool opengl = false );
         WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
         ~WindowCreatorConcrete();
@@ -22,11 +22,11 @@ namespace SDL2W
 
         IWindow* createWindow(
             const Vector3Di& pos, const Vector3Du& size,
-            CnstStr& winName ) override;
+            CUL::CnstMyStr& winName ) override;
 
         IWindow* createWindowOGL(
             const Vector3Di& pos, const Vector3Du& size,
-            CnstStr& winName,
+            CUL::CnstMyStr& winName,
             const int major = 2, const int minor = 1 ) override;
 
         IWindow* getMainWindow() override;

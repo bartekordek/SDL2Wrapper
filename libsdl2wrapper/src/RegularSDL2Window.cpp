@@ -14,13 +14,13 @@ using namespace SDL2W;
 RegularSDL2Window::RegularSDL2Window( 
     const Vector3Di& pos,
     const Vector3Du& size,
-    CnstStr& name ):
+    CUL::CnstMyStr& name ):
         m_position( pos ),
         m_size( size )
 {
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     this->m_window = SDL_CreateWindow(
-        this->getName().c_str(),
+        this->getName().cStr(),
         static_cast<int>( this->getPos().getX() ),
         static_cast<int>( this->getPos().getY() ),
         static_cast<int>( this->getSize().getX() ),
@@ -148,7 +148,7 @@ ISprite* RegularSDL2Window::createSprite( const Path& objPath )
 {
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
-    auto it = this->m_textures.find( objPath.getPath() );
+    auto it = this->m_textures.find( objPath.getPath().string() );
     if( this->m_textures.end() == it )
     {
         auto tex = createTexture( objPath );
@@ -166,7 +166,7 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
 {
     ITexture* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
-    auto it = this->m_textures.find( objPath.getPath() );
+    auto it = this->m_textures.find( objPath.getPath().string() );
     if( this->m_textures.end() == it )
     {
         auto surface = createSurface( objPath );
@@ -196,17 +196,17 @@ SDL_Surface* RegularSDL2Window::createSurface(
 {
     if( false == path.exists() )
     {
-        const std::string msg =
+        CUL::CnstMyStr msg =
             "File " +
             path.getPath() +
             " does not exist.";
-        CUL::Assert::simple( false, msg.c_str() );
+        CUL::Assert::simple( false, msg );
     }
 
     SDL_Surface* result = nullptr;
     if( ".bmp" == path.getExtension() )
     {
-        result = SDL_LoadBMP( path.getPath().c_str() );
+        result = SDL_LoadBMP( path.getPath().cStr() );
     }
 
     if( ".png" == path.getExtension() )

@@ -5,9 +5,10 @@
 #include "SDL2Wrapper/ITexture.hpp"
 #include "SDL2Wrapper/IRender.hpp"
 #include "SDL2Wrapper/IObjectRegister.hpp"
-#include "CUL/STD_string.hpp"
+#include "CUL/STD_map.hpp"
 #include "CUL/Color.hpp"
 #include "CUL/IName.hpp"
+#include "CUL/STD_memory.hpp"
 
 namespace SDL2W
 {
@@ -23,6 +24,8 @@ namespace SDL2W
     using ColorS = CUL::ColorS;
     using ColorE = CUL::ColorE;
     using IName = CUL::IName;
+
+    using TextureMap = std::map<CUL::MyString, std::unique_ptr<ITexture>>;
 
     class SDL2WAPI IWindow:
         public IRender,

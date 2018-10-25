@@ -5,7 +5,6 @@
 
 #include "CUL/STD_memory.hpp"
 #include "CUL/STD_set.hpp"
-#include "CUL/STD_map.hpp"
 #include "CUL/STD_mutex.hpp"
 #include "CUL/Video/IFPSCounter.hpp"
 
@@ -17,7 +16,6 @@ struct SDL_Surface;
 
 namespace SDL2W
 {
-    using TextureMap = std::map<std::string, std::unique_ptr<ITexture>>;
     class WindowWithOpenGL:
         public IWindow
     {
@@ -26,7 +24,7 @@ namespace SDL2W
         WindowWithOpenGL(
             const Vector3Di& pos,
             const Vector3Du& size,
-            CnstStr& name,
+            CUL::CnstMyStr& name,
             const int major, const int minor );
         WindowWithOpenGL( const WindowWithOpenGL& win ) = delete;
         virtual ~WindowWithOpenGL();

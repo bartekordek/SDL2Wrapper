@@ -26,10 +26,11 @@ public:
  
         if( this->m_pikachuBmp.exists() )
         {
-            this->m_obj1 = m_sdlW->createSprite( this->m_pikachuPng, this->m_activeWindow );
-            this->m_obj2 = m_sdlW->createSprite( this->m_pikachuPng, this->m_activeWindow );
-            this->m_obj3 = m_sdlW->createSprite( this->m_pikachuBmp, this->m_activeWindow );
-            this->m_obj4 = m_sdlW->createSprite( this->m_pikachuBmp, this->m_activeWindow );
+            auto aw = this->m_activeWindow;
+            this->m_obj1 = m_sdlW->createSprite( this->m_pikachuPng, aw );
+            this->m_obj2 = m_sdlW->createSprite( this->m_pikachuPng, aw );
+            this->m_obj3 = m_sdlW->createSprite( this->m_pikachuBmp, aw );
+            this->m_obj4 = m_sdlW->createSprite( this->m_pikachuBmp, aw );
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
@@ -70,7 +71,7 @@ public:
         {
             return;
         }
-        std::cout << "KEY: " << key.getKeyName() << "\n";
+        std::cout << "KEY: " << key.getKeyName().string() << "\n";
 
         static int delta = 8;
 

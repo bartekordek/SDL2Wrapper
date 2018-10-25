@@ -5,10 +5,11 @@ namespace SDL2W
 {
     ISDL2Wrapper* sdlWrapper = nullptr;
 
-    ISDL2Wrapper* createSDL2Wrapper( const Vector3Di& pos,
-                                     const Vector3Du& size,
-                                     CnstStr& winName,
-                                     const bool opengl )
+    ISDL2Wrapper* createSDL2Wrapper(
+        const Vector3Di& pos,
+        const Vector3Du& size,
+        CUL::CnstMyStr& winName,
+        const bool opengl )
     {
         CUL::Assert::simple( sdlWrapper == nullptr, "SDL2Wrapper already constructed." );
         sdlWrapper = new SDL2WrapperImpl( pos, size, winName, opengl );

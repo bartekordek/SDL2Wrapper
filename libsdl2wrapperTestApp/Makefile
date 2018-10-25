@@ -18,7 +18,6 @@ DIAG_FLAG := -fdiagnostics-color=always
 CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
 CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG)
 COMPILER_FLAGS := -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
-COMPILER_FLAGS := $(COMPILER_FLAGS) -D SDL2W_EXPORT -D SDL2W_LINUX
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = Tests
@@ -36,7 +35,7 @@ CUL_INC := $(CUL_HOME)/libcul/inc
 CUL_LIB := $(CUL_HOME)/build
 CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
 CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
-COMPILER_FLAGS := $(COMPILER_FLAGS) -D CUL_EXPORT -D CUL_LINUX
+
 # DEPS: SDL2W
 SDL2W_HOME := ../libsdl2wrapper
 SDL2W_INC := $(SDL2W_HOME)/inc

@@ -2,16 +2,18 @@
 
 #if _WIN32
 #define SDL2W_WINDOWS
+#define SDL2W_EXPORT
 #else
 #define SDL2W_LINUX
+#define SDL2W_EXPORT
 #endif
 
 #if defined SDL2W_EXPORT && defined SDL2W_LINUX
 #define SDL2WAPI
 #define SDL2Wrapper_TEMPLATE
-#elif SDL2W_EXPORT && defined SDL2W_WINDOWS
+#elif defined SDL2W_EXPORT && defined SDL2W_WINDOWS
 #define SDL2WAPI _declspec(dllexport)
-#define SDL2Wrapper_TEMPLATE
+#define SDL2Wrapper_TEMPLATE extern
 #else
 #define SDL2WAPI _declspec(dllimport)
 #define SDL2Wrapper_TEMPLATE extern

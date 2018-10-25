@@ -19,7 +19,7 @@ namespace SDL2W
         SDL2WrapperImpl(
             const Vector3Di& pos = Vector3Di(),
             const Vector3Du& size = Vector3Du(),
-            CnstStr& winName = "",
+            CUL::CnstMyStr& winName = "",
             const bool opengl = false);
         SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
         virtual ~SDL2WrapperImpl();
@@ -48,7 +48,7 @@ namespace SDL2W
 
         cunt getInputLatency()const override;
         void setInputLatency( const unsigned int latencyInUs ) override;
-        const bool isKeyUp( CnstStr& keyName )const;
+        const bool isKeyUp( CUL::CnstMyStr& keyName )const;
         Keys& getKeyStates() override;
 
         IWindowFactory* getWindowFactory() override;
