@@ -1,6 +1,7 @@
 #include "SDL2WrapperImpl.hpp"
 #include "RegularSDL2Window.hpp"
 #include "Input/KeySDL.hpp"
+#include "Input/MouseDataSDL.hpp"
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 
@@ -29,11 +30,15 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     createKeys();
     this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
     this->m_windows = &this->m_windowFactory->getAllWindows();
+
+    this->m_mouseData.reset( new MouseDataSDL() );
+
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
 {
     delete this->m_windowFactory;
+    this->m_windowFactory = nullptr;
     this->m_keys.clear();
     SDL_Quit();
 }
@@ -144,11 +149,8 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 
     if( eventIsMouseEvent( event ) )
     {
-
-    }
-
-    {
-        std::cout << "UNKOWN EVENT: " << event.type << "\n";
+        handleMouseEvent( event );
+        notifyMouseListerners( *this->m_mouseData );
     }
 }
 
@@ -178,35 +180,27 @@ void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 
 void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 {
-    switch( event.type )
+    if( event.type == SDL_MOUSEBUTTONDOWN ||
+        event.type == SDL_MOUSEBUTTONUP )
     {
-        case SDL_MOUSEMOTION:
-        {
+        const bool isUp = event.type == SDL_MOUSEBUTTONUP ? true : false;
 
-        }
-        break;
-        case SDL_MOUSEBUTTONDOWN:
-        {
-
-        }
-        break;
-        case SDL_MOUSEBUTTONUP:
-        {
-
-        }
-        break;
-        case SDL_MOUSEWHEEL:
-        {
-
-        }
-    default:
-    break;
-
+        const auto mb = event.button;
+        const auto mbIndex = static_cast<unsigned short>( mb.button );
+        this->m_mouseData->setState( mbIndex, isUp );
     }
-        /*||
-        SDL_MOUSEBUTTONDOWN ||
-        SDL_MOUSEBUTTONUP ||
-        SDL_MOUSEWHEEL )*/
+    else if( event.type == SDL_MOUSEMOTION )
+    {
+        this->m_mouseData->setPos( event.button.x, event.button.y );
+    }
+    else if( event.type == SDL_MOUSEWHEEL )
+    {
+        const auto we = event.wheel;
+        this->m_mouseData->setWheel(
+            we.x,
+            we.y,
+            we.direction == SDL_MOUSEWHEEL_NORMAL ? SDL2W::WheelDirection::UP : SDL2W::WheelDirection::DOWN );
+    }
 }
 
 void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
@@ -248,6 +242,14 @@ void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
     }
 }
 
+void SDL2WrapperImpl::notifyMouseListerners( const IMouseData& md )
+{
+    for( const auto& listener: this->m_mouseObservers )
+    {
+        listener->onMouseEvent( md );
+    }
+}
+
 void SDL2WrapperImpl::registerWindowEventListener(
     IWindowEventObserver* observer )
 {
@@ -258,6 +260,26 @@ void SDL2WrapperImpl::unregisterWindowEventListener(
     IWindowEventObserver* observer )
 {
     this->m_windowEventObservers.erase( observer );
+}
+
+void SDL2WrapperImpl::addMouseEventCallback( const std::function<void( const IMouseData& md )>& callback )
+{
+    this->m_mouseCallbacks.push_back( callback );
+}
+
+void SDL2WrapperImpl::registerMouseEventListener( IMouseObserver* observer )
+{
+    this->m_mouseObservers.insert( observer );
+}
+
+void SDL2WrapperImpl::unregisterMouseEventListener( IMouseObserver* observer )
+{
+    this->m_mouseObservers.erase( observer );
+}
+
+IMouseData& SDL2WrapperImpl::getMouseData( void )
+{
+    return *this->m_mouseData;
 }
 
 void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )

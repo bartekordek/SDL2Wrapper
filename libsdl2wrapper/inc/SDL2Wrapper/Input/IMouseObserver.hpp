@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SDL2Wrapper/Input/IMouseData.hpp"
 #include "CUL/UselessMacros.hpp"
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 
@@ -11,7 +12,7 @@ public:
     IMouseObserver( void ) = default;
     virtual ~IMouseObserver( void ) = default;
 
-    virtual void onKeyBoardEvent( void ) = 0;
+    virtual void onMouseEvent( const IMouseData& md ) = 0;
 
 protected:
 private:

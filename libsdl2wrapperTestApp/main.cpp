@@ -10,6 +10,7 @@
 
 class TestApp final: 
     public SDL2W::IKeyboardObserver, 
+    public SDL2W::IMouseObserver,
     private SDL2W::IWindowEventObserver
 {
 public:
@@ -31,6 +32,7 @@ public:
             this->m_obj2 = m_sdlW->createSprite( this->m_pikachuPng, aw );
             this->m_obj3 = m_sdlW->createSprite( this->m_pikachuBmp, aw );
             this->m_obj4 = m_sdlW->createSprite( this->m_pikachuBmp, aw );
+            this->m_obj5 = m_sdlW->createSprite( this->m_pikachuBmp, aw );
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW;
@@ -60,6 +62,7 @@ public:
     {
         this->m_sdlW->registerKeyboardEventListener( this );
         this->m_sdlW->registerWindowEventListener( this );
+        this->m_sdlW->registerMouseEventListener( this );
         this->m_objectMoveThread = std::thread( &TestApp::objectManagmentFun, this );
         this->m_dataInfoThread = std::thread( &TestApp::dataPrintFun, this );
         this->m_sdlW->runEventLoop();
@@ -100,6 +103,12 @@ public:
             this->m_sdlW->stopEventLoop();
             this->runLoop = false;
         }
+    }
+
+    void onMouseEvent( const SDL2W::IMouseData& md )
+    {
+        this->m_obj5->setX( static_cast<double>( md.getX() ) );
+        this->m_obj5->setY( static_cast<double>( md.getY() ) );
     }
 
     void onWindowEvent( const WindowEventType windowEventType ) override
@@ -197,6 +206,7 @@ private:
     SDL2W::ISprite* m_obj2 = nullptr;
     SDL2W::ISprite* m_obj3 = nullptr;
     SDL2W::ISprite* m_obj4 = nullptr;
+    SDL2W::ISprite* m_obj5 = nullptr;
 
     CUL::Math::Vector3Dd obj1Scale;
     CUL::Math::Vector3Di obj2Pos0;
