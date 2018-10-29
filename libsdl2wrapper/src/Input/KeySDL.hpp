@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SDL2Wrapper/IKey.hpp"
+#include "SDL2Wrapper/Input/IKey.hpp"
 #include "CUL/STD_string.hpp"
 
 namespace SDL2W
@@ -17,7 +17,7 @@ namespace SDL2W
         virtual ~KeySDL();
         KeySDL& operator=( const KeySDL& key );
 
-        void setKeyName( const std::string& keyName ) override;
+        void setKeyName( CUL::CnstMyStr& keyName ) override;
         CUL::CnstMyStr& getKeyName()const override;
         void setKeyIsDown( const bool keyIsDown ) override;
         const bool getKeyIsDown()const override;

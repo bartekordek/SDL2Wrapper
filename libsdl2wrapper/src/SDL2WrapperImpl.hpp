@@ -69,9 +69,10 @@ namespace SDL2W
         void notifyKeyboardCallbacks( const IKey& key );
         void notifyKeyboardListeners( const IKey& key );
         void notifyWindowEventListeners( const WindowEventType e );
-        void handleEveent( SDL_Event& event );
-
-        void handleKeyboardEvent( SDL_Event& sdlEvent );
+        void handleEveent( const SDL_Event& event );
+        const bool eventIsMouseEvent( const SDL_Event& event );
+        void handleKeyboardEvent( const SDL_Event& sdlEvent );
+        void handleMouseEvent( const SDL_Event& sdlEvent );
 
         WindowCreatorConcrete* m_windowFactory = nullptr;
 

@@ -1,6 +1,6 @@
 #include "SDL2WrapperImpl.hpp"
 #include "RegularSDL2Window.hpp"
-#include "KeySDL.hpp"
+#include "Input/KeySDL.hpp"
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 
@@ -116,7 +116,7 @@ void SDL2WrapperImpl::runEventLoop()
     }
 }
 
-void SDL2WrapperImpl::handleEveent( SDL_Event &event )
+void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 {
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
@@ -125,21 +125,47 @@ void SDL2WrapperImpl::handleEveent( SDL_Event &event )
             handleKeyboardEvent( event );
         }
     }
-    else if( event.type == SDL_MOUSEMOTION )
-    {
-
-    }
     else if( event.type == SDL_QUIT )
     {
         notifyWindowEventListeners( WindowEventType::CLOSE );
     }
-    else
+    else if( event.type == SDL_WINDOWEVENT_MOVED )
+    {
+        notifyWindowEventListeners( WindowEventType::MOVED );
+    }
+    else if( event.type == SDL_WINDOWEVENT_ENTER )
+    {
+        notifyWindowEventListeners( WindowEventType::MOUSE_ENTERED );
+    }
+    else if( event.type == SDL_WINDOWEVENT_LEAVE )
+    {
+        notifyWindowEventListeners( WindowEventType::MOUSE_LEAVED );
+    }
+
+    if( eventIsMouseEvent( event ) )
+    {
+
+    }
+
     {
         std::cout << "UNKOWN EVENT: " << event.type << "\n";
     }
 }
 
-void SDL2WrapperImpl::handleKeyboardEvent( SDL_Event& sdlEvent )
+const bool SDL2WrapperImpl::eventIsMouseEvent( const SDL_Event& event )
+{
+    if( event.type ==
+        SDL_MOUSEMOTION ||
+        SDL_MOUSEBUTTONDOWN ||
+        SDL_MOUSEBUTTONUP ||
+        SDL_MOUSEWHEEL )
+    {
+        return true;
+    }
+    return false;
+}
+
+void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 {
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
     auto& key = this->m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
@@ -148,6 +174,39 @@ void SDL2WrapperImpl::handleKeyboardEvent( SDL_Event& sdlEvent )
     std::cout << "EVENT: Key press/release, keyID: " << sdlEvent.key.keysym.scancode << "\n";
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
+}
+
+void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
+{
+    switch( event.type )
+    {
+        case SDL_MOUSEMOTION:
+        {
+
+        }
+        break;
+        case SDL_MOUSEBUTTONDOWN:
+        {
+
+        }
+        break;
+        case SDL_MOUSEBUTTONUP:
+        {
+
+        }
+        break;
+        case SDL_MOUSEWHEEL:
+        {
+
+        }
+    default:
+    break;
+
+    }
+        /*||
+        SDL_MOUSEBUTTONDOWN ||
+        SDL_MOUSEBUTTONUP ||
+        SDL_MOUSEWHEEL )*/
 }
 
 void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )

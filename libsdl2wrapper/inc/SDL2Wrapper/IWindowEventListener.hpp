@@ -8,7 +8,14 @@ namespace SDL2W
         enum class WindowEventType: short
         {
             CLOSE = 1,
-            RESIZE
+            MINIMIZED,
+            RESTORED,
+            MOVED,
+            RESIZE,
+            MOUSE_ENTERED,
+            MOUSE_LEAVED,
+            FOCUS_GAINED,
+            FOCUS_LEAVED
         };
 
         IWindowEventObserver() = default;

@@ -27,3 +27,6 @@
 #pragma comment(lib, "libsdl2wrapper.a")
 #endif
 */
+
+using cunt = const unsigned int;
+using cint = const int;

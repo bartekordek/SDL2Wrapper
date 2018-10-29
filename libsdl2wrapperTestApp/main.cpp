@@ -105,6 +105,11 @@ public:
     void onWindowEvent( const WindowEventType windowEventType ) override
     {
         std::cout << "Event Type: " << static_cast<short>( windowEventType ) << "WAT!!\n";
+        if( WindowEventType::CLOSE == windowEventType )
+        {
+            this->m_sdlW->stopEventLoop();
+            this->runLoop = false;
+        }
     }
 
 protected:

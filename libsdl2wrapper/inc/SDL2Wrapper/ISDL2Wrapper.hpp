@@ -1,9 +1,9 @@
 #pragma once
 #include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2Wrapper/IEventLoop.hpp"
-#include "SDL2Wrapper/IKey.hpp"
+#include "SDL2Wrapper/Input/IKey.hpp"
 #include "SDL2Wrapper/IWindowEventListener.hpp"
-#include "SDL2Wrapper/IKeyboardObservable.hpp"
+#include "SDL2Wrapper/Input/IKeyboardObservable.hpp"
 #include "SDL2Wrapper/ITexture.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
@@ -13,7 +13,6 @@
 
 NAMESPACE_BEGIN( SDL2W )
 
-using cunt = const unsigned int;
 using Keys = std::map<CUL::MyString, std::unique_ptr<IKey>>;
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
@@ -31,12 +30,16 @@ public:
         const bool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
 
-    virtual ITexture* createTexture( const Path& path,
-                                        IWindow* targetWindow ) = 0;
-    virtual ISprite* createSprite( const Path& path,
-                                    IWindow* targetWindow ) = 0;
-    virtual ISprite* createSprite( ITexture* tex,
-                                    IWindow* targetWindow ) = 0;
+    virtual ITexture* createTexture(
+        const Path& path,
+        IWindow* targetWindow ) = 0;
+    virtual ISprite* createSprite(
+        const Path& path,
+        IWindow* targetWindow ) = 0;
+
+    virtual ISprite* createSprite(
+        ITexture* tex,
+        IWindow* targetWindow ) = 0;
 
     virtual IWindowFactory* getWindowFactory() = 0;
     virtual IWindow* getMainWindow() = 0;

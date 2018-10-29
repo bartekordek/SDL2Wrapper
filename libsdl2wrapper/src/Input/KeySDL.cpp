@@ -25,7 +25,7 @@ namespace SDL2W
         return *this;
     }
 
-    void KeySDL::setKeyName( const std::string& name )
+    void KeySDL::setKeyName( CUL::CnstMyStr& name )
     {
         this->keyName = name;
     }

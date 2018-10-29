@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{bb202745-8f29-4a35-a14f-b5e5daea98d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{8dd0011b-2dde-46a9-b992-8c551124cad0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
@@ -39,19 +45,7 @@
     <ClInclude Include="src\Sprite.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IKey.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\KeySDL.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IKeyboardObserver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IKeyboardObservable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\ITexture.hpp">
@@ -96,6 +90,33 @@
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IDevice.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\IKey.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\IKeyboardObservable.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\IKeyboardObserver.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\IMouseData.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObservable.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObserver.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\MouseDataSDL.hpp">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\KeySDL.hpp">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">
@@ -119,12 +140,6 @@
     <ClCompile Include="src\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\KeySDL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IKey.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ITexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -145,6 +160,15 @@
     </ClCompile>
     <ClCompile Include="src\WindowWithOpenGL.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\IKey.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\MouseDataSDL.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\KeySDL.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
