@@ -1,21 +1,26 @@
 #pragma once
 
-#include "ITexture.hpp"
-#include "IObject.hpp"
+#include "SDL2Wrapper/SDL2Wrapper.hpp"
+#include "CUL/Graphics/ITexture.hpp"
+#include "CUL/Graphics/IObject.hpp"
 
-namespace SDL2W
+NAMESPACE_BEGIN( SDL2W )
+
+using ITexture = CUL::Graphics::ITexture;
+using IObject = CUL::Graphics::IObject;
+
+class SDL2WAPI ISprite:
+    public IObject
 {
-    class SDL2WAPI ISprite:
-        public IObject
-    {    
-    public:
-        ISprite();
-        
-        virtual ITexture* getTexture() = 0;
-        virtual void setTexture( ITexture* texture ) = 0;
-        
-        virtual ~ISprite();
-    private:
+public:
+    ISprite();
 
-    };
-}
+    virtual ITexture* getTexture() = 0;
+    virtual void setTexture( ITexture* texture ) = 0;
+        
+    virtual ~ISprite();
+private:
+
+};
+
+NAMESPACE_END( CUL )

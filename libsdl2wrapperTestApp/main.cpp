@@ -3,7 +3,7 @@
 #include "CUL/IThreadUtility.hpp"
 #include "CUL/FS.hpp"
 #include "CUL/LckPrim.hpp"
-#include "CUL/Math/Degree.hpp"
+#include "CUL/Math/Angle.hpp"
 #include "CUL/STD_thread.hpp"
 #include "CUL/STD_cmath.hpp"
 #include "CUL/STD_iostream.hpp"
@@ -157,8 +157,8 @@ private:
 
             unsigned sleepTimeinMs = 18;
             double i = 0.0;
-            CUL::Math::Degree obj2Angle;
-            CUL::Math::Degree obj3Angle;
+            CUL::Math::Angle obj2Angle;
+            CUL::Math::Angle obj3Angle;
 
             while( this->runLoop )
             {

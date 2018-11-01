@@ -39,16 +39,10 @@
     <ClInclude Include="src\RegularSDL2Window.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Sprite.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\ITexture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextureSDL.hpp">
@@ -73,9 +67,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_video.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IObjectRegister.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WindowWithOpenGL.hpp">
@@ -134,13 +125,7 @@
     <ClCompile Include="src\RegularSDL2Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\IObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ITexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextureSDL.cpp">

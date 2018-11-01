@@ -5,9 +5,9 @@
 #include "SDL2Wrapper/IWindowEventListener.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObservable.hpp"
 #include "SDL2Wrapper/Input/IMouseObservable.hpp"
-#include "SDL2Wrapper/ITexture.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
+#include "CUL/Graphics/ITexture.hpp"
 #include "CUL/IThreadUtility.hpp"
 #include "CUL/STD_memory.hpp"
 #include "CUL/STD_map.hpp"
@@ -15,6 +15,7 @@
 NAMESPACE_BEGIN( SDL2W )
 
 using Keys = std::map<CUL::MyString, std::unique_ptr<IKey>>;
+
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
     public IMouseObservable,
@@ -65,7 +66,9 @@ SDL2WAPI ISDL2Wrapper* createSDL2Wrapper(
     const Vector3Du& size = Vector3Du( 800, 600, 0 ),
     CUL::CnstMyStr& winName = "",
     const bool opengl = false );
+
 SDL2WAPI ISDL2Wrapper* getSDL2Wrapper();
-void SDL2WAPI destroySDL2Wrapper();
+
+SDL2WAPI void destroySDL2Wrapper();
 
 NAMESPACE_END( SDL2W )

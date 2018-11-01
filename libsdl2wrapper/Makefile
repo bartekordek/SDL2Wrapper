@@ -15,7 +15,7 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-CC_STAND := -std=c++11
+CC_STAND := -std=c++17
 CC := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
 CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared
 COMPILER_FLAGS := -pedantic -Wall -Wno-ignored-attributes
@@ -54,6 +54,7 @@ SDL_IMAGE_LIB_IMPORT := $(SDL_IMAGE_LIB)/libSDL2_image-2.0.so.0.2.1
 HOME_BOOST := $(CUL_HOME)/deps/boost_1_67_0
 
 HEADERS_INC := -I inc
+HEADERS_INC += -I src
 HEADERS_INC += -I $(CUL_INC)
 HEADERS_INC += -I $(SDL_INC)
 HEADERS_INC += -I $(SDL_IMAGE_INC)
@@ -70,14 +71,15 @@ IMP_LIB_RELEASE = $(OUTPUT_DIR_RELEASE)/$(IMP_LIB_NAME)
 IMPORT_LIBS_DEBUG := $(SDL_LIB_IMPORT) $(SDL_IMAGE_LIB_IMPORT) -pthread
 IMPORT_LIBS_RELEASE := $(SDL_LIB_IMPORT) $(SDL_IMAGE_LIB_IMPORT) -pthread
 
-CPP_FILES := $(wildcard */*.cpp)
+CPP_FILES := $(wildcard src/*.cpp)
+CPP_FILES += $(wildcard src/*/*.cpp)
 
 OBJ_DEBUG_DIR := obj/debug/
 OBJ_DEBUG_FILES := $(addprefix $(OBJ_DEBUG_DIR),$(CPP_FILES:.cpp=.o))
 
 OBJ_RELEASE_DIR := obj/release/
 OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
-	
+
 ifeq ($(OS),Windows_NT)
     DYN_LIB_EXT = .dll
 else
@@ -111,7 +113,7 @@ clean:
 	rm -f $(OUTPUT_DEBUG)
 	rm -f $(OUTPUT_RELEASE)
 	find . -name '*.o' | xargs rm -fv
-	
+
 test:
 	@echo "All .o files: $(OBJ_DEBUG_FILES)"
 	@echo "All .cpp files: $(CPP_FILES)"

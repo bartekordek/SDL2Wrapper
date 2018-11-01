@@ -17,7 +17,8 @@ endif
 DIAG_FLAG := -fdiagnostics-color=always
 CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
 CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG)
-COMPILER_FLAGS := -pedantic -Wall -std=c++11 -D MogeLib_EXPORT="1" -Wno-ignored-attributes
+CC_STAND := -std=c++17
+COMPILER_FLAGS := -pedantic -Wall $(CC_STAND) -D MogeLib_EXPORT="1" -Wno-ignored-attributes
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = Tests
@@ -74,6 +75,7 @@ run_release: release
 
 $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
 	@mkdir -p $(@D)
+	make -C ../libsdl2wrapper debug
 	$(CC_LINK) -o $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME) $(OBJ_DEBUG_FILES) $(IMPORT_LIBS_DEBUG) $(IMPORT_LIBS_FILES)
 	mkdir -p $(RUN_DIR)
 	cp $(SDL2W_LIB_DEBUG)/*.so $(RUN_DIR)
@@ -81,6 +83,7 @@ $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
 
 $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME): $(OBJ_RELEASE_FILES) $(OUTPUT_DIR_RELEASE)
 	@mkdir -p $(@D)
+		make -C ../libsdl2wrapper release
 	$(CC_LINK) -o $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME) $(OBJ_RELEASE_FILES) $(IMPORT_LIBS_RELEASE) $(IMPORT_LIBS_FILES)
 	mkdir -p $(RUN_DIR)
 	cp $(SDL2W_LIB_RELEASE)/*.so $(RUN_DIR)
