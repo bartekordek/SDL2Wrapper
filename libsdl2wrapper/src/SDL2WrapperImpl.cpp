@@ -156,15 +156,17 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 
 const bool SDL2WrapperImpl::eventIsMouseEvent( const SDL_Event& event )
 {
-    if( event.type ==
-        SDL_MOUSEMOTION ||
-        SDL_MOUSEBUTTONDOWN ||
-        SDL_MOUSEBUTTONUP ||
-        SDL_MOUSEWHEEL )
+    switch( event.type )
     {
+        case SDL_MOUSEMOTION:
+        case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONUP:
+        case SDL_MOUSEWHEEL:
         return true;
+        default:
+        return false;
+        break;
     }
-    return false;
 }
 
 void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
@@ -262,7 +264,8 @@ void SDL2WrapperImpl::unregisterWindowEventListener(
     this->m_windowEventObservers.erase( observer );
 }
 
-void SDL2WrapperImpl::addMouseEventCallback( const std::function<void( const IMouseData& md )>& callback )
+void SDL2WrapperImpl::addMouseEventCallback(
+    const std::function<void( const IMouseData& md )>& callback )
 {
     this->m_mouseCallbacks.push_back( callback );
 }

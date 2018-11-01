@@ -98,16 +98,16 @@ void Sprite::calculatePositionOffset()
 }
 
 void Sprite::rotate(
-    const CUL::Math::IAngle& angle,
-    const RotationType )
+    const CUL::Math::Angle& angle,
+    CRT )
 {
     this->yaw = angle;
 }
 
-const CUL::Math::IAngle& Sprite::getAngle(
-    const RotationType rotationType )const
+const CUL::Math::Angle& Sprite::getAngle(
+    CRT rotationType )const
 {
-    if( RotationType::YAW == rotationType )
+    if( RT::YAW == rotationType )
     {
         return this->yaw;
     }
@@ -198,4 +198,3 @@ void Sprite::calculatePivotNormalised()
 {
     this->m_pivotNormalised = this->m_pivotAbsolute / this->m_absoluteSize;
 }
-

@@ -298,12 +298,9 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="inc\SDL2Wrapper\Input\IMouseData.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObservable.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObserver.hpp" />
-    <ClInclude Include="inc\SDL2Wrapper\IObject.hpp" />
-    <ClInclude Include="inc\SDL2Wrapper\IObjectRegister.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IRender.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISDL2Wrapper.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISprite.hpp" />
-    <ClInclude Include="inc\SDL2Wrapper\ITexture.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowFactory.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp" />
@@ -323,11 +320,9 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClCompile Include="src\Input\IKey.cpp" />
     <ClCompile Include="src\Input\KeySDL.cpp" />
     <ClCompile Include="src\Input\MouseDataSDL.cpp" />
-    <ClCompile Include="src\IObject.cpp" />
     <ClCompile Include="src\IRender.cpp" />
     <ClCompile Include="src\ISDL2Wrapper.cpp" />
     <ClCompile Include="src\ISprite.cpp" />
-    <ClCompile Include="src\ITexture.cpp" />
     <ClCompile Include="src\IWindow.cpp" />
     <ClCompile Include="src\IWindowFactory.cpp" />
     <ClCompile Include="src\RegularSDL2Window.cpp" />

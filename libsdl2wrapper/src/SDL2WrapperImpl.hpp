@@ -50,7 +50,8 @@ public:
     void unregisterWindowEventListener( 
         IWindowEventObserver* observer ) override;
 
-    void addMouseEventCallback( const std::function<void( const IMouseData& md )>& callback ) override;
+    void addMouseEventCallback(
+        const std::function<void( const IMouseData& md )>& callback ) override;
 
     void registerMouseEventListener( IMouseObserver* observer ) override;
     void unregisterMouseEventListener( IMouseObserver* observer ) override;
@@ -58,18 +59,18 @@ public:
     IMouseData& getMouseData( void ) override;
 
     cunt getInputLatency()const override;
-    void setInputLatency( const unsigned int latencyInUs ) override;
+    void setInputLatency( cunt latencyInUs ) override;
     const bool isKeyUp( CUL::CnstMyStr& keyName )const;
     Keys& getKeyStates() override;
 
     IWindowFactory* getWindowFactory() override;
 
     ITexture* createTexture( const Path& path,
-                                IWindow* targetWindow ) override;
+                             IWindow* targetWindow ) override;
     ISprite* createSprite( const Path& path,
-                            IWindow* targetWindow ) override;
+                           IWindow* targetWindow ) override;
     ISprite* createSprite( ITexture* tex,
-                            IWindow* targetWindow ) override;
+                           IWindow* targetWindow ) override;
 
     IWindow* getMainWindow() override;
 

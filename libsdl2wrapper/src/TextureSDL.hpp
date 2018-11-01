@@ -1,28 +1,36 @@
 #pragma once
-#include "SDL2Wrapper/ITexture.hpp"
+#include "CUL/Graphics/ITexture.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_renderer.hpp"
 #include <CUL/STD_memory.hpp>
 #include <CUL/STD_mutex.hpp>
-namespace SDL2W
+
+NAMESPACE_BEGIN( SDL2W )
+
+using ITexture = CUL::Graphics::ITexture;
+using Path = CUL::FS::Path;
+using Vector3Dd = CUL::Math::Vector3Dd;
+
+class TextureSDL:
+    public ITexture
 {
-    class TextureSDL:
-        public ITexture
-    {
-    public:
-        TextureSDL();
-        TextureSDL( const TextureSDL& val ) = delete;
-        virtual ~TextureSDL();
+public:
+    TextureSDL();
+    TextureSDL( const TextureSDL& val ) = delete;
+    virtual ~TextureSDL();
 
-        TextureSDL& operator=( const TextureSDL& val ) = delete;
+    TextureSDL& operator=( const TextureSDL& val ) = delete;
 
-        SDL_Texture* getTexture()const;
-        void setTexture( const SDL_Texture* texture, const Path& path );
-        const Vector3Dd& getSize()const override;
-        const Path& getPath()const override;
-    protected:
-    private:
-        SDL_Texture* m_texture = nullptr;
-        Vector3Dd m_size;
-        Path m_path;
-    };
-}
+    SDL_Texture* getTexture()const;
+    void setTexture(
+        const SDL_Texture* texture,
+        const Path& path );
+    const Vector3Dd& getSize()const override;
+    const Path& getPath()const override;
+protected:
+private:
+    SDL_Texture* m_texture = nullptr;
+    Vector3Dd m_size;
+    Path m_path;
+};
+
+NAMESPACE_END( CUL )
