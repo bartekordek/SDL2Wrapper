@@ -1,7 +1,7 @@
 ARCH := $(shell getconf LONG_BIT)
 ifeq ($(OS),Windows_NT)
 DYN_LIB_EXT := .dll
-BUILD_ROOT := Cygwin
+BUILD_ROOT := Build-Cygwin
 else
 DYN_LIB_EXT := .so
 BUILD_ROOT := Build-Linux
@@ -15,13 +15,13 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-CC := g++ $(ARCH_FLAG) $(DIAG_FLAG) -fPIC
-CC_LINK := g++ $(ARCH_FLAG) $(DIAG_FLAG)
 CC_STAND := -std=c++17
-COMPILER_FLAGS := -pedantic -Wall $(CC_STAND) -D MogeLib_EXPORT="1" -Wno-ignored-attributes
+CC := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
+CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG)
+
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
-PROJECT_NAME = Tests
+PROJECT_NAME = libsdl2wrapperTestApp
 BINARY_NAME = $(PROJECT_NAME).exe
 OUTPUT_DIR := ../build
 OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
@@ -37,22 +37,21 @@ CUL_LIB := $(CUL_HOME)/build
 CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
 CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
 
-# DEPS: SDL2W
+# DEPS::SDL2W
 SDL2W_HOME := ../libsdl2wrapper
 SDL2W_INC := $(SDL2W_HOME)/inc
 SDL2W_LIB := ../build
-SDL2W_LIB_DEBUG := $(SDL2W_LIB)/Debug
-SDL2W_LIB_RELEASE := $(SDL2W_LIB)/Release
+SDL2W_LIB_NAME := libsdl2wrapper.so
+SDL2W_LIB_DEBUG := $(SDL2W_LIB)/Debug/$(SDL2W_LIB_NAME)
+SDL2W_LIB_RELEASE := $(SDL2W_LIB)/Release/$(SDL2W_LIB_NAME)
 
-DEVIL_HOME := $(CUL_HOME)/deps/DevIL
-DEVIL_INC := $(DEVIL_HOME)/include
-DEVIL_LIB_DIR := $(DEVIL_HOME)/Build-Linux/x64
-DEVIL_LIB := $(DEVIL_LIB_DIR)/libIL.so
-DEVIL_LIB += $(DEVIL_LIB_DIR)/libILU.so
-DEVIL_LIB += $(DEVIL_LIB_DIR)/libILUT.so
-
-IMPORT_LIBS_DEBUG := $(CUL_LIB_DEBUG) -L $(SDL2W_LIB_DEBUG) $(DEVIL_LIB) -lsdl2wrapper -pthread
-IMPORT_LIBS_RELEASE := $(CUL_LIB_RELEASE) -L $(SDL2W_LIB_RELEASE) $(DEVIL_LIB) -lsdl2wrapper -pthread
+IMPORT_LIBS := -pthread
+IMPORT_LIBS += $(shell pkg-config --libs IL)
+IMPORT_LIBS += $(shell pkg-config --libs ILU)
+IMPORT_LIBS += $(shell pkg-config --libs ILUT)
+IMPORT_LIBS += $(shell pkg-config --libs libpng)
+IMPORT_LIBS_DEBUG := $(IMPORT_LIBS) $(CUL_LIB_DEBUG) -L $(SDL2W_LIB_DEBUG)
+IMPORT_LIBS_RELEASE := $(IMPORT_LIBS) $(CUL_LIB_RELEASE) -L $(SDL2W_LIB_RELEASE)
 
 CPP_FILES := $(wildcard *.cpp)
 
@@ -64,8 +63,11 @@ OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
 
 HEADERS_INC := -I $(CUL_INC) -I $(SDL2W_INC)
 
-debug: $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
-release: $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
+debug: $(SDL2W_LIB_DEBUG)
+	@make $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
+
+release: $(SDL2W_LIB_RELEASE)
+	@make $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
 
 run_debug: debug
 	cd $(RUN_DIR);LD_LIBRARY_PATH=$(RUN_DIR) ./$(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
@@ -75,7 +77,6 @@ run_release: release
 
 $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
 	@mkdir -p $(@D)
-	make -C ../libsdl2wrapper debug
 	$(CC_LINK) -o $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME) $(OBJ_DEBUG_FILES) $(IMPORT_LIBS_DEBUG) $(IMPORT_LIBS_FILES)
 	mkdir -p $(RUN_DIR)
 	cp $(SDL2W_LIB_DEBUG)/*.so $(RUN_DIR)
@@ -83,7 +84,6 @@ $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME): $(OBJ_DEBUG_FILES) $(OUTPUT_DIR_DEBUG)
 
 $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME): $(OBJ_RELEASE_FILES) $(OUTPUT_DIR_RELEASE)
 	@mkdir -p $(@D)
-		make -C ../libsdl2wrapper release
 	$(CC_LINK) -o $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME) $(OBJ_RELEASE_FILES) $(IMPORT_LIBS_RELEASE) $(IMPORT_LIBS_FILES)
 	mkdir -p $(RUN_DIR)
 	cp $(SDL2W_LIB_RELEASE)/*.so $(RUN_DIR)
@@ -104,6 +104,7 @@ $(OBJ_RELEASE_DIR)%.o: %.cpp
 	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
 
 clean:
+	make -C $(SDL2W_HOME) clean
 	rm -f $(OBJ_DEBUG_FILES)
 	rm -f $(OBJ_RELEASE_FILES)
 	rm -f $(OUTPUT_DEBUG)
@@ -116,3 +117,5 @@ test:
 	@echo "All .o files: $(OBJ_DEBUG_FILES)"
 	@echo "All .cpp files: $(CPP_FILES)"
 	@echo "ARCH: $(ARCH)"
+help:
+	echo "If run first time, please run \"make first_run\" it will create necessary dirs."
