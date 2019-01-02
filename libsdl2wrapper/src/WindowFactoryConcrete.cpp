@@ -14,7 +14,7 @@ WindowCreatorConcrete::WindowCreatorConcrete(
 {
     if( opengl )
     {
-        const int openglVersionMajor = 2;
+        const int openglVersionMajor = 3;
         const int openglVersionMinor = 1;
         this->m_mainWindow = createWindowOGL( pos, size, winName,
                                               openglVersionMajor,

@@ -131,10 +131,13 @@
     <ProjectReference />
     <PreLinkEvent>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
@@ -181,10 +184,13 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ProjectReference />
     <PreLinkEvent>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
@@ -228,10 +234,13 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ProjectReference />
     <PreLinkEvent>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
@@ -275,10 +284,13 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ProjectReference />
     <PreLinkEvent>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
+
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
