@@ -21,13 +21,14 @@ namespace SDL2W
         WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
 
         IWindow* createWindow(
-            const Vector3Di& pos, const Vector3Du& size,
-            CUL::CnstMyStr& winName ) override;
+            const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
+            const Vector3Du& size = Vector3Du( 800, 600, 0 ),
+            CUL::CnstMyStr& winName = "Generic Window Name." ) override;
 
         IWindow* createWindowOGL(
-            const Vector3Di& pos, const Vector3Du& size,
-            CUL::CnstMyStr& winName,
-            const int major = 2, const int minor = 1 ) override;
+            const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
+            const Vector3Du& size = Vector3Du( 800, 600, 0 ),
+            CUL::CnstMyStr& winName = "Generic Window Name." ) override;
 
         IWindow* getMainWindow() override;
         IWindow* getWindow( const char* winName ) override;

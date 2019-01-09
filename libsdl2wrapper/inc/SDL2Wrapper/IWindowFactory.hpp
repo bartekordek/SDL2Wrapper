@@ -17,13 +17,14 @@ namespace SDL2W
         IWindowFactory& operator=( const IWindowFactory& rhv ) = delete;
 
         virtual IWindow* createWindow(
-            const Vector3Di& pos, const Vector3Du& size,
-            CUL::CnstMyStr& winName ) = 0;
+            const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
+            const Vector3Du& size = Vector3Du( 800, 600, 0 ),
+            CUL::CnstMyStr& winName = "Generic Window Name." ) = 0;
 
         virtual IWindow* createWindowOGL(
-            const Vector3Di& pos, const Vector3Du& size,
-            CUL::CnstMyStr& winName,
-            const int major = 2, const int minor = 1 ) = 0;
+            const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
+            const Vector3Du& size = Vector3Du( 800, 600, 0 ),
+            CUL::CnstMyStr& winName = "Generic Window Name." ) = 0;
 
         virtual IWindow* getMainWindow() = 0;
         virtual IWindow* getWindow( const char* winName ) = 0;

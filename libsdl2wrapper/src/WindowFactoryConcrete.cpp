@@ -14,11 +14,7 @@ WindowCreatorConcrete::WindowCreatorConcrete(
 {
     if( opengl )
     {
-        const int openglVersionMajor = 3;
-        const int openglVersionMinor = 1;
-        this->m_mainWindow = createWindowOGL( pos, size, winName,
-                                              openglVersionMajor,
-                                              openglVersionMinor );
+        this->m_mainWindow = createWindowOGL( pos, size, winName );
     }
     else
     {
@@ -49,14 +45,12 @@ IWindow* WindowCreatorConcrete::createWindow(
 }
 
 IWindow* WindowCreatorConcrete::createWindowOGL(
-    const Vector3Di & pos, const Vector3Du & size,
-    CUL::CnstMyStr& winName,
-    const int major, const int minor )
+    const Vector3Di& pos, const Vector3Du & size,
+    CUL::CnstMyStr& winName )
 {
     auto window = new WindowWithOpenGL( 
         pos, size,
-        winName,
-        major, minor );
+        winName );
     this->m_windows[window] = std::unique_ptr<IWindow>( window );
     return window;
 }

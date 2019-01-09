@@ -17,15 +17,11 @@ using namespace SDL2W;
 WindowWithOpenGL::WindowWithOpenGL(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CUL::CnstMyStr& name,
-    const int major, const int minor ):
+    CUL::CnstMyStr& name ):
     m_position( pos ),
     m_size( size )
 {
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, major );
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, minor );
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES );
-    Uint32 windowFlags = SDL_WINDOW_OPENGL;
+    Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
     this->m_window = SDL_CreateWindow(
         this->getName().cStr(),
         static_cast<int>( this->getPos().getX() ),
@@ -78,7 +74,7 @@ void WindowWithOpenGL::renderAll()
         if( IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
-            auto& pos = object->getRenderPosition();
+            auto pos = object->getRenderPosition();
             auto& size = object->getSizeAbs();
             auto pivot = object->getPivot( PivotType::ABSOLUTE );
 
@@ -108,7 +104,10 @@ void WindowWithOpenGL::renderAll()
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
-    SDL_GL_SwapWindow( this->m_window );
+    if( this->m_updateBuffers )
+    {
+        updateScreenBuffers();
+    }
 
     this->m_fpsCounter->increase();
 }

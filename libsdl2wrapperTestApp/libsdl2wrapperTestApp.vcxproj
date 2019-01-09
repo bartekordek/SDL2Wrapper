@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{75ff01a3-e575-4661-b75b-3aa935b46f2f}</ProjectGuid>
+    <ProjectGuid>{D43D15FF-25E5-47DF-A66C-7F16B4D54971}</ProjectGuid>
     <RootNamespace>TestApp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>libsdl2wrapperTestApp</ProjectName>

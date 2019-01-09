@@ -7,6 +7,7 @@
 #include "CUL/STD_set.hpp"
 #include "CUL/STD_mutex.hpp"
 #include "CUL/Video/IFPSCounter.hpp"
+#include "CUL/LckPrim.hpp"
 
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 
@@ -24,8 +25,7 @@ namespace SDL2W
         WindowWithOpenGL(
             const Vector3Di& pos,
             const Vector3Du& size,
-            CUL::CnstMyStr& name,
-            const int major, const int minor );
+            CUL::CnstMyStr& name );
         WindowWithOpenGL( const WindowWithOpenGL& win ) = delete;
         virtual ~WindowWithOpenGL();
 
@@ -73,6 +73,7 @@ namespace SDL2W
         std::mutex m_objectsMtx;
         TextureMap m_textures;
         std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
+        CUL::LckPrim<bool> m_updateBuffers { true };
 
         Vector3Di m_position;
         Vector3Du m_size;

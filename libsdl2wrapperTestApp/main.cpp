@@ -8,6 +8,8 @@
 #include "CUL/STD_cmath.hpp"
 #include "CUL/STD_iostream.hpp"
 
+using Pos3D = CUL::Graphics::Position3DDMutexed;
+
 class TestApp final: 
     public SDL2W::IKeyboardObserver, 
     public SDL2W::IMouseObserver,
@@ -35,8 +37,8 @@ public:
             this->m_obj5 = m_sdlW->createSprite( this->m_pikachuBmp, aw );
             this->obj4Pos = this->m_obj4->getPosition();
         }
-        this->m_keyObservable = this->m_sdlW;
-        m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
+        this->m_keyObservable = this->m_sdlW.get();
+        this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
     }
 
     TestApp( const TestApp& rhv ) = delete;
@@ -52,8 +54,6 @@ public:
         {
             this->m_dataInfoThread.join();
         }
-
-        SDL2W::destroySDL2Wrapper();
     }
 
     TestApp& operator=( const TestApp& rhv ) = delete;
@@ -143,11 +143,11 @@ private:
 
             this->obj3Pos.setXYZ( 300, 300, 0 );
 
-            CUL::Math::Vector3Di obj1Pos( 100, 100, 0 );
-            CUL::Math::Vector3Di somePosition1( 450, 100, 0 );
-            CUL::Math::Vector3Di somePosition2( 600, 600, 0 );
-            CUL::Math::Vector3Di somePosition3( 800, 500, 0 );
-            CUL::Math::Vector3Di obj2Pos;
+            Pos3D obj1Pos( 100, 100, 0 );
+            Pos3D somePosition1( 450, 100, 0 );
+            Pos3D somePosition2( 600, 600, 0 );
+            Pos3D somePosition3( 800, 500, 0 );
+            Pos3D obj2Pos;
             this->m_obj1->setPosition( obj1Pos );
             this->m_obj2->setPosition( somePosition2 );
             this->m_obj3->setPivotX( 0.1 );
@@ -194,7 +194,7 @@ private:
 
     CUL::LckPrim<bool> runLoop{ true };
 
-    SDL2W::ISDL2Wrapper* m_sdlW = nullptr;
+    std::unique_ptr< SDL2W::ISDL2Wrapper> m_sdlW;
 
     std::thread m_objectMoveThread;
     std::thread m_dataInfoThread;
@@ -208,10 +208,10 @@ private:
     SDL2W::ISprite* m_obj4 = nullptr;
     SDL2W::ISprite* m_obj5 = nullptr;
 
-    CUL::Math::Vector3Dd obj1Scale;
-    CUL::Math::Vector3Di obj2Pos0;
-    CUL::Math::Vector3Di obj3Pos;
-    CUL::Math::Vector3Di obj4Pos;
+    Pos3D obj1Scale;
+    Pos3D obj2Pos0;
+    Pos3D obj3Pos;
+    Pos3D obj4Pos;
 
     std::shared_ptr<CUL::IThreadUtility> m_threadUtil;
 };

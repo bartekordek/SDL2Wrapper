@@ -67,8 +67,4 @@ SDL2WAPI ISDL2Wrapper* createSDL2Wrapper(
     CUL::CnstMyStr& winName = "",
     const bool opengl = false );
 
-SDL2WAPI ISDL2Wrapper* getSDL2Wrapper();
-
-SDL2WAPI void destroySDL2Wrapper();
-
 NAMESPACE_END( SDL2W )

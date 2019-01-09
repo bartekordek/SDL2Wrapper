@@ -31,57 +31,57 @@ const IObject::Type Sprite::getType()const
     return IObject::Type::SPRITE;
 }
 
-    const CUL::Math::Vector3Dd& Sprite::getPosition()const
+const Position3DDMutexed& Sprite::getPosition()const
 {
     return this->position;
 }
 
-const CUL::Math::Vector3Dd& Sprite::getRenderPosition()const
+const Position3DDMutexed& Sprite::getRenderPosition()const
 {
     return this->positionWithOffset;
 }
 
-const CUL::Math::Vector3Dd& Sprite::getSizeReal()const
+const Position3DDMutexed& Sprite::getSizeReal()const
 {
     return this->m_textureRealSize;
 }
 
-const CUL::Math::Vector3Dd& Sprite::getSizeAbs()const
+const Position3DDMutexed& Sprite::getSizeAbs()const
 {
     return this->m_absoluteSize;
 }
 
-void Sprite::setPosition( const CUL::Math::Vector3Di& newPosition )
+void Sprite::setPosition( const Position3DDMutexed& newPosition )
 {
     this->position = newPosition;
     calculatePositionOffset();
 }
 
-void Sprite::setX( const double val )
+void Sprite::setX( CDbl val )
 {
     this->position.setX( val );
     calculatePositionOffset();
 }
 
-void Sprite::setY( const double val )
+void Sprite::setY( CDbl val )
 {
     this->position.setY( val );
     calculatePositionOffset();
 }
 
-void Sprite::setZ( const double val )
+void Sprite::setZ( CDbl val )
 {
     this->position.setZ( val );
     calculatePositionOffset();
 }
 
-void Sprite::move( const CUL::Math::Vector3Di& moveVect )
+void Sprite::move( const Position3DDMutexed& moveVect )
 {
     this->position += moveVect;
     calculatePositionOffset();
 }
 
-const CUL::Math::Vector3Dd& Sprite::getScale()const
+const Position3DDMutexed& Sprite::getScale()const
 {
     return this->scale;
 }
@@ -132,7 +132,7 @@ void Sprite::setPivot(
     }
 }
 
-void Sprite::setPivotX( const double val, const PivotType type )
+void Sprite::setPivotX( CDbl val, const PivotType type )
 {
     if( PivotType::ABSOLUTE == type )
     {
@@ -146,7 +146,7 @@ void Sprite::setPivotX( const double val, const PivotType type )
     }
 }
 
-void Sprite::setPivotY( const double val, const PivotType type )
+void Sprite::setPivotY( CDbl val, const PivotType type )
 {
     if( PivotType::ABSOLUTE == type )
     {
@@ -160,7 +160,7 @@ void Sprite::setPivotY( const double val, const PivotType type )
     }
 }
 
-void Sprite::setPivotZ( const double val, const PivotType type )
+void Sprite::setPivotZ( CDbl val, const PivotType type )
 {
     if( PivotType::ABSOLUTE == type )
     {
@@ -174,7 +174,7 @@ void Sprite::setPivotZ( const double val, const PivotType type )
     }
 }
 
-const Vector3Dd& Sprite::getPivot( const PivotType type )const
+const Position3DDMutexed& Sprite::getPivot( const PivotType type )const
 {
     if( PivotType::ABSOLUTE == type )
     {
