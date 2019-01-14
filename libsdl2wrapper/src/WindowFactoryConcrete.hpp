@@ -7,15 +7,12 @@
 
 namespace SDL2W
 {
-    using WindowCollection = std::map<IWindow*, std::unique_ptr<IWindow>>;
+    
     class WindowCreatorConcrete final:
         public IWindowFactory
     {
     public:
-        WindowCreatorConcrete(
-            const Vector3Di& pos, const Vector3Du& size,
-            CUL::CnstMyStr& winName,
-            const bool opengl = false );
+        explicit WindowCreatorConcrete();
         WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
         ~WindowCreatorConcrete();
         WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
@@ -30,14 +27,7 @@ namespace SDL2W
             const Vector3Du& size = Vector3Du( 800, 600, 0 ),
             CUL::CnstMyStr& winName = "Generic Window Name." ) override;
 
-        IWindow* getMainWindow() override;
-        IWindow* getWindow( const char* winName ) override;
-        WindowCollection& getAllWindows();
-
     protected:
     private:
-
-        WindowCollection m_windows;
-        IWindow* m_mainWindow = nullptr;
     };
 }

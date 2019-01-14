@@ -7,12 +7,14 @@
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 #include "IMPORT_SDL_image.hpp"
 
-#include "CUL/FS.hpp"
+#include "CUL/Filesystem//FS.hpp"
 #include "CUL/SimpleAssert.hpp"
 
 #include "IMPORT_SDL_opengl.hpp"
 
 using namespace SDL2W;
+
+using IPivot = CUL::Math::IPivot;
 
 WindowWithOpenGL::WindowWithOpenGL(
     const Vector3Di& pos,
@@ -21,19 +23,11 @@ WindowWithOpenGL::WindowWithOpenGL(
     m_position( pos ),
     m_size( size )
 {
-    Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-    this->m_window = SDL_CreateWindow(
-        this->getName().cStr(),
-        static_cast<int>( this->getPos().getX() ),
-        static_cast<int>( this->getPos().getY() ),
-        static_cast<int>( this->getSize().getX() ),
-        static_cast<int>( this->getSize().getY() ),
-        windowFlags );
+    this->m_window = createWindow( pos, size, name, true );
     this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
-    
+    const auto id = SDL_GetWindowID( this->m_window );
+    setWindowID( id );
     setName( name );
-    this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
-    this->m_fpsCounter->start();
 }
 
 WindowWithOpenGL::~WindowWithOpenGL()
@@ -54,11 +48,11 @@ WindowWithOpenGL::~WindowWithOpenGL()
 
 void WindowWithOpenGL::updateScreenBuffers()
 {
-    CUL::Assert::simple( this->m_renderer, "The Renderer has not been initialized." );
     CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
     //SDL_RenderPresent( this->m_renderer );
     // ^ https://forums.libsdl.org/viewtopic.php?p=52399
     SDL_GL_SwapWindow( this->m_window );
+    frameHasEnded();
 }
 
 void WindowWithOpenGL::renderAll()
@@ -105,8 +99,6 @@ void WindowWithOpenGL::renderAll()
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
-
-    this->m_fpsCounter->increase();
 }
 
 void WindowWithOpenGL::setBackgroundColor( const ColorE color )
@@ -256,21 +248,6 @@ void WindowWithOpenGL::removeObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_objects.erase( object );
-}
-
-CDbl WindowWithOpenGL::getFpsAverage()
-{
-    return this->m_fpsCounter->getAverageFps();
-}
-
-void WindowWithOpenGL::setAverageFpsSampleSize( SmallCount sampleSize )
-{
-    this->m_fpsCounter->setSampleSize( sampleSize );
-}
-
-CDbl WindowWithOpenGL::getFpsLast()
-{
-    return this->m_fpsCounter->getCurrentFps();
 }
 
 SDL_Window* WindowWithOpenGL::getSDLWindow() const

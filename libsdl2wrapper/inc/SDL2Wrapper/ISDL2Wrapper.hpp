@@ -8,7 +8,7 @@
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
 #include "CUL/Graphics/ITexture.hpp"
-#include "CUL/IThreadUtility.hpp"
+#include "CUL/Threadutils.hpp"
 #include "CUL/STD_memory.hpp"
 #include "CUL/STD_map.hpp"
 
@@ -44,7 +44,6 @@ public:
         ITexture* tex,
         IWindow* targetWindow ) = 0;
 
-    virtual IWindowFactory* getWindowFactory() = 0;
     virtual IWindow* getMainWindow() = 0;
 
     virtual cunt getInputLatency()const = 0;

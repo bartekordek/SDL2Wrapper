@@ -2,7 +2,6 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 #include "WindowFactoryConcrete.hpp"
-#include "CUL/IThreadUtility.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/STD_vector.hpp"
 #include "CUL/STD_set.hpp"
@@ -13,7 +12,7 @@ union SDL_Event;
 NAMESPACE_BEGIN( SDL2W )
 
 using WindowEventType = IWindowEventObserver::WindowEventType;
-using IThreadUtil = CUL::IThreadUtility;
+using WindowCollection = std::map<unsigned int, std::unique_ptr<IWindow>>;
 class MouseDataSDL;
 
 class SDL2WrapperImpl:
@@ -63,8 +62,6 @@ public:
     const bool isKeyUp( CUL::CnstMyStr& keyName )const;
     Keys& getKeyStates() override;
 
-    IWindowFactory* getWindowFactory() override;
-
     ITexture* createTexture( const Path& path,
                              IWindow* targetWindow ) override;
     ISprite* createSprite( const Path& path,
@@ -93,9 +90,8 @@ private:
     CUL::LckPrim<unsigned int> m_eventLatencyUs{ 256 };
 
     std::set<IWindowEventObserver*> m_windowEventObservers;
-    WindowCollection* m_windows = nullptr;
     IWindow* m_mainWindow = nullptr;
-    std::shared_ptr<IThreadUtil> m_threadUtil;
+    WindowCollection m_windows;
 
     Keys m_keys;
 

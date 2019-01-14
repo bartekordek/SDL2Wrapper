@@ -1,4 +1,5 @@
 #pragma once
+
 #include "CUL/Graphics/ITexture.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_renderer.hpp"
 #include <CUL/STD_memory.hpp>

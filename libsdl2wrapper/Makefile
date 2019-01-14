@@ -24,7 +24,7 @@ RELEASE_FLAGS = -Ofast
 PROJECT_NAME = libsdl2wrapper
 IMP_LIB_NAME = $(PROJECT_NAME).a
 DLL_NAME = $(PROJECT_NAME)$(DYN_LIB_EXT)
-OUTPUT_DIR := ../build
+OUTPUT_DIR := ../$(BUILD_ROOT)
 OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
 OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
 
@@ -33,7 +33,7 @@ DEPS_HOME := ../deps
 # DEPS::CUL
 CUL_HOME := $(DEPS_HOME)/CUL
 CUL_INC := $(CUL_HOME)/libcul/inc
-CUL_LIB := $(CUL_HOME)/build
+CUL_LIB := $(CUL_HOME)/$(BUILD_ROOT)
 CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
 CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
 

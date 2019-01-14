@@ -70,22 +70,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(ProjectDir)..\build\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(ProjectDir)..\build\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(ProjectDir)..\build\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)..\build\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -105,7 +105,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -130,16 +130,19 @@
     </Lib>
     <ProjectReference />
     <PreLinkEvent>
-      <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+      <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 
-xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
+xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
-xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
@@ -160,7 +163,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -185,16 +188,19 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     </Lib>
     <ProjectReference />
     <PreLinkEvent>
-      <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+      <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 
-xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
+xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
-xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
@@ -214,7 +220,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
@@ -237,14 +243,19 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     </Lib>
     <ProjectReference />
     <PreLinkEvent>
-      <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+      <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+
+
+xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
-xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>
@@ -264,7 +275,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
@@ -287,14 +298,19 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     </Lib>
     <ProjectReference />
     <PreLinkEvent>
-      <Command>xcopy "$(ProjectDir)..\deps\CUL\build\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+      <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
+
+
+xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
+
 
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
-xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 
+xcopy "$(ProjectDir)..\deps\SDL2-2.0.8\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
 </Command>
     </PreLinkEvent>

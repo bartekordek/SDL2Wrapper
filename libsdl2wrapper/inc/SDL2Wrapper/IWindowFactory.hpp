@@ -26,9 +26,6 @@ namespace SDL2W
             const Vector3Du& size = Vector3Du( 800, 600, 0 ),
             CUL::CnstMyStr& winName = "Generic Window Name." ) = 0;
 
-        virtual IWindow* getMainWindow() = 0;
-        virtual IWindow* getWindow( const char* winName ) = 0;
-
     protected:
     private:
     };

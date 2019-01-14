@@ -12,69 +12,64 @@ struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
 
-namespace SDL2W
+NAMESPACE_BEGIN( SDL2W )
+
+class RegularSDL2Window:
+    public IWindow
 {
-    class RegularSDL2Window:
-        public IWindow
-    {
-    public:
-        RegularSDL2Window() = delete;
-        RegularSDL2Window(
-            const Vector3Di& pos,
-            const Vector3Du& size,
-            CUL::CnstMyStr& name );
-        RegularSDL2Window( const RegularSDL2Window& win ) = delete;
-        virtual ~RegularSDL2Window();
+public:
+    RegularSDL2Window() = delete;
+    RegularSDL2Window(
+        const Vector3Di& pos,
+        const Vector3Du& size,
+        CUL::CnstMyStr& name );
+    RegularSDL2Window( const RegularSDL2Window& win ) = delete;
+    virtual ~RegularSDL2Window();
 
-        RegularSDL2Window& operator=(
-            const RegularSDL2Window& right ) = delete;
+    RegularSDL2Window& operator=(
+        const RegularSDL2Window& right ) = delete;
 
+    const Vector3Di& getPos()const override;
+    void setPos( const Vector3Di& pos ) override;
 
-        const Vector3Di& getPos()const override;
-        void setPos( const Vector3Di& pos ) override;
+    const Vector3Du& getSize()const override;
+    void setSize( const Vector3Du& size ) override;
 
-        const Vector3Du& getSize()const override;
-        void setSize( const Vector3Du& size ) override;
+    void setBackgroundColor( const ColorE color ) override;
+    void setBackgroundColor( const ColorS& color ) override;
+    void clearBuffers() override;
+    void renderAll() override;
+    void updateScreenBuffers() override;
 
-        void setBackgroundColor( const ColorE color ) override;
-        void setBackgroundColor( const ColorS& color ) override;
-        void clearBuffers() override;
-        void renderAll() override;
-        void updateScreenBuffers() override;
+    const IWindow::Type getType() const override;
 
-        const IWindow::Type getType() const override;
+    ITexture* createTexture( const Path& path ) override;
+    ISprite* createSprite( const Path& path ) override;
+    ISprite* createSprite( ITexture* tex ) override;
 
-        ITexture* createTexture( const Path& path ) override;
-        ISprite* createSprite( const Path& path ) override;
-        ISprite* createSprite( ITexture* tex ) override;
+    const ColorS getBackgroundColor()const override;
 
-        const ColorS getBackgroundColor()const override;
-        // Inherited via IWindow
-        CDbl getFpsAverage() override;
-        void setAverageFpsSampleSize( SmallCount sampleSize ) override;
-        CDbl getFpsLast() override;
+    SDL_Window* getSDLWindow()const override;
 
-        SDL_Window* getSDLWindow()const override;
+protected:
+private:
+    SDL_Surface * createSurface( const Path& path );
+    ITexture* createTexture( SDL_Surface* surface, const Path& path );
 
-    protected:
-    private:
-        SDL_Surface * createSurface( const Path& path );
-        ITexture* createTexture( SDL_Surface* surface, const Path& path );
+    // Inherited via IWindow
+    void addObject( IObject* object ) override;
+    void removeObject( IObject* object ) override;
 
-        // Inherited via IWindow
-        virtual void addObject( IObject * object ) override;
-        virtual void removeObject( IObject * object ) override;
+    ColorS m_backgroundColor;
+    SDL_Window* m_window = nullptr;
+    SDL_Renderer* m_renderer = nullptr;
+    std::set<IObject*> m_objects;
+    std::mutex m_objectsMtx;
+    TextureMap m_textures;
 
-        ColorS m_backgroundColor;
-        SDL_Window* m_window = nullptr;
-        SDL_Renderer* m_renderer = nullptr;
-        std::set<IObject*> m_objects;
-        std::mutex m_objectsMtx;
-        TextureMap m_textures;
-        std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
+    Vector3Di m_position;
+    Vector3Du m_size;
 
-        Vector3Di m_position;
-        Vector3Du m_size;
+};
 
-    };
-}
+NAMESPACE_END( SDL2W )

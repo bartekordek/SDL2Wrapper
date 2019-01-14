@@ -1,7 +1,8 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
+#include "CUL/Video/IFPSCounter.hpp"
 #include "CUL/ITimer.hpp"
-#include "CUL/IThreadUtility.hpp"
-#include "CUL/FS.hpp"
+#include "CUL/ThreadUtils.hpp"
+#include "CUL/Filesystem/FS.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/Math/Angle.hpp"
 #include "CUL/STD_thread.hpp"
@@ -10,22 +11,24 @@
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
 
-class TestApp final: 
-    public SDL2W::IKeyboardObserver, 
+class TestApp final:
+    public SDL2W::IKeyboardObserver,
     public SDL2W::IMouseObserver,
     private SDL2W::IWindowEventObserver
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper( 
+        m_sdlW( SDL2W::createSDL2Wrapper(
         SDL2W::Vector3Di( 200, 200, 0 ),
         SDL2W::Vector3Du( 1024, 768, 0 ),
         "Test app." ) )
     {
-        this->m_windowFactory = this->m_sdlW->getWindowFactory();
-        this->m_activeWindow = this->m_windowFactory->getMainWindow();
+        this->m_activeWindow = this->m_sdlW->getMainWindow();
+        this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
+        this->m_activeWindow->addFPSCounter( this->m_fpsCounter.get() );
+        this->m_fpsCounter->start();
         this->m_sdlW->setInputLatency( 1024 );
- 
+
         if( this->m_pikachuBmp.exists() )
         {
             auto aw = this->m_activeWindow;
@@ -37,7 +40,6 @@ public:
             this->obj4Pos = this->m_obj4->getPosition();
         }
         this->m_keyObservable = this->m_sdlW.get();
-        this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
     }
 
     TestApp( const TestApp& rhv ) = delete;
@@ -86,7 +88,7 @@ public:
         {
             this->obj4Pos.setX( this->obj4Pos.getX() - delta );
         }
-        
+
         if( m_keyObservable->isKeyUp( "W" ) )
         {
             this->obj4Pos.setY( this->obj4Pos.getY() - delta );
@@ -127,14 +129,16 @@ private:
         while( this->runLoop )
         {
             CUL::ITimer::sleepSeconds( 2 );
-            auto fpsCount = this->m_activeWindow->getFpsLast();
-            std::cout << "CURRENT FPS: " << fpsCount << "\n";
+            const auto currentFpsCount = this->m_fpsCounter->getCurrentFps();
+            const auto averageFpsCount = this->m_fpsCounter->getAverageFps();
+            std::cout << "CURRENT FPS: " << currentFpsCount << "\n";
+            std::cout << "AVERAGE FPS: " << averageFpsCount << "\n";
         }
     }
 
     void objectManagmentFun()
     {
-        m_threadUtil->setCurrentThreadName( "TestApp::objectManagmentFun" );
+        CUL::ThreadUtils::setCurrentThreadName( "TestApp::objectManagmentFun" );
         if( this->m_pikachuBmp.exists() )
         {
             CUL::Math::Vector3Dd someScale;
@@ -194,6 +198,7 @@ private:
     CUL::LckPrim<bool> runLoop{ true };
 
     std::unique_ptr< SDL2W::ISDL2Wrapper> m_sdlW;
+    std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
 
     std::thread m_objectMoveThread;
     std::thread m_dataInfoThread;
@@ -212,7 +217,6 @@ private:
     Pos3D obj3Pos;
     Pos3D obj4Pos;
 
-    std::shared_ptr<CUL::IThreadUtility> m_threadUtil;
 };
 
 #if _MSC_VER

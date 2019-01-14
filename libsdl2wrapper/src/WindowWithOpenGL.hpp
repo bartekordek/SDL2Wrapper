@@ -52,9 +52,6 @@ namespace SDL2W
 
         const ColorS getBackgroundColor()const override;
 
-        CDbl getFpsAverage() override;
-        void setAverageFpsSampleSize( SmallCount sampleSize ) override;
-        CDbl getFpsLast() override;
         SDL_Window* getSDLWindow()const override;
 
     protected:
@@ -73,7 +70,6 @@ namespace SDL2W
         std::set<IObject*> m_objects;
         std::mutex m_objectsMtx;
         TextureMap m_textures;
-        std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
         CUL::LckPrim<bool> m_updateBuffers { true };
 
         Vector3Di m_position;

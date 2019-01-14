@@ -7,32 +7,26 @@
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 #include "IMPORT_SDL_image.hpp"
 
-#include "CUL/FS.hpp"
+#include "CUL/Filesystem/FS.hpp"
 #include "CUL/SimpleAssert.hpp"
 
 using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
 
-RegularSDL2Window::RegularSDL2Window( 
+RegularSDL2Window::RegularSDL2Window(
     const Vector3Di& pos,
     const Vector3Du& size,
     CUL::CnstMyStr& name ):
         m_position( pos ),
         m_size( size )
 {
-    Uint32 windowFlags = SDL_WINDOW_SHOWN;
-    this->m_window = SDL_CreateWindow(
-        this->getName().cStr(),
-        static_cast<int>( this->getPos().getX() ),
-        static_cast<int>( this->getPos().getY() ),
-        static_cast<int>( this->getSize().getX() ),
-        static_cast<int>( this->getSize().getY() ),
-        windowFlags );
+    this->m_window = createWindow( pos, size, name, false );
+    const auto id = SDL_GetWindowID( this->m_window );
+    setWindowID( id );
+
     this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
     setName( name );
-    this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
-    this->m_fpsCounter->start();
 }
 
 RegularSDL2Window::~RegularSDL2Window()
@@ -56,13 +50,13 @@ void RegularSDL2Window::updateScreenBuffers()
     CUL::Assert::simple( this->m_renderer, "The Renderer has not been initialized." );
     CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
     SDL_RenderPresent( this->m_renderer );
-    SDL_GL_SwapWindow( this->m_window );
+    frameHasEnded();
 }
 
 void RegularSDL2Window::renderAll()
 {
-     SDL_SetRenderDrawColor( 
-        this->m_renderer, 
+     SDL_SetRenderDrawColor(
+        this->m_renderer,
         this->m_backgroundColor.getRUI(),
         this->m_backgroundColor.getGUI(),
         this->m_backgroundColor.getBUI(),
@@ -103,7 +97,6 @@ void RegularSDL2Window::renderAll()
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
     }
-     this->m_fpsCounter->increase();
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorE color )
@@ -232,7 +225,7 @@ ITexture* RegularSDL2Window::createTexture(
     auto tex = SDL_CreateTextureFromSurface(
         this->m_renderer,
         surface );
-    CUL::Assert::simple( 
+    CUL::Assert::simple(
         tex,
         "Cannot create texture from " +
         path.getPath() +
@@ -253,21 +246,6 @@ void RegularSDL2Window::removeObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_objects.erase( object );
-}
-
-CDbl RegularSDL2Window::getFpsAverage()
-{
-    return this->m_fpsCounter->getAverageFps();
-}
-
-void RegularSDL2Window::setAverageFpsSampleSize( SmallCount sampleSize )
-{
-    this->m_fpsCounter->setSampleSize( sampleSize );
-}
-
-CDbl RegularSDL2Window::getFpsLast()
-{
-    return this->m_fpsCounter->getCurrentFps();
 }
 
 SDL_Window* RegularSDL2Window::getSDLWindow() const

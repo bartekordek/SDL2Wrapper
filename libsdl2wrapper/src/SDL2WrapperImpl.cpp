@@ -25,11 +25,18 @@ SDL2WrapperImpl::SDL2WrapperImpl(
         CUL::Assert::simple( 0, SDL_GetError() );
     }
     
-    this->m_windowFactory = new WindowCreatorConcrete( pos, size, winName, opengl );
-    this->m_mainWindow = this->m_windowFactory->getMainWindow();
+    this->m_windowFactory = new WindowCreatorConcrete();
+    if( opengl )
+    {
+        this->m_mainWindow = this->m_windowFactory->createWindowOGL( pos, size, winName );
+    }
+    else
+    {
+        this->m_mainWindow = this->m_windowFactory->createWindow( pos, size, winName );
+    }
+    this->m_windows[ this->m_mainWindow->getWindowID() ] = std::unique_ptr<IWindow>( this->m_mainWindow );
+    
     createKeys();
-    this->m_threadUtil = CUL::IThreadUtilityFactory::getConcrete();
-    this->m_windows = &this->m_windowFactory->getAllWindows();
 
     this->m_mouseData.reset( new MouseDataSDL() );
 
@@ -79,7 +86,7 @@ void SDL2WrapperImpl::renderFrame(
         clearWindows();
     }
 
-    for( auto& window : *this->m_windows )
+    for( auto& window : this->m_windows )
     {
         window.second->renderAll();
     }
@@ -92,24 +99,24 @@ void SDL2WrapperImpl::renderFrame(
 
 void SDL2WrapperImpl::clearWindows()
 {
-    for( auto& window : *this->m_windows )
+    for( auto& window : this->m_windows )
     {
-        window.first->clearBuffers();
+        window.second->clearBuffers();
     }
 }
 
 void SDL2WrapperImpl::refreshScreen()
 {
-    for( auto& window : *this->m_windows )
+    for( auto& window : this->m_windows )
     {
-        window.first->updateScreenBuffers();
+        window.second->updateScreenBuffers();
     }
 }
 
 #include "CUL/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {
-    this->m_threadUtil->setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
+    CUL::ThreadUtils::setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
     SDL_Event event;
     while( this->eventLoopActive )
     {
@@ -123,6 +130,7 @@ void SDL2WrapperImpl::runEventLoop()
 
 void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 {
+    std::cout << "Event ID: " << event.type << "\n";
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
         if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
@@ -136,6 +144,7 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
     }
     else if( event.type == SDL_WINDOWEVENT_MOVED )
     {
+        std::cout << "Window has been moved.\n";
         notifyWindowEventListeners( WindowEventType::MOVED );
     }
     else if( event.type == SDL_WINDOWEVENT_ENTER )
@@ -311,12 +320,6 @@ const bool SDL2WrapperImpl::isKeyUp( CUL::CnstMyStr& keyName )const
 Keys& SDL2WrapperImpl::getKeyStates()
 {
     return this->m_keys;
-}
-
-IWindowFactory* SDL2W::SDL2WrapperImpl::getWindowFactory()
-{
-    CUL::Assert::simple( this->m_windowFactory, "Windows Factory not yet constructed." );
-    return this->m_windowFactory;
 }
 
 ISprite* SDL2WrapperImpl::createSprite( const Path& objPath,

@@ -4,8 +4,8 @@
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IRender.hpp"
 #include "CUL/Graphics/IObjectRegister.hpp"
-#include "CUL/Path.hpp"
 #include "CUL/Graphics/ITexture.hpp"
+#include "CUL/Filesystem/Path.hpp"
 #include "CUL/STD_map.hpp"
 #include "CUL/Color.hpp"
 #include "CUL/IName.hpp"
@@ -31,7 +31,10 @@ using Path = CUL::FS::Path;
 
 using TextureMap = std::map<CUL::MyString, std::unique_ptr<ITexture>>;
 
-
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable: 4820 )
+#endif
 
 class SDL2WAPI IWindow:
     public IRender,
@@ -64,14 +67,26 @@ public:
     virtual ISprite* createSprite( const Path& path ) = 0;
     virtual ISprite* createSprite( ITexture* tex ) = 0;
 
-    virtual CDbl getFpsAverage() = 0;
-    virtual void setAverageFpsSampleSize( SmallCount sampleSize ) = 0;
-    virtual CDbl getFpsLast() = 0;
+    virtual SDL_Window* getSDLWindow() const = 0;
 
-    virtual SDL_Window* getSDLWindow()const = 0;
+    void setWindowID( cunt id );
+    const unsigned int getWindowID() const;
+
 
 protected:
+    static SDL_Window* createWindow(
+        const Vector3Di& pos,
+        const Vector3Du& size,
+        CUL::CnstMyStr& nameconst,
+        bool opengl );
+
 private:
+    unsigned int m_winId = 0;
+
 };
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 NAMESPACE_END( CUL )

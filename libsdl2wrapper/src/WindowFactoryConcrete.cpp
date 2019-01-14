@@ -6,31 +6,12 @@
 
 using namespace SDL2W;
 
-WindowCreatorConcrete::WindowCreatorConcrete(
-    const Vector3Di& pos,
-    const Vector3Du& size,
-    CUL::CnstMyStr& winName,
-    const bool opengl )
+WindowCreatorConcrete::WindowCreatorConcrete()
 {
-    if( opengl )
-    {
-        this->m_mainWindow = createWindowOGL( pos, size, winName );
-    }
-    else
-    {
-        this->m_mainWindow = createWindow( pos, size, winName );
-    }
 }
 
 WindowCreatorConcrete::~WindowCreatorConcrete()
 {
-    this->m_mainWindow = nullptr;
-}
-
-IWindow* WindowCreatorConcrete::getMainWindow()
-{
-    CUL::Assert::simple( this->m_mainWindow, "There is no main window." );
-    return this->m_mainWindow;
 }
 
 IWindow* WindowCreatorConcrete::createWindow(
@@ -40,35 +21,16 @@ IWindow* WindowCreatorConcrete::createWindow(
 {
     auto window = new RegularSDL2Window(
         pos, size, winName );
-    this->m_windows[ window ] = std::unique_ptr<IWindow>( window );
     return window;
 }
 
 IWindow* WindowCreatorConcrete::createWindowOGL(
-    const Vector3Di& pos, const Vector3Du & size,
+    const Vector3Di& pos,
+    const Vector3Du & size,
     CUL::CnstMyStr& winName )
 {
     auto window = new WindowWithOpenGL( 
         pos, size,
         winName );
-    this->m_windows[window] = std::unique_ptr<IWindow>( window );
     return window;
-}
-
-IWindow* WindowCreatorConcrete::getWindow(
-    const char* winName )
-{
-    for( auto& windows : this->m_windows )
-    {
-        if( std::strcmp( windows.first->getName().cStr(), winName ) == 0 )
-        {
-            return windows.first;
-        }
-    }
-    return nullptr;
-}
-
-WindowCollection& SDL2W::WindowCreatorConcrete::getAllWindows()
-{
-    return this->m_windows;
 }
