@@ -55,6 +55,7 @@ namespace SDL2W
         CDbl getFpsAverage() override;
         void setAverageFpsSampleSize( SmallCount sampleSize ) override;
         CDbl getFpsLast() override;
+        SDL_Window* getSDLWindow()const override;
 
     protected:
     private:
@@ -68,7 +69,7 @@ namespace SDL2W
         ColorS m_backgroundColor;
         SDL_Window* m_window = nullptr;
         SDL_Renderer* m_renderer = nullptr;
-        SDL_GLContext m_oglContext;
+        
         std::set<IObject*> m_objects;
         std::mutex m_objectsMtx;
         TextureMap m_textures;

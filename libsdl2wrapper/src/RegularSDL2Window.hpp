@@ -54,6 +54,8 @@ namespace SDL2W
         void setAverageFpsSampleSize( SmallCount sampleSize ) override;
         CDbl getFpsLast() override;
 
+        SDL_Window* getSDLWindow()const override;
+
     protected:
     private:
         SDL_Surface * createSurface( const Path& path );

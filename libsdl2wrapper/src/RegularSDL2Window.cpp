@@ -5,6 +5,7 @@
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
+#include "IMPORT_SDL_image.hpp"
 
 #include "CUL/FS.hpp"
 #include "CUL/SimpleAssert.hpp"
@@ -213,11 +214,11 @@ SDL_Surface* RegularSDL2Window::createSurface(
 
     if( ".png" == path.getExtension() )
     {
-        //TODO result = SDL_Load
+        result = IMG_Load( path.getPath().cStr() );
     }
     CUL::Assert::simple(
         nullptr != result,
-        "Result is nullptr." );
+        "Cannot load: " + path.getPath() );
     return result;
 }
 
@@ -267,6 +268,11 @@ void RegularSDL2Window::setAverageFpsSampleSize( SmallCount sampleSize )
 CDbl RegularSDL2Window::getFpsLast()
 {
     return this->m_fpsCounter->getCurrentFps();
+}
+
+SDL_Window* RegularSDL2Window::getSDLWindow() const
+{
+    return this->m_window;
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor()const

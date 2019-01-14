@@ -11,6 +11,8 @@
 #include "CUL/IName.hpp"
 #include "CUL/STD_memory.hpp"
 
+struct SDL_Window;
+
 NAMESPACE_BEGIN( SDL2W )
 
 using CDbl = const double;
@@ -28,6 +30,8 @@ using IName = CUL::IName;
 using Path = CUL::FS::Path;
 
 using TextureMap = std::map<CUL::MyString, std::unique_ptr<ITexture>>;
+
+
 
 class SDL2WAPI IWindow:
     public IRender,
@@ -63,6 +67,8 @@ public:
     virtual CDbl getFpsAverage() = 0;
     virtual void setAverageFpsSampleSize( SmallCount sampleSize ) = 0;
     virtual CDbl getFpsLast() = 0;
+
+    virtual SDL_Window* getSDLWindow()const = 0;
 
 protected:
 private:

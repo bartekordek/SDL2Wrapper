@@ -30,7 +30,7 @@ WindowWithOpenGL::WindowWithOpenGL(
         static_cast<int>( this->getSize().getY() ),
         windowFlags );
     this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
-    this->m_oglContext = SDL_GL_CreateContext( this->m_window );
+    
     setName( name );
     this->m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
     this->m_fpsCounter->start();
@@ -56,7 +56,8 @@ void WindowWithOpenGL::updateScreenBuffers()
 {
     CUL::Assert::simple( this->m_renderer, "The Renderer has not been initialized." );
     CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
-    SDL_RenderPresent( this->m_renderer );
+    //SDL_RenderPresent( this->m_renderer );
+    // ^ https://forums.libsdl.org/viewtopic.php?p=52399
     SDL_GL_SwapWindow( this->m_window );
 }
 
@@ -103,10 +104,6 @@ void WindowWithOpenGL::renderAll()
                 angle, &center, SDL_RendererFlip::SDL_FLIP_NONE );
             CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
         }
-    }
-    if( this->m_updateBuffers )
-    {
-        updateScreenBuffers();
     }
 
     this->m_fpsCounter->increase();
@@ -224,7 +221,7 @@ SDL_Surface* WindowWithOpenGL::createSurface(
     }
     CUL::Assert::simple(
         nullptr != result,
-        "Result is nullptr." );
+        "Cannot load: " + path.getPath() );
     return result;
 }
 
@@ -274,6 +271,11 @@ void WindowWithOpenGL::setAverageFpsSampleSize( SmallCount sampleSize )
 CDbl WindowWithOpenGL::getFpsLast()
 {
     return this->m_fpsCounter->getCurrentFps();
+}
+
+SDL_Window* WindowWithOpenGL::getSDLWindow() const
+{
+    return this->m_window;
 }
 
 const ColorS WindowWithOpenGL::getBackgroundColor()const
