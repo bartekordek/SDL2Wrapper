@@ -20,8 +20,7 @@ public:
         m_sdlW( SDL2W::createSDL2Wrapper( 
         SDL2W::Vector3Di( 200, 200, 0 ),
         SDL2W::Vector3Du( 1024, 768, 0 ),
-        "Test app.",
-        true ) )
+        "Test app." ) )
     {
         this->m_windowFactory = this->m_sdlW->getWindowFactory();
         this->m_activeWindow = this->m_windowFactory->getMainWindow();
@@ -177,8 +176,8 @@ private:
                 obj2Angle -= 1;
                 obj3Angle += 1;
                 auto amp = 64;
-                obj2Pos.setX( static_cast< const int >( somePosition1.getX() + sin( i ) * amp ) );
-                obj2Pos.setY( static_cast< const int >( somePosition1.getY() + cos( i ) * amp ) );
+                obj2Pos.setX( somePosition1.getX() + sin( i ) * amp );
+                obj2Pos.setY( somePosition1.getY() + cos( i ) * amp );
                 auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
                 this->bckgroundColor.setGCU( greeVal );
                 m_activeWindow->setBackgroundColor( this->bckgroundColor );
