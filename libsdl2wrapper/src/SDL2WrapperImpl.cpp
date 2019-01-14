@@ -109,7 +109,7 @@ void SDL2WrapperImpl::refreshScreen()
 #include "CUL/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {
-    this->m_threadUtil->setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()" );
+    this->m_threadUtil->setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
     SDL_Event event;
     while( this->eventLoopActive )
     {
