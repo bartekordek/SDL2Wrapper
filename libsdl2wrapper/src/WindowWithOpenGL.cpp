@@ -103,7 +103,7 @@ void WindowWithOpenGL::renderAll()
 
 void WindowWithOpenGL::setBackgroundColor( const ColorE color )
 {
-    setBackgroundColor( color );
+    setBackgroundColor( ColorS( color ) );
 }
 
 void WindowWithOpenGL::clearBuffers()

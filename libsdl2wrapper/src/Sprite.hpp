@@ -19,7 +19,7 @@ using CDbl = CUL::Graphics::CDbl;
 
 using Position3DDMutexed = CUL::Graphics::Position3DDMutexed;
 
-class Sprite final: 
+class Sprite final:
     public ISprite
 {
 public:
@@ -46,9 +46,9 @@ public:
 
     void rotate(
         const CUL::Math::Angle& angle,
-        CRT = RT::YAW );
+        CRT = RT::YAW ) override;
     const CUL::Math::Angle& getAngle(
-        CRT = RT::YAW )const;
+        CRT = RT::YAW )const override;
 
     void setPivot( const double px, const double py, const double pz, const PivotType type = PivotType::NORMALIZED ) override;
     void setPivotX( CDbl val, const PivotType type = PivotType::NORMALIZED ) override;

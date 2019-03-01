@@ -1,21 +1,16 @@
 #include "Input/MouseDataSDL.hpp"
-#include "CUL/STD_iostream.hpp"
+#include "CUL/Log/ILogContainer.hpp"
 
 using MouseDataSDL = SDL2W::MouseDataSDL;
 using MouseButtonIndex = SDL2W::MouseButtonIndex;
 using WheelDirection = SDL2W::WheelDirection;
 
-#ifdef _MSC_VER
-#pragma warning( push )
-#pragma warning( disable: 4100 )
-#endif
-
-MouseDataSDL::MouseDataSDL( void )
+MouseDataSDL::MouseDataSDL()
 {
 
 }
 
-MouseDataSDL::~MouseDataSDL( void )
+MouseDataSDL::~MouseDataSDL()
 {
 }
 
@@ -60,23 +55,30 @@ const WheelDirection MouseDataSDL::getWheelDirection() const
 
 void MouseDataSDL::setPos( cint x, cint y )
 {
-    std::cout << "MOUSE STATE: X = " << x << ", Y: " << y << "\n";
+    const CUL::MyString log = "RegularSDL2Window::RegularSDL2Window( " +
+        CUL::MyString( x ) + ", " +
+        CUL::MyString( y ) + " );";
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     this->m_x = x;
     this->m_y = y;
 }
 
 void MouseDataSDL::setState( const MouseButtonIndex buttonIndex, const bool isUp )
 {
-    std::cout << "MOUSE STATE: INDEX = " << buttonIndex << ", IS UP: " << isUp << "\n";
+    const CUL::MyString log = "MouseDataSDL::setState( " +
+        CUL::MyString( buttonIndex ) + ", " +
+        CUL::MyString( isUp ) + " );";
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     this->m_buttonStates[ buttonIndex ] = isUp;
 }
 void MouseDataSDL::setWheel( cint x, cint y, const WheelDirection direction )
 {
-    std::cout << "MOUSE WHEEL STATE: X = " << x << ", Y: " << y << "\n";
+    const CUL::MyString log = "MouseDataSDL::setState( " +
+        CUL::MyString( x ) + ", " +
+        CUL::MyString( y ) + ", " +
+        CUL::MyString( static_cast<unsigned>( direction ) ) + " );";
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     this->m_wheelX = x;
     this->m_wheelY = y;
     this->m_wheelDirection = direction;
 }
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif

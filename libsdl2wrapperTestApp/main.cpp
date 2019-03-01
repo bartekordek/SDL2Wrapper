@@ -7,7 +7,7 @@
 #include "CUL/Math/Angle.hpp"
 #include "CUL/STD_thread.hpp"
 #include "CUL/STD_cmath.hpp"
-#include "CUL/STD_iostream.hpp"
+#include "CUL/Log/ILogContainer.hpp"
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
 
@@ -75,7 +75,7 @@ public:
         {
             return;
         }
-        std::cout << "KEY: " << key.getKeyName().string() << "\n";
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "KEY: " + key.getKeyName().string() );
 
         static int delta = 8;
 
@@ -106,7 +106,7 @@ public:
         }
     }
 
-    void onMouseEvent( const SDL2W::IMouseData& md )
+    void onMouseEvent( const SDL2W::IMouseData& md ) override
     {
         this->m_obj5->setX( static_cast<double>( md.getX() ) );
         this->m_obj5->setY( static_cast<double>( md.getY() ) );
@@ -114,7 +114,7 @@ public:
 
     void onWindowEvent( const WindowEventType windowEventType ) override
     {
-        std::cout << "Event Type: " << static_cast<short>( windowEventType ) << "WAT!!\n";
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + static_cast< short >( windowEventType ) );
         if( WindowEventType::CLOSE == windowEventType )
         {
             this->m_sdlW->stopEventLoop();
@@ -131,8 +131,10 @@ private:
             CUL::ITimer::sleepSeconds( 2 );
             const auto currentFpsCount = this->m_fpsCounter->getCurrentFps();
             const auto averageFpsCount = this->m_fpsCounter->getAverageFps();
-            std::cout << "CURRENT FPS: " << currentFpsCount << "\n";
-            std::cout << "AVERAGE FPS: " << averageFpsCount << "\n";
+            const CUL::MyString messageCfps = "CURRENT FPS: " + CUL::MyString( currentFpsCount );
+            const CUL::MyString messageAfps = "AVERAGE FPS: " + CUL::MyString( averageFpsCount );
+            CUL::LOG::LOG_CONTAINER::getLogger()->log( messageCfps );
+            CUL::LOG::LOG_CONTAINER::getLogger()->log( messageAfps );
         }
     }
 
@@ -190,7 +192,6 @@ private:
         }
     }
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
-    SDL2W::IWindowFactory* m_windowFactory = nullptr;
     SDL2W::IWindow* m_activeWindow = nullptr;
 
     SDL2W::ColorS bckgroundColor;

@@ -9,10 +9,12 @@
 
 #include "CUL/Filesystem/FS.hpp"
 #include "CUL/SimpleAssert.hpp"
+#include "CUL/Log/ILogContainer.hpp"
 
 using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
+
 
 RegularSDL2Window::RegularSDL2Window(
     const Vector3Di& pos,
@@ -21,6 +23,7 @@ RegularSDL2Window::RegularSDL2Window(
         m_position( pos ),
         m_size( size )
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "RegularSDL2Window::RegularSDL2Window()" );
     this->m_window = createWindow( pos, size, name, false );
     const auto id = SDL_GetWindowID( this->m_window );
     setWindowID( id );
@@ -31,6 +34,7 @@ RegularSDL2Window::RegularSDL2Window(
 
 RegularSDL2Window::~RegularSDL2Window()
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "RegularSDL2Window::~RegularSDL2Window()" );
     std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
     this->m_textures.clear();
     CUL::Assert::simple(
@@ -101,7 +105,7 @@ void RegularSDL2Window::renderAll()
 
 void RegularSDL2Window::setBackgroundColor( const ColorE color )
 {
-    setBackgroundColor( color );
+    setBackgroundColor( ColorS( color ) );
 }
 
 void RegularSDL2Window::clearBuffers()
@@ -219,6 +223,7 @@ ITexture* RegularSDL2Window::createTexture(
     SDL_Surface* surface,
     const Path& path )
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "RegularSDL2Window::createTexture" );
     CUL::Assert::simple( this->m_renderer, "RENDERER NOT READY!\n" );
     auto texSDL = new TextureSDL();
 

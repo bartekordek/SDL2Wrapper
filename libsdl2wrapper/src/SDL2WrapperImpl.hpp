@@ -30,23 +30,23 @@ public:
     SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
 
     void refreshScreen() override;
-    void renderFrame( 
+    void renderFrame(
         const bool clearContext = true,
         const bool refreshWindow = true ) override;
     void clearWindows() override;
     void runEventLoop() override;
     void stopEventLoop() override;
 
-    void addKeyboardEventCallback( 
+    void addKeyboardEventCallback(
         const std::function<void( const IKey& key )>& callback ) override;
 
-    void registerKeyboardEventListener( 
+    void registerKeyboardEventListener(
         IKeyboardObserver* observer ) override;
     void unregisterKeyboardEventListener( IKeyboardObserver* observer ) override;
 
-    void registerWindowEventListener( 
+    void registerWindowEventListener(
         IWindowEventObserver* observer ) override;
-    void unregisterWindowEventListener( 
+    void unregisterWindowEventListener(
         IWindowEventObserver* observer ) override;
 
     void addMouseEventCallback(
@@ -59,7 +59,7 @@ public:
 
     cunt getInputLatency()const override;
     void setInputLatency( cunt latencyInUs ) override;
-    const bool isKeyUp( CUL::CnstMyStr& keyName )const;
+    const bool isKeyUp( CUL::CnstMyStr& keyName )const override;
     Keys& getKeyStates() override;
 
     ITexture* createTexture( const Path& path,

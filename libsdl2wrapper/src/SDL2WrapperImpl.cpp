@@ -8,8 +8,7 @@
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "CUL/SimpleAssert.hpp"
 #include "CUL/ITimer.hpp"
-
-#include "CUL/STD_iostream.hpp"
+#include "CUL/Log/ILogContainer.hpp"
 
 using namespace SDL2W;
 
@@ -130,7 +129,9 @@ void SDL2WrapperImpl::runEventLoop()
 
 void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 {
-    std::cout << "Event ID: " << event.type << "\n";
+    const CUL::MyString log = "SDL2WrapperImpl::handleEveent( " +
+        CUL::MyString( event.type ) + " );";
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
         if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
@@ -144,7 +145,7 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
     }
     else if( event.type == SDL_WINDOWEVENT_MOVED )
     {
-        std::cout << "Window has been moved.\n";
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Window has been moved." );
         notifyWindowEventListeners( WindowEventType::MOVED );
     }
     else if( event.type == SDL_WINDOWEVENT_ENTER )
@@ -180,11 +181,19 @@ const bool SDL2WrapperImpl::eventIsMouseEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::handleKeyboardEvent" );
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
     auto& key = this->m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
     key->setKeyIsDown( keyIsDown );
-    std::cout << "EVENT: Key press/release, key: " << key->getKeyName().string() << "\n";
-    std::cout << "EVENT: Key press/release, keyID: " << sdlEvent.key.keysym.scancode << "\n";
+
+    CUL::LOG::LOG_CONTAINER::getLogger()->log(
+        "EVENT: Key press/release, key: " +
+        key->getKeyName().string() );
+
+    CUL::LOG::LOG_CONTAINER::getLogger()->log(
+        "EVENT: Key press/release, keyID: " +
+        sdlEvent.key.keysym.scancode );
+
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
 }
