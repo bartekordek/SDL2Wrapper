@@ -15,9 +15,10 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-CC_STAND := -std=c++17
-CC := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
-CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared
+COMPILER := clang++-6.0
+CC := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Werror -Wno-ignored-attributes
+CC_LINK := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared
+CPP_VERSION := -std=c++17
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
@@ -38,7 +39,7 @@ CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
 CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
 
 # DEPS::SDL2
-SDL_HOME := $(DEPS_HOME)/SDL2-2.0.8
+SDL_HOME := $(DEPS_HOME)/SDL2
 SDL_INC := $(SDL_HOME)/include
 SDL_LIB := $(SDL_HOME)/$(BUILD_ROOT)/$(PLATFORM)
 SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a

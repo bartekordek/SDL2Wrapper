@@ -15,9 +15,10 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
+COMPILER := clang++-6.0
 CC_STAND := -std=c++17
-CC := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
-CC_LINK := g++ $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG)
+CC := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
+CC_LINK := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG)
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
