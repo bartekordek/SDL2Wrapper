@@ -192,7 +192,7 @@ void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 
     CUL::LOG::LOG_CONTAINER::getLogger()->log(
         "EVENT: Key press/release, keyID: " +
-        sdlEvent.key.keysym.scancode );
+        std::to_string( sdlEvent.key.keysym.scancode ) );
 
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
