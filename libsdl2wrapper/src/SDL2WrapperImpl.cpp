@@ -18,7 +18,12 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     CUL::CnstMyStr& winName,
     const bool opengl )
 {
-    const auto sdlInitSuccess = SDL_Init( SDL_INIT_EVERYTHING );
+    const auto sdlInitSuccess = SDL_Init(
+        SDL_INIT_TIMER &&
+        SDL_INIT_AUDIO &&
+        SDL_INIT_VIDEO &&
+        SDL_INIT_EVENTS 
+    );
     if( 0 != sdlInitSuccess )
     {
         CUL::Assert::simple( 0, SDL_GetError() );
@@ -51,6 +56,7 @@ SDL2WrapperImpl::~SDL2WrapperImpl()
 
 void SDL2WrapperImpl::createKeys()
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::createKeys()::Begin" );
     auto kbrdState = SDL_GetKeyboardState( nullptr );
     for( int i = SDL_SCANCODE_A; i < SDL_NUM_SCANCODES; ++i )
     {
@@ -65,6 +71,7 @@ void SDL2WrapperImpl::createKeys()
             this->m_keys[ keyName ] = std::unique_ptr<IKey>( key );
         }
     }
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::createKeys()::End" );
 }
 
 IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* sdlKey ) const
@@ -116,15 +123,20 @@ void SDL2WrapperImpl::refreshScreen()
 void SDL2WrapperImpl::runEventLoop()
 {
     CUL::ThreadUtils::setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
+    const CUL::MyString log = "SDL2WrapperImpl::runEventLoop()::Begin";
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     SDL_Event event;
     while( this->eventLoopActive )
     {
+        //CUL::LOG::LOG_CONTAINER::getLogger()->log(  "SDL2WrapperImpl::runEventLoop()::Pooling..." );
         if( SDL_PollEvent( &event ) > 0 )
         {
+            CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
             handleEveent( event );
         }
         CUL::ITimer::sleepMicroSeconds( this->m_eventLatencyUs );
     }
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::runEventLoop()::End" );
 }
 
 void SDL2WrapperImpl::handleEveent( const SDL_Event& event )

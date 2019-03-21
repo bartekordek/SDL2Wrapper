@@ -114,7 +114,7 @@ public:
 
     void onWindowEvent( const WindowEventType windowEventType ) override
     {
-        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + static_cast< short >( windowEventType ) );
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::MyString( static_cast< short >( windowEventType ) ) );
         if( WindowEventType::CLOSE == windowEventType )
         {
             this->m_sdlW->stopEventLoop();
