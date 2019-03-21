@@ -15,7 +15,6 @@ using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
 
-
 RegularSDL2Window::RegularSDL2Window(
     const Vector3Di& pos,
     const Vector3Du& size,
