@@ -19,16 +19,16 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     const bool opengl )
 {
     const auto sdlInitSuccess = SDL_Init(
-        SDL_INIT_TIMER &&
-        SDL_INIT_AUDIO &&
-        SDL_INIT_VIDEO &&
-        SDL_INIT_EVENTS 
+        SDL_INIT_TIMER &
+        SDL_INIT_AUDIO &
+        SDL_INIT_VIDEO &
+        SDL_INIT_EVENTS
     );
     if( 0 != sdlInitSuccess )
     {
         CUL::Assert::simple( 0, SDL_GetError() );
     }
-    
+
     this->m_windowFactory = new WindowCreatorConcrete();
     if( opengl )
     {
@@ -39,7 +39,7 @@ SDL2WrapperImpl::SDL2WrapperImpl(
         this->m_mainWindow = this->m_windowFactory->createWindow( pos, size, winName );
     }
     this->m_windows[ this->m_mainWindow->getWindowID() ] = std::unique_ptr<IWindow>( this->m_mainWindow );
-    
+
     createKeys();
 
     this->m_mouseData.reset( new MouseDataSDL() );
@@ -83,7 +83,7 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     return result;
 }
 
-void SDL2WrapperImpl::renderFrame( 
+void SDL2WrapperImpl::renderFrame(
     const bool clearContext,
     const bool refreshWindow )
 {
