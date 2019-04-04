@@ -16,9 +16,10 @@ endif
 
 DIAG_FLAG := -fdiagnostics-color=always
 COMPILER := clang++-6.0
-CC := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Werror -Wno-ignored-attributes
-CC_LINK := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -shared
 CPP_VERSION := -std=c++17
+CC := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) \
+-fPIC -pedantic -Wall -Werror -Wno-ignored-attributes
+CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
@@ -31,12 +32,6 @@ OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
 
 # DEPS
 DEPS_HOME := ../deps
-# DEPS::CUL
-CUL_HOME := $(DEPS_HOME)/CUL
-CUL_INC := $(CUL_HOME)/libcul/inc
-CUL_LIB := $(CUL_HOME)/$(BUILD_ROOT)
-CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
-CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
 
 # DEPS::SDL2
 SDL_HOME := $(DEPS_HOME)/SDL2
@@ -52,9 +47,17 @@ SDL_IMAGE_LIB := $(SDL_IMAGE_HOME)/Build-Linux
 SDL_IMAGE_LIB_FILES := $(SDL_IMAGE_LIB)/libSDL2_image.a
 SDL_IMAGE_LIB_IMPORT := $(SDL_IMAGE_LIB)/libSDL2_image-2.0.so.0.2.1
 
-# DEPS::BOOST
-HOME_BOOST := $(CUL_HOME)/deps/boost_1_67_0
 
+
+
+# DEPS::CUL
+CUL_HOME := $(DEPS_HOME)/CUL
+CUL_INC := $(CUL_HOME)/libcul/inc
+CUL_LIB := $(CUL_HOME)/$(BUILD_ROOT)
+CUL_LIB_DEBUG := $(CUL_LIB)/Debug/libcul.so
+CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
+
+# HEADERS
 HEADERS_INC := -I inc
 HEADERS_INC += -I src
 HEADERS_INC += -I $(CUL_INC)
