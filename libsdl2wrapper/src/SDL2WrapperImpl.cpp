@@ -29,6 +29,15 @@ SDL2WrapperImpl::SDL2WrapperImpl(
         CUL::Assert::simple( 0, SDL_GetError() );
     }
 
+
+    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+    int initalizedFlags = IMG_Init( flags );
+
+    if( ( initalizedFlags & flags ) != flags )
+    {
+        CUL::Assert::simple( 0, "Cannot initialize all sdl image flags." );
+    }
+
     this->m_windowFactory = new WindowCreatorConcrete();
     if( opengl )
     {

@@ -6,6 +6,7 @@
 #endif
 #include <SDL.h>
 #include <SDL_mouse.h>
+#include <SDL_image.h>
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif

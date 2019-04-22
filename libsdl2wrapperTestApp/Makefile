@@ -15,7 +15,7 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-COMPILER := clang++-6.0
+COMPILER := g++#clang++-6.0
 CC_STAND := -std=c++17
 CC := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
 CC_LINK := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG)
@@ -65,17 +65,13 @@ OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
 
 HEADERS_INC := -I $(CUL_INC) -I $(SDL2W_INC)
 
-debug: $(SDL2W_LIB_DEBUG)
-	@make $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
+debug:
+	$(MAKE) -C $(SDL2W_HOME) debug
+	$(MAKE) $(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
 
 release: $(SDL2W_LIB_RELEASE)
-	@make $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
-
-$(SDL2W_LIB_DEBUG):
-	make -C $(SDL2W_HOME) debug
-
-$(SDL2W_LIB_RELEASE):
-	make -C $(SDL2W_HOME) release
+	$(MAKE) -C $(SDL2W_HOME) release
+	$(MAKE) $(OUTPUT_DIR_RELEASE)/$(BINARY_NAME)
 
 run_debug: debug
 	cd $(RUN_DIR);LD_LIBRARY_PATH=$(RUN_DIR) ./$(OUTPUT_DIR_DEBUG)/$(BINARY_NAME)
@@ -110,7 +106,7 @@ $(OBJ_RELEASE_DIR)%.o: %.cpp
 	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
 
 clean:
-	make -C $(SDL2W_HOME) clean
+	$(MAKE) -C $(SDL2W_HOME) clean
 	rm -f $(OBJ_DEBUG_FILES)
 	rm -f $(OBJ_RELEASE_FILES)
 	rm -f $(OUTPUT_DEBUG)

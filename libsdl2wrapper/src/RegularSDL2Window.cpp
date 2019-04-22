@@ -58,15 +58,15 @@ void RegularSDL2Window::updateScreenBuffers()
 
 void RegularSDL2Window::renderAll()
 {
-     SDL_SetRenderDrawColor(
+    SDL_SetRenderDrawColor(
         this->m_renderer,
         this->m_backgroundColor.getRUI(),
         this->m_backgroundColor.getGUI(),
         this->m_backgroundColor.getBUI(),
         this->m_backgroundColor.getAUI() );
-     std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
-     for( auto& object : this->m_objects )
-     {
+    std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
+    for( auto& object : this->m_objects )
+    {
         if ( IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
@@ -145,30 +145,41 @@ const IWindow::Type RegularSDL2Window::getType() const
 
 ISprite* RegularSDL2Window::createSprite( const Path& objPath )
 {
+	CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )" );
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )1" );
     auto it = this->m_textures.find( objPath.getPath().string() );
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )2" );
     if( this->m_textures.end() == it )
     {
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )21" );
         auto tex = createTexture( objPath );
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )211" );
         result = createSprite( tex );
     }
     else
     {
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )22" );
         auto tex = it->second.get();
         result = createSprite( tex );
     }
+	CUL::LOG::LOG_CONTAINER::getLogger()->log( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )end" );
     return result;
 }
 
 ITexture* RegularSDL2Window::createTexture( const Path& objPath )
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )" );
     ITexture* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
     auto it = this->m_textures.find( objPath.getPath().string() );
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )1" );
     if( this->m_textures.end() == it )
     {
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )11" );
         auto surface = createSurface( objPath );
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )111" );
         auto tex = createTexture( surface, objPath );
         SDL_FreeSurface( surface );
         surface = nullptr;
@@ -176,6 +187,7 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
     }
     else
     {
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )12" );
         result = it->second.get();
     }
     return result;
@@ -193,6 +205,7 @@ ISprite* RegularSDL2Window::createSprite(
 SDL_Surface* RegularSDL2Window::createSurface(
     const Path& path )
 {
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )" );
     if( false == path.exists() )
     {
         CUL::CnstMyStr msg =
@@ -201,20 +214,27 @@ SDL_Surface* RegularSDL2Window::createSurface(
             " does not exist.";
         CUL::Assert::simple( false, msg );
     }
-
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )1" );
     SDL_Surface* result = nullptr;
     if( ".bmp" == path.getExtension() )
     {
         result = SDL_LoadBMP( path.getPath().cStr() );
     }
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )2" );
 
     if( ".png" == path.getExtension() )
     {
-        result = IMG_Load( path.getPath().cStr() );
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )21" );
+        auto value = path.getPath().cStr();
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )22" + CUL::MyString( value ) );
+        const char* chuj = value;
+        result = IMG_Load( chuj );
     }
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )3" );
     CUL::Assert::simple(
         nullptr != result,
         "Cannot load: " + path.getPath() );
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )" );
     return result;
 }
 

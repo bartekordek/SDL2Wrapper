@@ -15,11 +15,11 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-COMPILER := clang++-6.0
+COMPILER := g++#clang++-6.0
 CPP_VERSION := -std=c++17
 CC := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) \
 -fPIC -pedantic -Wall -Werror -Wno-ignored-attributes
-CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared
+CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared -W1,—export-all-symbols
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
@@ -34,18 +34,18 @@ OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
 DEPS_HOME := ../deps
 
 # DEPS::SDL2
-SDL_HOME := $(DEPS_HOME)/SDL2
-SDL_INC := $(SDL_HOME)/include
-SDL_LIB := $(SDL_HOME)/$(BUILD_ROOT)/$(PLATFORM)
-SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a
-SDL_LIB_IMPORT := $(SDL_LIB)/libSDL2-2.0.so.0.7.0
-
-# DEPS::SDL2::image
-SDL_IMAGE_HOME := $(DEPS_HOME)/SDL2_image-2.0.3
-SDL_IMAGE_INC := $(SDL_IMAGE_HOME)/include
-SDL_IMAGE_LIB := $(SDL_IMAGE_HOME)/Build-Linux
-SDL_IMAGE_LIB_FILES := $(SDL_IMAGE_LIB)/libSDL2_image.a
-SDL_IMAGE_LIB_IMPORT := $(SDL_IMAGE_LIB)/libSDL2_image-2.0.so.0.2.1
+#SDL_HOME := $(DEPS_HOME)/SDL2
+#SDL_INC := $(SDL_HOME)/include
+#SDL_LIB := $(SDL_HOME)/$(BUILD_ROOT)/$(PLATFORM)
+#SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a
+#SDL_LIB_IMPORT := $(SDL_LIB)/libSDL2-2.0.so.0.7.0
+#
+## DEPS::SDL2::image
+#SDL_IMAGE_HOME := $(DEPS_HOME)/SDL2_image-2.0.3
+#SDL_IMAGE_INC := $(SDL_IMAGE_HOME)/include
+#SDL_IMAGE_LIB := $(SDL_IMAGE_HOME)/Build-Linux
+#SDL_IMAGE_LIB_IMPORT := $(SDL_IMAGE_LIB)/libSDL2_image-2.0.so.0.2.1
+#SDL_IMAGE_LIB_FILES := $(SDL_IMAGE_LIB)/libSDL2_image.a
 
 
 
@@ -61,12 +61,16 @@ CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
 HEADERS_INC := -I inc
 HEADERS_INC += -I src
 HEADERS_INC += -I $(CUL_INC)
+HEADERS_INC += $(shell pkg-config --cflags sdl2)
+HEADERS_INC += $(shell pkg-config --cflags SDL2_image)
 HEADERS_INC += -I $(SDL_INC)
 HEADERS_INC += -I $(SDL_IMAGE_INC)
 HEADERS_INC += -I $(HOME_BOOST)
 
 IMPORT_FILES := $(SDL_LIB_FILES)
 IMPORT_FILES += $(SDL_IMAGE_LIB_FILES)
+IMPORT_FILES += $(shell pkg-config --libs sdl2)
+IMPORT_FILES += $(shell pkg-config --libs SDL2_image)
 
 OUTPUT_DEBUG = $(OUTPUT_DIR_DEBUG)/$(DLL_NAME)
 OUTPUT_RELEASE = $(OUTPUT_DIR_RELEASE)/$(DLL_NAME)
@@ -85,17 +89,19 @@ OBJ_DEBUG_FILES := $(addprefix $(OBJ_DEBUG_DIR),$(CPP_FILES:.cpp=.o))
 OBJ_RELEASE_DIR := obj/release/
 OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
 
-debug: $(CUL_LIB_DEBUG)
-	@make $(OUTPUT_DEBUG)
+debug:
+	$(MAKE) $(CUL_LIB_DEBUG)
+	$(MAKE) $(OUTPUT_DEBUG)
 
-release: $(CUL_LIB_RELEASE)
-	@make $(OUTPUT_RELEASE)
+release:
+	$(MAKE) $(CUL_LIB_RELEASE)
+	$(MAKE) $(OUTPUT_RELEASE)
 
 $(CUL_LIB_DEBUG):
-	make -C $(CUL_HOME)/libcul debug
+	$(MAKE) -C $(CUL_HOME)/libcul
 
 $(CUL_LIB_RELEASE):
-	make -C $(CUL_HOME)/libcul release
+	$(MAKE) -C $(CUL_HOME)/libcul
 
 $(OUTPUT_DEBUG): $(OBJ_DEBUG_FILES)
 	@mkdir -p $(dir $@)
@@ -114,7 +120,7 @@ $(OBJ_RELEASE_DIR)%.o: %.cpp
 	$(CC) $(HEADERS_INC) $(COMPILER_FLAGS) $(RELEASE_FLAGS) -c -o $@ $<
 
 clean:
-	make -C $(CUL_HOME)/libcul clean
+	$(MAKE) -C $(CUL_HOME)/libcul clean
 	rm -f $(OBJ_DEBUG_FILES)
 	rm -f $(OBJ_RELEASE_FILES)
 	rm -f $(OUTPUT_DEBUG)
