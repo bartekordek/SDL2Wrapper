@@ -29,6 +29,7 @@ RegularSDL2Window::RegularSDL2Window(
 {
     logMsg( "RegularSDL2Window::RegularSDL2Window()" );
     this->m_window = createWindow( pos, size, name, false );
+    CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
     const auto id = SDL_GetWindowID( this->m_window );
     setWindowID( id );
 

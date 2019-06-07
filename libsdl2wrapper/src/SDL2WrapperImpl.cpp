@@ -137,7 +137,6 @@ void SDL2WrapperImpl::runEventLoop()
     SDL_Event event;
     while( this->eventLoopActive )
     {
-        //CUL::LOG::LOG_CONTAINER::getLogger()->log(  "SDL2WrapperImpl::runEventLoop()::Pooling..." );
         if( SDL_PollEvent( &event ) > 0 )
         {
             CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
