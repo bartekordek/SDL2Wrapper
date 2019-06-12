@@ -2,7 +2,6 @@
 
 #include "SDL2Wrapper/Input/IMouseData.hpp"
 #include "CUL/UselessMacros.hpp"
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 

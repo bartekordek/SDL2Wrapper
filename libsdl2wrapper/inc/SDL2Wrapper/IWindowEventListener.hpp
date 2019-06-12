@@ -1,5 +1,7 @@
 #pragma once
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
+
+#include "SDL2Wrapper/Import.hpp"
+
 namespace SDL2W
 {
     class SDL2WAPI IWindowEventObserver

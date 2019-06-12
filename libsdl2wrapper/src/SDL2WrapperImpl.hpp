@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
+#include "ISDLInputObserver.hpp"
 #include "WindowFactoryConcrete.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/STD_vector.hpp"
@@ -62,14 +63,16 @@ public:
     const bool isKeyUp( CUL::CnstMyStr& keyName )const override;
     Keys& getKeyStates() override;
 
-    ITexture* createTexture( const Path& path,
-                             IWindow* targetWindow ) override;
-    ISprite* createSprite( const Path& path,
-                           IWindow* targetWindow ) override;
-    ISprite* createSprite( ITexture* tex,
-                           IWindow* targetWindow ) override;
+    ITexture* createTexture( const Path& path, IWindow* targetWindow ) override;
+    ISprite* createSprite( const Path& path, IWindow* targetWindow ) override;
+    ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) override;
 
     IWindow* getMainWindow() override;
+
+    IGui* getGui() override;
+
+    void registerSDLEventObserver( ISDLInputObserver* eventObserver );
+    void unRegisterSDLEventObserver( ISDLInputObserver* eventObserver );
 
 protected:
 private:
@@ -101,7 +104,11 @@ private:
     std::vector<std::function<void( const IMouseData& md )>> m_mouseCallbacks;
 
     std::set<IKeyboardObserver*> m_keyboardObservers;
+    std::mutex m_keyboardObserversMtx;
     std::set<IMouseObserver*> m_mouseObservers;
+    std::mutex m_mouseObserversMtx;
+    std::set<ISDLInputObserver*> m_sdlEventObservers;
+    std::mutex m_sdlEventObserversMtx;
 
 };
 

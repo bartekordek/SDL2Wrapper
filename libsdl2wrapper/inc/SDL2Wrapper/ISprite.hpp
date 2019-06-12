@@ -1,6 +1,7 @@
 #pragma once
 
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
+#include "SDL2Wrapper/Import.hpp"
+
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/Graphics/IObject.hpp"
 

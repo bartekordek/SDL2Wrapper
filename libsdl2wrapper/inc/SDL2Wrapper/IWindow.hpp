@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IRender.hpp"
 #include "CUL/Graphics/IObjectRegister.hpp"
@@ -50,10 +49,12 @@ public:
     };
 
     IWindow();
-    IWindow( const IWindow& wind ) = delete;
-    virtual ~IWindow();
+    IWindow( const Vector3Di& pos,
+        const Vector3Du& size,
+        CUL::CnstMyStr& name,
+        const bool withOpenGL = true ) = delete;
 
-    IWindow& operator=( const IWindow& window ) = delete;
+    virtual ~IWindow();
 
     virtual const Vector3Di& getPos()const = 0;
     virtual void setPos( const Vector3Di& pos ) = 0;
@@ -72,16 +73,14 @@ public:
     void setWindowID( cunt id );
     const unsigned int getWindowID() const;
 
-
 protected:
-    static SDL_Window* createWindow(
-        const Vector3Di& pos,
-        const Vector3Du& size,
-        CUL::CnstMyStr& nameconst,
-        bool opengl );
 
 private:
+
     unsigned int m_winId = 0;
+
+    IWindow( const IWindow& wind ) = delete;
+    IWindow& operator=( const IWindow& window ) = delete;
 
 };
 

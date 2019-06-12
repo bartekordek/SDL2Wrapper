@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CUL/UselessMacros.hpp"
+
 #if _WIN32
 #define SDL2W_WINDOWS
 #define SDL2W_EXPORT

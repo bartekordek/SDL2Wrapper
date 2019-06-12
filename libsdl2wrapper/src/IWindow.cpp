@@ -24,34 +24,3 @@ const unsigned int IWindow::getWindowID() const
 {
     return this->m_winId;
 }
-
-SDL_Window* IWindow::createWindow(
-    const Vector3Di& pos,
-    const Vector3Du& size,
-    CUL::CnstMyStr& nameconst,
-    bool opengl )
-{
-    SDL_Window* result = nullptr;
-    Uint32 windowFlags = SDL_WINDOW_SHOWN;
-    if( opengl )
-    {
-        windowFlags |= SDL_WINDOW_OPENGL;
-    }
-    result = SDL_CreateWindow(
-        nameconst.cStr(),
-        static_cast< int >( pos.getX() ),
-        static_cast< int >( pos.getY() ),
-        static_cast< int >( size.getX() ),
-        static_cast< int >( size.getY() ),
-        windowFlags );
-    if( nullptr == result )
-    {
-        auto sdlError = SDL_GetError();
-        CUL::MyString s_sdlError( sdlError );
-        CUL::LOG::LOG_CONTAINER::getLogger()->log(
-        "ERROR" + s_sdlError, CUL::LOG::Severity::CRITICAL );
-        CUL::Assert::simple( result, "The Window has not been initialized." );
-    }
-    
-    return result;
-}

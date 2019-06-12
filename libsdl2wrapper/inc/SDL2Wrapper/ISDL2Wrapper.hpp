@@ -1,5 +1,6 @@
 #pragma once
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
+
+#include "SDL2Wrapper/Gui/IGui.hpp"
 #include "SDL2Wrapper/IEventLoop.hpp"
 #include "SDL2Wrapper/Input/IKey.hpp"
 #include "SDL2Wrapper/IWindowEventListener.hpp"
@@ -55,6 +56,8 @@ public:
         IWindowEventObserver* observer ) = 0;
 
     virtual Keys& getKeyStates() = 0;
+
+    virtual IGui* getGui() = 0;
 
 protected:
 private:

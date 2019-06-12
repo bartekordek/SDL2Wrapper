@@ -12,6 +12,18 @@
 
 using namespace SDL2W;
 
+void logMsg(
+    CUL::CnstMyStr& msg,
+    const CUL::LOG::Severity severity = CUL::LOG::Severity::INFO )
+{
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( msg, severity );
+}
+
+void Assert( const bool result, CUL::CnstMyStr& msg )
+{
+    CUL::Assert::simple( result, msg );
+}
+
 SDL2WrapperImpl::SDL2WrapperImpl(
     const Vector3Di& pos,
     const Vector3Du& size,
@@ -26,7 +38,7 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     );
     if( 0 != sdlInitSuccess )
     {
-        CUL::Assert::simple( 0, SDL_GetError() );
+        Assert( 0, SDL_GetError() );
     }
 
 
@@ -35,37 +47,30 @@ SDL2WrapperImpl::SDL2WrapperImpl(
 
     if( ( initalizedFlags & flags ) != flags )
     {
-        CUL::Assert::simple( 0, "Cannot initialize all sdl image flags." );
+        Assert( 0, "Cannot initialize all sdl image flags." );
     }
 
-    this->m_windowFactory = new WindowCreatorConcrete();
-    if( opengl )
-    {
-        this->m_mainWindow = this->m_windowFactory->createWindowOGL( pos, size, winName );
-    }
-    else
-    {
-        this->m_mainWindow = this->m_windowFactory->createWindow( pos, size, winName );
-    }
-    this->m_windows[ this->m_mainWindow->getWindowID() ] = std::unique_ptr<IWindow>( this->m_mainWindow );
+    m_windowFactory = new WindowCreatorConcrete();
+    m_mainWindow = m_windowFactory->createWindow( pos, size, winName, opengl );
+    m_windows[ m_mainWindow->getWindowID() ] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();
 
-    this->m_mouseData.reset( new MouseDataSDL() );
+    m_mouseData.reset( new MouseDataSDL() );
 
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
 {
-    delete this->m_windowFactory;
-    this->m_windowFactory = nullptr;
-    this->m_keys.clear();
+    delete m_windowFactory;
+    m_windowFactory = nullptr;
+    m_keys.clear();
     SDL_Quit();
 }
 
 void SDL2WrapperImpl::createKeys()
 {
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::createKeys()::Begin" );
+    logMsg( "SDL2WrapperImpl::createKeys()::Begin" );
     auto kbrdState = SDL_GetKeyboardState( nullptr );
     for( int i = SDL_SCANCODE_A; i < SDL_NUM_SCANCODES; ++i )
     {
@@ -77,10 +82,10 @@ void SDL2WrapperImpl::createKeys()
         else
         {
             const auto keyName = key->getKeyName();
-            this->m_keys[ keyName ] = std::unique_ptr<IKey>( key );
+            m_keys[ keyName ] = std::unique_ptr<IKey>( key );
         }
     }
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::createKeys()::End" );
+    logMsg( "SDL2WrapperImpl::createKeys()::End" );
 }
 
 IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* sdlKey ) const
@@ -101,7 +106,7 @@ void SDL2WrapperImpl::renderFrame(
         clearWindows();
     }
 
-    for( auto& window : this->m_windows )
+    for( auto& window : m_windows )
     {
         window.second->renderAll();
     }
@@ -114,7 +119,7 @@ void SDL2WrapperImpl::renderFrame(
 
 void SDL2WrapperImpl::clearWindows()
 {
-    for( auto& window : this->m_windows )
+    for( auto& window : m_windows )
     {
         window.second->clearBuffers();
     }
@@ -122,7 +127,7 @@ void SDL2WrapperImpl::clearWindows()
 
 void SDL2WrapperImpl::refreshScreen()
 {
-    for( auto& window : this->m_windows )
+    for( auto& window : m_windows )
     {
         window.second->updateScreenBuffers();
     }
@@ -132,26 +137,32 @@ void SDL2WrapperImpl::refreshScreen()
 void SDL2WrapperImpl::runEventLoop()
 {
     CUL::ThreadUtils::setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
-    const CUL::MyString log = "SDL2WrapperImpl::runEventLoop()::Begin";
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
+    logMsg( "SDL2WrapperImpl::runEventLoop()::Begin" );
     SDL_Event event;
-    while( this->eventLoopActive )
+    while( eventLoopActive )
     {
         if( SDL_PollEvent( &event ) > 0 )
         {
-            CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
+            logMsg( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
             handleEveent( event );
+
+            {
+                std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
+                for( auto eventObserver: m_sdlEventObservers )
+                {
+                    eventObserver->handleEvent( event );
+                }
+            }
         }
-        CUL::ITimer::sleepMicroSeconds( this->m_eventLatencyUs );
+        CUL::ITimer::sleepMicroSeconds( m_eventLatencyUs );
     }
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::runEventLoop()::End" );
+    logMsg( "SDL2WrapperImpl::runEventLoop()::End" );
 }
 
 void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 {
-    const CUL::MyString log = "SDL2WrapperImpl::handleEveent( " +
-        CUL::MyString( event.type ) + " );";
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
+    logMsg( "SDL2WrapperImpl::handleEveent( " +
+        CUL::MyString( event.type ) + " );" );
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
         if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
@@ -165,7 +176,7 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
     }
     else if( event.type == SDL_WINDOWEVENT_MOVED )
     {
-        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Window has been moved." );
+        logMsg( "Window has been moved." );
         notifyWindowEventListeners( WindowEventType::MOVED );
     }
     else if( event.type == SDL_WINDOWEVENT_ENTER )
@@ -180,7 +191,7 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
     if( eventIsMouseEvent( event ) )
     {
         handleMouseEvent( event );
-        notifyMouseListerners( *this->m_mouseData );
+        notifyMouseListerners( *m_mouseData );
     }
 }
 
@@ -201,18 +212,13 @@ const bool SDL2WrapperImpl::eventIsMouseEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 {
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( "SDL2WrapperImpl::handleKeyboardEvent" );
+    logMsg( "SDL2WrapperImpl::handleKeyboardEvent" );
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
-    auto& key = this->m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
+    auto& key = m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
     key->setKeyIsDown( keyIsDown );
 
-    CUL::LOG::LOG_CONTAINER::getLogger()->log(
-        "EVENT: Key press/release, key: " +
-        key->getKeyName().string() );
-
-    CUL::LOG::LOG_CONTAINER::getLogger()->log(
-        "EVENT: Key press/release, keyID: " +
-        std::to_string( sdlEvent.key.keysym.scancode ) );
+    logMsg( "EVENT: Key press/release, key: " + key->getKeyName().string() );
+    logMsg( "EVENT: Key press/release, keyID: " + std::to_string( sdlEvent.key.keysym.scancode ) );
 
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
@@ -227,16 +233,16 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 
         const auto mb = event.button;
         const auto mbIndex = static_cast<unsigned short>( mb.button );
-        this->m_mouseData->setState( mbIndex, isUp );
+        m_mouseData->setState( mbIndex, isUp );
     }
     else if( event.type == SDL_MOUSEMOTION )
     {
-        this->m_mouseData->setPos( event.button.x, event.button.y );
+        m_mouseData->setPos( event.button.x, event.button.y );
     }
     else if( event.type == SDL_MOUSEWHEEL )
     {
         const auto we = event.wheel;
-        this->m_mouseData->setWheel(
+        m_mouseData->setWheel(
             we.x,
             we.y,
             we.direction == SDL_MOUSEWHEEL_NORMAL ? SDL2W::WheelDirection::UP : SDL2W::WheelDirection::DOWN );
@@ -245,7 +251,7 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
 {
-    for( auto callback: this->m_keyCallbacks )
+    for( auto callback: m_keyCallbacks )
     {
         callback( key );
     }
@@ -254,29 +260,31 @@ void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
 void SDL2WrapperImpl::addKeyboardEventCallback(
     const std::function<void( const IKey& key )>& callback )
 {
-    this->m_keyCallbacks.push_back( callback );
+    m_keyCallbacks.push_back( callback );
 }
 
 void SDL2WrapperImpl::stopEventLoop()
 {
-    this->eventLoopActive = false;
+    eventLoopActive = false;
 }
 
 void SDL2WrapperImpl::registerKeyboardEventListener(
     IKeyboardObserver* observer )
 {
-    this->m_keyboardObservers.insert( observer );
+    std::lock_guard<std::mutex> lock( m_keyboardObserversMtx );
+    m_keyboardObservers.insert( observer );
 }
 
-void SDL2WrapperImpl::unregisterKeyboardEventListener(
-    IKeyboardObserver* observer )
+void SDL2WrapperImpl::unregisterKeyboardEventListener( IKeyboardObserver* observer )
 {
-    this->m_keyboardObservers.erase( observer );
+    std::lock_guard<std::mutex> lock( m_keyboardObserversMtx );
+    m_keyboardObservers.erase( observer );
 }
 
 void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
 {
-    for( auto listener : this->m_keyboardObservers )
+    std::lock_guard<std::mutex> lock( m_keyboardObserversMtx );
+    for( auto listener: m_keyboardObservers )
     {
         listener->onKeyBoardEvent( key );
     }
@@ -284,48 +292,51 @@ void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
 
 void SDL2WrapperImpl::notifyMouseListerners( const IMouseData& md )
 {
-    for( const auto& listener: this->m_mouseObservers )
+    std::lock_guard<std::mutex> lock( m_mouseObserversMtx );
+    for( const auto& listener: m_mouseObservers )
     {
         listener->onMouseEvent( md );
     }
 }
 
+void SDL2WrapperImpl::registerMouseEventListener( IMouseObserver* observer )
+{
+    std::lock_guard<std::mutex> lock( m_mouseObserversMtx );
+    m_mouseObservers.insert( observer );
+}
+
+void SDL2WrapperImpl::unregisterMouseEventListener( IMouseObserver* observer )
+{
+    std::lock_guard<std::mutex> lock( m_mouseObserversMtx );
+    m_mouseObservers.erase( observer );
+}
+
 void SDL2WrapperImpl::registerWindowEventListener(
     IWindowEventObserver* observer )
 {
-    this->m_windowEventObservers.insert( observer );
+    m_windowEventObservers.insert( observer );
 }
 
 void SDL2WrapperImpl::unregisterWindowEventListener(
     IWindowEventObserver* observer )
 {
-    this->m_windowEventObservers.erase( observer );
+    m_windowEventObservers.erase( observer );
 }
 
 void SDL2WrapperImpl::addMouseEventCallback(
     const std::function<void( const IMouseData& md )>& callback )
 {
-    this->m_mouseCallbacks.push_back( callback );
-}
-
-void SDL2WrapperImpl::registerMouseEventListener( IMouseObserver* observer )
-{
-    this->m_mouseObservers.insert( observer );
-}
-
-void SDL2WrapperImpl::unregisterMouseEventListener( IMouseObserver* observer )
-{
-    this->m_mouseObservers.erase( observer );
+    m_mouseCallbacks.push_back( callback );
 }
 
 IMouseData& SDL2WrapperImpl::getMouseData( void )
 {
-    return *this->m_mouseData;
+    return *m_mouseData;
 }
 
 void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
 {
-    for( auto listener : this->m_windowEventObservers )
+    for( auto listener : m_windowEventObservers )
     {
         listener->onWindowEvent( e );
     }
@@ -333,22 +344,22 @@ void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
 
 cunt SDL2WrapperImpl::getInputLatency()const
 {
-    return this->m_eventLatencyUs.getValCopy();
+    return m_eventLatencyUs.getValCopy();
 }
 
 void SDL2WrapperImpl::setInputLatency( cunt latencyInUs )
 {
-    this->m_eventLatencyUs = latencyInUs;
+    m_eventLatencyUs = latencyInUs;
 }
 
 const bool SDL2WrapperImpl::isKeyUp( CUL::CnstMyStr& keyName )const
 {
-    return this->m_keys.at( keyName )->getKeyIsDown();
+    return m_keys.at( keyName )->getKeyIsDown();
 }
 
 Keys& SDL2WrapperImpl::getKeyStates()
 {
-    return this->m_keys;
+    return m_keys;
 }
 
 ISprite* SDL2WrapperImpl::createSprite( const Path& objPath,
@@ -381,5 +392,22 @@ ISprite* SDL2WrapperImpl::createSprite( ITexture* tex,
 
 IWindow* SDL2WrapperImpl::getMainWindow()
 {
-    return this->m_mainWindow;
+    return m_mainWindow;
+}
+
+IGui* SDL2WrapperImpl::getGui()
+{
+    return nullptr;
+}
+
+void SDL2WrapperImpl::registerSDLEventObserver( ISDLInputObserver* eventObserver )
+{
+    std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
+    m_sdlEventObservers.insert( eventObserver );
+}
+
+void SDL2WrapperImpl::unRegisterSDLEventObserver( ISDLInputObserver* eventObserver )
+{
+    std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
+    m_sdlEventObservers.erase( eventObserver );
 }

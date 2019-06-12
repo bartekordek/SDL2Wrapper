@@ -15,50 +15,101 @@ using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
 
-void logMsg( CUL::CnstMyStr& msg )
+void logMsg(
+    CUL::CnstMyStr& msg,
+    const CUL::LOG::Severity severity = CUL::LOG::Severity::INFO )
 {
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( msg );
+    CUL::LOG::LOG_CONTAINER::getLogger()->log( msg, severity );
+}
+
+void Assert( const bool result, CUL::CnstMyStr& msg )
+{
+    CUL::Assert::simple( result, msg );
 }
 
 RegularSDL2Window::RegularSDL2Window(
     const Vector3Di& pos,
     const Vector3Du& size,
-    CUL::CnstMyStr& name ):
+    CUL::CnstMyStr& name,
+    const bool withOpenGL ):
+        m_withOpenGL( withOpenGL ),
         m_position( pos ),
         m_size( size )
 {
-    logMsg( "RegularSDL2Window::RegularSDL2Window()" );
-    this->m_window = createWindow( pos, size, name, false );
-    CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
-    const auto id = SDL_GetWindowID( this->m_window );
+    m_window = createWindow( pos, size, name, m_withOpenGL );
+    Assert( m_window, "The Window has not been initialized." );
+
+    const auto id = SDL_GetWindowID( m_window );
     setWindowID( id );
 
-    this->m_renderer = SDL_CreateRenderer( this->m_window, -1, SDL_RENDERER_ACCELERATED );
+    m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED );
     setName( name );
+}
+
+SDL_Window* RegularSDL2Window::createWindow(
+    const Vector3Di& pos,
+    const Vector3Du& size,
+    CUL::CnstMyStr& nameconst,
+    bool opengl )
+{
+    SDL_Window* result = nullptr;
+    Uint32 windowFlags = SDL_WINDOW_SHOWN;
+    if( opengl )
+    {
+        windowFlags |= SDL_WINDOW_OPENGL;
+    }
+    result = SDL_CreateWindow(
+        nameconst.cStr(),
+        static_cast< int >( pos.getX() ),
+        static_cast< int >( pos.getY() ),
+        static_cast< int >( size.getX() ),
+        static_cast< int >( size.getY() ),
+        windowFlags );
+    if( nullptr == result )
+    {
+        auto sdlError = SDL_GetError();
+        CUL::MyString s_sdlError( sdlError );
+        logMsg(
+            "ERROR" + s_sdlError, CUL::LOG::Severity::CRITICAL );
+        Assert( result, "The Window has not been initialized." );
+    }
+
+    return result;
 }
 
 RegularSDL2Window::~RegularSDL2Window()
 {
     logMsg( "RegularSDL2Window::~RegularSDL2Window()" );
-    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
-    this->m_textures.clear();
-    CUL::Assert::simple(
-        this->m_window,
-        "The Window has been destroyed somwhere else." );
-    CUL::Assert::simple(
-        this->m_renderer,
-        "The Renderer has been destroyed somwhere else." );
-    SDL_DestroyRenderer( this->m_renderer );
+    destroyObjects();
+
+    Assert( m_renderer, "The Renderer has been destroyed somwhere else." );
+    SDL_DestroyRenderer( m_renderer );
     this->m_renderer = nullptr;
+
+    Assert( m_window, "The Window has been destroyed somwhere else." );
     SDL_DestroyWindow( this->m_window );
     this->m_window = nullptr;
 }
 
+void RegularSDL2Window::destroyObjects()
+{
+    std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
+    m_textures.clear();
+}
+
 void RegularSDL2Window::updateScreenBuffers()
 {
-    CUL::Assert::simple( this->m_renderer, "The Renderer has not been initialized." );
-    CUL::Assert::simple( this->m_window, "The Window has not been initialized." );
-    SDL_RenderPresent( this->m_renderer );
+    if( m_withOpenGL )
+    {
+        Assert( this->m_window, "The Window is not initialized." );
+        SDL_GL_SwapWindow( this->m_window );
+        // ^ https://forums.libsdl.org/viewtopic.php?p=52399
+    }
+    else
+    {
+        Assert( this->m_renderer, "The Renderer is not initialized." );
+        SDL_RenderPresent( this->m_renderer );
+    }
     frameHasEnded();
 }
 
@@ -151,17 +202,12 @@ const IWindow::Type RegularSDL2Window::getType() const
 
 ISprite* RegularSDL2Window::createSprite( const Path& objPath )
 {
-    logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )" );
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
-    logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )1" );
     auto it = this->m_textures.find( objPath.getPath().string() );
-    logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )2" );
     if( this->m_textures.end() == it )
     {
-        logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )21" );
         auto tex = createTexture( objPath );
-        logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )211" );
         result = createSprite( tex );
     }
     else
@@ -211,37 +257,23 @@ ISprite* RegularSDL2Window::createSprite(
 SDL_Surface* RegularSDL2Window::createSurface(
     const Path& path )
 {
-    logMsg( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )" );
     if( false == path.exists() )
     {
-        CUL::CnstMyStr msg =
-            "File " +
-            path.getPath() +
-            " does not exist.";
-        CUL::Assert::simple( false, msg );
+        Assert( false, "File " + path.getPath() + " does not exist." );
     }
-    logMsg( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )1" );
     SDL_Surface* result = nullptr;
     if( ".bmp" == path.getExtension() )
     {
         result = SDL_LoadBMP( path.getPath().cStr() );
     }
-    logMsg( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )2" );
 
     if( ".png" == path.getExtension() )
     {
-        logMsg(
-            "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )21" );
         auto value = path.getPath().cStr();
-        logMsg("SDL_Surface* RegularSDL2Window::createSurface(const Path& path )22" + CUL::MyString( value ) );
         const char* chuj = value;
         result = IMG_Load( chuj );
     }
-    logMsg( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )3" );
-    CUL::Assert::simple(
-        nullptr != result,
-        "Cannot load: " + path.getPath() );
-    logMsg( "SDL_Surface* RegularSDL2Window::createSurface(const Path& path )" );
+    Assert( result, "Cannot load: " + path.getPath() );
     return result;
 }
 

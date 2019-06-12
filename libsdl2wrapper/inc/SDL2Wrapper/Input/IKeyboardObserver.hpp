@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SDL2Wrapper/Input/IKey.hpp"
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
 #include "CUL/UselessMacros.hpp"
 
 NAMESPACE_BEGIN( SDL2W )

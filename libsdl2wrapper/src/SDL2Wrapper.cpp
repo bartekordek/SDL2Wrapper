@@ -1,5 +1,6 @@
-#include "SDL2Wrapper/SDL2Wrapper.hpp"
+#include "SDL2Wrapper/Import.hpp"
 #include "SDL2WrapperImpl.hpp"
+
 #include "CUL/SimpleAssert.hpp"
 
 using namespace SDL2W;
