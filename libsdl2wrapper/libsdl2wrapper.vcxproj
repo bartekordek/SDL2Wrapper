@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)..\deps\imgui;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -154,7 +154,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)..\deps\imgui;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -213,7 +213,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)..\deps\imgui;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -268,7 +268,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)..\deps\imgui;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -316,9 +316,19 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="..\deps\imgui\LICENSE.txt" />
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\deps\imgui\examples\imgui_impl_opengl2.h" />
+    <ClInclude Include="..\deps\imgui\examples\imgui_impl_sdl.h" />
+    <ClInclude Include="..\deps\imgui\imconfig.h" />
+    <ClInclude Include="..\deps\imgui\imgui.h" />
+    <ClInclude Include="..\deps\imgui\imgui_internal.h" />
+    <ClInclude Include="..\deps\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\deps\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\deps\imgui\imstb_truetype.h" />
+    <ClInclude Include="inc\SDL2Wrapper\Gui\IGui.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IDevice.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL.hpp" />
@@ -336,7 +346,9 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowFactory.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp" />
-    <ClInclude Include="inc\SDL2Wrapper\SDL2Wrapper.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\Import.hpp" />
+    <ClInclude Include="src\IMPORT_SDL_events.hpp" />
+    <ClInclude Include="src\ISDLInputObserver.hpp" />
     <ClInclude Include="src\IMPORT_SDL_image.hpp" />
     <ClInclude Include="src\IMPORT_SDL_opengl.hpp" />
     <ClInclude Include="src\Input\KeySDL.hpp" />
@@ -346,9 +358,15 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\TextureSDL.hpp" />
     <ClInclude Include="src\WindowFactoryConcrete.hpp" />
-    <ClInclude Include="src\WindowWithOpenGL.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\deps\imgui\examples\example_sdl_opengl2\main.cpp" />
+    <ClCompile Include="..\deps\imgui\examples\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="..\deps\imgui\examples\imgui_impl_sdl.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Input\IKey.cpp" />
     <ClCompile Include="src\Input\KeySDL.cpp" />
     <ClCompile Include="src\Input\MouseDataSDL.cpp" />
@@ -363,7 +381,6 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\TextureSDL.cpp" />
     <ClCompile Include="src\WindowFactoryConcrete.cpp" />
-    <ClCompile Include="src\WindowWithOpenGL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.git\config" />

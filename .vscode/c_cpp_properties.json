@@ -11,8 +11,10 @@
             "includePath": [
                 "${workspaceFolder}/libsdl2wrapper/inc",
                 "${workspaceFolder}/libsdl2wrapper/src",
+                "${workspaceFolder}/deps/imgui",
+                "${workspaceFolder}/deps/imgui/examples",
                 "${workspaceFolder}/deps/CUL/libcul/inc",
-                "${workspaceFolder}/deps/SDL2-2.0.8/include",
+                "${workspaceFolder}/deps/SDL2/include",
                 "${workspaceFolder}/deps/SDL2_image-2.0.3/include",
                 "${workspaceFolder}/deps/SDL2_ttf-2.0.14/include"
             ],
