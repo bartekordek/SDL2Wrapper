@@ -8,24 +8,12 @@
 #include "IMPORT_SDL_image.hpp"
 
 #include "CUL/Filesystem/FS.hpp"
-#include "CUL/SimpleAssert.hpp"
-#include "CUL/Log/ILogContainer.hpp"
+
+#include "SimpleUtils.hpp"
 
 using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
-
-void logMsg(
-    CUL::CnstMyStr& msg,
-    const CUL::LOG::Severity severity = CUL::LOG::Severity::INFO )
-{
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( msg, severity );
-}
-
-void Assert( const bool result, CUL::CnstMyStr& msg )
-{
-    CUL::Assert::simple( result, msg );
-}
 
 RegularSDL2Window::RegularSDL2Window(
     const Vector3Di& pos,

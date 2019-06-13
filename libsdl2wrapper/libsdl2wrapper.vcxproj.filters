@@ -114,6 +114,9 @@
     <ClInclude Include="src\IMPORT_SDL_events.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\SimpleUtils.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="src\Input\KeySDL.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SimpleUtils.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

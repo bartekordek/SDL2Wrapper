@@ -346,6 +346,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="src\Input\MouseDataSDL.hpp" />
     <ClInclude Include="src\RegularSDL2Window.hpp" />
     <ClInclude Include="src\SDL2WrapperImpl.hpp" />
+    <ClInclude Include="src\SimpleUtils.hpp" />
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\TextureSDL.hpp" />
     <ClInclude Include="src\WindowFactoryConcrete.hpp" />
@@ -362,6 +363,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClCompile Include="src\RegularSDL2Window.cpp" />
     <ClCompile Include="src\SDL2Wrapper.cpp" />
     <ClCompile Include="src\SDL2WrapperImpl.cpp" />
+    <ClCompile Include="src\SimpleUtils.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\TextureSDL.cpp" />
     <ClCompile Include="src\WindowFactoryConcrete.cpp" />

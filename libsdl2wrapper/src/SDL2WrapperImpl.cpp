@@ -1,3 +1,4 @@
+#include "SimpleUtils.hpp"
 #include "SDL2WrapperImpl.hpp"
 #include "RegularSDL2Window.hpp"
 #include "Input/KeySDL.hpp"
@@ -6,23 +7,9 @@
 #include "TextureSDL.hpp"
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
-#include "CUL/SimpleAssert.hpp"
 #include "CUL/ITimer.hpp"
-#include "CUL/Log/ILogContainer.hpp"
 
 using namespace SDL2W;
-
-void logMsg(
-    CUL::CnstMyStr& msg,
-    const CUL::LOG::Severity severity = CUL::LOG::Severity::INFO )
-{
-    CUL::LOG::LOG_CONTAINER::getLogger()->log( msg, severity );
-}
-
-void Assert( const bool result, CUL::CnstMyStr& msg )
-{
-    CUL::Assert::simple( result, msg );
-}
 
 SDL2WrapperImpl::SDL2WrapperImpl(
     const Vector3Di& pos,
@@ -40,7 +27,6 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     {
         Assert( 0, SDL_GetError() );
     }
-
 
     int flags = IMG_INIT_JPG | IMG_INIT_PNG;
     int initalizedFlags = IMG_Init( flags );
