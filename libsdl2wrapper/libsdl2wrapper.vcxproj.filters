@@ -19,15 +19,9 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{8dd0011b-2dde-46a9-b992-8c551124cad0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ImGui">
-      <UniqueIdentifier>{0ce627ef-6977-4c61-85d2-775c667c7d99}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
-    <Text Include="..\deps\imgui\LICENSE.txt">
-      <Filter>Source Files\ImGui</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp">
@@ -114,35 +108,11 @@
     <ClInclude Include="inc\SDL2Wrapper\Import.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\deps\imgui\imconfig.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\imgui.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\imgui_internal.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\imstb_rectpack.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\imstb_textedit.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\imstb_truetype.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\examples\imgui_impl_sdl.h">
-      <Filter>Source Files\ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="src\ISDLInputObserver.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IMPORT_SDL_events.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\imgui\examples\imgui_impl_opengl2.h">
-      <Filter>Source Files\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,27 +157,6 @@
     </ClCompile>
     <ClCompile Include="src\Input\KeySDL.cpp">
       <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\imgui.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\imgui_demo.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\imgui_draw.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\imgui_widgets.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\examples\imgui_impl_sdl.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\examples\example_sdl_opengl2\main.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\examples\imgui_impl_opengl2.cpp">
-      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

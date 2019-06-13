@@ -316,18 +316,9 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="..\deps\imgui\LICENSE.txt" />
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\deps\imgui\examples\imgui_impl_opengl2.h" />
-    <ClInclude Include="..\deps\imgui\examples\imgui_impl_sdl.h" />
-    <ClInclude Include="..\deps\imgui\imconfig.h" />
-    <ClInclude Include="..\deps\imgui\imgui.h" />
-    <ClInclude Include="..\deps\imgui\imgui_internal.h" />
-    <ClInclude Include="..\deps\imgui\imstb_rectpack.h" />
-    <ClInclude Include="..\deps\imgui\imstb_textedit.h" />
-    <ClInclude Include="..\deps\imgui\imstb_truetype.h" />
     <ClInclude Include="inc\SDL2Wrapper\Gui\IGui.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IDevice.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp" />
@@ -360,13 +351,6 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <ClInclude Include="src\WindowFactoryConcrete.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\deps\imgui\examples\example_sdl_opengl2\main.cpp" />
-    <ClCompile Include="..\deps\imgui\examples\imgui_impl_opengl2.cpp" />
-    <ClCompile Include="..\deps\imgui\examples\imgui_impl_sdl.cpp" />
-    <ClCompile Include="..\deps\imgui\imgui.cpp" />
-    <ClCompile Include="..\deps\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\deps\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\deps\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Input\IKey.cpp" />
     <ClCompile Include="src\Input\KeySDL.cpp" />
     <ClCompile Include="src\Input\MouseDataSDL.cpp" />
