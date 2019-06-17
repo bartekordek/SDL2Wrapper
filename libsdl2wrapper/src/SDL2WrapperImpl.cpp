@@ -156,32 +156,20 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
             handleKeyboardEvent( event );
         }
     }
-    else if( event.type == SDL_QUIT )
-    {
-        notifyWindowEventListeners( WindowEventType::CLOSE );
-    }
-    else if( event.type == SDL_WINDOWEVENT_MOVED )
-    {
-        logMsg( "Window has been moved." );
-        notifyWindowEventListeners( WindowEventType::MOVED );
-    }
-    else if( event.type == SDL_WINDOWEVENT_ENTER )
-    {
-        notifyWindowEventListeners( WindowEventType::MOUSE_ENTERED );
-    }
-    else if( event.type == SDL_WINDOWEVENT_LEAVE )
-    {
-        notifyWindowEventListeners( WindowEventType::MOUSE_LEAVED );
-    }
 
-    if( eventIsMouseEvent( event ) )
+    if( isMouseEvent( event ) )
     {
         handleMouseEvent( event );
         notifyMouseListerners( *m_mouseData );
     }
+
+    if( isWindowEvent( event ) )
+    {
+        handleWindowEvent( event );
+    }
 }
 
-const bool SDL2WrapperImpl::eventIsMouseEvent( const SDL_Event& event )
+const bool SDL2WrapperImpl::isMouseEvent( const SDL_Event& event )
 {
     switch( event.type )
     {
@@ -189,6 +177,23 @@ const bool SDL2WrapperImpl::eventIsMouseEvent( const SDL_Event& event )
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEBUTTONUP:
         case SDL_MOUSEWHEEL:
+        return true;
+        default:
+        return false;
+        break;
+    }
+}
+
+const bool SDL2WrapperImpl::isWindowEvent( const SDL_Event& event )
+{
+    switch( event.type )
+    {
+        case SDL_QUIT:
+        case SDL_APP_TERMINATING:
+        case SDL_WINDOWEVENT:
+        case SDL_WINDOWEVENT_MOVED:
+        case SDL_WINDOWEVENT_ENTER:
+        case SDL_WINDOWEVENT_LEAVE:
         return true;
         default:
         return false;
@@ -235,6 +240,33 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
     }
 }
 
+void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )
+{
+    logMsg( "Window Event: " + std::to_string( sdlEvent.type ) );
+
+    auto eventType = WindowEventType::NONE;
+    switch( sdlEvent.type )
+    {
+        case SDL_QUIT:
+        eventType = WindowEventType::CLOSE; break;
+
+        case SDL_WINDOWEVENT_MOVED:
+        eventType = WindowEventType::MOVED; break;
+
+        case SDL_WINDOWEVENT_ENTER:
+        eventType = WindowEventType::MOUSE_ENTERED; break;
+
+        case SDL_WINDOWEVENT_LEAVE:
+        eventType = WindowEventType::MOUSE_LEAVED; break;
+
+        default:
+        return;
+    }
+
+    notifyWindowEventListeners( eventType );
+    notifyWindowEventCallbacks( eventType );
+}
+
 void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
 {
     for( auto callback: m_keyCallbacks )
@@ -247,6 +279,12 @@ void SDL2WrapperImpl::addKeyboardEventCallback(
     const std::function<void( const IKey& key )>& callback )
 {
     m_keyCallbacks.push_back( callback );
+}
+
+void SDL2WrapperImpl::registerWindowEventCallback(
+    const std::function<void(const WindowEventType wEt)>& callback )
+{
+    m_winEventCallbacks.push_back( callback );
 }
 
 void SDL2WrapperImpl::stopEventLoop()
@@ -325,6 +363,14 @@ void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
     for( auto listener : m_windowEventObservers )
     {
         listener->onWindowEvent( e );
+    }
+}
+
+void SDL2WrapperImpl::notifyWindowEventCallbacks( const WindowEventType e )
+{
+    for( auto callback : m_winEventCallbacks )
+    {
+        callback( e );
     }
 }
 

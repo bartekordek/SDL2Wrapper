@@ -320,6 +320,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\SDL2Wrapper\Gui\IGui.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\Gui\IWindowEventObservable.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IDevice.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL.hpp" />

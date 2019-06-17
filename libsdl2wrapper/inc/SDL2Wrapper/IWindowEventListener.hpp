@@ -2,30 +2,38 @@
 
 #include "SDL2Wrapper/Import.hpp"
 
-namespace SDL2W
+NAMESPACE_BEGIN( SDL2W )
+
+NAMESPACE_BEGIN( WindowEvent )
+
+enum class Type: short
 {
-    class SDL2WAPI IWindowEventObserver
-    {
-    public:
-        enum class WindowEventType: short
-        {
-            CLOSE = 1,
-            MINIMIZED,
-            RESTORED,
-            MOVED,
-            RESIZE,
-            MOUSE_ENTERED,
-            MOUSE_LEAVED,
-            FOCUS_GAINED,
-            FOCUS_LEAVED
-        };
+    NONE = 0,
+    CLOSE,
+    MINIMIZED,
+    RESTORED,
+    MOVED,
+    RESIZE,
+    MOUSE_ENTERED,
+    MOUSE_LEAVED,
+    FOCUS_GAINED,
+    FOCUS_LEAVED
+};
 
-        IWindowEventObserver() = default;
-        virtual ~IWindowEventObserver() = default;
+NAMESPACE_END( WindowEvent )
 
-        virtual void onWindowEvent( const WindowEventType e ) = 0;
+class SDL2WAPI IWindowEventObserver
+{
+public:
 
-    protected:
-    private:
-    };
-}
+
+    IWindowEventObserver() = default;
+    virtual ~IWindowEventObserver() = default;
+
+    virtual void onWindowEvent( const WindowEvent::Type e ) = 0;
+
+protected:
+private:
+};
+
+NAMESPACE_END( SDL2W )

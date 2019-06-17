@@ -12,7 +12,6 @@ union SDL_Event;
 
 NAMESPACE_BEGIN( SDL2W )
 
-using WindowEventType = IWindowEventObserver::WindowEventType;
 using WindowCollection = std::map<unsigned int, std::unique_ptr<IWindow>>;
 class MouseDataSDL;
 
@@ -40,6 +39,9 @@ public:
 
     void addKeyboardEventCallback(
         const std::function<void( const IKey& key )>& callback ) override;
+
+    void registerWindowEventCallback(
+        const std::function<void( const WindowEventType wEt )>& callback ) override;
 
     void registerKeyboardEventListener(
         IKeyboardObserver* observer ) override;
@@ -78,14 +80,21 @@ protected:
 private:
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey )const;
+
+    void handleEveent( const SDL_Event& event );
+
+    static const bool isMouseEvent( const SDL_Event& event );
+    static const bool isWindowEvent( const SDL_Event& event );
+
+    void handleKeyboardEvent( const SDL_Event& sdlEvent );
+    void handleMouseEvent( const SDL_Event& sdlEvent );
+    void handleWindowEvent( const SDL_Event& sdlEvent );
+
     void notifyKeyboardCallbacks( const IKey& key );
     void notifyKeyboardListeners( const IKey& key );
     void notifyMouseListerners( const IMouseData& md );
     void notifyWindowEventListeners( const WindowEventType e );
-    void handleEveent( const SDL_Event& event );
-    const bool eventIsMouseEvent( const SDL_Event& event );
-    void handleKeyboardEvent( const SDL_Event& sdlEvent );
-    void handleMouseEvent( const SDL_Event& sdlEvent );
+    void notifyWindowEventCallbacks( const WindowEventType e );
 
     WindowCreatorConcrete* m_windowFactory = nullptr;
 
@@ -102,6 +111,7 @@ private:
 
     std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
     std::vector<std::function<void( const IMouseData& md )>> m_mouseCallbacks;
+    std::vector<std::function<void( const WindowEventType wEt )>> m_winEventCallbacks;
 
     std::set<IKeyboardObserver*> m_keyboardObservers;
     std::mutex m_keyboardObserversMtx;

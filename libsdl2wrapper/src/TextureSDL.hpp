@@ -11,6 +11,11 @@ using ITexture = CUL::Graphics::ITexture;
 using Path = CUL::FS::Path;
 using Vector3Dd = CUL::Math::Vector3Dd;
 
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable: 4820 )
+#endif
+
 class TextureSDL:
     public ITexture
 {
@@ -33,5 +38,9 @@ private:
     Vector3Dd m_size;
     Path m_path;
 };
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 NAMESPACE_END( CUL )

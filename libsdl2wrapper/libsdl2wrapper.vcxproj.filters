@@ -117,6 +117,9 @@
     <ClInclude Include="src\SimpleUtils.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Gui\IWindowEventObservable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IWindow.cpp">

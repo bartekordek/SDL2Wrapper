@@ -12,10 +12,12 @@
 #include "CUL/Threadutils.hpp"
 #include "CUL/STD_memory.hpp"
 #include "CUL/STD_map.hpp"
+#include "CUL/STD_functional.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
 using Keys = std::map<CUL::MyString, std::unique_ptr<IKey>>;
+using WindowEventType = WindowEvent::Type;
 
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
@@ -54,6 +56,10 @@ public:
         IWindowEventObserver* observer ) = 0;
     virtual void unregisterWindowEventListener(
         IWindowEventObserver* observer ) = 0;
+
+    virtual void registerWindowEventCallback(
+        const std::function<void( const WindowEventType wEt )>& callback) = 0;
+
 
     virtual Keys& getKeyStates() = 0;
 

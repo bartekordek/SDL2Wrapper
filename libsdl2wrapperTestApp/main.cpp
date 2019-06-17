@@ -10,6 +10,7 @@
 #include "CUL/Log/ILogContainer.hpp"
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
+using WinEventType = SDL2W::WindowEvent::Type;
 
 class TestApp final:
     public SDL2W::IKeyboardObserver,
@@ -112,10 +113,10 @@ public:
         m_obj5->setY( static_cast<double>( md.getY() ) );
     }
 
-    void onWindowEvent( const WindowEventType windowEventType ) override
+    void onWindowEvent( const WinEventType windowEventType ) override
     {
         CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::MyString( static_cast< short >( windowEventType ) ) );
-        if( WindowEventType::CLOSE == windowEventType )
+        if( WinEventType::CLOSE == windowEventType )
         {
             m_sdlW->stopEventLoop();
             runLoop = false;
