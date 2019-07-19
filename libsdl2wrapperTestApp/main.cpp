@@ -5,8 +5,8 @@
 #include "CUL/Filesystem/FS.hpp"
 #include "CUL/LckPrim.hpp"
 #include "CUL/Math/Angle.hpp"
-#include "CUL/STD_thread.hpp"
-#include "CUL/STD_cmath.hpp"
+#include "CUL/STL_IMPORTS/STD_thread.hpp"
+#include "CUL/STL_IMPORTS/STD_cmath.hpp"
 #include "CUL/Log/ILogContainer.hpp"
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;

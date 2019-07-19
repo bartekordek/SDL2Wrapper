@@ -2,8 +2,8 @@
 
 #include "CUL/Graphics/ITexture.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_renderer.hpp"
-#include <CUL/STD_memory.hpp>
-#include <CUL/STD_mutex.hpp>
+#include <CUL/STL_IMPORTS/STD_memory.hpp>
+#include <CUL/STL_IMPORTS/STD_mutex.hpp>
 
 NAMESPACE_BEGIN( SDL2W )
 

@@ -2,7 +2,7 @@
 
 #include "SDL2Wrapper/Input/IMouseObserver.hpp"
 #include "SDL2Wrapper/Input/IMouseData.hpp"
-#include "CUL/STD_functional.hpp"
+#include "CUL/STL_IMPORTS/STD_functional.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 

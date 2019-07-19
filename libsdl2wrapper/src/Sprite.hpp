@@ -4,8 +4,8 @@
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/Math/IPivotObserver.hpp"
 #include "CUL/Math/Angle.hpp"
-#include "CUL/STD_memory.hpp"
-#include "CUL/STD_mutex.hpp"
+#include "CUL/STL_IMPORTS/STD_memory.hpp"
+#include "CUL/STL_IMPORTS/STD_mutex.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 

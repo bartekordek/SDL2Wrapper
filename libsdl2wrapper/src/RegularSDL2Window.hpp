@@ -3,9 +3,9 @@
 #include "SDL2Wrapper/IWindow.hpp"
 #include "SDL2Wrapper/IRender.hpp"
 
-#include "CUL/STD_memory.hpp"
-#include "CUL/STD_set.hpp"
-#include "CUL/STD_mutex.hpp"
+#include "CUL/STL_IMPORTS/STD_memory.hpp"
+#include "CUL/STL_IMPORTS/STD_set.hpp"
+#include "CUL/STL_IMPORTS/STD_mutex.hpp"
 #include "CUL/Video/IFPSCounter.hpp"
 
 struct SDL_Window;

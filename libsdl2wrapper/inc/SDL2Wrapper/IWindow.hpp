@@ -5,10 +5,10 @@
 #include "CUL/Graphics/IObjectRegister.hpp"
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/Filesystem/Path.hpp"
-#include "CUL/STD_map.hpp"
+#include "CUL/STL_IMPORTS/STD_map.hpp"
 #include "CUL/Color.hpp"
 #include "CUL/IName.hpp"
-#include "CUL/STD_memory.hpp"
+#include "CUL/STL_IMPORTS/STD_memory.hpp"
 
 struct SDL_Window;
 
