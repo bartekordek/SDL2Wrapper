@@ -1,5 +1,5 @@
 #include "TextureSDL.hpp"
-#include "CUL/SimpleAssert.hpp"
+#include "CUL/GenericUtils/SimpleAssert.hpp"
 
 using namespace SDL2W;
 

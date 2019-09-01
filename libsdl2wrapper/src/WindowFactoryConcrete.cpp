@@ -1,6 +1,6 @@
 #include "WindowFactoryConcrete.hpp"
 #include "RegularSDL2Window.hpp"
-#include "CUL/SimpleAssert.hpp"
+#include "CUL/GenericUtils/SimpleAssert.hpp"
 #include "CUL/STL_IMPORTS/STD_cstring.hpp"
 
 using namespace SDL2W;
