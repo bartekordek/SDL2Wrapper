@@ -18,8 +18,8 @@ DIAG_FLAG := -fdiagnostics-color=always
 COMPILER := g++#clang++-6.0
 CPP_VERSION := -std=c++17
 CC := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) \
--fPIC -pedantic -Wall -Werror -Wno-ignored-attributes
-CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared -W1,—export-all-symbols
+-fPIC -pedantic -Wall
+CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
@@ -32,22 +32,6 @@ OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
 
 # DEPS
 DEPS_HOME := ../deps
-
-# DEPS::SDL2
-#SDL_HOME := $(DEPS_HOME)/SDL2
-#SDL_INC := $(SDL_HOME)/include
-#SDL_LIB := $(SDL_HOME)/$(BUILD_ROOT)/$(PLATFORM)
-#SDL_LIB_FILES := $(SDL_LIB)/libSDL2.a $(SDL_LIB)/libSDL2main.a
-#SDL_LIB_IMPORT := $(SDL_LIB)/libSDL2-2.0.so.0.7.0
-#
-## DEPS::SDL2::image
-#SDL_IMAGE_HOME := $(DEPS_HOME)/SDL2_image-2.0.3
-#SDL_IMAGE_INC := $(SDL_IMAGE_HOME)/include
-#SDL_IMAGE_LIB := $(SDL_IMAGE_HOME)/Build-Linux
-#SDL_IMAGE_LIB_IMPORT := $(SDL_IMAGE_LIB)/libSDL2_image-2.0.so.0.2.1
-#SDL_IMAGE_LIB_FILES := $(SDL_IMAGE_LIB)/libSDL2_image.a
-
-
 
 
 # DEPS::CUL
@@ -63,8 +47,6 @@ HEADERS_INC += -I src
 HEADERS_INC += -I $(CUL_INC)
 HEADERS_INC += $(shell pkg-config --cflags sdl2)
 HEADERS_INC += $(shell pkg-config --cflags SDL2_image)
-HEADERS_INC += -I $(SDL_INC)
-HEADERS_INC += -I $(SDL_IMAGE_INC)
 HEADERS_INC += -I $(HOME_BOOST)
 
 IMPORT_FILES := $(SDL_LIB_FILES)

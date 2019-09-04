@@ -5,7 +5,6 @@
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
-#include "IMPORT_SDL_image.hpp"
 
 #include "CUL/Filesystem/FS.hpp"
 
