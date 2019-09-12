@@ -43,7 +43,6 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     createKeys();
 
     m_mouseData.reset( new MouseDataSDL() );
-
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
@@ -54,6 +53,14 @@ SDL2WrapperImpl::~SDL2WrapperImpl()
     SDL_Quit();
 }
 
+#ifdef _MSC_VER
+// Yes, I know that is a Spectre mitigation.
+// But for now, I let this as TODO, since i don't know
+// How to fix this.
+// TODO
+#pragma warning( push )
+#pragma warning( disable: 5045 )
+#endif
 void SDL2WrapperImpl::createKeys()
 {
     logMsg( "SDL2WrapperImpl::createKeys()::Begin" );
@@ -73,6 +80,9 @@ void SDL2WrapperImpl::createKeys()
     }
     logMsg( "SDL2WrapperImpl::createKeys()::End" );
 }
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* sdlKey ) const
 {

@@ -24,7 +24,7 @@ RegularSDL2Window::RegularSDL2Window(
         m_size( size )
 {
     m_window = createWindow( pos, size, name, m_withOpenGL );
-    Assert( m_window, "The Window has not been initialized." );
+    Assert( m_window != nullptr, "The Window has not been initialized." );
 
     const auto id = SDL_GetWindowID( m_window );
     setWindowID( id );
@@ -58,7 +58,7 @@ SDL_Window* RegularSDL2Window::createWindow(
         CUL::MyString s_sdlError( sdlError );
         logMsg(
             "ERROR" + s_sdlError, CUL::LOG::Severity::CRITICAL );
-        Assert( result, "The Window has not been initialized." );
+        Assert( false, "The Window has not been initialized." );
     }
 
     return result;
@@ -69,13 +69,13 @@ RegularSDL2Window::~RegularSDL2Window()
     logMsg( "RegularSDL2Window::~RegularSDL2Window()" );
     destroyObjects();
 
-    Assert( m_renderer, "The Renderer has been destroyed somwhere else." );
+    Assert( nullptr != m_renderer, "The Renderer has been destroyed somwhere else." );
     SDL_DestroyRenderer( m_renderer );
-    this->m_renderer = nullptr;
+    m_renderer = nullptr;
 
-    Assert( m_window, "The Window has been destroyed somwhere else." );
+    Assert( nullptr != m_window, "The Window has been destroyed somwhere else." );
     SDL_DestroyWindow( this->m_window );
-    this->m_window = nullptr;
+    m_window = nullptr;
 }
 
 void RegularSDL2Window::destroyObjects()
@@ -88,13 +88,13 @@ void RegularSDL2Window::updateScreenBuffers()
 {
     if( m_withOpenGL )
     {
-        Assert( this->m_window, "The Window is not initialized." );
+        Assert( nullptr != m_window, "The Window is not initialized." );
         SDL_GL_SwapWindow( this->m_window );
         // ^ https://forums.libsdl.org/viewtopic.php?p=52399
     }
     else
     {
-        Assert( this->m_renderer, "The Renderer is not initialized." );
+        Assert( nullptr != m_renderer, "The Renderer is not initialized." );
         SDL_RenderPresent( this->m_renderer );
     }
     frameHasEnded();
@@ -153,8 +153,8 @@ void RegularSDL2Window::setBackgroundColor( const ColorE color )
 
 void RegularSDL2Window::clearBuffers()
 {
-    CUL::Assert::simple( this->m_renderer, "The Renderer has been deleted somwhere else." );
-    SDL_RenderClear( this->m_renderer );
+    CUL::Assert::simple( nullptr != m_renderer, "The Renderer has been deleted somwhere else." );
+    SDL_RenderClear( m_renderer );
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorS& color )
@@ -260,7 +260,7 @@ SDL_Surface* RegularSDL2Window::createSurface(
         const char* chuj = value;
         result = IMG_Load( chuj );
     }
-    Assert( result, "Cannot load: " + path.getPath() );
+    Assert( nullptr != result, "Cannot load: " + path.getPath() );
     return result;
 }
 
@@ -269,20 +269,18 @@ ITexture* RegularSDL2Window::createTexture(
     const Path& path )
 {
     logMsg( "RegularSDL2Window::createTexture" );
-    CUL::Assert::simple( this->m_renderer, "RENDERER NOT READY!\n" );
+    CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
     auto texSDL = new TextureSDL();
 
-    auto tex = SDL_CreateTextureFromSurface(
-        this->m_renderer,
-        surface );
+    auto tex = SDL_CreateTextureFromSurface( m_renderer, surface );
     CUL::Assert::simple(
-        tex,
+        nullptr != tex,
         "Cannot create texture from " +
         path.getPath() +
         " does not exist." );
 
     texSDL->setTexture( tex, path );
-    this->m_textures[ path.getPath() ] = std::unique_ptr<ITexture>( texSDL );
+    m_textures[ path.getPath() ] = std::unique_ptr<ITexture>( texSDL );
     return texSDL;
 }
 

@@ -19,6 +19,14 @@ cunt MouseDataSDL::getMouseButtonCount() const
     return static_cast<unsigned>( this->m_buttonStates.size() );
 }
 
+#ifdef _MSC_VER
+// Yes, I know that is a Spectre mitigation.
+// But for now, I let this as TODO, since i don't know
+// How to fix this.
+// TODO
+#pragma warning( push )
+#pragma warning( disable: 5045 )
+#endif
 const bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) const
 {
     if( this->m_buttonStates.size() < buttonIndex )
@@ -27,6 +35,9 @@ const bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) cons
     }
     return false;
 }
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 cint MouseDataSDL::getX() const
 {
