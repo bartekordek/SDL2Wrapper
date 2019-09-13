@@ -32,6 +32,17 @@ RUN_DIR := ../run
 # DEPS
 DEPS_HOME := ../deps
 
+
+
+
+# DEPS::CUL
+CUL_HOME := $(DEPS_HOME)/CUL
+CUL_INC := $(CUL_HOME)/libcul/inc
+CUL_LIB := $(CUL_HOME)/$(BUILD_ROOT)
+CUL_LIB_NAME := libcul.so
+CUL_LIB_DEBUG := $(CUL_LIB)/Debug/$(CUL_LIB_NAME)
+CUL_LIB_RELEASE := $(CUL_LIB)/Release/$(CUL_LIB_NAME)
+
 # DEPS::SDL2Wrapper
 SDL2W_HOME := ../libsdl2wrapper
 SDL2W_INC := $(SDL2W_HOME)/inc
@@ -48,13 +59,7 @@ IMPORT_LIBS += $(shell pkg-config --libs libpng)
 IMPORT_LIBS_DEBUG := $(IMPORT_LIBS) $(CUL_LIB_DEBUG) $(SDL2W_LIB_DEBUG)
 IMPORT_LIBS_RELEASE := $(IMPORT_LIBS) $(CUL_LIB_RELEASE) $(SDL2W_LIB_RELEASE)
 
-# DEPS::CUL
-CUL_HOME := $(DEPS_HOME)/CUL
-CUL_INC := $(CUL_HOME)/libcul/inc
-CUL_LIB := $(CUL_HOME)/$(BUILD_ROOT)
-CUL_LIB_NAME := libcul.so
-CUL_LIB_DEBUG := $(CUL_LIB)/Debug/$(CUL_LIB_NAME)
-CUL_LIB_RELEASE := $(CUL_LIB)/Release/$(CUL_LIB_NAME)
+
 
 
 

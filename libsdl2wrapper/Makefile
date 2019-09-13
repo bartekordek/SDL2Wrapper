@@ -19,7 +19,7 @@ COMPILER := g++#clang++-6.0
 CPP_VERSION := -std=c++17
 CC := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) \
 -fPIC -pedantic -Wall
-CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared
+CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared -fPIC
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
