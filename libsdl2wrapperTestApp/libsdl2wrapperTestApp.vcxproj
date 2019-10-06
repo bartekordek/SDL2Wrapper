@@ -106,7 +106,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libsdl2wrapper.lib;libcul-v142.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
@@ -134,7 +134,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libsdl2wrapper.lib;libcul-v142.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
@@ -164,7 +164,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libsdl2wrapper.lib;libcul-v142.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
@@ -194,7 +194,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>libsdl2wrapper.lib;libcul.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libsdl2wrapper.lib;libcul-v142.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>

@@ -3,12 +3,12 @@
 #include "SDL2Wrapper/Import.hpp"
 
 #include "CUL/Video/IFPSObservable.hpp"
-#include "CUL/Color.hpp"
+#include "CUL/Graphics/Color.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
-using ColorS = CUL::ColorS;
-using ColorE = CUL::ColorE;
+using ColorS = CUL::Graphics::ColorS;
+using ColorE = CUL::Graphics::ColorE;
 class SDL2WAPI IRender:
     public CUL::Video::IFPSObservable
 {

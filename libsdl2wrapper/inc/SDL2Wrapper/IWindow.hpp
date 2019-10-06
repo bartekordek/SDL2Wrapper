@@ -6,7 +6,7 @@
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/Filesystem/Path.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
-#include "CUL/Color.hpp"
+#include "CUL/Graphics/Color.hpp"
 #include "CUL/IName.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 
@@ -23,8 +23,8 @@ class SDL2WAPI CUL::IName;
 #endif
 using Vector3Di = CUL::Math::Vector3Di;
 using Vector3Du = CUL::Math::Vector3Du;
-using ColorS = CUL::ColorS;
-using ColorE = CUL::ColorE;
+using ColorS = CUL::Graphics::ColorS;
+using ColorE = CUL::Graphics::ColorE;
 using IName = CUL::IName;
 using Path = CUL::FS::Path;
 
