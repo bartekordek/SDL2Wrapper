@@ -9,7 +9,7 @@
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
 #include "CUL/Graphics/ITexture.hpp"
-#include "CUL/Threadutils.hpp"
+#include "CUL/ThreadUtils.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
