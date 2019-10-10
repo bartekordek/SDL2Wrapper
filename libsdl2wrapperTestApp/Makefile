@@ -15,7 +15,8 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-COMPILER := g++#clang++-6.0
+#COMPILER := g++
+COMPILER := clang++-6.0
 CC_STAND := -std=c++17
 CC := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
 CC_LINK := $(COMPILER) $(CC_STAND) $(ARCH_FLAG) $(DIAG_FLAG)
@@ -27,7 +28,7 @@ BINARY_NAME = $(PROJECT_NAME).exe
 OUTPUT_DIR := ../$(BUILD_ROOT)
 OUTPUT_DIR_DEBUG = $(OUTPUT_DIR)/Debug
 OUTPUT_DIR_RELEASE = $(OUTPUT_DIR)/Release
-RUN_DIR := ../run
+RUN_DIR := ../runDir
 
 # DEPS
 DEPS_HOME := ../deps

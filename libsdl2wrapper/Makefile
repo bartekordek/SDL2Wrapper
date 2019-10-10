@@ -15,7 +15,8 @@ PLATFORM := x64
 endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-COMPILER := g++#clang++-6.0
+#COMPILER := g++
+COMPILER := clang++-6.0
 CPP_VERSION := -std=c++17
 CC := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) \
 -fPIC -pedantic -Wall

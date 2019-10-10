@@ -21,33 +21,33 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{946707F5-BE49-4A7F-9CD9-0BFF983CE298}</ProjectGuid>
     <RootNamespace>SDL2Wrapper</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>libsdl2wrapper</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <ProjectName>libsdl2wrapper-v141</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -71,22 +71,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
+    <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
+    <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
+    <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)intermediate\$(Platform)_$(Configuration)\</IntDir>
+    <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -107,7 +107,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v142.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v141.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -165,7 +165,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v142.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v141.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -222,7 +222,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v142.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v141.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -277,7 +277,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v142.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libcul-v141.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile />
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <GenerateDebugInformation>false</GenerateDebugInformation>

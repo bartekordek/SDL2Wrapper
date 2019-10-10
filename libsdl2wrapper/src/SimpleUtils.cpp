@@ -11,5 +11,6 @@ void SDL2W::logMsg(
 
 void SDL2W::Assert( const bool result, CUL::CnstMyStr& msg )
 {
+
     CUL::Assert::simple( result, msg );
 }

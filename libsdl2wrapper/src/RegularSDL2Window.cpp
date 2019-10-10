@@ -10,6 +10,8 @@
 
 #include "SimpleUtils.hpp"
 
+#include "CUL/STL_IMPORTS/STD_iostream.hpp"
+
 using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
@@ -24,12 +26,22 @@ RegularSDL2Window::RegularSDL2Window(
         m_size( size )
 {
     m_window = createWindow( pos, size, name, m_withOpenGL );
-    Assert( m_window != nullptr, "The Window has not been initialized." );
 
     const auto id = SDL_GetWindowID( m_window );
     setWindowID( id );
 
     m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED );
+    Assert( nullptr != m_renderer, "Cannot create renderer." );
+    SDL_RendererInfo info;
+    auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
+    CUL::MyString rendererInfoSummary( "Renderer INFO:\n" );
+    rendererInfoSummary += "Name = " + CUL::MyString( info.name ) + "\n";
+    rendererInfoSummary += "Max texture width = " + CUL::MyString( info.max_texture_width ) + "\n";
+    rendererInfoSummary += "Max texture height = " + CUL::MyString( info.max_texture_width ) + "\n";
+    logMsg( rendererInfoSummary, CUL::LOG::Severity::INFO );
+
+    Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
+
     setName( name );
 }
 
@@ -39,6 +51,9 @@ SDL_Window* RegularSDL2Window::createWindow(
     CUL::CnstMyStr& nameconst,
     bool opengl )
 {
+    logMsg( "Creating window with:\n", CUL::LOG::Severity::INFO );
+    logMsg( "Pos.x = " + CUL::MyString(pos.getX()) + ", Pos.y = " + CUL::MyString( pos.getY() ), CUL::LOG::Severity::INFO );
+    logMsg( "Size.x = " + CUL::MyString( size.getX() ) + ", Size.y = " + CUL::MyString( size.getY() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     if( opengl )
@@ -57,7 +72,7 @@ SDL_Window* RegularSDL2Window::createWindow(
         auto sdlError = SDL_GetError();
         CUL::MyString s_sdlError( sdlError );
         logMsg(
-            "ERROR" + s_sdlError, CUL::LOG::Severity::CRITICAL );
+            "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "The Window has not been initialized." );
     }
 
@@ -159,27 +174,27 @@ void RegularSDL2Window::clearBuffers()
 
 void RegularSDL2Window::setBackgroundColor( const ColorS& color )
 {
-    this->m_backgroundColor = color;
+    m_backgroundColor = color;
 }
 
 const Vector3Di& RegularSDL2Window::getPos()const
 {
-    return this->m_position;
+    return m_position;
 }
 
 void RegularSDL2Window::setPos( const Vector3Di& pos )
 {
-    this->m_position = pos;
+    m_position = pos;
 }
 
 const Vector3Du& RegularSDL2Window::getSize()const
 {
-    return this->m_size;
+    return m_size;
 }
 
 void RegularSDL2Window::setSize( const Vector3Du& size )
 {
-    this->m_size = size;
+    m_size = size;
 }
 
 const IWindow::Type RegularSDL2Window::getType() const
@@ -189,19 +204,25 @@ const IWindow::Type RegularSDL2Window::getType() const
 
 ISprite* RegularSDL2Window::createSprite( const Path& objPath )
 {
+    logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )" );
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
     auto it = this->m_textures.find( objPath.getPath().string() );
     if( this->m_textures.end() == it )
     {
+        logMsg( "ISprite* RegularSDL2Window::createSprite: sprite not found, creating..." );
         auto tex = createTexture( objPath );
         result = createSprite( tex );
+        logMsg( "ISprite* RegularSDL2Window::createSprite: sprite not found, creating... Done." );
     }
     else
     {
-        logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )22" );
+        logMsg( "ISprite* RegularSDL2Window::createSprite: sprite found, fetching..." );
         auto tex = it->second.get();
+        logMsg( "ISprite* RegularSDL2Window::createSprite: creating sprite..." );
         result = createSprite( tex );
+        logMsg( "ISprite* RegularSDL2Window::createSprite: creating sprite Done." );
+        logMsg( "ISprite* RegularSDL2Window::createSprite: sprite found, Done." );
     }
     logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )end" );
     return result;
@@ -212,22 +233,26 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
     logMsg( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )" );
     ITexture* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
-    auto it = this->m_textures.find( objPath.getPath().string() );
-    logMsg( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )1" );
-    if( this->m_textures.end() == it )
+    auto it = m_textures.find( objPath.getPath().string() );
+    if( m_textures.end() == it )
     {
-        logMsg( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )11" );
+        logMsg( "ITexture* RegularSDL2Window::createTexture texture not found, creating surface..." );
         auto surface = createSurface( objPath );
-        logMsg( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )111" );
+        logMsg( "ITexture* RegularSDL2Window::createTexture texture not found, creating surface done." );
+        logMsg( "ITexture* RegularSDL2Window::createTexture creating texture..." );
         auto tex = createTexture( surface, objPath );
+        logMsg( "ITexture* RegularSDL2Window::createTexture creating texture done." );
+        logMsg( "ITexture* RegularSDL2Window::createTexture freeing surface..." );
         SDL_FreeSurface( surface );
         surface = nullptr;
+        logMsg( "ITexture* RegularSDL2Window::createTexture freeing surface done." );
         result = tex;
     }
     else
     {
-        logMsg( "ITexture* RegularSDL2Window::createTexture( const Path& objPath )12" );
+        logMsg( "ITexture* RegularSDL2Window::createTexture texture found, fetching..." );
         result = it->second.get();
+        logMsg( "ITexture* RegularSDL2Window::createTexture texture found, fetching done." );
     }
     return result;
 }
@@ -244,35 +269,47 @@ ISprite* RegularSDL2Window::createSprite(
 SDL_Surface* RegularSDL2Window::createSurface(
     const Path& path )
 {
+    std::cout << "Current dir: " << CUL::FS::FSApi::getCurrentDir().cStr() << "\n";
+    std::cout << "Checking for path...\n";
     if( false == path.exists() )
     {
+        std::cout << "Checking for path FAILED\n";
         Assert( false, "File " + path.getPath() + " does not exist." );
     }
     SDL_Surface* result = nullptr;
     if( ".bmp" == path.getExtension() )
     {
+        std::cout << "Checking for sdl load bmp...\n";
         result = SDL_LoadBMP( path.getPath().cStr() );
     }
 
     if( ".png" == path.getExtension() )
     {
         auto value = path.getPath().cStr();
-        const char* chuj = value;
-        result = IMG_Load( chuj );
+        const char* valueAsChar = value;
+        std::cout << "Checking for sdl IMG_Load...\n";
+        std::cout << "File: " << valueAsChar << "\n";
+        result = IMG_Load( valueAsChar );//Crash on linux.
+        IMG_GetError();
+        std::cout << "Checking for sdl IMG_Load... Done.\n";
     }
+    std::cout << "Checking for file loading completion...\n";
     Assert( nullptr != result, "Cannot load: " + path.getPath() );
+    std::cout << "Checking for file loading completion... Done.\n";
     return result;
 }
 
-ITexture* RegularSDL2Window::createTexture(
-    SDL_Surface* surface,
-    const Path& path )
+ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& path )
 {
-    logMsg( "RegularSDL2Window::createTexture" );
+    logMsg( "ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& path )" );
     CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
+    CUL::Assert::simple( nullptr != surface, "SURFACE IS NULL!\n" );
+
     auto texSDL = new TextureSDL();
 
+    logMsg( "ITexture* RegularSDL2Window::createTexture: creating texture from surface..." );
     auto tex = SDL_CreateTextureFromSurface( m_renderer, surface );
+    logMsg( "ITexture* RegularSDL2Window::createTexture: creating texture from surface done." );
     CUL::Assert::simple(
         nullptr != tex,
         "Cannot create texture from " +
