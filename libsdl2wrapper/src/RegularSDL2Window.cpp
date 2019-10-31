@@ -151,7 +151,7 @@ void RegularSDL2Window::renderAll()
             center.y = static_cast<int>( pivot.getY() );
 
             auto result = SDL_RenderCopyEx(
-                this->m_renderer,
+                m_renderer,
                 texSDLW->getTexture(),
                 srcRect.get(),
                 &renderQuad,
