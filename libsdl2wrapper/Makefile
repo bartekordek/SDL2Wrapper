@@ -7,20 +7,14 @@ DYN_LIB_EXT := .so
 BUILD_ROOT := Build-Linux
 endif
 
-ARCH_FLAG := -m32
-PLATFORM := x86
-ifeq ($(ARCH),64)
-ARCH_FLAG := -m64
-PLATFORM := x64
-endif
 
 DIAG_FLAG := -fdiagnostics-color=always
-#COMPILER := g++
-COMPILER := clang++-6.0
+COMPILER := g++
+#COMPILER := clang++-6.0
 CPP_VERSION := -std=c++17
-CC := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) \
+CC := $(COMPILER) $(CPP_VERSION) $(DIAG_FLAG) \
 -fPIC -pedantic -Wall
-CC_LINK := $(COMPILER) $(CPP_VERSION) $(ARCH_FLAG) $(DIAG_FLAG) -shared -fPIC
+CC_LINK := $(COMPILER) $(CPP_VERSION) $(DIAG_FLAG) -shared -fPIC
 
 DEBUG_FLAGS = -ggdb
 RELEASE_FLAGS = -Ofast
