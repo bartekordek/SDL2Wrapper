@@ -3,7 +3,7 @@
 #include "SDL2Wrapper/IWindow.hpp"
 #include "ISDLInputObserver.hpp"
 #include "WindowFactoryConcrete.hpp"
-#include "CUL/LckPrim.hpp"
+#include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/STL_IMPORTS/STD_vector.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
 
@@ -13,6 +13,7 @@ union SDL_Event;
 NAMESPACE_BEGIN( SDL2W )
 
 using WindowCollection = std::map<unsigned int, std::unique_ptr<IWindow>>;
+template <typename TYPE> using LckPrim = CUL::GUTILS::LckPrim<TYPE>;
 class MouseDataSDL;
 
 class SDL2WrapperImpl:
@@ -98,8 +99,8 @@ private:
 
     WindowCreatorConcrete* m_windowFactory = nullptr;
 
-    CUL::LckPrim<bool> eventLoopActive{ true };
-    CUL::LckPrim<unsigned int> m_eventLatencyUs{ 256 };
+    LckPrim<bool> eventLoopActive{ true };
+    LckPrim<unsigned int> m_eventLatencyUs{ 256 };
 
     std::set<IWindowEventObserver*> m_windowEventObservers;
     IWindow* m_mainWindow = nullptr;

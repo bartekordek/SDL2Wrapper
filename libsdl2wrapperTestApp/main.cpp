@@ -3,7 +3,7 @@
 #include "CUL/ITimer.hpp"
 #include "CUL/ThreadUtils.hpp"
 #include "CUL/Filesystem/FS.hpp"
-#include "CUL/LckPrim.hpp"
+#include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/Math/Angle.hpp"
 #include "CUL/STL_IMPORTS/STD_thread.hpp"
 #include "CUL/STL_IMPORTS/STD_cmath.hpp"
@@ -197,7 +197,7 @@ private:
 
     SDL2W::ColorS bckgroundColor;
 
-    CUL::LckPrim<bool> runLoop{ true };
+    CUL::GUTILS::LckPrim<bool> runLoop = true;
 
     std::unique_ptr< SDL2W::ISDL2Wrapper> m_sdlW;
     std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
