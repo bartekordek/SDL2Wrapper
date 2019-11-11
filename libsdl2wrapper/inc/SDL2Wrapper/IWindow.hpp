@@ -9,6 +9,7 @@
 #include "CUL/Graphics/Color.hpp"
 #include "CUL/IName.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
+#include "CUL/Graphics/Size2D.hpp"
 
 struct SDL_Window;
 
@@ -17,6 +18,8 @@ NAMESPACE_BEGIN( SDL2W )
 using CDbl = const double;
 using CShrt = const unsigned short;
 using SmallCount = CShrt;
+using Size2D = CUL::Graphics::Size2D<unsigned>;
+using WindowSize = Size2D;
 
 #ifdef _MSC_VER
 class SDL2WAPI CUL::IName;
@@ -50,7 +53,7 @@ public:
 
     IWindow();
     IWindow( const Vector3Di& pos,
-        const Vector3Du& size,
+        const Size2D& size,
         CUL::CnstMyStr& name,
         const bool withOpenGL = true ) = delete;
 
@@ -59,8 +62,8 @@ public:
     virtual const Vector3Di& getPos()const = 0;
     virtual void setPos( const Vector3Di& pos ) = 0;
 
-    virtual const Vector3Du& getSize()const = 0;
-    virtual void setSize( const Vector3Du& size ) = 0;
+    virtual const WindowSize& getSize()const = 0;
+    virtual void setSize( const WindowSize& size ) = 0;
 
     virtual const Type getType() const = 0;
 
@@ -72,6 +75,7 @@ public:
 
     void setWindowID( cunt id );
     const unsigned int getWindowID() const;
+    virtual const double getScreenRatio() const = 0;
 
 protected:
 

@@ -18,7 +18,7 @@ using IPivot = CUL::Math::IPivot;
 
 RegularSDL2Window::RegularSDL2Window(
     const Vector3Di& pos,
-    const Vector3Du& size,
+    const WindowSize& size,
     CUL::CnstMyStr& name,
     const bool withOpenGL ):
         m_withOpenGL( withOpenGL ),
@@ -47,25 +47,29 @@ RegularSDL2Window::RegularSDL2Window(
 
 SDL_Window* RegularSDL2Window::createWindow(
     const Vector3Di& pos,
-    const Vector3Du& size,
+    const WindowSize& size,
     CUL::CnstMyStr& nameconst,
     bool opengl )
 {
     logMsg( "Creating window with:\n", CUL::LOG::Severity::INFO );
     logMsg( "Pos.x = " + CUL::MyString(pos.getX()) + ", Pos.y = " + CUL::MyString( pos.getY() ), CUL::LOG::Severity::INFO );
-    logMsg( "Size.x = " + CUL::MyString( size.getX() ) + ", Size.y = " + CUL::MyString( size.getY() ), CUL::LOG::Severity::INFO );
+    logMsg( "Width = " + CUL::MyString( size.getWidth() ) + ", height = " + CUL::MyString( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     if( opengl )
     {
         windowFlags |= SDL_WINDOW_OPENGL;
     }
+
+    auto targetWidth = static_cast<int>( size.getWidth() );
+    auto targetHeight = static_cast<int>( size.getHeight() );
+
     result = SDL_CreateWindow(
         nameconst.cStr(),
         static_cast< int >( pos.getX() ),
         static_cast< int >( pos.getY() ),
-        static_cast< int >( size.getX() ),
-        static_cast< int >( size.getY() ),
+        targetWidth,
+        targetHeight,
         windowFlags );
     if( nullptr == result )
     {
@@ -75,6 +79,14 @@ SDL_Window* RegularSDL2Window::createWindow(
             "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "The Window has not been initialized." );
     }
+
+    int resultWidth = 0;
+    int resultHeight = 0;
+    SDL_GetWindowSize( result, &resultWidth, &resultHeight );
+    Assert( targetWidth == resultWidth, "Result window width is different than target width." );
+    Assert( targetHeight == resultHeight, "Result window height is different than target height." );
+
+    m_screenRatio = ( 1.0 * targetWidth ) / ( 1.0f * targetHeight );
 
     return result;
 }
@@ -187,12 +199,12 @@ void RegularSDL2Window::setPos( const Vector3Di& pos )
     m_position = pos;
 }
 
-const Vector3Du& RegularSDL2Window::getSize()const
+const WindowSize& RegularSDL2Window::getSize()const
 {
     return m_size;
 }
 
-void RegularSDL2Window::setSize( const Vector3Du& size )
+void RegularSDL2Window::setSize( const WindowSize& size )
 {
     m_size = size;
 }
@@ -336,6 +348,11 @@ void RegularSDL2Window::removeObject( IObject* object )
 SDL_Window* RegularSDL2Window::getSDLWindow() const
 {
     return m_window;
+}
+
+const double RegularSDL2Window::getScreenRatio() const
+{
+    return m_screenRatio;
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor()const

@@ -21,7 +21,7 @@ public:
     TestApp():
         m_sdlW( SDL2W::createSDL2Wrapper(
             SDL2W::Vector3Di( 200, 200, 0 ),
-            SDL2W::Vector3Du( 1024, 768, 0 ),
+            SDL2W::WindowSize( 1024, 768 ),
             "Test app.", false ) )
     {
         m_activeWindow = m_sdlW->getMainWindow();

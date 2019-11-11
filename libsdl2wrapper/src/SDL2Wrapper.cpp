@@ -7,7 +7,7 @@ using namespace SDL2W;
 
 ISDL2Wrapper* SDL2W::createSDL2Wrapper(
     const Vector3Di& pos,
-    const Vector3Du& size,
+    const WindowSize& size,
     CUL::CnstMyStr& winName,
     const bool opengl )
 {

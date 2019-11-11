@@ -15,7 +15,7 @@ WindowCreatorConcrete::~WindowCreatorConcrete()
 
 IWindow* WindowCreatorConcrete::createWindow(
     const Vector3Di& pos,
-    const Vector3Du& size,
+    const Size2D& size,
     CUL::CnstMyStr& winName,
     const bool withOpenGL )
 {

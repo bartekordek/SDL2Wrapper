@@ -22,7 +22,7 @@ class SDL2WrapperImpl:
 public:
     SDL2WrapperImpl(
         const Vector3Di& pos = Vector3Di(),
-        const Vector3Du& size = Vector3Du(),
+        const WindowSize& size = WindowSize(),
         CUL::CnstMyStr& winName = "",
         const bool opengl = false);
     SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
@@ -99,7 +99,7 @@ private:
 
     WindowCreatorConcrete* m_windowFactory = nullptr;
 
-    LckPrim<bool> eventLoopActive{ true };
+    LckPrim<bool> eventLoopActive = true;
     LckPrim<unsigned int> m_eventLatencyUs{ 256 };
 
     std::set<IWindowEventObserver*> m_windowEventObservers;

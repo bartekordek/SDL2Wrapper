@@ -26,7 +26,7 @@ public:
     RegularSDL2Window() = delete;
     RegularSDL2Window(
         const Vector3Di& pos,
-        const Vector3Du& size,
+        const Size2D& size,
         CUL::CnstMyStr& name,
         const bool withOpenGL = true );
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;
@@ -38,8 +38,8 @@ public:
     const Vector3Di& getPos()const override;
     void setPos( const Vector3Di& pos ) override;
 
-    const Vector3Du& getSize()const override;
-    void setSize( const Vector3Du& size ) override;
+    const WindowSize& getSize()const override;
+    void setSize( const WindowSize& size ) override;
 
     void setBackgroundColor( const ColorE color ) override;
     void setBackgroundColor( const ColorS& color ) override;
@@ -56,12 +56,13 @@ public:
     const ColorS getBackgroundColor()const override;
 
     SDL_Window* getSDLWindow()const override;
+    const double getScreenRatio() const override;
 
 protected:
 private:
     SDL_Window* createWindow(
         const Vector3Di& pos,
-        const Vector3Du& size,
+        const WindowSize& size,
         CUL::CnstMyStr& nameconst,
         bool opengl = true );
     SDL_Surface* createSurface( const Path& path );
@@ -81,7 +82,9 @@ private:
     TextureMap m_textures;
 
     Vector3Di m_position;
-    Vector3Du m_size;
+    WindowSize m_size;
+
+    double m_screenRatio = 1.0;
 
 };
 

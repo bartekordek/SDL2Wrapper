@@ -71,7 +71,7 @@ private:
 
 SDL2WAPI ISDL2Wrapper* createSDL2Wrapper(
     const Vector3Di& pos = Vector3Di(),
-    const Vector3Du& size = Vector3Du( 800, 600, 0 ),
+    const WindowSize& size = WindowSize( 800, 600 ),
     CUL::CnstMyStr& winName = "",
     const bool opengl = false );
 

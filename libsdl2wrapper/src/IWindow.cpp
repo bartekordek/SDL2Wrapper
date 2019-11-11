@@ -17,10 +17,10 @@ IWindow::~IWindow()
 
 void IWindow::setWindowID( cunt id )
 {
-    this->m_winId = id;
+    m_winId = id;
 }
 
 const unsigned int IWindow::getWindowID() const
 {
-    return this->m_winId;
+    return m_winId;
 }

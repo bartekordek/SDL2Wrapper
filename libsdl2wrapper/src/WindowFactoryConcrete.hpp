@@ -19,7 +19,7 @@ namespace SDL2W
 
         IWindow* createWindow(
             const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
-            const Vector3Du& size = Vector3Du( 800, 600, 0 ),
+            const WindowSize& size = WindowSize( 800, 600 ),
             CUL::CnstMyStr& winName = "Generic Window Name.",
             const bool withOpenGL = true ) override;
 

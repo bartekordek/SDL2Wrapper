@@ -13,7 +13,7 @@ using namespace SDL2W;
 
 SDL2WrapperImpl::SDL2WrapperImpl(
     const Vector3Di& pos,
-    const Vector3Du& size,
+    const WindowSize& size,
     CUL::CnstMyStr& winName,
     const bool opengl )
 {
