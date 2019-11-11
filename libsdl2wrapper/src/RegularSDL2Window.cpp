@@ -89,7 +89,7 @@ RegularSDL2Window::~RegularSDL2Window()
     m_renderer = nullptr;
 
     Assert( nullptr != m_window, "The Window has been destroyed somwhere else." );
-    SDL_DestroyWindow( this->m_window );
+    SDL_DestroyWindow( m_window );
     m_window = nullptr;
 }
 
@@ -104,13 +104,13 @@ void RegularSDL2Window::updateScreenBuffers()
     if( m_withOpenGL )
     {
         Assert( nullptr != m_window, "The Window is not initialized." );
-        SDL_GL_SwapWindow( this->m_window );
+        SDL_GL_SwapWindow( m_window );
         // ^ https://forums.libsdl.org/viewtopic.php?p=52399
     }
     else
     {
         Assert( nullptr != m_renderer, "The Renderer is not initialized." );
-        SDL_RenderPresent( this->m_renderer );
+        SDL_RenderPresent( m_renderer );
     }
     frameHasEnded();
 }
@@ -118,13 +118,13 @@ void RegularSDL2Window::updateScreenBuffers()
 void RegularSDL2Window::renderAll()
 {
     SDL_SetRenderDrawColor(
-        this->m_renderer,
-        this->m_backgroundColor.getRUI(),
-        this->m_backgroundColor.getGUI(),
-        this->m_backgroundColor.getBUI(),
-        this->m_backgroundColor.getAUI() );
-    std::lock_guard<std::mutex> objectsMutexGuard(this->m_objectsMtx);
-    for( auto& object : this->m_objects )
+        m_renderer,
+        m_backgroundColor.getRUI(),
+        m_backgroundColor.getGUI(),
+        m_backgroundColor.getBUI(),
+        m_backgroundColor.getAUI() );
+    std::lock_guard<std::mutex> objectsMutexGuard(m_objectsMtx);
+    for( auto& object : m_objects )
     {
         if ( IObject::Type::SPRITE == object->getType() )
         {
@@ -207,8 +207,8 @@ ISprite* RegularSDL2Window::createSprite( const Path& objPath )
     logMsg( "ISprite* RegularSDL2Window::createSprite( const Path& objPath )" );
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
-    auto it = this->m_textures.find( objPath.getPath().string() );
-    if( this->m_textures.end() == it )
+    auto it = m_textures.find( objPath.getPath().string() );
+    if( m_textures.end() == it )
     {
         logMsg( "ISprite* RegularSDL2Window::createSprite: sprite not found, creating..." );
         auto tex = createTexture( objPath );
@@ -323,22 +323,22 @@ ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& pa
 
 void RegularSDL2Window::addObject( IObject* object )
 {
-    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
-    this->m_objects.insert( object );
+    std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
+    m_objects.insert( object );
 }
 
 void RegularSDL2Window::removeObject( IObject* object )
 {
-    std::lock_guard<std::mutex> objectsMutexGuard( this->m_objectsMtx );
-    this->m_objects.erase( object );
+    std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
+    m_objects.erase( object );
 }
 
 SDL_Window* RegularSDL2Window::getSDLWindow() const
 {
-    return this->m_window;
+    return m_window;
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor()const
 {
-    return this->m_backgroundColor;
+    return m_backgroundColor;
 }

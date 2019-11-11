@@ -14,7 +14,7 @@ CC_STAND := -std=c++17
 CC := $(COMPILER) $(CC_STAND) $(DIAG_FLAG) -fPIC -pedantic -Wall -Wno-ignored-attributes
 CC_LINK := $(COMPILER) $(CC_STAND) $(DIAG_FLAG)
 
-DEBUG_FLAGS = -ggdb
+DEBUG_FLAGS = -ggdb3
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = libsdl2wrapperTestApp
 BINARY_NAME = $(PROJECT_NAME).exe
@@ -50,6 +50,7 @@ IMPORT_LIBS += $(shell pkg-config --libs IL)
 IMPORT_LIBS += $(shell pkg-config --libs ILU)
 IMPORT_LIBS += $(shell pkg-config --libs ILUT)
 IMPORT_LIBS += $(shell pkg-config --libs libpng)
+IMPORT_LIBS += $(shell pkg-config --libs sdl2)
 IMPORT_LIBS_DEBUG := $(IMPORT_LIBS) $(CUL_LIB_DEBUG) $(SDL2W_LIB_DEBUG)
 IMPORT_LIBS_RELEASE := $(IMPORT_LIBS) $(CUL_LIB_RELEASE) $(SDL2W_LIB_RELEASE)
 
@@ -109,10 +110,7 @@ $(OBJ_RELEASE_DIR)%.o: %.cpp
 
 clean:
 	$(MAKE) -C $(SDL2W_HOME) clean
-	rm -f $(OBJ_DEBUG_FILES)
-	rm -f $(OBJ_RELEASE_FILES)
-	rm -f $(OUTPUT_DEBUG)
-	rm -f $(OUTPUT_RELEASE)
+	rm -rf $(OUTPUT_DIR)
 
 clear_all:
 	find . -name '*.o' | xargs rm
