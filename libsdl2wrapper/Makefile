@@ -16,7 +16,7 @@ CC := $(COMPILER) $(CPP_VERSION) $(DIAG_FLAG) \
 -fPIC -pedantic -Wall
 CC_LINK := $(COMPILER) $(CPP_VERSION) $(DIAG_FLAG) -shared -fPIC
 
-DEBUG_FLAGS = -ggdb
+DEBUG_FLAGS = -ggdb3
 RELEASE_FLAGS = -Ofast
 PROJECT_NAME = libsdl2wrapper
 IMP_LIB_NAME = $(PROJECT_NAME).a
@@ -40,13 +40,11 @@ CUL_LIB_RELEASE := $(CUL_LIB)/Release/libcul.so
 HEADERS_INC := -I inc
 HEADERS_INC += -I src
 HEADERS_INC += -I $(CUL_INC)
-HEADERS_INC += $(shell pkg-config --cflags sdl2)
 HEADERS_INC += $(shell pkg-config --cflags SDL2_image)
 HEADERS_INC += -I $(HOME_BOOST)
 
 IMPORT_FILES := $(SDL_LIB_FILES)
 IMPORT_FILES += $(SDL_IMAGE_LIB_FILES)
-IMPORT_FILES += $(shell pkg-config --libs sdl2)
 IMPORT_FILES += $(shell pkg-config --libs SDL2_image)
 
 OUTPUT_DEBUG = $(OUTPUT_DIR_DEBUG)/$(DLL_NAME)
@@ -54,16 +52,16 @@ OUTPUT_RELEASE = $(OUTPUT_DIR_RELEASE)/$(DLL_NAME)
 IMP_LIB_DEBUG = $(OUTPUT_DIR_DEBUG)/$(IMP_LIB_NAME)
 IMP_LIB_RELEASE = $(OUTPUT_DIR_RELEASE)/$(IMP_LIB_NAME)
 
-IMPORT_LIBS_DEBUG := $(SDL_LIB_IMPORT) $(SDL_IMAGE_LIB_IMPORT) -pthread
-IMPORT_LIBS_RELEASE := $(SDL_LIB_IMPORT) $(SDL_IMAGE_LIB_IMPORT) -pthread
+IMPORT_LIBS_PTHREAD := -pthread
+IMPORT_FILES += $(IMPORT_LIBS_PTHREAD)
 
 CPP_FILES := $(wildcard src/*.cpp)
 CPP_FILES += $(wildcard src/*/*.cpp)
 
-OBJ_DEBUG_DIR := obj/debug/
+OBJ_DEBUG_DIR := $(OUTPUT_DIR_DEBUG)/obj/
 OBJ_DEBUG_FILES := $(addprefix $(OBJ_DEBUG_DIR),$(CPP_FILES:.cpp=.o))
 
-OBJ_RELEASE_DIR := obj/release/
+OBJ_RELEASE_DIR := $(OUTPUT_DIR_RELEASE)/obj/
 OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
 
 debug:
@@ -98,11 +96,7 @@ $(OBJ_RELEASE_DIR)%.o: %.cpp
 
 clean:
 	$(MAKE) -C $(CUL_HOME)/libcul clean
-	rm -f $(OBJ_DEBUG_FILES)
-	rm -f $(OBJ_RELEASE_FILES)
-	rm -f $(OUTPUT_DEBUG)
-	rm -f $(OUTPUT_RELEASE)
-	find . -name '*.o' | xargs rm -fv
+	rm -rf $(OUTPUT_DIR)
 
 test:
 	@echo "All .o files: $(OBJ_DEBUG_FILES)"
