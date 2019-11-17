@@ -30,5 +30,10 @@
 #endif
 */
 
-using cunt = const unsigned int;
-using cint = const int;
+NAMESPACE_BEGIN( SDL2W )
+
+using Cunt = const unsigned int;
+using Cint = const int;
+using Cbool = const bool;
+
+NAMESPACE_END( SDL2W )

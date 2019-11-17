@@ -12,21 +12,21 @@ class MouseDataSDL:
     public IMouseData
 {
 public:
-    MouseDataSDL( void );
-    virtual ~MouseDataSDL( void );
+    MouseDataSDL();
+    virtual ~MouseDataSDL();
 
-    cunt getMouseButtonCount()const override;
+    Cunt getMouseButtonCount()const override;
     const bool isButtonDown( const MouseButtonIndex buttonIndex )const override;
-    cint getX()const override;
-    cint getY()const override;
+    Cint getX()const override;
+    Cint getY()const override;
 
-    cint getWheelX()const override;
-    cint getWheelY()const override;
+    Cint getWheelX()const override;
+    Cint getWheelY()const override;
     const WheelDirection getWheelDirection()const override;
 
-    void setPos( cint x, cint y );
+    void setPos( Cint x, Cint y );
     void setState( const MouseButtonIndex buttonIndex, const bool isUp );
-    void setWheel( cint x, cint y, const WheelDirection direction );
+    void setWheel( Cint x, Cint y, const WheelDirection direction );
 
 protected:
 private:

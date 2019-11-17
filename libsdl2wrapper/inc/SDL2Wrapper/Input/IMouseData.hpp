@@ -19,12 +19,12 @@ public:
     IMouseData( void ) = default;
     virtual ~IMouseData( void ) = default;
 
-    virtual cunt getMouseButtonCount()const = 0;
+    virtual Cunt getMouseButtonCount()const = 0;
     virtual const bool isButtonDown( const MouseButtonIndex buttonIndex )const = 0;
-    virtual cint getX()const = 0;
-    virtual cint getY()const = 0;
-    virtual cint getWheelX()const = 0;
-    virtual cint getWheelY()const = 0;
+    virtual Cint getX()const = 0;
+    virtual Cint getY()const = 0;
+    virtual Cint getWheelX()const = 0;
+    virtual Cint getWheelY()const = 0;
     virtual const WheelDirection getWheelDirection()const = 0;
 
 protected:
