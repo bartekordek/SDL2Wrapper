@@ -13,7 +13,7 @@ public:
     IKeyboardObservable() = default;
     virtual ~IKeyboardObservable() = default;
 
-    virtual void addKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) = 0;
+    virtual void registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) = 0;
 
     virtual void registerKeyboardEventListener( IKeyboardObserver* observer ) = 0;
     virtual void unregisterKeyboardEventListener( IKeyboardObserver* observer ) = 0;
