@@ -15,11 +15,7 @@ public:
 
     IWindowFactory& operator=( const IWindowFactory& rhv ) = delete;
 
-    virtual IWindow* createWindow(
-        const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
-        const WindowSize& size = WindowSize( 800, 600 ),
-        CUL::CnstMyStr& winName = "Generic Window Name.",
-        const bool withOpenGL = true ) = 0;
+    virtual IWindow* createWindow( const WindowData& winData ) = 0;
 
 protected:
 private:

@@ -5,26 +5,23 @@
 #include "CUL/STL_IMPORTS/STD_vector.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 
-namespace SDL2W
+NAMESPACE_BEGIN( SDL2W )
+
+class WindowCreatorConcrete final:
+    public IWindowFactory
 {
-    
-    class WindowCreatorConcrete final:
-        public IWindowFactory
-    {
-    public:
-        explicit WindowCreatorConcrete();
-        WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
-        ~WindowCreatorConcrete();
-        WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
+public:
+    explicit WindowCreatorConcrete();
 
-        IWindow* createWindow(
-            const Vector3Di& pos = Vector3Di( 0, 0, 0 ),
-            const WindowSize& size = WindowSize( 800, 600 ),
-            CUL::CnstMyStr& winName = "Generic Window Name.",
-            const bool withOpenGL = true ) override;
+    IWindow* createWindow( const WindowData& winData ) override;
 
+    ~WindowCreatorConcrete();
 
-    protected:
-    private:
-    };
-}
+protected:
+private:
+    WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
+    WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
+
+};
+
+NAMESPACE_END( SDL2W )

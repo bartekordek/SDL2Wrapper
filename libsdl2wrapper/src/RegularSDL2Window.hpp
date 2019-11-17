@@ -19,21 +19,28 @@ NAMESPACE_BEGIN( SDL2W )
 #pragma warning( disable: 4820 )
 #endif
 
-class RegularSDL2Window:
+class RegularSDL2Window final:
     public IWindow
 {
 public:
     RegularSDL2Window() = delete;
-    RegularSDL2Window(
-        const Vector3Di& pos,
-        const Size2D& size,
-        CUL::CnstMyStr& name,
-        const bool withOpenGL = true );
-    RegularSDL2Window( const RegularSDL2Window& win ) = delete;
-    virtual ~RegularSDL2Window();
+    RegularSDL2Window( const WindowData& winData );
 
-    RegularSDL2Window& operator=(
-        const RegularSDL2Window& right ) = delete;
+    ~RegularSDL2Window();
+
+protected:
+private:
+    SDL_Window* createWindow( const WindowData& winDatae );
+    SDL_Surface* createSurface( const Path& path );
+    ITexture* createTexture( SDL_Surface* surface, const Path& path );
+    void destroyObjects();
+
+    // Inherited via IWindow
+    void addObject( IObject* object ) override;
+    void removeObject( IObject* object ) override;
+
+    operator SDL_Window*() override;
+    operator const SDL_Window*( ) override;
 
     const Vector3Di& getPos()const override;
     void setPos( const Vector3Di& pos ) override;
@@ -55,25 +62,9 @@ public:
 
     const ColorS getBackgroundColor()const override;
 
-    SDL_Window* getSDLWindow()const override;
     const double getScreenRatio() const override;
 
-protected:
-private:
-    SDL_Window* createWindow(
-        const Vector3Di& pos,
-        const WindowSize& size,
-        CUL::CnstMyStr& nameconst,
-        bool opengl = true );
-    SDL_Surface* createSurface( const Path& path );
-    ITexture* createTexture( SDL_Surface* surface, const Path& path );
-    void destroyObjects();
-
-    // Inherited via IWindow
-    void addObject( IObject* object ) override;
-    void removeObject( IObject* object ) override;
-
-    bool m_withOpenGL = true;
+    WindowData m_windowData;
     ColorS m_backgroundColor;
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;
@@ -81,10 +72,10 @@ private:
     std::mutex m_objectsMtx;
     TextureMap m_textures;
 
-    Vector3Di m_position;
-    WindowSize m_size;
-
     double m_screenRatio = 1.0;
+
+    RegularSDL2Window( const RegularSDL2Window& win ) = delete;
+    RegularSDL2Window& operator=( const RegularSDL2Window& right ) = delete;
 
 };
 

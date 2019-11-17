@@ -9,17 +9,13 @@ WindowCreatorConcrete::WindowCreatorConcrete()
 {
 }
 
-WindowCreatorConcrete::~WindowCreatorConcrete()
+IWindow* WindowCreatorConcrete::createWindow( const WindowData& winData )
 {
+    auto window = new RegularSDL2Window( winData );
+    return window;
 }
 
-IWindow* WindowCreatorConcrete::createWindow(
-    const Vector3Di& pos,
-    const Size2D& size,
-    CUL::CnstMyStr& winName,
-    const bool withOpenGL )
+
+WindowCreatorConcrete::~WindowCreatorConcrete()
 {
-    auto window = new RegularSDL2Window(
-        pos, size, winName, withOpenGL );
-    return window;
 }

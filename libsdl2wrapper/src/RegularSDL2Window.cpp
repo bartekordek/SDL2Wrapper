@@ -16,16 +16,10 @@ using namespace SDL2W;
 
 using IPivot = CUL::Math::IPivot;
 
-RegularSDL2Window::RegularSDL2Window(
-    const Vector3Di& pos,
-    const WindowSize& size,
-    CUL::CnstMyStr& name,
-    const bool withOpenGL ):
-        m_withOpenGL( withOpenGL ),
-        m_position( pos ),
-        m_size( size )
+RegularSDL2Window::RegularSDL2Window( const WindowData& winData ):
+    m_windowData( winData )
 {
-    m_window = createWindow( pos, size, name, m_withOpenGL );
+    m_window = createWindow( winData );
 
     const auto id = SDL_GetWindowID( m_window );
     setWindowID( id );
@@ -42,17 +36,18 @@ RegularSDL2Window::RegularSDL2Window(
 
     Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
 
-    setName( name );
+    setName( winData.name );
 }
 
-SDL_Window* RegularSDL2Window::createWindow(
-    const Vector3Di& pos,
-    const WindowSize& size,
-    CUL::CnstMyStr& nameconst,
-    bool opengl )
+SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 {
+    auto& pos = winData.pos;
+    auto& size = winData.size;
+    auto& opengl = winData.withOpenGL;
+    auto& winName = winData.name;
+
     logMsg( "Creating window with:\n", CUL::LOG::Severity::INFO );
-    logMsg( "Pos.x = " + CUL::MyString(pos.getX()) + ", Pos.y = " + CUL::MyString( pos.getY() ), CUL::LOG::Severity::INFO );
+    logMsg( "Pos.x = " + CUL::MyString( pos.getX()) + ", Pos.y = " + CUL::MyString( pos.getY() ), CUL::LOG::Severity::INFO );
     logMsg( "Width = " + CUL::MyString( size.getWidth() ) + ", height = " + CUL::MyString( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
@@ -65,7 +60,7 @@ SDL_Window* RegularSDL2Window::createWindow(
     auto targetHeight = static_cast<int>( size.getHeight() );
 
     result = SDL_CreateWindow(
-        nameconst.cStr(),
+        winName.cStr(),
         static_cast< int >( pos.getX() ),
         static_cast< int >( pos.getY() ),
         targetWidth,
@@ -91,6 +86,16 @@ SDL_Window* RegularSDL2Window::createWindow(
     return result;
 }
 
+RegularSDL2Window::operator SDL_Window*()
+{
+    return m_window;
+}
+
+RegularSDL2Window::operator const SDL_Window*( )
+{
+    return m_window;
+}
+
 RegularSDL2Window::~RegularSDL2Window()
 {
     logMsg( "RegularSDL2Window::~RegularSDL2Window()" );
@@ -113,7 +118,7 @@ void RegularSDL2Window::destroyObjects()
 
 void RegularSDL2Window::updateScreenBuffers()
 {
-    if( m_withOpenGL )
+    if( m_windowData.withOpenGL )
     {
         Assert( nullptr != m_window, "The Window is not initialized." );
         SDL_GL_SwapWindow( m_window );
@@ -189,24 +194,24 @@ void RegularSDL2Window::setBackgroundColor( const ColorS& color )
     m_backgroundColor = color;
 }
 
-const Vector3Di& RegularSDL2Window::getPos()const
+const Vector3Di& RegularSDL2Window::getPos() const
 {
-    return m_position;
+    return m_windowData.pos;
 }
 
 void RegularSDL2Window::setPos( const Vector3Di& pos )
 {
-    m_position = pos;
+    m_windowData.pos = pos;
 }
 
-const WindowSize& RegularSDL2Window::getSize()const
+const WindowSize& RegularSDL2Window::getSize() const
 {
-    return m_size;
+    return m_windowData.size;
 }
 
 void RegularSDL2Window::setSize( const WindowSize& size )
 {
-    m_size = size;
+    m_windowData.size = size;
 }
 
 const IWindow::Type RegularSDL2Window::getType() const
@@ -345,17 +350,12 @@ void RegularSDL2Window::removeObject( IObject* object )
     m_objects.erase( object );
 }
 
-SDL_Window* RegularSDL2Window::getSDLWindow() const
-{
-    return m_window;
-}
-
 const double RegularSDL2Window::getScreenRatio() const
 {
     return m_screenRatio;
 }
 
-const ColorS RegularSDL2Window::getBackgroundColor()const
+const ColorS RegularSDL2Window::getBackgroundColor() const
 {
     return m_backgroundColor;
 }

@@ -11,6 +11,9 @@
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
 using WinEventType = SDL2W::WindowEvent::Type;
+using SDL2WinData = SDL2W::WindowData;
+
+SDL2WinData winData;
 
 class TestApp final:
     public SDL2W::IKeyboardObserver,
@@ -19,10 +22,7 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper(
-            SDL2W::Vector3Di( 200, 200, 0 ),
-            SDL2W::WindowSize( 1024, 768 ),
-            "Test app.", false ) )
+        m_sdlW( SDL2W::createSDL2Wrapper( winData ) )
     {
         m_activeWindow = m_sdlW->getMainWindow();
         m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
@@ -161,7 +161,7 @@ private:
             someScale.setXYZ( 0.5, 0.5, 0.0 );
             m_obj3->setScale( someScale );
 
-            unsigned sleepTimeinMs = 10;
+            unsigned sleepTimeinMs = 2;
             double i = 0.0;
             CUL::Math::Angle obj2Angle;
             CUL::Math::Angle obj3Angle;
@@ -227,6 +227,10 @@ private:
 #endif
 int main( int argc, char** argv )
 {
+    winData.size.setSize( 800, 600 );
+    winData.pos.setXYZ( 480, 480, 0 );
+    winData.withOpenGL = false;
+
     TestApp testApp;
     testApp.runMainLoop();
     return 0;

@@ -11,11 +11,7 @@
 
 using namespace SDL2W;
 
-SDL2WrapperImpl::SDL2WrapperImpl(
-    const Vector3Di& pos,
-    const WindowSize& size,
-    CUL::CnstMyStr& winName,
-    const bool opengl )
+SDL2WrapperImpl::SDL2WrapperImpl( const WindowData& wd )
 {
     const auto sdlInitSuccess = SDL_Init(
         SDL_INIT_TIMER &
@@ -37,7 +33,7 @@ SDL2WrapperImpl::SDL2WrapperImpl(
     }
 
     m_windowFactory = new WindowCreatorConcrete();
-    m_mainWindow = m_windowFactory->createWindow( pos, size, winName, opengl );
+    m_mainWindow = m_windowFactory->createWindow( wd );
     m_windows[ m_mainWindow->getWindowID() ] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();
@@ -47,8 +43,6 @@ SDL2WrapperImpl::SDL2WrapperImpl(
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
 {
-    delete m_windowFactory;
-    m_windowFactory = nullptr;
     m_keys.clear();
     SDL_Quit();
 }
@@ -285,7 +279,7 @@ void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
     }
 }
 
-void SDL2WrapperImpl::addKeyboardEventCallback(
+void SDL2WrapperImpl::registerKeyboardEventCallback(
     const std::function<void( const IKey& key )>& callback )
 {
     m_keyCallbacks.push_back( callback );
@@ -384,12 +378,12 @@ void SDL2WrapperImpl::notifyWindowEventCallbacks( const WindowEventType e )
     }
 }
 
-cunt SDL2WrapperImpl::getInputLatency()const
+Cunt SDL2WrapperImpl::getInputLatency()const
 {
     return m_eventLatencyUs.getValCopy();
 }
 
-void SDL2WrapperImpl::setInputLatency( cunt latencyInUs )
+void SDL2WrapperImpl::setInputLatency( Cunt latencyInUs )
 {
     m_eventLatencyUs = latencyInUs;
 }
@@ -404,30 +398,31 @@ Keys& SDL2WrapperImpl::getKeyStates()
     return m_keys;
 }
 
-ISprite* SDL2WrapperImpl::createSprite( const Path& objPath,
-                                        IWindow* targetWindow )
+ISprite* SDL2WrapperImpl::createSprite(
+    const Path& objPath,
+    IWindow* targetWindow )
 {
     return targetWindow->createSprite( objPath );
 }
 
-ITexture* SDL2WrapperImpl::createTexture( const Path& objPath,
-                                          IWindow* targetWindow )
+ITexture* SDL2WrapperImpl::createTexture(
+    const Path& objPath,
+    IWindow* targetWindow )
 {
     if( IWindow::Type::SDL_WIN == targetWindow->getType() )
     {
-        auto sdlWin = static_cast<RegularSDL2Window*>( targetWindow );
-        return sdlWin->createTexture( objPath );
+        return targetWindow->createTexture( objPath );
     }
     return nullptr;
 }
 
-ISprite* SDL2WrapperImpl::createSprite( ITexture* tex,
-                                        IWindow* targetWindow )
+ISprite* SDL2WrapperImpl::createSprite(
+    ITexture* tex,
+    IWindow* targetWindow )
 {
     if( IWindow::Type::SDL_WIN == targetWindow->getType() )
     {
-        auto sdlWin = static_cast<RegularSDL2Window*>( targetWindow );
-        return sdlWin->createSprite( tex );
+        return targetWindow->createSprite( tex );
     }
     return nullptr;
 }

@@ -5,11 +5,7 @@
 
 using namespace SDL2W;
 
-ISDL2Wrapper* SDL2W::createSDL2Wrapper(
-    const Vector3Di& pos,
-    const WindowSize& size,
-    CUL::CnstMyStr& winName,
-    const bool opengl )
+ISDL2Wrapper* SDL2W::createSDL2Wrapper( const WindowData& winData )
 {
-    return new SDL2WrapperImpl( pos, size, winName, opengl );
+    return new SDL2WrapperImpl( winData );
 }

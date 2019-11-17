@@ -30,6 +30,7 @@ using ColorS = CUL::Graphics::ColorS;
 using ColorE = CUL::Graphics::ColorE;
 using IName = CUL::IName;
 using Path = CUL::FS::Path;
+using String = CUL::MyString;
 
 using TextureMap = std::map<CUL::MyString, std::unique_ptr<ITexture>>;
 
@@ -37,6 +38,39 @@ using TextureMap = std::map<CUL::MyString, std::unique_ptr<ITexture>>;
 #pragma warning( push )
 #pragma warning( disable: 4820 )
 #endif
+
+struct SDL2WAPI WindowData
+{
+    Vector3Di pos = Vector3Di( 0, 0, 0 );
+    WindowSize size = WindowSize( 640, 480 );
+    String name = "Generic Window Name.";
+    bool withOpenGL = true;
+
+    WindowData() = default;
+
+    WindowData( const WindowData& arg ):
+        pos( arg.pos ),
+        size( arg.size ),
+        name( arg.name ),
+        withOpenGL( arg.withOpenGL )
+    {
+
+    }
+
+    WindowData& operator=( const WindowData& rhv )
+    {
+        if( this != &rhv )
+        {
+            pos = rhv.pos;
+            size = rhv.size;
+            name = rhv.name;
+            withOpenGL = rhv.withOpenGL;
+        }
+        return *this;
+    }
+
+    ~WindowData() = default;
+};
 
 class SDL2WAPI IWindow:
     public IRender,
@@ -52,10 +86,7 @@ public:
     };
 
     IWindow();
-    IWindow( const Vector3Di& pos,
-        const Size2D& size,
-        CUL::CnstMyStr& name,
-        const bool withOpenGL = true ) = delete;
+    IWindow( const WindowData& data ) = delete;
 
     virtual ~IWindow();
 
@@ -71,11 +102,12 @@ public:
     virtual ISprite* createSprite( const Path& path ) = 0;
     virtual ISprite* createSprite( ITexture* tex ) = 0;
 
-    virtual SDL_Window* getSDLWindow() const = 0;
-
-    void setWindowID( cunt id );
+    void setWindowID( Cunt id );
     const unsigned int getWindowID() const;
     virtual const double getScreenRatio() const = 0;
+
+    virtual operator ::SDL_Window*() = 0;
+    virtual operator const ::SDL_Window*( ) = 0;
 
 protected:
 
