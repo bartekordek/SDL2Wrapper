@@ -23,20 +23,23 @@ class SDL2WrapperImpl:
 {
 public:
     SDL2WrapperImpl( const WindowData& wd );
-    SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
+
     virtual ~SDL2WrapperImpl();
 
-    SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
+    void registerSDLEventObserver( ISDLInputObserver* eventObserver );
+    void unRegisterSDLEventObserver( ISDLInputObserver* eventObserver );
 
+protected:
+private:
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
     void clearWindows() override;
     void runEventLoop() override;
     void stopEventLoop() override;
+    void pollEvents() override;
 
     void registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) override;
-
-    void registerWindowEventCallback( const std::function<void( const WindowEventType wEt )>& callback ) override;
+    void registerWindowEventCallback( const WindowCallback& callback ) override;
 
     void registerKeyboardEventListener( IKeyboardObserver* observer ) override;
     void unregisterKeyboardEventListener( IKeyboardObserver* observer ) override;
@@ -44,7 +47,7 @@ public:
     void registerWindowEventListener( IWindowEventObserver* observer ) override;
     void unregisterWindowEventListener( IWindowEventObserver* observer ) override;
 
-    void addMouseEventCallback( const std::function<void( const IMouseData& md )>& callback ) override;
+    void addMouseEventCallback( const MouseCallback& callback ) override;
 
     void registerMouseEventListener( IMouseObserver* observer ) override;
     void unregisterMouseEventListener( IMouseObserver* observer ) override;
@@ -53,18 +56,12 @@ public:
 
     Cunt getInputLatency() const override;
     void setInputLatency( Cunt latencyInUs ) override;
-    Cbool isKeyUp( CUL::CnstMyStr& keyName )const override;
+    Cbool isKeyUp( CsStr& keyName )const override;
     Keys& getKeyStates() override;
 
     IWindow* getMainWindow() override;
 
     IGui* getGui() override;
-
-    void registerSDLEventObserver( ISDLInputObserver* eventObserver );
-    void unRegisterSDLEventObserver( ISDLInputObserver* eventObserver );
-
-protected:
-private:
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey )const;
 
@@ -110,6 +107,11 @@ private:
     std::mutex m_mouseObserversMtx;
     std::set<ISDLInputObserver*> m_sdlEventObservers;
     std::mutex m_sdlEventObserversMtx;
+
+private: // Deleted methods.
+    SDL2WrapperImpl() = delete;
+    SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
+    SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
 
 };
 

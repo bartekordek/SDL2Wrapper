@@ -87,9 +87,7 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     return result;
 }
 
-void SDL2WrapperImpl::renderFrame(
-    const bool clearContext,
-    const bool refreshWindow )
+void SDL2WrapperImpl::renderFrame( Cbool clearContext, Cbool refreshWindow )
 {
     if( true == clearContext )
     {
@@ -128,31 +126,36 @@ void SDL2WrapperImpl::runEventLoop()
 {
     CUL::ThreadUtils::setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
     logMsg( "SDL2WrapperImpl::runEventLoop()::Begin" );
-    SDL_Event event;
+    
     while( eventLoopActive )
     {
-        if( SDL_PollEvent( &event ) > 0 )
-        {
-            logMsg( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
-            handleEveent( event );
-
-            {
-                std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
-                for( auto eventObserver: m_sdlEventObservers )
-                {
-                    eventObserver->handleEvent( event );
-                }
-            }
-        }
+        pollEvents();
         CUL::ITimer::sleepMicroSeconds( m_eventLatencyUs );
     }
     logMsg( "SDL2WrapperImpl::runEventLoop()::End" );
 }
 
+void SDL2WrapperImpl::pollEvents()
+{
+    static SDL_Event event;
+    if( SDL_PollEvent( &event ) > 0 )
+    {
+        logMsg( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
+        handleEveent( event );
+        {
+            std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
+            for( auto eventObserver : m_sdlEventObservers )
+            {
+                eventObserver->handleEvent( event );
+            }
+        }
+    }
+}
+
 void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 {
     logMsg( "SDL2WrapperImpl::handleEveent( " +
-        CUL::MyString( event.type ) + " );" );
+        CUL::String( event.type ) + " );" );
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
         if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
@@ -279,14 +282,12 @@ void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
     }
 }
 
-void SDL2WrapperImpl::registerKeyboardEventCallback(
-    const std::function<void( const IKey& key )>& callback )
+void SDL2WrapperImpl::registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback )
 {
     m_keyCallbacks.push_back( callback );
 }
 
-void SDL2WrapperImpl::registerWindowEventCallback(
-    const std::function<void(const WindowEventType wEt)>& callback )
+void SDL2WrapperImpl::registerWindowEventCallback( const WindowCallback& callback )
 {
     m_winEventCallbacks.push_back( callback );
 }
@@ -351,8 +352,7 @@ void SDL2WrapperImpl::unregisterWindowEventListener(
     m_windowEventObservers.erase( observer );
 }
 
-void SDL2WrapperImpl::addMouseEventCallback(
-    const std::function<void( const IMouseData& md )>& callback )
+void SDL2WrapperImpl::addMouseEventCallback( const MouseCallback& callback )
 {
     m_mouseCallbacks.push_back( callback );
 }
@@ -388,7 +388,7 @@ void SDL2WrapperImpl::setInputLatency( Cunt latencyInUs )
     m_eventLatencyUs = latencyInUs;
 }
 
-const bool SDL2WrapperImpl::isKeyUp( CUL::CnstMyStr& keyName )const
+const bool SDL2WrapperImpl::isKeyUp( CsStr& keyName )const
 {
     return m_keys.at( keyName )->getKeyIsDown();
 }

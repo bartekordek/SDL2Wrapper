@@ -115,7 +115,7 @@ public:
 
     void onWindowEvent( const WinEventType windowEventType ) override
     {
-        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::MyString( static_cast< short >( windowEventType ) ) );
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::String( static_cast< short >( windowEventType ) ) );
         if( WinEventType::CLOSE == windowEventType )
         {
             m_sdlW->stopEventLoop();
@@ -132,8 +132,8 @@ private:
             CUL::ITimer::sleepSeconds( 2 );
             const auto currentFpsCount = m_fpsCounter->getCurrentFps();
             const auto averageFpsCount = m_fpsCounter->getAverageFps();
-            const CUL::MyString messageCfps = "CURRENT FPS: " + CUL::MyString( currentFpsCount );
-            const CUL::MyString messageAfps = "AVERAGE FPS: " + CUL::MyString( averageFpsCount );
+            const CUL::String messageCfps = "CURRENT FPS: " + CUL::String( currentFpsCount );
+            const CUL::String messageAfps = "AVERAGE FPS: " + CUL::String( averageFpsCount );
             CUL::LOG::LOG_CONTAINER::getLogger()->log( messageCfps );
             CUL::LOG::LOG_CONTAINER::getLogger()->log( messageAfps );
         }

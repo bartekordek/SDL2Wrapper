@@ -15,6 +15,8 @@ public:
     virtual void runEventLoop() = 0;
     virtual void stopEventLoop() = 0;
 
+    virtual void pollEvents() = 0;
+
 protected:
 private:
 };

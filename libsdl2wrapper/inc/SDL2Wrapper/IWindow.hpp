@@ -30,9 +30,9 @@ using ColorS = CUL::Graphics::ColorS;
 using ColorE = CUL::Graphics::ColorE;
 using IName = CUL::IName;
 using Path = CUL::FS::Path;
-using String = CUL::MyString;
+using String = CUL::String;
 
-using TextureMap = std::map<CUL::MyString, std::unique_ptr<ITexture>>;
+using TextureMap = std::map<CUL::String, std::unique_ptr<ITexture>>;
 
 #ifdef _MSC_VER
 #pragma warning( push )

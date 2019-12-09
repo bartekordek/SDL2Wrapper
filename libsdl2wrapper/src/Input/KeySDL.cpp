@@ -1,48 +1,31 @@
 #include "KeySDL.hpp"
 
-namespace SDL2W
+using namespace SDL2W;
+
+KeySDL::KeySDL()
 {
-    KeySDL::KeySDL()
-    {
-    }
+}
 
-    KeySDL::KeySDL( const KeySDL& key ): keyName( key.keyName ), m_keyIsDown( key.m_keyIsDown )
-    {
-        
-    }
+KeySDL::~KeySDL()
+{
+}
 
-    KeySDL::~KeySDL()
-    {
-    }
+void KeySDL::setKeyName( CsStr& name )
+{
+    m_keyName = name;
+}
 
-    KeySDL& KeySDL::operator=( const KeySDL& key )
-    {
-        if( this != &key )
-        {
-            this->keyName = key.keyName;
-            this->m_keyIsDown = key.m_keyIsDown;
-        }
-        return *this;
-    }
+CsStr& KeySDL::getKeyName() const
+{
+    return m_keyName;
+}
 
-    void KeySDL::setKeyName( CUL::CnstMyStr& name )
-    {
-        this->keyName = name;
-    }
+void KeySDL::setKeyIsDown( Cbool keyIsDow )
+{
+    m_keyIsDown = keyIsDow;
+}
 
-    CUL::CnstMyStr& KeySDL::getKeyName() const
-    {
-        return this->keyName;
-    }
-
-    void KeySDL::setKeyIsDown( const bool keyIsDow )
-    {
-        this->m_keyIsDown = keyIsDow;
-    }
-
-    const bool KeySDL::getKeyIsDown() const
-    {
-        return this->m_keyIsDown;
-    }
-
+const bool KeySDL::getKeyIsDown() const
+{
+    return m_keyIsDown;
 }

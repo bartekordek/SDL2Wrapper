@@ -2,7 +2,7 @@
 
 #include "SDL2Wrapper/IWindow.hpp"
 
-#include "CUL/MyString.hpp"
+#include "CUL/String.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 

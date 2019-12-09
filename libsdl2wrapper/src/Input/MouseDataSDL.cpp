@@ -68,9 +68,9 @@ const WheelDirection MouseDataSDL::getWheelDirection() const
 
 void MouseDataSDL::setPos( Cint x, Cint y )
 {
-    const CUL::MyString log = "RegularSDL2Window::RegularSDL2Window( " +
-        CUL::MyString( x ) + ", " +
-        CUL::MyString( y ) + " );";
+    const CUL::String log = "RegularSDL2Window::RegularSDL2Window( " +
+        CUL::String( x ) + ", " +
+        CUL::String( y ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     this->m_x = x;
     this->m_y = y;
@@ -78,18 +78,18 @@ void MouseDataSDL::setPos( Cint x, Cint y )
 
 void MouseDataSDL::setState( const MouseButtonIndex buttonIndex, const bool isUp )
 {
-    const CUL::MyString log = "MouseDataSDL::setState( " +
-        CUL::MyString( buttonIndex ) + ", " +
-        CUL::MyString( isUp ) + " );";
+    const CUL::String log = "MouseDataSDL::setState( " +
+        CUL::String( buttonIndex ) + ", " +
+        CUL::String( isUp ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     this->m_buttonStates[ buttonIndex ] = isUp;
 }
 void MouseDataSDL::setWheel( Cint x, Cint y, const WheelDirection direction )
 {
-    const CUL::MyString log = "MouseDataSDL::setState( " +
-        CUL::MyString( x ) + ", " +
-        CUL::MyString( y ) + ", " +
-        CUL::MyString( static_cast<unsigned>( direction ) ) + " );";
+    const CUL::String log = "MouseDataSDL::setState( " +
+        CUL::String( x ) + ", " +
+        CUL::String( y ) + ", " +
+        CUL::String( static_cast<unsigned>( direction ) ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     this->m_wheelX = x;
     this->m_wheelY = y;

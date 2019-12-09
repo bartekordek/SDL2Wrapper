@@ -28,10 +28,10 @@ RegularSDL2Window::RegularSDL2Window( const WindowData& winData ):
     Assert( nullptr != m_renderer, "Cannot create renderer." );
     SDL_RendererInfo info;
     auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
-    CUL::MyString rendererInfoSummary( "Renderer INFO:\n" );
-    rendererInfoSummary += "Name = " + CUL::MyString( info.name ) + "\n";
-    rendererInfoSummary += "Max texture width = " + CUL::MyString( info.max_texture_width ) + "\n";
-    rendererInfoSummary += "Max texture height = " + CUL::MyString( info.max_texture_width ) + "\n";
+    CUL::String rendererInfoSummary( "Renderer INFO:\n" );
+    rendererInfoSummary += "Name = " + CUL::String( info.name ) + "\n";
+    rendererInfoSummary += "Max texture width = " + CUL::String( info.max_texture_width ) + "\n";
+    rendererInfoSummary += "Max texture height = " + CUL::String( info.max_texture_width ) + "\n";
     logMsg( rendererInfoSummary, CUL::LOG::Severity::INFO );
 
     Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
@@ -47,8 +47,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     auto& winName = winData.name;
 
     logMsg( "Creating window with:\n", CUL::LOG::Severity::INFO );
-    logMsg( "Pos.x = " + CUL::MyString( pos.getX()) + ", Pos.y = " + CUL::MyString( pos.getY() ), CUL::LOG::Severity::INFO );
-    logMsg( "Width = " + CUL::MyString( size.getWidth() ) + ", height = " + CUL::MyString( size.getHeight() ), CUL::LOG::Severity::INFO );
+    logMsg( "Pos.x = " + CUL::String( pos.getX()) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
+    logMsg( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     if( opengl )
@@ -69,7 +69,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     if( nullptr == result )
     {
         auto sdlError = SDL_GetError();
-        CUL::MyString s_sdlError( sdlError );
+        CUL::String s_sdlError( sdlError );
         logMsg(
             "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "The Window has not been initialized." );

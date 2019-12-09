@@ -3,7 +3,7 @@
 #include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/Input/IKey.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
-#include "CUL/MyString.hpp"
+#include "CUL/String.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
@@ -18,7 +18,7 @@ public:
     virtual void registerKeyboardEventListener( IKeyboardObserver* observer ) = 0;
     virtual void unregisterKeyboardEventListener( IKeyboardObserver* observer ) = 0;
 
-    virtual const bool isKeyUp( CUL::CnstMyStr& keyName )const = 0;
+    virtual Cbool isKeyUp( CsStr& keyName )const = 0;
 
 protected:
 private:

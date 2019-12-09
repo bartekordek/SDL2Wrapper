@@ -1,19 +1,21 @@
 #pragma once
 
 #include "SDL2Wrapper/Import.hpp"
-#include "CUL/MyString.hpp"
+#include "CUL/String.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
+
+using CsStr = CUL::CsStr;
 
 class SDL2WAPI IKey
 {
 public:
     IKey();
     virtual ~IKey();
-    virtual void setKeyName( CUL::CnstMyStr& keyName ) = 0;
-    virtual CUL::CnstMyStr& getKeyName()const = 0;
-    virtual const bool getKeyIsDown()const = 0;
-    virtual void setKeyIsDown( const bool isDown ) = 0;
+    virtual void setKeyName( CsStr& keyName ) = 0;
+    virtual CsStr& getKeyName()const = 0;
+    virtual Cbool getKeyIsDown()const = 0;
+    virtual void setKeyIsDown( Cbool isDown ) = 0;
 protected:
 private:
 
