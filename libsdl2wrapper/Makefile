@@ -65,18 +65,12 @@ OBJ_RELEASE_DIR := $(OUTPUT_DIR_RELEASE)/obj/
 OBJ_RELEASE_FILES := $(addprefix $(OBJ_RELEASE_DIR),$(CPP_FILES:.cpp=.o))
 
 debug:
-	$(MAKE) $(CUL_LIB_DEBUG)
+	$(MAKE) -C $(CUL_HOME)/libcul debug
 	$(MAKE) $(OUTPUT_DEBUG)
 
 release:
-	$(MAKE) $(CUL_LIB_RELEASE)
+	$(MAKE) -C $(CUL_HOME)/libcul release
 	$(MAKE) $(OUTPUT_RELEASE)
-
-$(CUL_LIB_DEBUG):
-	$(MAKE) -C $(CUL_HOME)/libcul
-
-$(CUL_LIB_RELEASE):
-	$(MAKE) -C $(CUL_HOME)/libcul
 
 $(OUTPUT_DEBUG): $(OBJ_DEBUG_FILES)
 	@mkdir -p $(dir $@)
