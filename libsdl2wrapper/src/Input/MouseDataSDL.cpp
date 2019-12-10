@@ -18,7 +18,7 @@ MouseDataSDL::~MouseDataSDL()
 
 Cunt MouseDataSDL::getMouseButtonCount() const
 {
-    return static_cast<unsigned>( this->m_buttonStates.size() );
+    return static_cast<unsigned>( m_buttonStates.size() );
 }
 
 #ifdef _MSC_VER
@@ -31,9 +31,9 @@ Cunt MouseDataSDL::getMouseButtonCount() const
 #endif
 const bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) const
 {
-    if( this->m_buttonStates.size() < buttonIndex )
+    if( m_buttonStates.size() < buttonIndex )
     {
-        return this->m_buttonStates.at( buttonIndex );
+        return m_buttonStates.at( buttonIndex );
     }
     return false;
 }
@@ -43,27 +43,27 @@ const bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) cons
 
 Cint MouseDataSDL::getX() const
 {
-    return this->m_x;
+    return m_x;
 }
 
 Cint MouseDataSDL::getY() const
 {
-    return this->m_y;
+    return m_y;
 }
 
 Cint MouseDataSDL::getWheelX() const
 {
-    return this->m_wheelX;
+    return m_wheelX;
 }
 
 Cint MouseDataSDL::getWheelY() const
 {
-    return this->m_wheelY;
+    return m_wheelY;
 }
 
 const WheelDirection MouseDataSDL::getWheelDirection() const
 {
-    return this->m_wheelDirection;
+    return m_wheelDirection;
 }
 
 void MouseDataSDL::setPos( Cint x, Cint y )
@@ -72,8 +72,8 @@ void MouseDataSDL::setPos( Cint x, Cint y )
         CUL::String( x ) + ", " +
         CUL::String( y ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
-    this->m_x = x;
-    this->m_y = y;
+    m_x = x;
+    m_y = y;
 }
 
 void MouseDataSDL::setState( const MouseButtonIndex buttonIndex, const bool isUp )
@@ -82,7 +82,7 @@ void MouseDataSDL::setState( const MouseButtonIndex buttonIndex, const bool isUp
         CUL::String( buttonIndex ) + ", " +
         CUL::String( isUp ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
-    this->m_buttonStates[ buttonIndex ] = isUp;
+    m_buttonStates[ buttonIndex ] = isUp;
 }
 void MouseDataSDL::setWheel( Cint x, Cint y, const WheelDirection direction )
 {
@@ -91,7 +91,7 @@ void MouseDataSDL::setWheel( Cint x, Cint y, const WheelDirection direction )
         CUL::String( y ) + ", " +
         CUL::String( static_cast<unsigned>( direction ) ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
-    this->m_wheelX = x;
-    this->m_wheelY = y;
-    this->m_wheelDirection = direction;
+    m_wheelX = x;
+    m_wheelY = y;
+    m_wheelDirection = direction;
 }
