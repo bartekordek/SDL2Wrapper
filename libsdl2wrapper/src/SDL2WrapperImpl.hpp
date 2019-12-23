@@ -18,19 +18,20 @@ template <typename TYPE> using LckPrim = CUL::GUTILS::LckPrim<TYPE>;
 template <typename TYPE> using DumbPtr = CUL::GUTILS::DumbPtr<TYPE>;
 class MouseDataSDL;
 
-class SDL2WrapperImpl:
+class SDL2WrapperImpl final:
     public ISDL2Wrapper
 {
 public:
-    SDL2WrapperImpl( const WindowData& wd );
+    SDL2WrapperImpl();
 
-    virtual ~SDL2WrapperImpl();
+    ~SDL2WrapperImpl();
 
     void registerSDLEventObserver( ISDLInputObserver* eventObserver );
     void unRegisterSDLEventObserver( ISDLInputObserver* eventObserver );
 
 protected:
 private:
+    void init( const WindowData& wd ) override;
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
     void clearWindows() override;
@@ -51,6 +52,8 @@ private:
 
     void registerMouseEventListener( IMouseObserver* observer ) override;
     void unregisterMouseEventListener( IMouseObserver* observer ) override;
+
+    void registerOnInitCallback( const InitCallback& callback ) override;
 
     IMouseData& getMouseData( void ) override;
 
@@ -101,6 +104,8 @@ private:
     std::vector<std::function<void( const IMouseData& md )>> m_mouseCallbacks;
     std::vector<std::function<void( const WindowEventType wEt )>> m_winEventCallbacks;
 
+    InitCallback m_onInitCallback;
+
     std::set<IKeyboardObserver*> m_keyboardObservers;
     std::mutex m_keyboardObserversMtx;
     std::set<IMouseObserver*> m_mouseObservers;
@@ -109,7 +114,6 @@ private:
     std::mutex m_sdlEventObserversMtx;
 
 private: // Deleted methods.
-    SDL2WrapperImpl() = delete;
     SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
     SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
 

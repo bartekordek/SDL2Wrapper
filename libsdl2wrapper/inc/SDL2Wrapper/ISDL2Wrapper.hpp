@@ -20,6 +20,7 @@ using Keys = std::map<CUL::String, std::unique_ptr<IKey>>;
 using WindowEventType = WindowEvent::Type;
 using Cbool = const bool;
 using WindowCallback = std::function<void( const WindowEventType wEt )>;
+using InitCallback = std::function<void()>;
 
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
@@ -28,10 +29,9 @@ class SDL2WAPI ISDL2Wrapper:
 {
 public:
     ISDL2Wrapper();
-    ISDL2Wrapper( const ISDL2Wrapper& rhv ) = delete;
     virtual ~ISDL2Wrapper();
-    ISDL2Wrapper& operator=( const ISDL2Wrapper& rhv ) = delete;
 
+    virtual void init( const WindowData& wd ) = 0;
     virtual void refreshScreen() = 0;
     virtual void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
@@ -48,9 +48,8 @@ public:
 
     virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
     virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;
-
     virtual void registerWindowEventCallback( const WindowCallback& callback) = 0;
-
+    virtual void registerOnInitCallback( const InitCallback& callback ) = 0;
 
     virtual Keys& getKeyStates() = 0;
 
@@ -58,8 +57,13 @@ public:
 
 protected:
 private:
+
+private: // Deleted
+    ISDL2Wrapper( const ISDL2Wrapper& rhv ) = delete;
+    ISDL2Wrapper& operator=( const ISDL2Wrapper& rhv ) = delete;
+
 };
 
-SDL2WAPI ISDL2Wrapper* createSDL2Wrapper( const WindowData& winData );
+SDL2WAPI ISDL2Wrapper* createSDL2Wrapper();
 
 NAMESPACE_END( SDL2W )

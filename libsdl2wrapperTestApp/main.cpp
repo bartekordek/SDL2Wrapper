@@ -22,8 +22,9 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper( winData ) )
+        m_sdlW( SDL2W::createSDL2Wrapper() )
     {
+        m_sdlW->init( winData );
         m_activeWindow = m_sdlW->getMainWindow();
         m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
         m_activeWindow->addFPSCounter( m_fpsCounter.get() );

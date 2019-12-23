@@ -5,7 +5,7 @@
 
 using namespace SDL2W;
 
-ISDL2Wrapper* SDL2W::createSDL2Wrapper( const WindowData& winData )
+ISDL2Wrapper* SDL2W::createSDL2Wrapper()
 {
-    return new SDL2WrapperImpl( winData );
+    return new SDL2WrapperImpl();
 }

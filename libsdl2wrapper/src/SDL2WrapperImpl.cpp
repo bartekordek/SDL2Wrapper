@@ -11,7 +11,12 @@
 
 using namespace SDL2W;
 
-SDL2WrapperImpl::SDL2WrapperImpl( const WindowData& wd )
+SDL2WrapperImpl::SDL2WrapperImpl()
+{
+
+}
+
+void SDL2WrapperImpl::init( const WindowData& wd )
 {
     const auto sdlInitSuccess = SDL_Init(
         SDL_INIT_TIMER &
@@ -34,11 +39,16 @@ SDL2WrapperImpl::SDL2WrapperImpl( const WindowData& wd )
 
     m_windowFactory = new WindowCreatorConcrete();
     m_mainWindow = m_windowFactory->createWindow( wd );
-    m_windows[ m_mainWindow->getWindowID() ] = std::unique_ptr<IWindow>( m_mainWindow );
+    m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();
 
     m_mouseData.reset( new MouseDataSDL() );
+
+    if( m_onInitCallback )
+    {
+        m_onInitCallback();
+    }
 }
 
 SDL2WrapperImpl::~SDL2WrapperImpl()
@@ -338,6 +348,11 @@ void SDL2WrapperImpl::unregisterMouseEventListener( IMouseObserver* observer )
 {
     std::lock_guard<std::mutex> lock( m_mouseObserversMtx );
     m_mouseObservers.erase( observer );
+}
+
+void SDL2WrapperImpl::registerOnInitCallback( const InitCallback& callback )
+{
+    m_onInitCallback = callback;
 }
 
 void SDL2WrapperImpl::registerWindowEventListener(
