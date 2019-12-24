@@ -20,9 +20,9 @@ public:
 protected:
 private:
     void setKeyName( CsStr& keyName ) override;
-    CsStr& getKeyName()const override;
+    CsStr& getKeyName() const override;
     void setKeyIsDown( Cbool keyIsDown ) override;
-    Cbool getKeyIsDown()const override;
+    Cbool getKeyIsDown() const override;
 
     CUL::String m_keyName;
     bool m_keyIsDown = false;

@@ -90,10 +90,10 @@ public:
 
     virtual ~IWindow();
 
-    virtual const Vector3Di& getPos()const = 0;
+    virtual const Vector3Di& getPos() const = 0;
     virtual void setPos( const Vector3Di& pos ) = 0;
 
-    virtual const WindowSize& getSize()const = 0;
+    virtual const WindowSize& getSize() const = 0;
     virtual void setSize( const WindowSize& size ) = 0;
 
     virtual const Type getType() const = 0;

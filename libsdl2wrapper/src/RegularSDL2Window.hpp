@@ -42,10 +42,10 @@ private:
     operator SDL_Window*() override;
     operator const SDL_Window*( ) override;
 
-    const Vector3Di& getPos()const override;
+    const Vector3Di& getPos() const override;
     void setPos( const Vector3Di& pos ) override;
 
-    const WindowSize& getSize()const override;
+    const WindowSize& getSize() const override;
     void setSize( const WindowSize& size ) override;
 
     void setBackgroundColor( const ColorE color ) override;
@@ -60,7 +60,7 @@ private:
     ISprite* createSprite( const Path& path ) override;
     ISprite* createSprite( ITexture* tex ) override;
 
-    const ColorS getBackgroundColor()const override;
+    const ColorS getBackgroundColor() const override;
 
     const double getScreenRatio() const override;
 

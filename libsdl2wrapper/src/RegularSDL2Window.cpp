@@ -46,7 +46,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     auto& opengl = winData.withOpenGL;
     auto& winName = winData.name;
 
-    logMsg( "Creating window with:\n", CUL::LOG::Severity::INFO );
+    logMsg( "Creating window with:", CUL::LOG::Severity::INFO );
     logMsg( "Pos.x = " + CUL::String( pos.getX()) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
     logMsg( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
@@ -81,7 +81,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     Assert( targetWidth == resultWidth, "Result window width is different than target width." );
     Assert( targetHeight == resultHeight, "Result window height is different than target height." );
 
-    m_screenRatio = ( 1.0 * targetWidth ) / ( 1.0f * targetHeight );
+    m_screenRatio = ( 1.0 * targetWidth ) / ( 1.0 * targetHeight );
 
     return result;
 }

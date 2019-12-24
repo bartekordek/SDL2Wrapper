@@ -28,12 +28,12 @@ public:
 
     ITexture* getTexture() override;
     void setTexture( ITexture* texutre ) override;
-    const Type getType()const override;
+    const Type getType() const override;
 
-    const Position3DDMutexed& getPosition()const override;
-    const Position3DDMutexed& getRenderPosition()const override;
-    const Position3DDMutexed& getSizeReal()const override;
-    const Position3DDMutexed& getSizeAbs()const override;
+    const Position3DDMutexed& getPosition() const override;
+    const Position3DDMutexed& getRenderPosition() const override;
+    const Position3DDMutexed& getSizeReal() const override;
+    const Position3DDMutexed& getSizeAbs() const override;
 
     void setPosition( const Position3DDMutexed& newPosition ) override;
     void setX( CDbl val ) override;
@@ -41,21 +41,21 @@ public:
     void setZ( CDbl val ) override;
     void move( const Position3DDMutexed& moveVect ) override;
 
-    const Position3DDMutexed& getScale()const override;
+    const Position3DDMutexed& getScale() const override;
     void setScale( const Vector3Dd& scale ) override;
 
     void rotate(
         const CUL::Math::Angle& angle,
         CRT = RT::YAW ) override;
     const CUL::Math::Angle& getAngle(
-        CRT = RT::YAW )const override;
+        CRT = RT::YAW ) const override;
 
     void setPivot( const double px, const double py, const double pz, const PivotType type = PivotType::NORMALIZED ) override;
     void setPivotX( CDbl val, const PivotType type = PivotType::NORMALIZED ) override;
     void setPivotY( CDbl val, const PivotType type = PivotType::NORMALIZED ) override;
     void setPivotZ( CDbl val, const PivotType type = PivotType::NORMALIZED ) override;
 
-    const Position3DDMutexed& getPivot( const PivotType type = PivotType::NORMALIZED )const override;
+    const Position3DDMutexed& getPivot( const PivotType type = PivotType::NORMALIZED ) const override;
 
 protected:
 private:

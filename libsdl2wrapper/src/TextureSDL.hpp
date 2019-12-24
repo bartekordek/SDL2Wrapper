@@ -26,12 +26,12 @@ public:
 
     TextureSDL& operator=( const TextureSDL& val ) = delete;
 
-    SDL_Texture* getTexture()const;
+    SDL_Texture* getTexture() const;
     void setTexture(
         const SDL_Texture* texture,
         const Path& path );
-    const Vector3Dd& getSize()const override;
-    const Path& getPath()const override;
+    const Vector3Dd& getSize() const override;
+    const Path& getPath() const override;
 protected:
 private:
     SDL_Texture* m_texture = nullptr;

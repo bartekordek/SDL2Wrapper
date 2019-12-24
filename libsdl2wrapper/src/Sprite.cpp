@@ -25,27 +25,27 @@ void Sprite::setTexture( ITexture* inputTexture )
     calculateSpriteAbsoluteSize();
 }
 
-const IObject::Type Sprite::getType()const
+const IObject::Type Sprite::getType() const
 {
     return IObject::Type::SPRITE;
 }
 
-const Position3DDMutexed& Sprite::getPosition()const
+const Position3DDMutexed& Sprite::getPosition() const
 {
     return position;
 }
 
-const Position3DDMutexed& Sprite::getRenderPosition()const
+const Position3DDMutexed& Sprite::getRenderPosition() const
 {
     return positionWithOffset;
 }
 
-const Position3DDMutexed& Sprite::getSizeReal()const
+const Position3DDMutexed& Sprite::getSizeReal() const
 {
     return m_textureRealSize;
 }
 
-const Position3DDMutexed& Sprite::getSizeAbs()const
+const Position3DDMutexed& Sprite::getSizeAbs() const
 {
     return m_absoluteSize;
 }
@@ -80,7 +80,7 @@ void Sprite::move( const Position3DDMutexed& moveVect )
     calculatePositionOffset();
 }
 
-const Position3DDMutexed& Sprite::getScale()const
+const Position3DDMutexed& Sprite::getScale() const
 {
     return scale;
 }
@@ -104,7 +104,7 @@ void Sprite::rotate(
 }
 
 const CUL::Math::Angle& Sprite::getAngle(
-    CRT rotationType )const
+    CRT rotationType ) const
 {
     if( RT::YAW == rotationType )
     {
@@ -173,7 +173,7 @@ void Sprite::setPivotZ( CDbl val, const PivotType type )
     }
 }
 
-const Position3DDMutexed& Sprite::getPivot( const PivotType type )const
+const Position3DDMutexed& Sprite::getPivot( const PivotType type ) const
 {
     if( PivotType::ABSOLUTE == type )
     {

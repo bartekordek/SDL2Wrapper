@@ -14,7 +14,7 @@ TextureSDL::~TextureSDL()
     m_texture = nullptr;
 }
 
-SDL_Texture* TextureSDL::getTexture()const
+SDL_Texture* TextureSDL::getTexture() const
 {
     return m_texture;
 }
@@ -37,12 +37,12 @@ void TextureSDL::setTexture( const SDL_Texture* texture, const Path& path )
     m_path = path;
 }
 
-const Vector3Dd& TextureSDL::getSize()const
+const Vector3Dd& TextureSDL::getSize() const
 {
     return m_size;
 }
 
-const Path& TextureSDL::getPath()const
+const Path& TextureSDL::getPath() const
 {
     return m_path;
 }

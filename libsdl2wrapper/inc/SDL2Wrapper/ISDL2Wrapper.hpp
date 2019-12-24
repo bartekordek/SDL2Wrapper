@@ -43,7 +43,7 @@ public:
 
     virtual IWindow* getMainWindow() = 0;
 
-    virtual Cunt getInputLatency()const = 0;
+    virtual Cunt getInputLatency() const = 0;
     virtual void setInputLatency( Cunt latencyInUs ) = 0;
 
     virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;

@@ -59,14 +59,14 @@ private:
 
     Cunt getInputLatency() const override;
     void setInputLatency( Cunt latencyInUs ) override;
-    Cbool isKeyUp( CsStr& keyName )const override;
+    Cbool isKeyUp( CsStr& keyName ) const override;
     Keys& getKeyStates() override;
 
     IWindow* getMainWindow() override;
 
     IGui* getGui() override;
     void createKeys();
-    IKey* createKey( const int keySignature, const unsigned char* sdlKey )const;
+    IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
 
     void handleEveent( const SDL_Event& event );
 

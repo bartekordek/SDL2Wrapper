@@ -20,7 +20,7 @@ public:
 
     virtual void setBackgroundColor( const ColorS& color ) = 0;
     virtual void setBackgroundColor( const ColorE color ) = 0;
-    virtual const ColorS getBackgroundColor()const = 0;
+    virtual const ColorS getBackgroundColor() const = 0;
     virtual void clearBuffers() = 0;
     virtual void renderAll() = 0;
     virtual void updateScreenBuffers() = 0;

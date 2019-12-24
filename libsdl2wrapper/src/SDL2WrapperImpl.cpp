@@ -393,7 +393,7 @@ void SDL2WrapperImpl::notifyWindowEventCallbacks( const WindowEventType e )
     }
 }
 
-Cunt SDL2WrapperImpl::getInputLatency()const
+Cunt SDL2WrapperImpl::getInputLatency() const
 {
     return m_eventLatencyUs.getValCopy();
 }
@@ -403,7 +403,7 @@ void SDL2WrapperImpl::setInputLatency( Cunt latencyInUs )
     m_eventLatencyUs = latencyInUs;
 }
 
-const bool SDL2WrapperImpl::isKeyUp( CsStr& keyName )const
+const bool SDL2WrapperImpl::isKeyUp( CsStr& keyName ) const
 {
     return m_keys.at( keyName )->getKeyIsDown();
 }
