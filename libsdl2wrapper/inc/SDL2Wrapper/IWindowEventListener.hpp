@@ -25,8 +25,6 @@ NAMESPACE_END( WindowEvent )
 class SDL2WAPI IWindowEventObserver
 {
 public:
-
-
     IWindowEventObserver() = default;
     virtual ~IWindowEventObserver() = default;
 
@@ -34,6 +32,11 @@ public:
 
 protected:
 private:
+private: // Deleted:
+    IWindowEventObserver( const IWindowEventObserver& arg ) = delete;
+    IWindowEventObserver( IWindowEventObserver&& arg ) = delete;
+    IWindowEventObserver& operator=( const IWindowEventObserver& rhv ) = delete;
+    IWindowEventObserver& operator=( IWindowEventObserver&& rhv ) = delete;
 };
 
 NAMESPACE_END( SDL2W )

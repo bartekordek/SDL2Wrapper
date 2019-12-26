@@ -21,21 +21,17 @@ RegularSDL2Window::RegularSDL2Window( const WindowData& winData ):
 {
     m_window = createWindow( winData );
 
-    const auto id = SDL_GetWindowID( m_window );
-    setWindowID( id );
+    setWindowID( SDL_GetWindowID( m_window ) );
 
     m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED );
     Assert( nullptr != m_renderer, "Cannot create renderer." );
     SDL_RendererInfo info;
-    auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
-    CUL::String rendererInfoSummary( "Renderer INFO:\n" );
-    rendererInfoSummary += "Name = " + CUL::String( info.name ) + "\n";
-    rendererInfoSummary += "Max texture width = " + CUL::String( info.max_texture_width ) + "\n";
-    rendererInfoSummary += "Max texture height = " + CUL::String( info.max_texture_width ) + "\n";
-    logMsg( rendererInfoSummary, CUL::LOG::Severity::INFO );
-
+    const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
     Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
-
+    logMsg( "Renderer INFO:", CUL::LOG::Severity::INFO );
+    logMsg( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
+    logMsg( "Max texture width = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
+    logMsg( "Max texture height = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
     setName( winData.name );
 }
 
@@ -56,8 +52,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
         windowFlags |= SDL_WINDOW_OPENGL;
     }
 
-    auto targetWidth = static_cast<int>( size.getWidth() );
-    auto targetHeight = static_cast<int>( size.getHeight() );
+    const auto targetWidth = static_cast<int>( size.getWidth() );
+    const auto targetHeight = static_cast<int>( size.getHeight() );
 
     result = SDL_CreateWindow(
         winName.cStr(),
@@ -159,7 +155,7 @@ void RegularSDL2Window::renderAll()
             std::unique_ptr<SDL_Rect> srcRect;
 
             auto tex = sprite->getTexture();
-            auto texSDLW = static_cast< TextureSDL* >( tex );
+            const auto texSDLW = static_cast< TextureSDL* >( tex );
 
             const double angle = sprite->getAngle().getValueD();
 

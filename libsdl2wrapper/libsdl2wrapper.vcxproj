@@ -73,21 +73,33 @@
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)..\Build-Windows\$(Platform)_$(Configuration)\</OutDir>
     <IntDir>$(OutDir)intermediate\$(ProjectName)\$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,6 +115,7 @@
       <ProgramDataBaseFileName>
       </ProgramDataBaseFileName>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -134,13 +147,18 @@
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command>
-    </PreBuildEvent>
+      <Outputs>NonExistinngFile.SomeExtension</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -156,6 +174,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       <ProgramDataBaseFileName>
       </ProgramDataBaseFileName>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -187,13 +206,18 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command>
-    </PreBuildEvent>
+      <Outputs>NonExistinngFile.SomeExtension</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -206,6 +230,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)..\deps\imgui;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -237,13 +262,18 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command>
-    </PreBuildEvent>
+      <Outputs>NonExistinngFile.SomeExtension</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -256,6 +286,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       <AdditionalIncludeDirectories>$(ProjectDir)..\deps\CUL\libcul\inc;$(ProjectDir)..\deps\imgui;$(ProjectDir)..\deps\SDL2_image-2.0.3\include;$(ProjectDir)..\deps\SDL2\Build-Windows\include;$(ProjectDir)..\deps\SDL2\include;$(ProjectDir)src;$(ProjectDir)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -287,13 +318,18 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
       <Command>xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration)\*.pdb" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2_ttf-2.0.14\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform)\*.dll" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command>
-    </PreBuildEvent>
+      <Outputs>NonExistinngFile.SomeExtension</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
