@@ -82,6 +82,11 @@ void SDL2WrapperImpl::createKeys()
             m_keys[ keyName ] = std::unique_ptr<IKey>( key );
         }
     }
+    logMsg( "SDL2WrapperImpl::createKeys() - found keys:" );
+    for( const auto& key: m_keys )
+    {
+        logMsg( key.first );
+    }
     logMsg( "SDL2WrapperImpl::createKeys()::End" );
 }
 #ifdef _MSC_VER
