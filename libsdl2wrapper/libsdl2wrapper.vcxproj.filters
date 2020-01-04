@@ -75,9 +75,6 @@
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\IDevice.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\Input\IKey.hpp">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
