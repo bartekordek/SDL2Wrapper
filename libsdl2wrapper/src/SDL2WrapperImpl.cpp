@@ -377,7 +377,7 @@ void SDL2WrapperImpl::addMouseEventCallback( const MouseCallback& callback )
     m_mouseCallbacks.push_back( callback );
 }
 
-IMouseData& SDL2WrapperImpl::getMouseData( void )
+IMouseData& SDL2WrapperImpl::getMouseData()
 {
     return *m_mouseData;
 }

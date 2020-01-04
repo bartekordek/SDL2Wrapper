@@ -62,8 +62,6 @@ private:
 
     const ColorS getBackgroundColor() const override;
 
-    const double getScreenRatio() const override;
-
     WindowData m_windowData;
     ColorS m_backgroundColor;
     SDL_Window* m_window = nullptr;
@@ -71,8 +69,6 @@ private:
     std::set<IObject*> m_objects;
     std::mutex m_objectsMtx;
     TextureMap m_textures;
-
-    double m_screenRatio = 1.0;
 
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;
     RegularSDL2Window& operator=( const RegularSDL2Window& right ) = delete;

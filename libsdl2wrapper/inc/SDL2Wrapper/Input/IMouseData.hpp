@@ -16,8 +16,8 @@ enum class WheelDirection: short
 class SDL2WAPI IMouseData
 {
 public:
-    IMouseData( void ) = default;
-    virtual ~IMouseData( void ) = default;
+    IMouseData() = default;
+    virtual ~IMouseData() = default;
 
     virtual Cunt getMouseButtonCount() const = 0;
     virtual const bool isButtonDown( const MouseButtonIndex buttonIndex ) const = 0;

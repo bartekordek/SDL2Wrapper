@@ -55,7 +55,7 @@ private:
 
     void registerOnInitCallback( const InitCallback& callback ) override;
 
-    IMouseData& getMouseData( void ) override;
+    IMouseData& getMouseData() override;
 
     Cunt getInputLatency() const override;
     void setInputLatency( Cunt latencyInUs ) override;
@@ -115,7 +115,9 @@ private:
 
 private: // Deleted methods.
     SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;
+    SDL2WrapperImpl( SDL2WrapperImpl&& rhv ) = delete;
     SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
+    SDL2WrapperImpl& operator=( SDL2WrapperImpl&& rhv ) = delete;
 
 };
 

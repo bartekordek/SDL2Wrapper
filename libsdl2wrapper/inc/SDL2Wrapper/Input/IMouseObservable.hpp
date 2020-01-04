@@ -11,15 +11,15 @@ class SDL2WAPI IMouseObservable
 public:
     using MouseCallback = std::function<void( const IMouseData& md )>;
 
-    IMouseObservable( void ) = default;
-    virtual ~IMouseObservable( void ) = default;
+    IMouseObservable() = default;
+    virtual ~IMouseObservable() = default;
 
     virtual void addMouseEventCallback( const MouseCallback& callback ) = 0;
 
     virtual void registerMouseEventListener( IMouseObserver* observer ) = 0;
     virtual void unregisterMouseEventListener( IMouseObserver* observer ) = 0;
 
-    virtual IMouseData& getMouseData( void ) = 0;
+    virtual IMouseData& getMouseData() = 0;
 
 protected:
 private:

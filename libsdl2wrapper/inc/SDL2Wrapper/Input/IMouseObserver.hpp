@@ -8,8 +8,8 @@ NAMESPACE_BEGIN( SDL2W )
 class SDL2WAPI IMouseObserver
 {
 public:
-    IMouseObserver( void ) = default;
-    virtual ~IMouseObserver( void ) = default;
+    IMouseObserver() = default;
+    virtual ~IMouseObserver() = default;
 
     virtual void onMouseEvent( const IMouseData& md ) = 0;
 

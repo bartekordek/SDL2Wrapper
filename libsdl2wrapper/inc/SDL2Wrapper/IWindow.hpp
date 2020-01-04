@@ -104,7 +104,6 @@ public:
 
     void setWindowID( Cunt id );
     const unsigned int getWindowID() const;
-    virtual const double getScreenRatio() const = 0;
 
     virtual operator ::SDL_Window*() = 0;
     virtual operator const ::SDL_Window*( ) = 0;

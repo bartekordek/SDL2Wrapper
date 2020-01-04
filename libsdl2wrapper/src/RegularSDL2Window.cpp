@@ -77,8 +77,6 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     Assert( targetWidth == resultWidth, "Result window width is different than target width." );
     Assert( targetHeight == resultHeight, "Result window height is different than target height." );
 
-    m_screenRatio = ( 1.0 * targetWidth ) / ( 1.0 * targetHeight );
-
     return result;
 }
 
@@ -344,11 +342,6 @@ void RegularSDL2Window::removeObject( IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
     m_objects.erase( object );
-}
-
-const double RegularSDL2Window::getScreenRatio() const
-{
-    return m_screenRatio;
 }
 
 const ColorS RegularSDL2Window::getBackgroundColor() const
