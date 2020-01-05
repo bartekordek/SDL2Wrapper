@@ -54,7 +54,6 @@ struct SDL2WAPI WindowData
         name( arg.name ),
         withOpenGL( arg.withOpenGL )
     {
-
     }
 
     WindowData& operator=( const WindowData& rhv )
@@ -105,7 +104,7 @@ public:
     void setWindowID( Cunt id );
     const unsigned int getWindowID() const;
 
-    virtual operator ::SDL_Window*() = 0;
+    virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
 protected:
@@ -116,7 +115,6 @@ private:
 
     IWindow( const IWindow& wind ) = delete;
     IWindow& operator=( const IWindow& window ) = delete;
-
 };
 
 #ifdef _MSC_VER

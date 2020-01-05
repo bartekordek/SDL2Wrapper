@@ -26,7 +26,6 @@
 *.sdf
 *.suo
 *.tlog
-*.user
 *cache
 *~ml
 .vs

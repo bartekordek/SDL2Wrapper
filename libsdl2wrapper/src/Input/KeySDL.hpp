@@ -5,7 +5,6 @@
 
 NAMESPACE_BEGIN( SDL2W )
 
-
 #ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable: 4820 )
@@ -30,7 +29,6 @@ private:
 private: // Deleted
     KeySDL( const KeySDL& key ) = delete;
     KeySDL& operator=( const KeySDL& key ) = delete;
-
 };
 
 #ifdef _MSC_VER

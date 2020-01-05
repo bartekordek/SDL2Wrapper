@@ -39,7 +39,7 @@ private:
     void addObject( IObject* object ) override;
     void removeObject( IObject* object ) override;
 
-    operator SDL_Window*() override;
+    operator SDL_Window*( ) override;
     operator const SDL_Window*( ) override;
 
     const Vector3Di& getPos() const override;
@@ -72,7 +72,6 @@ private:
 
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;
     RegularSDL2Window& operator=( const RegularSDL2Window& right ) = delete;
-
 };
 
 #ifdef _MSC_VER

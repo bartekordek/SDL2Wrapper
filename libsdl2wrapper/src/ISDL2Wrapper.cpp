@@ -4,10 +4,8 @@ using namespace SDL2W;
 
 ISDL2Wrapper::ISDL2Wrapper()
 {
-
 }
 
 ISDL2Wrapper::~ISDL2Wrapper()
 {
-
 }

@@ -43,7 +43,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     auto& winName = winData.name;
 
     logMsg( "Creating window with:", CUL::LOG::Severity::INFO );
-    logMsg( "Pos.x = " + CUL::String( pos.getX()) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
+    logMsg( "Pos.x = " + CUL::String( pos.getX() ) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
     logMsg( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
@@ -57,8 +57,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 
     result = SDL_CreateWindow(
         winName.cStr(),
-        static_cast< int >( pos.getX() ),
-        static_cast< int >( pos.getY() ),
+        static_cast<int>( pos.getX() ),
+        static_cast<int>( pos.getY() ),
         targetWidth,
         targetHeight,
         windowFlags );
@@ -80,7 +80,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     return result;
 }
 
-RegularSDL2Window::operator SDL_Window*()
+RegularSDL2Window::operator SDL_Window*( )
 {
     return m_window;
 }
@@ -134,10 +134,10 @@ void RegularSDL2Window::renderAll()
         m_backgroundColor.getGUI(),
         m_backgroundColor.getBUI(),
         m_backgroundColor.getAUI() );
-    std::lock_guard<std::mutex> objectsMutexGuard(m_objectsMtx);
+    std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
     for( auto& object : m_objects )
     {
-        if ( IObject::Type::SPRITE == object->getType() )
+        if( IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
             auto& pos = object->getRenderPosition();
@@ -153,7 +153,7 @@ void RegularSDL2Window::renderAll()
             std::unique_ptr<SDL_Rect> srcRect;
 
             auto tex = sprite->getTexture();
-            const auto texSDLW = static_cast< TextureSDL* >( tex );
+            const auto texSDLW = static_cast<TextureSDL*>( tex );
 
             const double angle = sprite->getAngle().getValueD();
 
@@ -328,7 +328,7 @@ ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& pa
         " does not exist." );
 
     texSDL->setTexture( tex, path );
-    m_textures[ path.getPath() ] = std::unique_ptr<ITexture>( texSDL );
+    m_textures[path.getPath()] = std::unique_ptr<ITexture>( texSDL );
     return texSDL;
 }
 

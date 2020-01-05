@@ -18,7 +18,6 @@ public:
     virtual void setKeyIsDown( Cbool isDown ) = 0;
 protected:
 private:
-
 };
 
 NAMESPACE_END( SDL2W )

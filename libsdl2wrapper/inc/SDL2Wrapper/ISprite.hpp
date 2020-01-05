@@ -18,10 +18,9 @@ public:
 
     virtual ITexture* getTexture() = 0;
     virtual void setTexture( ITexture* texture ) = 0;
-        
+
     virtual ~ISprite();
 private:
-
 };
 
 NAMESPACE_END( CUL )

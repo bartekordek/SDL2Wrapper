@@ -118,7 +118,6 @@ private: // Deleted methods.
     SDL2WrapperImpl( SDL2WrapperImpl&& rhv ) = delete;
     SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
     SDL2WrapperImpl& operator=( SDL2WrapperImpl&& rhv ) = delete;
-
 };
 
 NAMESPACE_END( SDL2W )

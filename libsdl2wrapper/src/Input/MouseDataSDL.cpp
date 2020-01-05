@@ -9,7 +9,6 @@ using Cint = SDL2W::Cint;
 
 MouseDataSDL::MouseDataSDL()
 {
-
 }
 
 MouseDataSDL::~MouseDataSDL()
@@ -82,7 +81,7 @@ void MouseDataSDL::setState( const MouseButtonIndex buttonIndex, const bool isUp
         CUL::String( buttonIndex ) + ", " +
         CUL::String( isUp ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
-    m_buttonStates[ buttonIndex ] = isUp;
+    m_buttonStates[buttonIndex] = isUp;
 }
 void MouseDataSDL::setWheel( Cint x, Cint y, const WheelDirection direction )
 {

@@ -15,7 +15,6 @@ IWindow* WindowCreatorConcrete::createWindow( const WindowData& winData )
     return window;
 }
 
-
 WindowCreatorConcrete::~WindowCreatorConcrete()
 {
 }

@@ -48,7 +48,7 @@ public:
 
     virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
     virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;
-    virtual void registerWindowEventCallback( const WindowCallback& callback) = 0;
+    virtual void registerWindowEventCallback( const WindowCallback& callback ) = 0;
     virtual void registerOnInitCallback( const InitCallback& callback ) = 0;
 
     virtual Keys& getKeyStates() = 0;
@@ -61,7 +61,6 @@ private:
 private: // Deleted
     ISDL2Wrapper( const ISDL2Wrapper& rhv ) = delete;
     ISDL2Wrapper& operator=( const ISDL2Wrapper& rhv ) = delete;
-
 };
 
 SDL2WAPI ISDL2Wrapper* createSDL2Wrapper();

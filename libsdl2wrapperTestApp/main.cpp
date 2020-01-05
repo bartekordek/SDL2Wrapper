@@ -116,7 +116,7 @@ public:
 
     void onWindowEvent( const WinEventType windowEventType ) override
     {
-        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::String( static_cast< short >( windowEventType ) ) );
+        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::String( static_cast<short>( windowEventType ) ) );
         if( WinEventType::CLOSE == windowEventType )
         {
             m_sdlW->stopEventLoop();
@@ -219,7 +219,6 @@ private:
     Pos3D obj2Pos0;
     Pos3D obj3Pos;
     Pos3D obj4Pos;
-
 };
 
 #if _MSC_VER

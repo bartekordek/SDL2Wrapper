@@ -4,7 +4,6 @@ using ISprite = SDL2W::ISprite;
 
 ISprite::ISprite()
 {
-
 }
 
 ISprite::~ISprite()

@@ -21,7 +21,6 @@ protected:
 private:
     WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
     WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
-
 };
 
 NAMESPACE_END( SDL2W )

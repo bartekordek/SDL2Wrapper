@@ -19,7 +19,7 @@ ITexture* Sprite::getTexture()
 
 void Sprite::setTexture( ITexture* inputTexture )
 {
-    m_texture = const_cast< ITexture* >( inputTexture );
+    m_texture = const_cast<ITexture*>( inputTexture );
     m_textureRealSize = inputTexture->getSize();
     m_textureRealSize.setZ( 1.0 );
     calculateSpriteAbsoluteSize();
@@ -113,9 +113,9 @@ const CUL::Math::Angle& Sprite::getAngle(
     return yaw; // TODO?
 }
 
-void Sprite::setPivot( 
-    const double px, 
-    const double py, 
+void Sprite::setPivot(
+    const double px,
+    const double py,
     const double pz,
     const PivotType type )
 {

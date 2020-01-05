@@ -17,7 +17,6 @@ protected:
 private:
     ISDLInputObserver( const ISDLInputObserver& arg ) = delete;
     ISDLInputObserver& operator=( const ISDLInputObserver& rhv ) = delete;
-
 };
 
 NAMESPACE_END( SDL2W )

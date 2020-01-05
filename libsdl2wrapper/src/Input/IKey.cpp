@@ -4,10 +4,8 @@ using namespace SDL2W;
 
 IKey::IKey()
 {
-
 }
 
 IKey::~IKey()
 {
-
 }

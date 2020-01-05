@@ -5,7 +5,6 @@ using namespace SDL2W;
 
 TextureSDL::TextureSDL()
 {
-
 }
 
 TextureSDL::~TextureSDL()

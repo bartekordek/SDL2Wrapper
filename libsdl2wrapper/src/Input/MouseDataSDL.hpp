@@ -36,7 +36,6 @@ private:
     int m_wheelX = 0;
     int m_wheelY = 0;
     WheelDirection m_wheelDirection = WheelDirection::NONE;
-
 };
 #ifdef _MSC_VER
 #pragma warning( pop )
