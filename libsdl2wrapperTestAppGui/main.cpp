@@ -135,8 +135,8 @@ private:
         CUL::ThreadUtils::setCurrentThreadName( "TestApp::objectManagmentFun" );
         unsigned sleepTimeinMs = 18;
         double i = 0.0;
-        CUL::Math::Angle obj2Angle;
-        CUL::Math::Angle obj3Angle;
+        CUL::MATH::Angle obj2Angle;
+        CUL::MATH::Angle obj3Angle;
 
         while( runLoop )
         {

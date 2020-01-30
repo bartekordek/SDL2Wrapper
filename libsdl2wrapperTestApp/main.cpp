@@ -145,7 +145,7 @@ private:
         CUL::ThreadUtils::setCurrentThreadName( "TestApp::objectManagmentFun" );
         if( m_pikachuBmp.exists() )
         {
-            CUL::Math::Vector3Dd someScale;
+            CUL::MATH::Vector3Dd someScale;
             m_obj1->setScale( someScale );
 
             obj3Pos.setXYZ( 300, 300, 0 );
@@ -164,8 +164,8 @@ private:
 
             unsigned sleepTimeinMs = 2;
             double i = 0.0;
-            CUL::Math::Angle obj2Angle;
-            CUL::Math::Angle obj3Angle;
+            CUL::MATH::Angle obj2Angle;
+            CUL::MATH::Angle obj3Angle;
 
             while( runLoop )
             {

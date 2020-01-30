@@ -14,7 +14,7 @@
 
 using namespace SDL2W;
 
-using IPivot = CUL::Math::IPivot;
+using IPivot = CUL::MATH::IPivot;
 
 RegularSDL2Window::RegularSDL2Window( const WindowData& winData ):
     m_windowData( winData )

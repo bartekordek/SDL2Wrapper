@@ -24,8 +24,8 @@ using WindowSize = Size2D;
 #ifdef _MSC_VER
 class SDL2WAPI CUL::IName;
 #endif
-using Vector3Di = CUL::Math::Vector3Di;
-using Vector3Du = CUL::Math::Vector3Du;
+using Vector3Di = CUL::MATH::Vector3Di;
+using Vector3Du = CUL::MATH::Vector3Du;
 using ColorS = CUL::Graphics::ColorS;
 using ColorE = CUL::Graphics::ColorE;
 using IName = CUL::IName;

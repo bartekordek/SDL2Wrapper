@@ -85,7 +85,7 @@ const Position3DDMutexed& Sprite::getScale() const
     return scale;
 }
 
-void Sprite::setScale( const CUL::Math::Vector3Dd& scnewScale )
+void Sprite::setScale( const CUL::MATH::Vector3Dd& scnewScale )
 {
     scale = scnewScale;
     calculateSpriteAbsoluteSize();
@@ -97,13 +97,13 @@ void Sprite::calculatePositionOffset()
 }
 
 void Sprite::rotate(
-    const CUL::Math::Angle& angle,
+    const CUL::MATH::Angle& angle,
     CRT )
 {
     yaw = angle;
 }
 
-const CUL::Math::Angle& Sprite::getAngle(
+const CUL::MATH::Angle& Sprite::getAngle(
     CRT rotationType ) const
 {
     if( RT::YAW == rotationType )

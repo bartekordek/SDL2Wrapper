@@ -9,7 +9,7 @@ NAMESPACE_BEGIN( SDL2W )
 
 using ITexture = CUL::Graphics::ITexture;
 using Path = CUL::FS::Path;
-using Vector3Dd = CUL::Math::Vector3Dd;
+using Vector3Dd = CUL::MATH::Vector3Dd;
 
 #ifdef _MSC_VER
 #pragma warning( push )

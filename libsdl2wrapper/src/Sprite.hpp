@@ -9,10 +9,10 @@
 
 NAMESPACE_BEGIN( SDL2W )
 
-using PivotType = CUL::Math::IPivot::PivotType;
-using Vector3Dd = CUL::Math::Vector3Dd;
+using PivotType = CUL::MATH::IPivot::PivotType;
+using Vector3Dd = CUL::MATH::Vector3Dd;
 
-using RT = CUL::Math::RotationType;
+using RT = CUL::MATH::RotationType;
 using CRT = const RT;
 
 using CDbl = CUL::Graphics::CDbl;
@@ -45,9 +45,9 @@ public:
     void setScale( const Vector3Dd& scale ) override;
 
     void rotate(
-        const CUL::Math::Angle& angle,
+        const CUL::MATH::Angle& angle,
         CRT = RT::YAW ) override;
-    const CUL::Math::Angle& getAngle(
+    const CUL::MATH::Angle& getAngle(
         CRT = RT::YAW ) const override;
 
     void setPivot( const double px, const double py, const double pz, const PivotType type = PivotType::NORMALIZED ) override;
@@ -72,7 +72,7 @@ private:
     Position3DDMutexed scale = Position3DDMutexed( 1.0, 1.0, 0.0 );
     Position3DDMutexed m_pivotNormalised = Position3DDMutexed( 0.5, 0.5, 0.5 );
     Position3DDMutexed m_pivotAbsolute = Position3DDMutexed( 0.5, 0.5, 0.5 );
-    CUL::Math::Angle yaw = 0.0;
+    CUL::MATH::Angle yaw = 0.0;
 };
 
 NAMESPACE_END( SDL2W )
