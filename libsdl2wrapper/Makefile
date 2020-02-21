@@ -1,4 +1,4 @@
-ARCH := $(shell getconf LONG_BIT)
+
 ifeq ($(OS),Windows_NT)
 DYN_LIB_EXT := .dll
 BUILD_ROOT := Build-Cygwin
@@ -7,14 +7,12 @@ DYN_LIB_EXT := .so
 BUILD_ROOT := Build-Linux
 endif
 
-
 DIAG_FLAG := -fdiagnostics-color=always
-COMPILER := g++
-#COMPILER := clang++-6.0
+COMPILER := g++ #clang++-6.0
 CPP_VERSION := -std=c++17
 CC := $(COMPILER) $(CPP_VERSION) $(DIAG_FLAG) \
--fPIC -pedantic -Wall
-CC_LINK := $(COMPILER) $(CPP_VERSION) $(DIAG_FLAG) -shared -fPIC
+-fPIC -pedantic -Wall -Werror
+CC_LINK := $(COMPILER) $(DIAG_FLAG) -shared -fPIC
 
 DEBUG_FLAGS = -ggdb3
 RELEASE_FLAGS = -Ofast
@@ -74,11 +72,11 @@ release:
 
 $(OUTPUT_DEBUG): $(OBJ_DEBUG_FILES)
 	@mkdir -p $(dir $@)
-	$(CC_LINK) -o $@ $(OBJ_DEBUG_FILES) $(DEBUG_FLAGS) $(IMPORT_LIBS_DEBUG) $(IMPORT_FILES)
+	$(CC_LINK) -o $@ $(OBJ_DEBUG_FILES) $(DEBUG_FLAGS) $(IMPORT_FILES)
 
 $(OUTPUT_RELEASE): $(OBJ_RELEASE_FILES)
 	@mkdir -p $(dir $@)
-	$(CC_LINK) -o $@ $(OBJ_RELEASE_FILES) $(RELEASE_FLAGS) $(IMPORT_LIBS_RELEASE) $(IMPORT_FILES)
+	$(CC_LINK) -o $@ $(OBJ_RELEASE_FILES) $(RELEASE_FLAGS) $(IMPORT_FILES)
 
 $(OBJ_DEBUG_DIR)%.o: %.cpp
 	@mkdir -p $(dir $@)
