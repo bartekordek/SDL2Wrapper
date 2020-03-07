@@ -18,6 +18,11 @@ template <typename TYPE> using LckPrim = CUL::GUTILS::LckPrim<TYPE>;
 template <typename TYPE> using DumbPtr = CUL::GUTILS::DumbPtr<TYPE>;
 class MouseDataSDL;
 
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4820 )
+#endif
+
 class SDL2WrapperImpl final:
     public ISDL2Wrapper
 {
@@ -119,5 +124,9 @@ private: // Deleted methods.
     SDL2WrapperImpl& operator=( const SDL2WrapperImpl& rhv ) = delete;
     SDL2WrapperImpl& operator=( SDL2WrapperImpl&& rhv ) = delete;
 };
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 NAMESPACE_END( SDL2W )
