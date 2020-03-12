@@ -15,6 +15,11 @@ using SDL2WinData = SDL2W::WindowData;
 
 SDL2WinData winData;
 
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4820 )
+#endif
+
 class TestApp final:
     public SDL2W::IKeyboardObserver,
     public SDL2W::IMouseObserver,
@@ -220,6 +225,11 @@ private:
     Pos3D obj3Pos;
     Pos3D obj4Pos;
 };
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
 
 #if _MSC_VER
 #pragma warning( push )
