@@ -8,10 +8,6 @@ Sprite::Sprite()
 {
 }
 
-Sprite::~Sprite()
-{
-}
-
 ITexture* Sprite::getTexture()
 {
     return m_texture;
@@ -19,13 +15,13 @@ ITexture* Sprite::getTexture()
 
 void Sprite::setTexture( ITexture* inputTexture )
 {
-    m_texture = const_cast<ITexture*>( inputTexture );
+    m_texture = inputTexture;
     m_textureRealSize = inputTexture->getSize();
     m_textureRealSize.setZ( 1.0 );
     calculateSpriteAbsoluteSize();
 }
 
-const IObject::Type Sprite::getType() const
+IObject::Type Sprite::getType() const
 {
     return IObject::Type::SPRITE;
 }
@@ -196,4 +192,8 @@ void Sprite::calculatePivotAbsolute()
 void Sprite::calculatePivotNormalised()
 {
     m_pivotNormalised = m_pivotAbsolute / m_absoluteSize;
+}
+
+Sprite::~Sprite()
+{
 }

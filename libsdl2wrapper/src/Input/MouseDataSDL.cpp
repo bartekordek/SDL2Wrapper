@@ -11,11 +11,7 @@ MouseDataSDL::MouseDataSDL()
 {
 }
 
-MouseDataSDL::~MouseDataSDL()
-{
-}
-
-Cunt MouseDataSDL::getMouseButtonCount() const
+unsigned int MouseDataSDL::getMouseButtonCount() const
 {
     return static_cast<unsigned>( m_buttonStates.size() );
 }
@@ -28,7 +24,7 @@ Cunt MouseDataSDL::getMouseButtonCount() const
 #pragma warning( push )
 #pragma warning( disable: 5045 )
 #endif
-const bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) const
+bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) const
 {
     if( m_buttonStates.size() < buttonIndex )
     {
@@ -40,27 +36,27 @@ const bool MouseDataSDL::isButtonDown( const MouseButtonIndex buttonIndex ) cons
 #pragma warning( pop )
 #endif
 
-Cint MouseDataSDL::getX() const
+int MouseDataSDL::getX() const
 {
     return m_x;
 }
 
-Cint MouseDataSDL::getY() const
+int MouseDataSDL::getY() const
 {
     return m_y;
 }
 
-Cint MouseDataSDL::getWheelX() const
+int MouseDataSDL::getWheelX() const
 {
     return m_wheelX;
 }
 
-Cint MouseDataSDL::getWheelY() const
+int MouseDataSDL::getWheelY() const
 {
     return m_wheelY;
 }
 
-const WheelDirection MouseDataSDL::getWheelDirection() const
+WheelDirection MouseDataSDL::getWheelDirection() const
 {
     return m_wheelDirection;
 }
@@ -83,6 +79,7 @@ void MouseDataSDL::setState( const MouseButtonIndex buttonIndex, const bool isUp
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
     m_buttonStates[buttonIndex] = isUp;
 }
+
 void MouseDataSDL::setWheel( Cint x, Cint y, const WheelDirection direction )
 {
     const CUL::String log = "MouseDataSDL::setState( " +
@@ -93,4 +90,8 @@ void MouseDataSDL::setWheel( Cint x, Cint y, const WheelDirection direction )
     m_wheelX = x;
     m_wheelY = y;
     m_wheelDirection = direction;
+}
+
+MouseDataSDL::~MouseDataSDL()
+{
 }

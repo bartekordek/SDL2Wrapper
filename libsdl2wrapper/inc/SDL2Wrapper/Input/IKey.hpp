@@ -14,7 +14,7 @@ public:
     virtual ~IKey();
     virtual void setKeyName( CsStr& keyName ) = 0;
     virtual CsStr& getKeyName() const = 0;
-    virtual Cbool getKeyIsDown() const = 0;
+    virtual bool getKeyIsDown() const = 0;
     virtual void setKeyIsDown( Cbool isDown ) = 0;
 protected:
 private:

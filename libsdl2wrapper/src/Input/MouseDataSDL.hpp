@@ -15,14 +15,14 @@ public:
     MouseDataSDL();
     virtual ~MouseDataSDL();
 
-    Cunt getMouseButtonCount() const override;
-    const bool isButtonDown( const MouseButtonIndex buttonIndex ) const override;
-    Cint getX() const override;
-    Cint getY() const override;
+    unsigned getMouseButtonCount() const override;
+    bool isButtonDown( const MouseButtonIndex buttonIndex ) const override;
+    int getX() const override;
+    int getY() const override;
 
-    Cint getWheelX() const override;
-    Cint getWheelY() const override;
-    const WheelDirection getWheelDirection() const override;
+    int getWheelX() const override;
+    int getWheelY() const override;
+    WheelDirection getWheelDirection() const override;
 
     void setPos( Cint x, Cint y );
     void setState( const MouseButtonIndex buttonIndex, const bool isUp );

@@ -28,7 +28,7 @@ public:
 
     ITexture* getTexture() override;
     void setTexture( ITexture* texutre ) override;
-    const Type getType() const override;
+    Type getType() const override;
 
     const Position3DDMutexed& getPosition() const override;
     const Position3DDMutexed& getRenderPosition() const override;

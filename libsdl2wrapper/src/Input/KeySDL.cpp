@@ -6,10 +6,6 @@ KeySDL::KeySDL()
 {
 }
 
-KeySDL::~KeySDL()
-{
-}
-
 void KeySDL::setKeyName( CsStr& name )
 {
     m_keyName = name;
@@ -25,7 +21,11 @@ void KeySDL::setKeyIsDown( Cbool keyIsDow )
     m_keyIsDown = keyIsDow;
 }
 
-const bool KeySDL::getKeyIsDown() const
+bool KeySDL::getKeyIsDown() const
 {
     return m_keyIsDown;
+}
+
+KeySDL::~KeySDL()
+{
 }

@@ -20,7 +20,7 @@ void IWindow::setWindowID( Cunt id )
     m_winId = id;
 }
 
-const unsigned int IWindow::getWindowID() const
+unsigned int IWindow::getWindowID() const
 {
     return m_winId;
 }
