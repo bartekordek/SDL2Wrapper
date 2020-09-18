@@ -45,3 +45,5 @@ libsdl2wrapperTestApp/nbproject/Package-*
 libsdl2wrapperTestApp/nbproject/private/
 runDir/*.dll
 runDir/*.so
+
+Build-*

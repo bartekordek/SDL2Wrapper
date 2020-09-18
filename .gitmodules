@@ -1,3 +1,6 @@
 [submodule "deps/CUL"]
 	path = deps/CUL
 	url = https://github.com/bartekordek/CUL.git
+[submodule "deps/sdl2-repo"]
+	path = deps/sdl2-repo
+	url = git@github.com:spurious/SDL-mirror.git
