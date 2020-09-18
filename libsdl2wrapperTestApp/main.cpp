@@ -8,12 +8,14 @@
 #include "CUL/STL_IMPORTS/STD_thread.hpp"
 #include "CUL/STL_IMPORTS/STD_cmath.hpp"
 #include "CUL/Log/ILogContainer.hpp"
+#include "CUL/GenericUtils/IConfigFile.hpp"
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
 using WinEventType = SDL2W::WindowEvent::Type;
 using SDL2WinData = SDL2W::WindowData;
 
 SDL2WinData winData;
+std::unique_ptr<CUL::GUTILS::IConfigFile> configFile;
 
 #ifdef _MSC_VER
 #pragma warning( push )
@@ -29,27 +31,32 @@ public:
     TestApp():
         m_sdlW( SDL2W::createSDL2Wrapper() )
     {
-        m_sdlW->init( winData );
+        configFile.reset( CUL::GUTILS::IConfigFile::createFile( "../media/Config.txt" ) );
+        m_sdlW->init( winData, configFile.get() );
         m_activeWindow = m_sdlW->getMainWindow();
         m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
         m_activeWindow->addFPSCounter( m_fpsCounter.get() );
         m_fpsCounter->start();
         m_sdlW->setInputLatency( 1024 );
 
+        m_pikachuBmp = configFile->getValue( "m_pikachuBmp" );
+        m_pikachuPng = configFile->getValue( "m_pikachuPng" );
+
         if( m_pikachuBmp.exists() )
         {
             auto aw = m_activeWindow;
-            m_obj1 = m_sdlW->createSprite( m_pikachuPng, aw );
+            m_obj1 = m_sdlW->createSprite( m_pikachuBmp, aw );
             m_obj2 = m_sdlW->createSprite( m_pikachuPng, aw );
-            m_obj3 = m_sdlW->createSprite( m_pikachuBmp, aw );
+            m_obj3 = m_sdlW->createSprite( m_pikachuPng, aw );
             m_obj4 = m_sdlW->createSprite( m_pikachuBmp, aw );
-            m_obj5 = m_sdlW->createSprite( m_pikachuBmp, aw );
+            m_obj5 = m_sdlW->createSprite( m_pikachuPng, aw );
             obj4Pos = m_obj4->getPosition();
         }
         m_keyObservable = m_sdlW.get();
     }
 
     TestApp( const TestApp& rhv ) = delete;
+    TestApp( TestApp&& rhv ) = delete;
 
     ~TestApp()
     {
@@ -160,6 +167,7 @@ private:
             Pos3D somePosition2( 600, 600, 0 );
             Pos3D somePosition3( 800, 500, 0 );
             Pos3D obj2Pos;
+            obj4Pos.setXYZ( 380, 380, 0 );
             m_obj1->setPosition( obj1Pos );
             m_obj2->setPosition( somePosition2 );
             m_obj3->setPivotX( 0.1 );
@@ -211,8 +219,8 @@ private:
     std::thread m_objectMoveThread;
     std::thread m_dataInfoThread;
 
-    CUL::FS::Path m_pikachuBmp = CUL::FS::Path( "../media/pikaczu.bmp" );
-    CUL::FS::Path m_pikachuPng = CUL::FS::Path( "../media/pikaczu.png" );
+    CUL::FS::Path m_pikachuBmp;
+    CUL::FS::Path m_pikachuPng;
 
     SDL2W::ISprite* m_obj1 = nullptr;
     SDL2W::ISprite* m_obj2 = nullptr;
