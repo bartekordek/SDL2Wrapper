@@ -6,13 +6,18 @@
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
 #include "CUL/STL_IMPORTS/STD_mutex.hpp"
+#include "CUL/STL_IMPORTS/STD_utility.hpp"
+
 #include "CUL/Video/IFPSCounter.hpp"
+#include "CUL/Graphics/IImageLoader.hpp"
 
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
 
 NAMESPACE_BEGIN( SDL2W )
+
+using SurfaceImage = std::pair<SDL_Surface*, CUL::Graphics::IImage*>;
 
 #ifdef _MSC_VER
 #pragma warning( push )
@@ -24,14 +29,14 @@ class RegularSDL2Window final:
 {
 public:
     RegularSDL2Window() = delete;
-    RegularSDL2Window( const WindowData& winData );
+    RegularSDL2Window( const WindowData& winData, ISDL2Wrapper* wrapper );
 
     ~RegularSDL2Window();
 
 protected:
 private:
     SDL_Window* createWindow( const WindowData& winDatae );
-    SDL_Surface* createSurface( const Path& path );
+    SurfaceImage createSurface( const Path& path );
     ITexture* createTexture( SDL_Surface* surface, const Path& path );
     void destroyObjects();
 
@@ -54,13 +59,13 @@ private:
     void renderAll() override;
     void updateScreenBuffers() override;
 
-    const IWindow::Type getType() const override;
+    IWindow::Type getType() const override;
 
     ITexture* createTexture( const Path& path ) override;
     ISprite* createSprite( const Path& path ) override;
     ISprite* createSprite( ITexture* tex ) override;
 
-    const ColorS getBackgroundColor() const override;
+    ColorS getBackgroundColor() const override;
 
     WindowData m_windowData;
     ColorS m_backgroundColor;
@@ -69,9 +74,13 @@ private:
     std::set<IObject*> m_objects;
     std::mutex m_objectsMtx;
     TextureMap m_textures;
+    CUL::Graphics::IImageLoader* m_il = nullptr;
+    ISDL2Wrapper* m_wrapper = nullptr;
 
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;
+    RegularSDL2Window( RegularSDL2Window&& win ) = delete;
     RegularSDL2Window& operator=( const RegularSDL2Window& right ) = delete;
+    RegularSDL2Window& operator=( RegularSDL2Window&& right ) = delete;
 };
 
 #ifdef _MSC_VER

@@ -13,7 +13,7 @@ class WindowCreatorConcrete final:
 public:
     explicit WindowCreatorConcrete();
 
-    IWindow* createWindow( const WindowData& winData ) override;
+    IWindow* createWindow( const WindowData& winData, ISDL2Wrapper* wrapper ) override;
 
     ~WindowCreatorConcrete();
 

@@ -9,9 +9,9 @@ WindowCreatorConcrete::WindowCreatorConcrete()
 {
 }
 
-IWindow* WindowCreatorConcrete::createWindow( const WindowData& winData )
+IWindow* WindowCreatorConcrete::createWindow( const WindowData& winData, ISDL2Wrapper* wrapper )
 {
-    auto window = new RegularSDL2Window( winData );
+    auto window = new RegularSDL2Window( winData, wrapper );
     return window;
 }
 

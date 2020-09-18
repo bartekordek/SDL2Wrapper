@@ -24,6 +24,8 @@ using WindowSize = Size2D;
 #ifdef _MSC_VER
 class SDL2WAPI CUL::IName;
 #endif
+class ISDL2Wrapper;
+
 using Vector3Di = CUL::MATH::Vector3Di;
 using Vector3Du = CUL::MATH::Vector3Du;
 using ColorS = CUL::Graphics::ColorS;
@@ -95,14 +97,14 @@ public:
     virtual const WindowSize& getSize() const = 0;
     virtual void setSize( const WindowSize& size ) = 0;
 
-    virtual const Type getType() const = 0;
+    virtual Type getType() const = 0;
 
     virtual ITexture* createTexture( const Path& path ) = 0;
     virtual ISprite* createSprite( const Path& path ) = 0;
     virtual ISprite* createSprite( ITexture* tex ) = 0;
 
     void setWindowID( Cunt id );
-    const unsigned int getWindowID() const;
+    unsigned int getWindowID() const;
 
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;

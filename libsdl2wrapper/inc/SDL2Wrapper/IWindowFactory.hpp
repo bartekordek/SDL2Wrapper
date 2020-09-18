@@ -3,6 +3,7 @@
 #include "SDL2Wrapper/IWindow.hpp"
 
 #include "CUL/String.hpp"
+#include "CUL/GenericUtils/IConfigFile.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
@@ -15,7 +16,7 @@ public:
 
     IWindowFactory& operator=( const IWindowFactory& rhv ) = delete;
 
-    virtual IWindow* createWindow( const WindowData& winData ) = 0;
+    virtual IWindow* createWindow( const WindowData& winData, ISDL2Wrapper* wrapper ) = 0;
 
 protected:
 private:

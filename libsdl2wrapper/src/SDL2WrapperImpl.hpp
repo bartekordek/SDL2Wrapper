@@ -29,14 +29,14 @@ class SDL2WrapperImpl final:
 public:
     SDL2WrapperImpl();
 
-    ~SDL2WrapperImpl();
-
     void registerSDLEventObserver( ISDLInputObserver* eventObserver );
     void unRegisterSDLEventObserver( ISDLInputObserver* eventObserver );
 
+    ~SDL2WrapperImpl();
 protected:
 private:
-    void init( const WindowData& wd ) override;
+    void init( const WindowData& wd, IConfigFile* configFile = nullptr ) override;
+    IConfigFile* getConfig() override;
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
     void clearWindows() override;
@@ -62,9 +62,9 @@ private:
 
     IMouseData& getMouseData() override;
 
-    Cunt getInputLatency() const override;
+    unsigned int getInputLatency() const override;
     void setInputLatency( Cunt latencyInUs ) override;
-    Cbool isKeyUp( CsStr& keyName ) const override;
+    bool isKeyUp( CsStr& keyName ) const override;
     Keys& getKeyStates() override;
 
     IWindow* getMainWindow() override;
@@ -75,8 +75,8 @@ private:
 
     void handleEveent( const SDL_Event& event );
 
-    static Cbool isMouseEvent( const SDL_Event& event );
-    static Cbool isWindowEvent( const SDL_Event& event );
+    static bool isMouseEvent( const SDL_Event& event );
+    static bool isWindowEvent( const SDL_Event& event );
 
     void handleKeyboardEvent( const SDL_Event& sdlEvent );
     void handleMouseEvent( const SDL_Event& sdlEvent );
@@ -117,6 +117,7 @@ private:
     std::mutex m_mouseObserversMtx;
     std::set<ISDLInputObserver*> m_sdlEventObservers;
     std::mutex m_sdlEventObserversMtx;
+    IConfigFile* m_configFile = nullptr;
 
 private: // Deleted methods.
     SDL2WrapperImpl( const SDL2WrapperImpl& rhv ) = delete;

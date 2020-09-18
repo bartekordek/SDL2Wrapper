@@ -18,7 +18,7 @@ public:
     virtual void registerKeyboardEventListener( IKeyboardObserver* observer ) = 0;
     virtual void unregisterKeyboardEventListener( IKeyboardObserver* observer ) = 0;
 
-    virtual Cbool isKeyUp( CsStr& keyName ) const = 0;
+    virtual bool isKeyUp( CsStr& keyName ) const = 0;
 
 protected:
 private:

@@ -8,6 +8,7 @@
 #include "SDL2Wrapper/Input/IMouseObservable.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
+#include "CUL/GenericUtils/IConfigFile.hpp"
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/ThreadUtils.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
@@ -21,6 +22,7 @@ using WindowEventType = WindowEvent::Type;
 using Cbool = const bool;
 using WindowCallback = std::function<void( const WindowEventType wEt )>;
 using InitCallback = std::function<void()>;
+using IConfigFile = CUL::GUTILS::IConfigFile;
 
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
@@ -29,9 +31,8 @@ class SDL2WAPI ISDL2Wrapper:
 {
 public:
     ISDL2Wrapper();
-    virtual ~ISDL2Wrapper();
 
-    virtual void init( const WindowData& wd ) = 0;
+    virtual void init( const WindowData& wd, IConfigFile* configFile = nullptr ) = 0;
     virtual void refreshScreen() = 0;
     virtual void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
@@ -43,7 +44,7 @@ public:
 
     virtual IWindow* getMainWindow() = 0;
 
-    virtual Cunt getInputLatency() const = 0;
+    virtual unsigned int getInputLatency() const = 0;
     virtual void setInputLatency( Cunt latencyInUs ) = 0;
 
     virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
@@ -55,12 +56,17 @@ public:
 
     virtual IGui* getGui() = 0;
 
+    virtual IConfigFile* getConfig() = 0;
+
+    virtual ~ISDL2Wrapper();
 protected:
 private:
 
 private: // Deleted
     ISDL2Wrapper( const ISDL2Wrapper& rhv ) = delete;
+    ISDL2Wrapper( ISDL2Wrapper&& rhv ) = delete;
     ISDL2Wrapper& operator=( const ISDL2Wrapper& rhv ) = delete;
+    ISDL2Wrapper& operator=( ISDL2Wrapper&& rhv ) = delete;
 };
 
 SDL2WAPI ISDL2Wrapper* createSDL2Wrapper();

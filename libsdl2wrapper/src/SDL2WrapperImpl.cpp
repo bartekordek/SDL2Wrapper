@@ -15,8 +15,9 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 {
 }
 
-void SDL2WrapperImpl::init( const WindowData& wd )
+void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
 {
+    m_configFile = configFile;
     const auto sdlInitSuccess = SDL_Init(
         SDL_INIT_TIMER &
         SDL_INIT_AUDIO &
@@ -37,7 +38,7 @@ void SDL2WrapperImpl::init( const WindowData& wd )
     }
 
     m_windowFactory = new WindowCreatorConcrete();
-    m_mainWindow = m_windowFactory->createWindow( wd );
+    m_mainWindow = m_windowFactory->createWindow( wd, this );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();
@@ -50,10 +51,9 @@ void SDL2WrapperImpl::init( const WindowData& wd )
     }
 }
 
-SDL2WrapperImpl::~SDL2WrapperImpl()
+IConfigFile* SDL2WrapperImpl::getConfig()
 {
-    m_keys.clear();
-    SDL_Quit();
+    return m_configFile;
 }
 
 #ifdef _MSC_VER
@@ -190,7 +190,7 @@ void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
     }
 }
 
-const bool SDL2WrapperImpl::isMouseEvent( const SDL_Event& event )
+bool SDL2WrapperImpl::isMouseEvent( const SDL_Event& event )
 {
     switch( event.type )
     {
@@ -205,7 +205,7 @@ const bool SDL2WrapperImpl::isMouseEvent( const SDL_Event& event )
     }
 }
 
-const bool SDL2WrapperImpl::isWindowEvent( const SDL_Event& event )
+bool SDL2WrapperImpl::isWindowEvent( const SDL_Event& event )
 {
     switch( event.type )
     {
@@ -397,7 +397,7 @@ void SDL2WrapperImpl::notifyWindowEventCallbacks( const WindowEventType e )
     }
 }
 
-Cunt SDL2WrapperImpl::getInputLatency() const
+unsigned int SDL2WrapperImpl::getInputLatency() const
 {
     return m_eventLatencyUs.getValCopy();
 }
@@ -407,7 +407,7 @@ void SDL2WrapperImpl::setInputLatency( Cunt latencyInUs )
     m_eventLatencyUs = latencyInUs;
 }
 
-const bool SDL2WrapperImpl::isKeyUp( CsStr& keyName ) const
+bool SDL2WrapperImpl::isKeyUp( CsStr& keyName ) const
 {
     return m_keys.at( keyName )->getKeyIsDown();
 }
@@ -466,4 +466,10 @@ void SDL2WrapperImpl::unRegisterSDLEventObserver( ISDLInputObserver* eventObserv
 {
     std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
     m_sdlEventObservers.erase( eventObserver );
+}
+
+SDL2WrapperImpl::~SDL2WrapperImpl()
+{
+    m_keys.clear();
+    SDL_Quit();
 }
