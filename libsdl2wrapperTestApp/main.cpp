@@ -9,6 +9,8 @@
 #include "CUL/STL_IMPORTS/STD_cmath.hpp"
 #include "CUL/Log/ILogContainer.hpp"
 #include "CUL/GenericUtils/IConfigFile.hpp"
+#include "CUL/GenericUtils/ConsoleUtilities.hpp"
+#include "CUL/GenericUtils/SimpleAssert.hpp"
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
 using WinEventType = SDL2W::WindowEvent::Type;
@@ -21,6 +23,11 @@ std::unique_ptr<CUL::GUTILS::IConfigFile> configFile;
 #pragma warning( push )
 #pragma warning( disable : 4820 )
 #endif
+
+struct Object
+{
+    SDL2W::ISprite* sprite = nullptr;
+};
 
 class TestApp final:
     public SDL2W::IKeyboardObserver,
@@ -39,39 +46,25 @@ public:
         m_fpsCounter->start();
         m_sdlW->setInputLatency( 1024 );
 
-        m_pikachuBmp = configFile->getValue( "m_pikachuBmp" );
-        m_pikachuPng = configFile->getValue( "m_pikachuPng" );
+        CUL::FS::Path pikachuBmp = configFile->getValue( "pikachuBmp" );
+        CUL::FS::Path pikachuPng = configFile->getValue( "pikachuPng" );
 
-        if( m_pikachuBmp.exists() )
-        {
-            auto aw = m_activeWindow;
-            m_obj1 = m_sdlW->createSprite( m_pikachuBmp, aw );
-            m_obj2 = m_sdlW->createSprite( m_pikachuPng, aw );
-            m_obj3 = m_sdlW->createSprite( m_pikachuPng, aw );
-            m_obj4 = m_sdlW->createSprite( m_pikachuBmp, aw );
-            m_obj5 = m_sdlW->createSprite( m_pikachuPng, aw );
-            obj4Pos = m_obj4->getPosition();
-        }
+        CUL::Assert::simple( pikachuBmp.exists(), pikachuBmp.getPath() + " does not exist." );
+        CUL::Assert::simple( pikachuPng.exists(), pikachuPng.getPath() + " does not exist." );
+
+        auto aw = m_activeWindow;
+        m_obj1.sprite = m_sdlW->createSprite( pikachuBmp, aw );
+        m_obj2 = m_sdlW->createSprite( pikachuPng, aw );
+        m_obj3 = m_sdlW->createSprite( pikachuPng, aw );
+        m_obj4 = m_sdlW->createSprite( pikachuBmp, aw );
+        m_obj5 = m_sdlW->createSprite( pikachuPng, aw );
+        obj4Pos = m_obj4->getPosition();
+
         m_keyObservable = m_sdlW.get();
     }
 
     TestApp( const TestApp& rhv ) = delete;
     TestApp( TestApp&& rhv ) = delete;
-
-    ~TestApp()
-    {
-        if( m_objectMoveThread.joinable() )
-        {
-            m_objectMoveThread.join();
-        }
-
-        if( m_dataInfoThread.joinable() )
-        {
-            m_dataInfoThread.join();
-        }
-    }
-
-    TestApp& operator=( const TestApp& rhv ) = delete;
 
     void runMainLoop()
     {
@@ -136,6 +129,19 @@ public:
         }
     }
 
+    ~TestApp()
+    {
+        if( m_objectMoveThread.joinable() )
+        {
+            m_objectMoveThread.join();
+        }
+
+        if( m_dataInfoThread.joinable() )
+        {
+            m_dataInfoThread.join();
+        }
+    }
+
 protected:
 private:
     void dataPrintFun()
@@ -155,57 +161,54 @@ private:
     void objectManagmentFun()
     {
         CUL::ThreadUtils::setCurrentThreadName( "TestApp::objectManagmentFun" );
-        if( m_pikachuBmp.exists() )
+
+        CUL::MATH::Vector3Dd someScale;
+        m_obj1.sprite->setScale( someScale );
+
+        obj3Pos.setXYZ( 300, 300, 0 );
+
+        Pos3D obj1Pos( 100, 100, 0 );
+        Pos3D somePosition1( 450, 100, 0 );
+        Pos3D somePosition2( 600, 600, 0 );
+        Pos3D somePosition3( 800, 500, 0 );
+        Pos3D obj2Pos;
+        obj4Pos.setXYZ( 380, 380, 0 );
+        m_obj1.sprite->setPosition( obj1Pos );
+        m_obj2->setPosition( somePosition2 );
+        m_obj3->setPivotX( 0.1 );
+        m_obj3->setPosition( somePosition3 );
+        someScale.setXYZ( 0.5, 0.5, 0.0 );
+        m_obj3->setScale( someScale );
+
+        unsigned sleepTimeinMs = 2;
+        double i = 0.0;
+        CUL::MATH::Angle obj2Angle;
+        CUL::MATH::Angle obj3Angle;
+
+        while( runLoop )
         {
-            CUL::MATH::Vector3Dd someScale;
-            m_obj1->setScale( someScale );
+            m_sdlW->renderFrame();
+            CUL::ITimer::sleepMiliSeconds( sleepTimeinMs );
+            auto xScale = ( sin( i ) + 1.0 ) * 0.25;
+            auto yScale = ( cos( i ) + 1.0 ) * 0.25;
+            someScale.setXYZ( xScale, yScale, 0 );
+            m_obj1.sprite->setScale( someScale );
+            m_obj2->setScale( someScale );
+            m_obj2->rotate( obj2Angle );
+            m_obj3->rotate( obj3Angle );
 
-            obj3Pos.setXYZ( 300, 300, 0 );
+            m_obj4->setPosition( obj4Pos );
 
-            Pos3D obj1Pos( 100, 100, 0 );
-            Pos3D somePosition1( 450, 100, 0 );
-            Pos3D somePosition2( 600, 600, 0 );
-            Pos3D somePosition3( 800, 500, 0 );
-            Pos3D obj2Pos;
-            obj4Pos.setXYZ( 380, 380, 0 );
-            m_obj1->setPosition( obj1Pos );
-            m_obj2->setPosition( somePosition2 );
-            m_obj3->setPivotX( 0.1 );
-            m_obj3->setPosition( somePosition3 );
-            someScale.setXYZ( 0.5, 0.5, 0.0 );
-            m_obj3->setScale( someScale );
-
-            unsigned sleepTimeinMs = 2;
-            double i = 0.0;
-            CUL::MATH::Angle obj2Angle;
-            CUL::MATH::Angle obj3Angle;
-
-            while( runLoop )
-            {
-                m_sdlW->renderFrame();
-                CUL::ITimer::sleepMiliSeconds( sleepTimeinMs );
-                auto xScale = ( sin( i ) + 1.0 ) * 0.25;
-                auto yScale = ( cos( i ) + 1.0 ) * 0.25;
-                someScale.setXYZ( xScale, yScale, 0 );
-                m_obj1->setScale( someScale );
-                m_obj2->setScale( someScale );
-                m_obj2->rotate( obj2Angle );
-                m_obj3->rotate( obj3Angle );
-
-                m_obj4->setPosition( obj4Pos );
-
-                obj2Angle -= 1;
-                obj3Angle += 1;
-                auto amp = 64;
-                obj2Pos.setX( somePosition1.getX() + sin( i ) * amp );
-                obj2Pos.setY( somePosition1.getY() + cos( i ) * amp );
-                auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
-                bckgroundColor.setGCU( greeVal );
-                m_activeWindow->setBackgroundColor( bckgroundColor );
-                i += 0.02;
-            }
+            obj2Angle -= 1;
+            obj3Angle += 1;
+            auto amp = 64;
+            auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
+            bckgroundColor.setGCU( greeVal );
+            m_activeWindow->setBackgroundColor( bckgroundColor );
+            i += 0.02;
         }
     }
+
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
     SDL2W::IWindow* m_activeWindow = nullptr;
 
@@ -219,40 +222,35 @@ private:
     std::thread m_objectMoveThread;
     std::thread m_dataInfoThread;
 
-    CUL::FS::Path m_pikachuBmp;
-    CUL::FS::Path m_pikachuPng;
-
-    SDL2W::ISprite* m_obj1 = nullptr;
+    Object m_obj1;
     SDL2W::ISprite* m_obj2 = nullptr;
     SDL2W::ISprite* m_obj3 = nullptr;
     SDL2W::ISprite* m_obj4 = nullptr;
     SDL2W::ISprite* m_obj5 = nullptr;
 
-    Pos3D obj1Scale;
     Pos3D obj2Pos0;
     Pos3D obj3Pos;
     Pos3D obj4Pos;
+
+private:
+    TestApp& operator=( const TestApp& rhv ) = delete;
 };
 
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
 
-
-#if _MSC_VER
-#pragma warning( push )
-#pragma warning( disable: 4100 )
-#endif
 int main( int argc, char** argv )
 {
     winData.size.setSize( 800, 600 );
     winData.pos.setXYZ( 480, 480, 0 );
     winData.withOpenGL = false;
 
+    auto& console = CUL::GUTILS::ConsoleUtilities::getInstance();
+    console.setArgs( argc, argv );
+    console.printInputParameters();
+
     TestApp testApp;
     testApp.runMainLoop();
     return 0;
 }
-#if _MSC_VER
-#pragma warning( pop )
-#endif

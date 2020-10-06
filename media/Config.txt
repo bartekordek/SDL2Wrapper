@@ -1,6 +1,6 @@
-m_pikachuBmp ../media/Shapes.bmp
-m_pikachuBmp ../media/RGB.bmp
-m_pikachuPng ../media/pikaczu.png
+pikachuBmp ../media/Shapes.bmp
+pikachuBmp ../media/RGB.bmp
+pikachuPng ../media/pikaczu.png
 BMP_LOADER DevilImageLoader
 BMP_LOADER TinyImageLoader
 BMP_LOADER STBIImageLoader

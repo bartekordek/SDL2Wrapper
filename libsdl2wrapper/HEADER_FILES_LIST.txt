@@ -17,3 +17,15 @@ inc/SDL2Wrapper/ISprite.hpp
 inc/SDL2Wrapper/IWindow.hpp
 inc/SDL2Wrapper/IWindowEventListener.hpp
 inc/SDL2Wrapper/IWindowFactory.hpp
+src/IMPORT_SDL_events.hpp
+src/IMPORT_SDL_image.hpp
+src/IMPORT_SDL_opengl.hpp
+src/Input/KeySDL.hpp
+src/Input/MouseDataSDL.hpp
+src/ISDLInputObserver.hpp
+src/RegularSDL2Window.hpp
+src/SDL2WrapperImpl.hpp
+src/SimpleUtils.hpp
+src/Sprite.hpp
+src/TextureSDL.hpp
+src/WindowFactoryConcrete.hpp

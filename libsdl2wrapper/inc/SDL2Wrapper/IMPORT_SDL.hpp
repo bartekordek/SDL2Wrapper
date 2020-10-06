@@ -21,7 +21,6 @@
 #endif
 #include <SDL.h>
 #include <SDL_mouse.h>
-#include <SDL_image.h>
 #include <SDL_surface.h>
 #ifdef _MSC_VER
 #pragma warning( pop )

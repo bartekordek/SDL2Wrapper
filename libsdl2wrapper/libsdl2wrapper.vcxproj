@@ -356,7 +356,6 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
     <ClInclude Include="inc\SDL2Wrapper\Import.hpp" />
     <ClInclude Include="src\IMPORT_SDL_events.hpp" />
     <ClInclude Include="src\ISDLInputObserver.hpp" />
-    <ClInclude Include="src\IMPORT_SDL_image.hpp" />
     <ClInclude Include="src\IMPORT_SDL_opengl.hpp" />
     <ClInclude Include="src\Input\KeySDL.hpp" />
     <ClInclude Include="src\Input\MouseDataSDL.hpp" />

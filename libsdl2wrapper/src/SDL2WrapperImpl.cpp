@@ -29,14 +29,6 @@ void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
         Assert( 0, SDL_GetError() );
     }
 
-    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-    int initalizedFlags = IMG_Init( flags );
-
-    if( ( initalizedFlags & flags ) != flags )
-    {
-        Assert( 0, "Cannot initialize all sdl image flags." );
-    }
-
     m_windowFactory = new WindowCreatorConcrete();
     m_mainWindow = m_windowFactory->createWindow( wd, this );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );

@@ -1,16 +1,41 @@
 #cmake -DCMAKE_BUILD_TYPE=Debug
 cmake_minimum_required(VERSION 3.0.0)
 
-project(sdlwrapper LANGUAGES CXX)
+project(sdl2wrapper LANGUAGES CXX)
+
 set(CMAKE_CXX_STANDARD 17)
-set(EXEC sdlwrapper)
+set(EXEC sdl2wrapper)
 
-#include_directories( SYSTEM "../deps/spdlog/include" )
+# include_directories( SYSTEM "../deps/spdlog/include" )
+# include_directories( SYSTEM "../deps/boost/assert/include" )
+# include_directories( SYSTEM "../deps/boost/circular_buffer/include" )
+# include_directories( SYSTEM "../deps/boost/concept_check/include" )
+# include_directories( SYSTEM "../deps/boost/config/include" )
+# include_directories( SYSTEM "../deps/boost/container_hash/include" )
+# include_directories( SYSTEM "../deps/boost/core/include" )
+# include_directories( SYSTEM "../deps/boost/move/include" )
+# include_directories( SYSTEM "../deps/boost/preprocessor/include" )
+# include_directories( SYSTEM "../deps/boost/static_assert/include" )
+# include_directories( SYSTEM "../deps/boost/throw_exception/include" )
+# include_directories( SYSTEM "../deps/boost/type_index/include" )
+# include_directories( SYSTEM "../deps/boost/type_traits/include" )
+# include_directories( SYSTEM "../deps/boost/variant/include" )
+# include_directories( SYSTEM "../deps/tiny-image/src" )
+# include_directories( SYSTEM "../deps/stb" )
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL ${CMAKE_CURRENT_BINARY_DIR}/../deps/CUL)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../deps/sdl2-repo ${CMAKE_CURRENT_BINARY_DIR}/../deps/sdl2-repo)
+
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL/libcul/inc)
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL/sdl2-repo/include)
 
 if( MSVC )
     # warning level 4 and all warnings as errors
     add_compile_options( /W4 /WX )
+    add_compile_options( /MP )
+    set_target_properties(SDL2 PROPERTIES
+        COMPILE_FLAGS "/MP" # Adjust as needed
+    )
 else()
     # lots of warnings and all warnings as errors
     #add_compile_options(-Wall -Wextra -pedantic -Werror)
@@ -18,7 +43,7 @@ else()
     add_definitions( -Wfatal-errors )
 endif()
 
-add_library( sdlwrapper SHARED
+add_library( ${EXEC} SHARED
     src/Input/IKey.cpp
     src/Input/KeySDL.cpp
     src/Input/MouseDataSDL.cpp
@@ -36,7 +61,8 @@ add_library( sdlwrapper SHARED
     src/WindowFactoryConcrete.cpp
 )
 
-set_target_properties(sdlwrapper PROPERTIES PUBLIC_HEADER
+#set_target_properties(cul PROPERTIES PUBLIC_HEADER
+set( HEADERS_PUBLIC
     inc/SDL2Wrapper/Gui/IGui.hpp
     inc/SDL2Wrapper/Gui/IWindowEventObservable.hpp
     inc/SDL2Wrapper/IEventLoop.hpp
@@ -56,26 +82,14 @@ set_target_properties(sdlwrapper PROPERTIES PUBLIC_HEADER
     inc/SDL2Wrapper/IWindow.hpp
     inc/SDL2Wrapper/IWindowEventListener.hpp
     inc/SDL2Wrapper/IWindowFactory.hpp
+    src/IMPORT_SDL_events.hpp
 )
 
-link_directories(${CMAKE_SOURCE_DIR}/lib)
-
-find_package(SDL2 REQUIRED)
-if( SDL2_FOUND )
-    include_directories( sdlwrapper ${SDL2_INCLUDE_DIRS} )
-    message( "SDL2_LIBRARIES: ${SDL2_LIBRARIES}" )
-    link_directories( "/usr/lib" )
-    target_link_libraries( ${EXEC} ${SDL2_LIBRARIES} stdc++fs )
+if( MSVC )
+    target_link_libraries( ${EXEC} SDL2 cul AdditionalDeps )
+else()
+    target_link_libraries( ${EXEC} SDL2 cul AdditionalDeps stdc++fs  )
 endif()
 
-#find_file(SDL2_INCLUDE_DIR NAME SDL.h HINTS SDL2)
-#find_library(SDL2_LIBRARY NAME SDL2)
-#add_executable(sdlwrapper main.cpp)
-#target_include_directories(sdlwrapper ${SDL2_INCLUDE_DIR})
-#target_link_libraries(${EXEC} ${SDL2_LIBRARY} stdc++fs )
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL ${CMAKE_CURRENT_BINARY_DIR}/../deps/CUL)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL/libcul/inc)
-
-target_include_directories(sdlwrapper PUBLIC inc)
-target_include_directories(sdlwrapper PRIVATE src)
+target_include_directories(${EXEC} PUBLIC inc)
+target_include_directories(${EXEC} PRIVATE src)
