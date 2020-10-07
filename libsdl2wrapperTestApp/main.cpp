@@ -40,6 +40,7 @@ public:
     {
         configFile.reset( CUL::GUTILS::IConfigFile::createFile( "../media/Config.txt" ) );
         m_sdlW->init( winData, configFile.get() );
+        m_logger = m_sdlW->getLogger();
         m_activeWindow = m_sdlW->getMainWindow();
         m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
         m_activeWindow->addFPSCounter( m_fpsCounter.get() );
@@ -82,7 +83,8 @@ public:
         {
             return;
         }
-        CUL::LOG::LOG_CONTAINER::getLogger()->log( "KEY: " + key.getKeyName().string() );
+        
+        m_logger->log( "KEY: " + key.getKeyName().string() );
 
         static int delta = 8;
 
@@ -121,7 +123,7 @@ public:
 
     void onWindowEvent( const WinEventType windowEventType ) override
     {
-        CUL::LOG::LOG_CONTAINER::getLogger()->log( "Event Type: " + CUL::String( static_cast<short>( windowEventType ) ) );
+        m_logger->log( "Event Type: " + CUL::String( static_cast<short>(windowEventType) ) );
         if( WinEventType::CLOSE == windowEventType )
         {
             m_sdlW->stopEventLoop();
@@ -153,8 +155,8 @@ private:
             const auto averageFpsCount = m_fpsCounter->getAverageFps();
             const CUL::String messageCfps = "CURRENT FPS: " + CUL::String( currentFpsCount );
             const CUL::String messageAfps = "AVERAGE FPS: " + CUL::String( averageFpsCount );
-            CUL::LOG::LOG_CONTAINER::getLogger()->log( messageCfps );
-            CUL::LOG::LOG_CONTAINER::getLogger()->log( messageAfps );
+            m_logger->log( messageCfps );
+            m_logger->log( messageAfps );
         }
     }
 
@@ -231,6 +233,8 @@ private:
     Pos3D obj2Pos0;
     Pos3D obj3Pos;
     Pos3D obj4Pos;
+
+    SDL2W::Logger* m_logger;
 
 private:
     TestApp& operator=( const TestApp& rhv ) = delete;

@@ -3,6 +3,7 @@
 #include "SDL2Wrapper/IWindow.hpp"
 #include "ISDLInputObserver.hpp"
 #include "WindowFactoryConcrete.hpp"
+#include "CUL/CULInterface.hpp"
 #include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/STL_IMPORTS/STD_vector.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
@@ -72,6 +73,8 @@ private:
     IGui* getGui() override;
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
+    std::unique_ptr<CUL::CULInterface> m_culInterface;
+    Logger* getLogger() override;
 
     void handleEveent( const SDL_Event& event );
 
@@ -102,6 +105,8 @@ private:
     WindowCollection m_windows;
 
     Keys m_keys;
+
+    Logger* m_logger = nullptr;
 
     std::unique_ptr<MouseDataSDL> m_mouseData;
 

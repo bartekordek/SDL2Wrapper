@@ -17,7 +17,10 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 
 void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
 {
+    m_culInterface = std::move( CUL::CULInterface::createInstance() );
+    m_logger = m_culInterface->getLogger();
     m_configFile = configFile;
+    m_logger->log( "Initializing SDL..." );
     const auto sdlInitSuccess = SDL_Init(
         SDL_INIT_TIMER &
         SDL_INIT_AUDIO &
@@ -28,8 +31,9 @@ void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
     {
         Assert( 0, SDL_GetError() );
     }
+    m_logger->log( "Initializing SDL... Done." );
 
-    m_windowFactory = new WindowCreatorConcrete();
+    m_windowFactory = new WindowCreatorConcrete( m_logger );
     m_mainWindow = m_windowFactory->createWindow( wd, this );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
 
@@ -58,7 +62,7 @@ IConfigFile* SDL2WrapperImpl::getConfig()
 #endif
 void SDL2WrapperImpl::createKeys()
 {
-    logMsg( "SDL2WrapperImpl::createKeys()::Begin" );
+    m_logger->log( "SDL2WrapperImpl::createKeys()::Begin" );
     auto kbrdState = SDL_GetKeyboardState( nullptr );
     for( int i = SDL_SCANCODE_A; i < SDL_NUM_SCANCODES; ++i )
     {
@@ -73,12 +77,12 @@ void SDL2WrapperImpl::createKeys()
             m_keys[keyName] = std::unique_ptr<IKey>( key );
         }
     }
-    logMsg( "SDL2WrapperImpl::createKeys() - found keys:" );
+    m_logger->log( "SDL2WrapperImpl::createKeys() - found keys:" );
     for( const auto& key : m_keys )
     {
-        logMsg( key.first );
+        m_logger->log( key.first );
     }
-    logMsg( "SDL2WrapperImpl::createKeys()::End" );
+    m_logger->log( "SDL2WrapperImpl::createKeys()::End" );
 }
 #ifdef _MSC_VER
 #pragma warning( pop )
@@ -91,6 +95,11 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     result->setKeyName( SDL_GetScancodeName( scanCode ) );
     result->setKeyIsDown( ( 0 == sdlKey[scanCode] ) ? false : true );
     return result;
+}
+
+Logger* SDL2WrapperImpl::getLogger()
+{
+    return m_logger;
 }
 
 void SDL2WrapperImpl::renderFrame( Cbool clearContext, Cbool refreshWindow )
@@ -131,14 +140,14 @@ void SDL2WrapperImpl::refreshScreen()
 void SDL2WrapperImpl::runEventLoop()
 {
     CUL::ThreadUtils::setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
-    logMsg( "SDL2WrapperImpl::runEventLoop()::Begin" );
+    m_logger->log( "SDL2WrapperImpl::runEventLoop()::Begin" );
 
     while( eventLoopActive )
     {
         pollEvents();
         CUL::ITimer::sleepMicroSeconds( m_eventLatencyUs );
     }
-    logMsg( "SDL2WrapperImpl::runEventLoop()::End" );
+    m_logger->log( "SDL2WrapperImpl::runEventLoop()::End" );
 }
 
 void SDL2WrapperImpl::pollEvents()
@@ -146,7 +155,7 @@ void SDL2WrapperImpl::pollEvents()
     static SDL_Event event;
     if( SDL_PollEvent( &event ) > 0 )
     {
-        logMsg( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
+        m_logger->log( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
         handleEveent( event );
         {
             std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
@@ -160,7 +169,7 @@ void SDL2WrapperImpl::pollEvents()
 
 void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
 {
-    logMsg( "SDL2WrapperImpl::handleEveent( " +
+    m_logger->log( "SDL2WrapperImpl::handleEveent( " +
         CUL::String( event.type ) + " );" );
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
@@ -216,13 +225,13 @@ bool SDL2WrapperImpl::isWindowEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 {
-    logMsg( "SDL2WrapperImpl::handleKeyboardEvent" );
+    m_logger->log( "SDL2WrapperImpl::handleKeyboardEvent" );
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
     auto& key = m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
     key->setKeyIsDown( keyIsDown );
 
-    logMsg( "EVENT: Key press/release, key: " + key->getKeyName().string() );
-    logMsg( "EVENT: Key press/release, keyID: " + std::to_string( sdlEvent.key.keysym.scancode ) );
+    m_logger->log( "EVENT: Key press/release, key: " + key->getKeyName().string() );
+    m_logger->log( "EVENT: Key press/release, keyID: " + std::to_string( sdlEvent.key.keysym.scancode ) );
 
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
@@ -255,7 +264,7 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )
 {
-    logMsg( "Window Event: " + std::to_string( sdlEvent.type ) );
+    m_logger->log( "Window Event: " + std::to_string( sdlEvent.type ) );
 
     auto eventType = WindowEventType::NONE;
     switch( sdlEvent.type )

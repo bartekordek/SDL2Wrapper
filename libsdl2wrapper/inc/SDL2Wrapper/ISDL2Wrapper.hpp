@@ -11,6 +11,7 @@
 #include "CUL/GenericUtils/IConfigFile.hpp"
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/ThreadUtils.hpp"
+#include "CUL/Log/ILogger.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
@@ -23,6 +24,7 @@ using Cbool = const bool;
 using WindowCallback = std::function<void( const WindowEventType wEt )>;
 using InitCallback = std::function<void()>;
 using IConfigFile = CUL::GUTILS::IConfigFile;
+using Logger = CUL::LOG::ILogger;
 
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
@@ -57,6 +59,8 @@ public:
     virtual IGui* getGui() = 0;
 
     virtual IConfigFile* getConfig() = 0;
+
+    virtual Logger* getLogger() = 0;
 
     virtual ~ISDL2Wrapper();
 protected:

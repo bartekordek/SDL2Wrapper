@@ -10,6 +10,7 @@
 
 #include "CUL/Video/IFPSCounter.hpp"
 #include "CUL/Graphics/IImageLoader.hpp"
+#include "CUL/Log/ILogger.hpp"
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -28,8 +29,7 @@ class RegularSDL2Window final:
     public IWindow
 {
 public:
-    RegularSDL2Window() = delete;
-    RegularSDL2Window( const WindowData& winData, ISDL2Wrapper* wrapper );
+    RegularSDL2Window( const WindowData& winData, ISDL2Wrapper* wrapper, CUL::LOG::ILogger* logger );
 
     ~RegularSDL2Window();
 
@@ -76,11 +76,14 @@ private:
     TextureMap m_textures;
     CUL::Graphics::IImageLoader* m_il = nullptr;
     ISDL2Wrapper* m_wrapper = nullptr;
+    CUL::LOG::ILogger* m_logger = nullptr;
 
+// Deleted:
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;
     RegularSDL2Window( RegularSDL2Window&& win ) = delete;
     RegularSDL2Window& operator=( const RegularSDL2Window& right ) = delete;
     RegularSDL2Window& operator=( RegularSDL2Window&& right ) = delete;
+    RegularSDL2Window() = delete;
 };
 
 #ifdef _MSC_VER

@@ -17,9 +17,13 @@ using namespace SDL2W;
 
 using IPivot = CUL::MATH::IPivot;
 
-RegularSDL2Window::RegularSDL2Window( const WindowData& winData, ISDL2Wrapper* wrapper ):
+RegularSDL2Window::RegularSDL2Window(
+    const WindowData& winData,
+    ISDL2Wrapper* wrapper,
+    CUL::LOG::ILogger* logger ):
     m_windowData( winData ),
-    m_wrapper( wrapper )
+    m_wrapper( wrapper ),
+    m_logger( logger )
 {
     m_window = createWindow( winData );
 
@@ -30,10 +34,10 @@ RegularSDL2Window::RegularSDL2Window( const WindowData& winData, ISDL2Wrapper* w
     SDL_RendererInfo info;
     const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
     Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
-    logMsg( "Renderer INFO:", CUL::LOG::Severity::INFO );
-    logMsg( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
-    logMsg( "Max texture width = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
-    logMsg( "Max texture height = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Renderer INFO:", CUL::LOG::Severity::INFO );
+    m_logger->log( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
     setName( winData.name );
     m_il = CUL::Graphics::IImageLoader::createConcrete( m_wrapper->getConfig() );
 }
@@ -45,9 +49,9 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     auto& opengl = winData.withOpenGL;
     auto& winName = winData.name;
 
-    logMsg( "Creating window with:", CUL::LOG::Severity::INFO );
-    logMsg( "Pos.x = " + CUL::String( pos.getX() ) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
-    logMsg( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Creating window with:", CUL::LOG::Severity::INFO );
+    m_logger->log( "Pos.x = " + CUL::String( pos.getX() ) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     if( opengl )
@@ -69,7 +73,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     {
         auto sdlError = SDL_GetError();
         CUL::String s_sdlError( sdlError );
-        logMsg(
+        m_logger->log(
             "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "The Window has not been initialized." );
     }
@@ -346,7 +350,7 @@ ColorS RegularSDL2Window::getBackgroundColor() const
 
 RegularSDL2Window::~RegularSDL2Window()
 {
-    logMsg( "RegularSDL2Window::~RegularSDL2Window()" );
+    m_logger->log( "RegularSDL2Window::~RegularSDL2Window()" );
     destroyObjects();
 
     Assert( nullptr != m_renderer, "The Renderer has been destroyed somwhere else." );

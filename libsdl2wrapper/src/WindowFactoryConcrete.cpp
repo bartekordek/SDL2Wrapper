@@ -5,13 +5,15 @@
 
 using namespace SDL2W;
 
-WindowCreatorConcrete::WindowCreatorConcrete()
+WindowCreatorConcrete::WindowCreatorConcrete( CUL::LOG::ILogger* logger ):
+    m_logger( logger )
 {
+    m_logger->log( "Initialized WindowCreatorConcrete... Done" );
 }
 
 IWindow* WindowCreatorConcrete::createWindow( const WindowData& winData, ISDL2Wrapper* wrapper )
 {
-    auto window = new RegularSDL2Window( winData, wrapper );
+    auto window = new RegularSDL2Window( winData, wrapper, m_logger );
     return window;
 }
 
