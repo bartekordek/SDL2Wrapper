@@ -9,6 +9,7 @@ NAMESPACE_BEGIN( SDL2W )
 
 using ColorS = CUL::Graphics::ColorS;
 using ColorE = CUL::Graphics::ColorE;
+
 class SDL2WAPI IRender:
     public CUL::Video::IFPSObservable
 {
