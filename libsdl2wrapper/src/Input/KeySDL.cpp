@@ -6,12 +6,12 @@ KeySDL::KeySDL()
 {
 }
 
-void KeySDL::setKeyName( CsStr& name )
+void KeySDL::setKeyName( const String& name )
 {
     m_keyName = name;
 }
 
-CsStr& KeySDL::getKeyName() const
+const String& KeySDL::getKeyName() const
 {
     return m_keyName;
 }

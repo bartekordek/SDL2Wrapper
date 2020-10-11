@@ -11,9 +11,23 @@
 
 using namespace SDL2W;
 
+bool SDLBoolToCppBool( const SDL_bool value )
+{
+    return value == 1 ? true : false;
+}
+
 SDL2WrapperImpl::SDL2WrapperImpl()
 {
 }
+
+#ifdef _MSC_VER
+// Yes, I know that is a Spectre mitigation.
+// But for now, I let this as TODO, since i don't know
+// How to fix this.
+// TODO
+#pragma warning( push )
+#pragma warning( disable: 5045 )
+#endif
 
 void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
 {
@@ -33,13 +47,49 @@ void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
     }
     m_logger->log( "Initializing SDL... Done." );
 
+
+    auto cpuCount = SDL_GetCPUCount();
+    m_logger->log( "Available cpu cores: " + String( cpuCount ) );
+
+    auto cpuCacheSize = SDL_GetCPUCacheLineSize();
+    m_logger->log( "Available cache size: " + String( cpuCacheSize ) );
+
+    auto hasRDTSC = SDLBoolToCppBool( SDL_HasRDTSC() );
+    m_logger->log( "CPU has the RDTSC instruction: " + String( hasRDTSC ) );
+
+    auto renderDriversCount = SDL_GetNumRenderDrivers();
+    m_logger->log( "Available render drivers count: " + String( renderDriversCount ) + "\n" );
+    for( auto i = 0; i < renderDriversCount; ++i )
+    {
+        m_logger->log( "#################################################################################" );
+        std::unique_ptr<SDL_RendererInfo> renderInfo( new SDL_RendererInfo );
+        Assert( SDL_GetRenderDriverInfo( i, renderInfo.get() ) == 0, "Cannnot get driver info for index = " + String( i ) );
+        String rendererName( renderInfo->name );
+        m_logger->log( "Renderer name:" + rendererName );
+        m_logger->log( "Max texture width = " + CUL::String( renderInfo->max_texture_width ) );
+        m_logger->log( "Max texture height = " + CUL::String( renderInfo->max_texture_width ) );
+
+        //
+
+        m_logger->log( "Available texture formats:" );
+        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo->num_texture_formats; ++iTexFormat )
+        {
+            m_logger->log( String( SDL_GetPixelFormatName( renderInfo->texture_formats[ iTexFormat ] ) ) );
+        }
+
+        m_logger->log( "#################################################################################\n" );
+
+        m_renderers[ rendererName ] = i;
+    }
+
+
     m_windowFactory = new WindowCreatorConcrete( m_logger );
     m_mainWindow = m_windowFactory->createWindow( wd, this );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();
 
-    m_mouseData.reset( new MouseDataSDL() );
+    m_mouseData = std::move( std::unique_ptr<MouseDataSDL>( new MouseDataSDL() ) );
 
     if( m_onInitCallback )
     {
@@ -52,14 +102,7 @@ IConfigFile* SDL2WrapperImpl::getConfig()
     return m_configFile;
 }
 
-#ifdef _MSC_VER
-// Yes, I know that is a Spectre mitigation.
-// But for now, I let this as TODO, since i don't know
-// How to fix this.
-// TODO
-#pragma warning( push )
-#pragma warning( disable: 5045 )
-#endif
+
 void SDL2WrapperImpl::createKeys()
 {
     m_logger->log( "SDL2WrapperImpl::createKeys()::Begin" );
@@ -125,6 +168,25 @@ void SDL2WrapperImpl::clearWindows()
     for( auto& window : m_windows )
     {
         window.second->clearBuffers();
+    }
+}
+
+int SDL2WrapperImpl::getRendererId( const String& name ) const
+{
+    return m_renderers.at( name );
+}
+
+const std::map<String, int>& SDL2WrapperImpl::getRenderersList() const
+{
+    return m_renderers;
+}
+
+void SDL2WrapperImpl::printAvailableRenderers() const
+{
+    m_logger->log( "SDL2WrapperImpl::printAvailableRenderers():" );
+    for( const auto& renderer: m_renderers )
+    {
+        m_logger->log( "Name: " + renderer.first + ", id: " + String( renderer.second ) );
     }
 }
 
@@ -408,7 +470,7 @@ void SDL2WrapperImpl::setInputLatency( Cunt latencyInUs )
     m_eventLatencyUs = latencyInUs;
 }
 
-bool SDL2WrapperImpl::isKeyUp( CsStr& keyName ) const
+bool SDL2WrapperImpl::isKeyUp( const String& keyName ) const
 {
     return m_keys.at( keyName )->getKeyIsDown();
 }

@@ -18,8 +18,8 @@ public:
 
 protected:
 private:
-    void setKeyName( CsStr& keyName ) override;
-    CsStr& getKeyName() const override;
+    void setKeyName( const String& keyName ) override;
+    const String& getKeyName() const override;
     void setKeyIsDown( Cbool keyIsDown ) override;
     bool getKeyIsDown() const override;
 

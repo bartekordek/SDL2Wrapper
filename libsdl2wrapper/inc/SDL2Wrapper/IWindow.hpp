@@ -46,7 +46,7 @@ struct SDL2WAPI WindowData
     Vector3Di pos = Vector3Di( 0, 0, 0 );
     WindowSize size = WindowSize( 640, 480 );
     String name = "Generic Window Name.";
-    bool withOpenGL = true;
+    String rendererName = "opengl";
 
     WindowData() = default;
 
@@ -54,7 +54,7 @@ struct SDL2WAPI WindowData
         pos( arg.pos ),
         size( arg.size ),
         name( arg.name ),
-        withOpenGL( arg.withOpenGL )
+        rendererName( arg.rendererName )
     {
     }
 
@@ -65,7 +65,7 @@ struct SDL2WAPI WindowData
             pos = rhv.pos;
             size = rhv.size;
             name = rhv.name;
-            withOpenGL = rhv.withOpenGL;
+            rendererName = rhv.rendererName;
         }
         return *this;
     }

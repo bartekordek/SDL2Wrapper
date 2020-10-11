@@ -17,11 +17,20 @@ using namespace SDL2W;
 
 using IPivot = CUL::MATH::IPivot;
 
+#ifdef _MSC_VER
+// Yes, I know that is a Spectre mitigation.
+// But for now, I let this as TODO, since i don't know
+// How to fix this.
+// TODO
+#pragma warning( push )
+#pragma warning( disable: 5045 )
+#endif
 RegularSDL2Window::RegularSDL2Window(
     const WindowData& winData,
     ISDL2Wrapper* wrapper,
     CUL::LOG::ILogger* logger ):
     m_windowData( winData ),
+    m_openGL( winData.rendererName.contains( "opengl" ) ),
     m_wrapper( wrapper ),
     m_logger( logger )
 {
@@ -29,24 +38,42 @@ RegularSDL2Window::RegularSDL2Window(
 
     setWindowID( SDL_GetWindowID( m_window ) );
 
-    m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED );
+    auto rendererId = m_wrapper->getRendererId( winData.rendererName );
+    m_renderer = SDL_CreateRenderer( m_window, rendererId, SDL_RENDERER_ACCELERATED );
     Assert( nullptr != m_renderer, "Cannot create renderer." );
     SDL_RendererInfo info;
     const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
     Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
-    m_logger->log( "Renderer INFO:", CUL::LOG::Severity::INFO );
+    m_logger->log( "Selected renderer INFO:" );
     m_logger->log( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
-    m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
-    m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ) );
+    m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ) );
+
+    int w = 0, h = 0;
+    auto operationResult = SDL_GetRendererOutputSize( m_renderer, &w, &h );
+    Assert( 0 == operationResult, "Cannot get renderer output size." );
+    m_logger->log( "Renderer output size, w: " + CUL::String( w ) );
+    m_logger->log( "Renderer output size, h: " + CUL::String( h ) );
+
+    m_logger->log( "Available texture formats:" );
+
+    for( Uint32 i = 0; i < info.num_texture_formats; ++i )
+    {
+        m_logger->log( String( SDL_GetPixelFormatName( info.texture_formats[i] ) ) );
+    }
+
     setName( winData.name );
     m_il = CUL::Graphics::IImageLoader::createConcrete( m_wrapper->getConfig() );
 }
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 {
     auto& pos = winData.pos;
     auto& size = winData.size;
-    auto& opengl = winData.withOpenGL;
+    auto& rendererName = winData.rendererName;
     auto& winName = winData.name;
 
     m_logger->log( "Creating window with:", CUL::LOG::Severity::INFO );
@@ -54,7 +81,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     m_logger->log( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
-    if( opengl )
+    if( rendererName.contains( "opengl" ) )
     {
         windowFlags |= SDL_WINDOW_OPENGL;
     }
@@ -99,7 +126,7 @@ void RegularSDL2Window::destroyObjects()
 
 void RegularSDL2Window::updateScreenBuffers()
 {
-    if( m_windowData.withOpenGL )
+    if( m_openGL )
     {
         Assert( nullptr != m_window, "The Window is not initialized." );
         SDL_GL_SwapWindow( m_window );

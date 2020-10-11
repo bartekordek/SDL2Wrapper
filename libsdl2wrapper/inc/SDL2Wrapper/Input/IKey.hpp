@@ -5,15 +5,15 @@
 
 NAMESPACE_BEGIN( SDL2W )
 
-using CsStr = CUL::CsStr;
+using String = CUL::String;
 
 class SDL2WAPI IKey
 {
 public:
     IKey();
     virtual ~IKey();
-    virtual void setKeyName( CsStr& keyName ) = 0;
-    virtual CsStr& getKeyName() const = 0;
+    virtual void setKeyName( const String& keyName ) = 0;
+    virtual const String& getKeyName() const = 0;
     virtual bool getKeyIsDown() const = 0;
     virtual void setKeyIsDown( Cbool isDown ) = 0;
 protected:

@@ -68,6 +68,7 @@ private:
     ColorS getBackgroundColor() const override;
 
     WindowData m_windowData;
+    bool m_openGL = false;
     ColorS m_backgroundColor;
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;

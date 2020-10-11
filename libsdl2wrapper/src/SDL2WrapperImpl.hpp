@@ -41,6 +41,11 @@ private:
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
     void clearWindows() override;
+
+    int getRendererId( const String& name ) const override;
+    const std::map<String, int>& getRenderersList() const override;
+    void printAvailableRenderers() const override;
+
     void runEventLoop() override;
     void stopEventLoop() override;
     void pollEvents() override;
@@ -65,7 +70,7 @@ private:
 
     unsigned int getInputLatency() const override;
     void setInputLatency( Cunt latencyInUs ) override;
-    bool isKeyUp( CsStr& keyName ) const override;
+    bool isKeyUp( const String& keyName ) const override;
     Keys& getKeyStates() override;
 
     IWindow* getMainWindow() override;
@@ -96,6 +101,8 @@ private:
     ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) override;
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
+
+    std::map<String, int> m_renderers;
 
     LckPrim<bool> eventLoopActive = true;
     LckPrim<unsigned int> m_eventLatencyUs = 256;

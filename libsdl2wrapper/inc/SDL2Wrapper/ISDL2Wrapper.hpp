@@ -38,6 +38,9 @@ public:
     virtual void refreshScreen() = 0;
     virtual void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
+    virtual int getRendererId( const String& name ) const = 0;
+    virtual const std::map<String, int>& getRenderersList() const = 0;
+    virtual void printAvailableRenderers() const = 0;
 
     virtual ITexture* createTexture( const Path& path, IWindow* targetWindow ) = 0;
     virtual ISprite* createSprite( const Path& path, IWindow* targetWindow ) = 0;

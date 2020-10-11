@@ -18,6 +18,7 @@ using SDL2WinData = SDL2W::WindowData;
 
 SDL2WinData winData;
 std::unique_ptr<CUL::GUTILS::IConfigFile> configFile;
+SDL2W::ISDL2Wrapper* sdlWrapper = nullptr;
 
 #ifdef _MSC_VER
 #pragma warning( push )
@@ -38,11 +39,13 @@ public:
     TestApp():
         m_sdlW( SDL2W::createSDL2Wrapper() )
     {
-        configFile.reset( CUL::GUTILS::IConfigFile::createFile( "../media/Config.txt" ) );
+        sdlWrapper = m_sdlW.get();
+
+        configFile = std::unique_ptr<CUL::GUTILS::IConfigFile>( CUL::GUTILS::IConfigFile::createFile( "../media/Config.txt" ) );
         m_sdlW->init( winData, configFile.get() );
         m_logger = m_sdlW->getLogger();
         m_activeWindow = m_sdlW->getMainWindow();
-        m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
+        m_fpsCounter = std::unique_ptr<CUL::Video::IFPSCounter>( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
         m_activeWindow->addFPSCounter( m_fpsCounter.get() );
         m_fpsCounter->start();
         m_sdlW->setInputLatency( 1024 );
@@ -248,7 +251,12 @@ int main( int argc, char** argv )
 {
     winData.size.setSize( 800, 600 );
     winData.pos.setXYZ( 480, 480, 0 );
-    winData.withOpenGL = false;
+
+#if defined _MSC_VER
+    winData.rendererName = "direct3d";
+#else
+    winData.rendererName = "opengl";
+#endif
 
     auto& console = CUL::GUTILS::ConsoleUtilities::getInstance();
     console.setArgs( argc, argv );
