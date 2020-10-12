@@ -6,12 +6,13 @@
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 
-#include "CUL/Filesystem/FS.hpp"
-
 #include "SimpleUtils.hpp"
 
-#include "CUL/STL_IMPORTS/STD_iostream.hpp"
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
+
+#include "CUL/Filesystem/FS.hpp"
+#include "CUL/ITimer.hpp"
+#include "CUL/STL_IMPORTS/STD_iostream.hpp"
 
 using namespace SDL2W;
 
@@ -106,6 +107,39 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     }
 
     return result;
+}
+
+void RegularSDL2Window::toggleFpsCounter( const bool on, const short unsigned everyNsecond )
+{
+    if( on )
+    {
+        m_sleepTimeInfoLoop = everyNsecond;
+        m_runInfoLoop = true;
+        auto fpsCounterPtr = CUL::Video::FPSCounterFactory::getConcreteFPSCounter();
+        CUL::Assert::simple( fpsCounterPtr != nullptr, "Cannot create fps counter." );
+        m_fpsCounter = std::move( std::unique_ptr<CUL::Video::IFPSCounter>( fpsCounterPtr ) );
+        addFPSCounter( m_fpsCounter.get() );
+        m_fpsCounter->start();
+        m_infoPrintLoop = std::thread( &RegularSDL2Window::infoLoop, this );
+    }
+    else
+    {
+        closeInfoLoop();
+    }
+}
+
+void RegularSDL2Window::infoLoop()
+{
+    while( m_runInfoLoop )
+    {
+        CUL::ITimer::sleepSeconds( m_sleepTimeInfoLoop );
+        const auto currentFpsCount = m_fpsCounter->getCurrentFps();
+        const auto averageFpsCount = m_fpsCounter->getAverageFps();
+        const CUL::String messageCfps = "CURRENT FPS: " + CUL::String( currentFpsCount );
+        const CUL::String messageAfps = "AVERAGE FPS: " + CUL::String( averageFpsCount );
+        m_logger->log( messageCfps );
+        m_logger->log( messageAfps );
+    }
 }
 
 RegularSDL2Window::operator SDL_Window*( )
@@ -377,6 +411,8 @@ ColorS RegularSDL2Window::getBackgroundColor() const
 
 RegularSDL2Window::~RegularSDL2Window()
 {
+    closeInfoLoop();
+
     m_logger->log( "RegularSDL2Window::~RegularSDL2Window()" );
     destroyObjects();
 
@@ -387,4 +423,13 @@ RegularSDL2Window::~RegularSDL2Window()
     Assert( nullptr != m_window, "The Window has been destroyed somwhere else." );
     SDL_DestroyWindow( m_window );
     m_window = nullptr;
+}
+
+void RegularSDL2Window::closeInfoLoop()
+{
+    if( m_infoPrintLoop.joinable() )
+    {
+        m_runInfoLoop = false;
+        m_infoPrintLoop.join();
+    }
 }

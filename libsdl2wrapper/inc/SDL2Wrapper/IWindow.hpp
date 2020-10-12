@@ -106,6 +106,8 @@ public:
     void setWindowID( Cunt id );
     unsigned int getWindowID() const;
 
+    virtual void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) = 0;
+
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 

@@ -40,6 +40,14 @@ private:
     ITexture* createTexture( SDL_Surface* surface, const Path& path );
     void destroyObjects();
 
+    void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) override;
+    void closeInfoLoop();
+    void infoLoop();
+    std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
+    std::atomic<bool> m_runInfoLoop = false;
+    std::atomic<unsigned int> m_sleepTimeInfoLoop = 2u;
+    std::thread m_infoPrintLoop;
+
     // Inherited via IWindow
     void addObject( IObject* object ) override;
     void removeObject( IObject* object ) override;

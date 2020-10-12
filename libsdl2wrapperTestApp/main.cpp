@@ -45,9 +45,9 @@ public:
         m_sdlW->init( winData, configFile.get() );
         m_logger = m_sdlW->getLogger();
         m_activeWindow = m_sdlW->getMainWindow();
-        m_fpsCounter = std::unique_ptr<CUL::Video::IFPSCounter>( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
-        m_activeWindow->addFPSCounter( m_fpsCounter.get() );
-        m_fpsCounter->start();
+
+        m_activeWindow->toggleFpsCounter( true, 4u );
+
         m_sdlW->setInputLatency( 1024 );
 
         CUL::FS::Path pikachuBmp = configFile->getValue( "pikachuBmp" );
@@ -76,7 +76,6 @@ public:
         m_sdlW->registerWindowEventListener( this );
         m_sdlW->registerMouseEventListener( this );
         m_objectMoveThread = std::thread( &TestApp::objectManagmentFun, this );
-        m_dataInfoThread = std::thread( &TestApp::dataPrintFun, this );
         m_sdlW->runEventLoop();
     }
 
@@ -140,28 +139,10 @@ public:
         {
             m_objectMoveThread.join();
         }
-
-        if( m_dataInfoThread.joinable() )
-        {
-            m_dataInfoThread.join();
-        }
     }
 
 protected:
 private:
-    void dataPrintFun()
-    {
-        while( runLoop )
-        {
-            CUL::ITimer::sleepSeconds( 2 );
-            const auto currentFpsCount = m_fpsCounter->getCurrentFps();
-            const auto averageFpsCount = m_fpsCounter->getAverageFps();
-            const CUL::String messageCfps = "CURRENT FPS: " + CUL::String( currentFpsCount );
-            const CUL::String messageAfps = "AVERAGE FPS: " + CUL::String( averageFpsCount );
-            m_logger->log( messageCfps );
-            m_logger->log( messageAfps );
-        }
-    }
 
     void objectManagmentFun()
     {
@@ -225,7 +206,6 @@ private:
     std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
 
     std::thread m_objectMoveThread;
-    std::thread m_dataInfoThread;
 
     Object m_obj1;
     SDL2W::ISprite* m_obj2 = nullptr;
