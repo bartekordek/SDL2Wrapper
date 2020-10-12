@@ -408,7 +408,6 @@ ColorS RegularSDL2Window::getBackgroundColor() const
     return m_backgroundColor;
 }
 
-
 RegularSDL2Window::~RegularSDL2Window()
 {
     closeInfoLoop();
