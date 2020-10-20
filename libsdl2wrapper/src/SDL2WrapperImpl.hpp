@@ -81,7 +81,7 @@ private:
     std::unique_ptr<CUL::CULInterface> m_culInterface;
     Logger* getLogger() override;
 
-    void handleEveent( const SDL_Event& event );
+    void handleEvent( const SDL_Event& event );
 
     static bool isMouseEvent( const SDL_Event& event );
     static bool isWindowEvent( const SDL_Event& event );

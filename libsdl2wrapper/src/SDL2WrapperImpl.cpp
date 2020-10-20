@@ -217,8 +217,7 @@ void SDL2WrapperImpl::pollEvents()
     static SDL_Event event;
     if( SDL_PollEvent( &event ) > 0 )
     {
-        m_logger->log( "SDL2WrapperImpl::runEventLoop()::Handling Event..." );
-        handleEveent( event );
+        handleEvent( event );
         {
             std::lock_guard<std::mutex> lock( m_sdlEventObserversMtx );
             for( auto eventObserver : m_sdlEventObservers )
@@ -229,10 +228,8 @@ void SDL2WrapperImpl::pollEvents()
     }
 }
 
-void SDL2WrapperImpl::handleEveent( const SDL_Event& event )
+void SDL2WrapperImpl::handleEvent( const SDL_Event& event )
 {
-    m_logger->log( "SDL2WrapperImpl::handleEveent( " +
-        CUL::String( event.type ) + " );" );
     if( ( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ) )
     {
         if( SDL_SCANCODE_UNKNOWN != event.key.keysym.scancode )
@@ -326,8 +323,6 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )
 {
-    m_logger->log( "Window Event: " + std::to_string( sdlEvent.type ) );
-
     auto eventType = WindowEventType::NONE;
     switch( sdlEvent.type )
     {
