@@ -116,6 +116,7 @@ void RegularSDL2Window::toggleFpsCounter( const bool on, const short unsigned ev
         m_sleepTimeInfoLoop = everyNsecond;
         m_runInfoLoop = true;
         auto fpsCounterPtr = CUL::Video::FPSCounterFactory::getConcreteFPSCounter();
+        fpsCounterPtr->setSampleSize( 4 );
         CUL::Assert::simple( fpsCounterPtr != nullptr, "Cannot create fps counter." );
         m_fpsCounter = std::move( std::unique_ptr<CUL::Video::IFPSCounter>( fpsCounterPtr ) );
         addFPSCounter( m_fpsCounter.get() );
