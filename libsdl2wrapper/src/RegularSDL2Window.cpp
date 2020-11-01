@@ -12,7 +12,6 @@
 
 #include "CUL/Filesystem/FS.hpp"
 #include "CUL/ITimer.hpp"
-#include "CUL/STL_IMPORTS/STD_iostream.hpp"
 
 using namespace SDL2W;
 
@@ -29,11 +28,13 @@ using IPivot = CUL::MATH::IPivot;
 RegularSDL2Window::RegularSDL2Window(
     const WindowData& winData,
     ISDL2Wrapper* wrapper,
-    CUL::LOG::ILogger* logger ):
+    CUL::CULInterface* culInterface ):
     m_windowData( winData ),
     m_openGL( winData.rendererName.contains( "opengl" ) ),
     m_wrapper( wrapper ),
-    m_logger( logger )
+    m_culInterface( culInterface ),
+    m_fsApi( culInterface->getFS() ),
+    m_logger( culInterface->getLogger() )
 {
     m_window = createWindow( winData );
 
@@ -90,8 +91,13 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     const auto targetWidth = static_cast<int>( size.getWidth() );
     const auto targetHeight = static_cast<int>( size.getHeight() );
 
+    auto winTargetName = winName;
+    if( winTargetName.empty() )
+    {
+        winTargetName = "Window: " + std::to_string( size.getWidth() ) + "x" + std::to_string( size.getHeight() );
+    }
     result = SDL_CreateWindow(
-        winName.cStr(),
+        winTargetName.cStr(),
         static_cast<int>( pos.getX() ),
         static_cast<int>( pos.getY() ),
         targetWidth,
@@ -317,12 +323,11 @@ SurfaceImage RegularSDL2Window::createSurface(
 {
     SurfaceImage surfaceImage;
 
-    std::cout << "Current dir: " <<
-        CUL::FS::FSApi::getCurrentDir().cStr() <<
-        "\n";
+    m_logger->log( "Current dir: " + m_fsApi->getCurrentDir() );
+
     if( false == path.exists() )
     {
-        std::cout << "Checking for path FAILED\n";
+        m_logger->log( "Checking for path FAILED: ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "File " + path.getPath() + " does not exist." );
     }
 

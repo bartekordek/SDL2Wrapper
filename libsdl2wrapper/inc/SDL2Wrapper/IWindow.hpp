@@ -45,7 +45,7 @@ struct SDL2WAPI WindowData
 {
     Vector3Di pos = Vector3Di( 0, 0, 0 );
     WindowSize size = WindowSize( 640, 480 );
-    String name = "Generic Window Name.";
+    String name = "";
     String rendererName = "opengl";
 
     WindowData() = default;

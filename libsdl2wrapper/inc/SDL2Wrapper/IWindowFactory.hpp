@@ -5,6 +5,7 @@
 #include "CUL/String.hpp"
 #include "CUL/GenericUtils/IConfigFile.hpp"
 
+
 NAMESPACE_BEGIN( SDL2W )
 
 class SDL2WAPI IWindowFactory

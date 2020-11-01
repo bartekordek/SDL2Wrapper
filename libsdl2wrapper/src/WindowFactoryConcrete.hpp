@@ -12,7 +12,9 @@ class WindowCreatorConcrete final:
 public:
     explicit WindowCreatorConcrete( CUL::LOG::ILogger* logger );
 
-    IWindow* createWindow( const WindowData& winData, ISDL2Wrapper* wrapper ) override;
+    IWindow* createWindow(
+        const WindowData& winData,
+        ISDL2Wrapper* wrapper ) override;
 
     ~WindowCreatorConcrete();
 
@@ -22,7 +24,9 @@ private:
 
 
     WindowCreatorConcrete( const WindowCreatorConcrete& rhv ) = delete;
-    WindowCreatorConcrete& operator=( WindowCreatorConcrete& rhv ) = delete;
+    WindowCreatorConcrete( WindowCreatorConcrete&& rhv ) = delete;
+    WindowCreatorConcrete& operator=( const WindowCreatorConcrete& rhv ) = delete;
+    WindowCreatorConcrete& operator=( WindowCreatorConcrete&& rhv ) = delete;
 };
 
 NAMESPACE_END( SDL2W )

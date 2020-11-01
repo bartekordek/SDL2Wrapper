@@ -37,6 +37,9 @@ public:
 protected:
 private:
     void init( const WindowData& wd, IConfigFile* configFile = nullptr ) override;
+
+    CUL::CULInterface* getCul() override;
+
     IConfigFile* getConfig() override;
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
@@ -78,7 +81,7 @@ private:
     IGui* getGui() override;
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
-    std::unique_ptr<CUL::CULInterface> m_culInterface;
+    CUL::GUTILS::DumbPtr<CUL::CULInterface> m_culInterface;
     Logger* getLogger() override;
 
     void handleEvent( const SDL_Event& event );

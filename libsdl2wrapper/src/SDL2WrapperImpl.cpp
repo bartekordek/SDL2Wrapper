@@ -59,22 +59,20 @@ void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
 
     auto renderDriversCount = SDL_GetNumRenderDrivers();
     m_logger->log( "Available render drivers count: " + String( renderDriversCount ) + "\n" );
+
+    SDL_RendererInfo renderInfo;
     for( auto i = 0; i < renderDriversCount; ++i )
     {
         m_logger->log( "#################################################################################" );
-        std::unique_ptr<SDL_RendererInfo> renderInfo( new SDL_RendererInfo );
-        Assert( SDL_GetRenderDriverInfo( i, renderInfo.get() ) == 0, "Cannnot get driver info for index = " + String( i ) );
-        String rendererName( renderInfo->name );
+        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
+        String rendererName( renderInfo.name );
         m_logger->log( "Renderer name:" + rendererName );
-        m_logger->log( "Max texture width = " + CUL::String( renderInfo->max_texture_width ) );
-        m_logger->log( "Max texture height = " + CUL::String( renderInfo->max_texture_width ) );
-
-        //
-
+        m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
+        m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
         m_logger->log( "Available texture formats:" );
-        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo->num_texture_formats; ++iTexFormat )
+        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
         {
-            m_logger->log( String( SDL_GetPixelFormatName( renderInfo->texture_formats[ iTexFormat ] ) ) );
+            m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[ iTexFormat ] ) ) );
         }
 
         m_logger->log( "#################################################################################\n" );
@@ -95,6 +93,11 @@ void SDL2WrapperImpl::init( const WindowData& wd, IConfigFile* configFile )
     {
         m_onInitCallback();
     }
+}
+
+CUL::CULInterface* SDL2WrapperImpl::getCul()
+{
+    return m_culInterface;
 }
 
 IConfigFile* SDL2WrapperImpl::getConfig()

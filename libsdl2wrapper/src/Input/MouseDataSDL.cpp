@@ -63,10 +63,12 @@ WheelDirection MouseDataSDL::getWheelDirection() const
 
 void MouseDataSDL::setPos( Cint x, Cint y )
 {
+#ifdef DEBUG_POS
     const CUL::String log = "RegularSDL2Window::RegularSDL2Window( " +
         CUL::String( x ) + ", " +
         CUL::String( y ) + " );";
     CUL::LOG::LOG_CONTAINER::getLogger()->log( log );
+#endif
     m_x = x;
     m_y = y;
 }

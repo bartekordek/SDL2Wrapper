@@ -8,6 +8,8 @@
 #include "SDL2Wrapper/Input/IMouseObservable.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IWindowFactory.hpp"
+
+#include "CUL/CULInterface.hpp"
 #include "CUL/GenericUtils/IConfigFile.hpp"
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/ThreadUtils.hpp"
@@ -64,6 +66,7 @@ public:
     virtual IConfigFile* getConfig() = 0;
 
     virtual Logger* getLogger() = 0;
+    virtual CUL::CULInterface* getCul() = 0;
 
     virtual ~ISDL2Wrapper();
 protected:
