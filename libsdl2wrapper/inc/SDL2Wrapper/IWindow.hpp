@@ -18,8 +18,9 @@ NAMESPACE_BEGIN( SDL2W )
 using CDbl = const double;
 using CShrt = const unsigned short;
 using SmallCount = CShrt;
-using Size2D = CUL::Graphics::Size2D<unsigned>;
-using WindowSize = Size2D;
+using Size2Du = CUL::Graphics::Size2Du;
+using Size2Di = CUL::Graphics::Size2Di;
+using WindowSize = Size2Di;
 
 #ifdef _MSC_VER
 class SDL2WAPI CUL::IName;

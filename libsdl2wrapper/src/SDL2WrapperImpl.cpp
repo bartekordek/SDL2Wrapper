@@ -287,13 +287,9 @@ bool SDL2WrapperImpl::isWindowEvent( const SDL_Event& event )
 
 void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 {
-    m_logger->log( "SDL2WrapperImpl::handleKeyboardEvent" );
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
     auto& key = m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
     key->setKeyIsDown( keyIsDown );
-
-    m_logger->log( "EVENT: Key press/release, key: " + key->getKeyName().string() );
-    m_logger->log( "EVENT: Key press/release, keyID: " + std::to_string( sdlEvent.key.keysym.scancode ) );
 
     notifyKeyboardCallbacks( *key );
     notifyKeyboardListeners( *key );
