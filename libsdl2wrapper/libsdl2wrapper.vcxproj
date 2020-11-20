@@ -116,6 +116,7 @@
       </ProgramDataBaseFileName>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>false</EnablePREfast>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -175,7 +176,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       </ProgramDataBaseFileName>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>false</EnablePREfast>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\deps\SDL2_image-2.0.3\Build-Windows\$(Platform);$(ProjectDir)..\deps\CUL\Build-Windows\$(Platform)_$(Configuration);$(ProjectDir)..\deps\SDL2\Build-Windows\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -232,6 +233,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>false</EnablePREfast>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -288,6 +290,7 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
       <PreprocessorDefinitions>_WINDLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>false</EnablePREfast>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -350,13 +353,13 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
     <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObserver.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IRender.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISDL2Wrapper.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\ISDLEventObserver.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISprite.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowFactory.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\Import.hpp" />
     <ClInclude Include="src\IMPORT_SDL_events.hpp" />
-    <ClInclude Include="src\ISDLInputObserver.hpp" />
     <ClInclude Include="src\IMPORT_SDL_opengl.hpp" />
     <ClInclude Include="src\Input\KeySDL.hpp" />
     <ClInclude Include="src\Input\MouseDataSDL.hpp" />

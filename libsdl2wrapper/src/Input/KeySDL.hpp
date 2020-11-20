@@ -10,12 +10,11 @@ NAMESPACE_BEGIN( SDL2W )
 #pragma warning( disable: 4820 )
 #endif
 
-class KeySDL: public IKey
+class KeySDL final: public IKey
 {
 public:
     KeySDL();
-    virtual ~KeySDL();
-
+    ~KeySDL();
 protected:
 private:
     void setKeyName( const String& keyName ) override;
@@ -28,7 +27,9 @@ private:
 
 private: // Deleted
     KeySDL( const KeySDL& key ) = delete;
+    KeySDL( KeySDL&& key ) = delete;
     KeySDL& operator=( const KeySDL& key ) = delete;
+    KeySDL& operator=( KeySDL&& key ) = delete;
 };
 
 #ifdef _MSC_VER

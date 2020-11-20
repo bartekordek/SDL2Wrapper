@@ -20,6 +20,8 @@
 
 NAMESPACE_BEGIN( SDL2W )
 
+class ISDLEventObserver;
+
 using Keys = std::map<CUL::String, std::unique_ptr<IKey>>;
 using WindowEventType = WindowEvent::Type;
 using Cbool = const bool;
@@ -36,7 +38,7 @@ class SDL2WAPI ISDL2Wrapper:
 public:
     ISDL2Wrapper();
 
-    virtual void init( const WindowData& wd, IConfigFile* configFile = nullptr ) = 0;
+    virtual void init( const WindowData& wd, const Path& configPath = "" ) = 0;
     virtual void refreshScreen() = 0;
     virtual void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
@@ -44,12 +46,12 @@ public:
     virtual const std::map<String, int>& getRenderersList() const = 0;
     virtual void printAvailableRenderers() const = 0;
 
-    virtual ITexture* createTexture( const Path& path, IWindow* targetWindow ) = 0;
-    virtual ISprite* createSprite( const Path& path, IWindow* targetWindow ) = 0;
+    virtual ITexture* const createTexture( const Path& path, IWindow* targetWindow ) = 0;
+    virtual ISprite* const createSprite( const Path& path, IWindow* targetWindow ) = 0;
 
-    virtual ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) = 0;
+    virtual ISprite* const createSprite( ITexture* tex, IWindow* targetWindow ) = 0;
 
-    virtual IWindow* getMainWindow() = 0;
+    virtual IWindow* const getMainWindow() = 0;
 
     virtual unsigned int getInputLatency() const = 0;
     virtual void setInputLatency( Cunt latencyInUs ) = 0;
@@ -58,15 +60,17 @@ public:
     virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;
     virtual void registerWindowEventCallback( const WindowCallback& callback ) = 0;
     virtual void registerOnInitCallback( const InitCallback& callback ) = 0;
+    virtual void registerSDLEventObserver( ISDLEventObserver* eventObserver )  = 0;
+    virtual void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver )  = 0;
 
     virtual Keys& getKeyStates() = 0;
 
-    virtual IGui* getGui() = 0;
+    virtual IGui* const getGui() = 0;
 
-    virtual IConfigFile* getConfig() = 0;
+    virtual IConfigFile* const getConfig() = 0;
 
-    virtual Logger* getLogger() = 0;
-    virtual CUL::CULInterface* getCul() = 0;
+    virtual Logger* const getLogger() = 0;
+    virtual CUL::CULInterface* const getCul() = 0;
 
     virtual ~ISDL2Wrapper();
 protected:

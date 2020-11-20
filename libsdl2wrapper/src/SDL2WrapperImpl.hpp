@@ -1,9 +1,10 @@
 #pragma once
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
-#include "ISDLInputObserver.hpp"
+#include "SDL2Wrapper/ISDLEventObserver.hpp"
 #include "WindowFactoryConcrete.hpp"
 #include "CUL/CULInterface.hpp"
+#include "Input/MouseDataSDL.hpp"
 #include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/STL_IMPORTS/STD_vector.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
@@ -17,7 +18,6 @@ NAMESPACE_BEGIN( SDL2W )
 using WindowCollection = std::map<unsigned int, std::unique_ptr<IWindow>>;
 template <typename TYPE> using LckPrim = CUL::GUTILS::LckPrim<TYPE>;
 template <typename TYPE> using DumbPtr = CUL::GUTILS::DumbPtr<TYPE>;
-class MouseDataSDL;
 
 #ifdef _MSC_VER
 #pragma warning( push )
@@ -30,17 +30,18 @@ class SDL2WrapperImpl final:
 public:
     SDL2WrapperImpl();
 
-    void registerSDLEventObserver( ISDLInputObserver* eventObserver );
-    void unRegisterSDLEventObserver( ISDLInputObserver* eventObserver );
-
     ~SDL2WrapperImpl();
 protected:
 private:
-    void init( const WindowData& wd, IConfigFile* configFile = nullptr ) override;
+    void init( const WindowData& wd, const Path& configPath = "" ) override;
 
-    CUL::CULInterface* getCul() override;
 
-    IConfigFile* getConfig() override;
+    void registerSDLEventObserver( ISDLEventObserver* eventObserver ) override;
+    void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver ) override;
+
+    CUL::CULInterface* const getCul() override;
+
+    IConfigFile* const getConfig() override;
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
     void clearWindows() override;
@@ -52,6 +53,8 @@ private:
     void runEventLoop() override;
     void stopEventLoop() override;
     void pollEvents() override;
+
+    void notifySDLEventObservers( SDL_Event& event );
 
     void registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) override;
     void registerWindowEventCallback( const WindowCallback& callback ) override;
@@ -76,13 +79,13 @@ private:
     bool isKeyUp( const String& keyName ) const override;
     Keys& getKeyStates() override;
 
-    IWindow* getMainWindow() override;
+    IWindow* const getMainWindow() override;
 
-    IGui* getGui() override;
+    IGui* const getGui() override;
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
     CUL::GUTILS::DumbPtr<CUL::CULInterface> m_culInterface;
-    Logger* getLogger() override;
+    Logger* const getLogger() override;
 
     void handleEvent( const SDL_Event& event );
 
@@ -96,12 +99,13 @@ private:
     void notifyKeyboardCallbacks( const IKey& key );
     void notifyKeyboardListeners( const IKey& key );
     void notifyMouseListerners( const IMouseData& md );
+    void notifyMouseCallbacks( const IMouseData& md );
     void notifyWindowEventListeners( const WindowEventType e );
     void notifyWindowEventCallbacks( const WindowEventType e );
 
-    ITexture* createTexture( const Path& path, IWindow* targetWindow ) override;
-    ISprite* createSprite( const Path& path, IWindow* targetWindow ) override;
-    ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) override;
+    ITexture* const createTexture( const Path& path, IWindow* targetWindow ) override;
+    ISprite* const createSprite( const Path& path, IWindow* targetWindow ) override;
+    ISprite* const createSprite( ITexture* tex, IWindow* targetWindow ) override;
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
 
@@ -118,20 +122,23 @@ private:
 
     Logger* m_logger = nullptr;
 
-    std::unique_ptr<MouseDataSDL> m_mouseData;
-
-    std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
-    std::vector<std::function<void( const IMouseData& md )>> m_mouseCallbacks;
-    std::vector<std::function<void( const WindowEventType wEt )>> m_winEventCallbacks;
+    DumbPtr<MouseDataSDL> m_mouseData;
 
     InitCallback m_onInitCallback;
 
     std::set<IKeyboardObserver*> m_keyboardObservers;
+    std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
     std::mutex m_keyboardObserversMtx;
+
     std::set<IMouseObserver*> m_mouseObservers;
+    std::vector<std::function<void( const IMouseData& md )>> m_mouseCallbacks;
     std::mutex m_mouseObserversMtx;
-    std::set<ISDLInputObserver*> m_sdlEventObservers;
+
+    std::vector<std::function<void( const WindowEventType wEt )>> m_winEventCallbacks;
+
+    std::set<ISDLEventObserver*> m_sdlEventObservers;
     std::mutex m_sdlEventObserversMtx;
+
     IConfigFile* m_configFile = nullptr;
 
 private: // Deleted methods.

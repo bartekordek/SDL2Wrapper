@@ -15,9 +15,11 @@
 using Pos3D = CUL::Graphics::Position3DDMutexed;
 using WinEventType = SDL2W::WindowEvent::Type;
 using SDL2WinData = SDL2W::WindowData;
+template <typename TYPE> using DumbPtr = CUL::GUTILS::DumbPtr<TYPE>;
+
 
 SDL2WinData winData;
-std::unique_ptr<CUL::GUTILS::IConfigFile> configFile;
+DumbPtr<CUL::GUTILS::IConfigFile> configFile;
 SDL2W::ISDL2Wrapper* sdlWrapper = nullptr;
 
 #ifdef _MSC_VER
@@ -40,9 +42,10 @@ public:
         m_sdlW( SDL2W::createSDL2Wrapper() )
     {
         sdlWrapper = m_sdlW.get();
+        m_sdlW->init( winData, "../media/Config.txt" );
 
-        configFile = std::unique_ptr<CUL::GUTILS::IConfigFile>( CUL::GUTILS::IConfigFile::createFile( "../media/Config.txt" ) );
-        m_sdlW->init( winData, configFile.get() );
+        configFile = sdlWrapper->getConfig();
+
         m_logger = m_sdlW->getLogger();
         m_activeWindow = m_sdlW->getMainWindow();
 

@@ -1,5 +1,7 @@
 pikachuBmp ../media/Shapes.bmp
 pikachuBmp ../media/RGB.bmp
+pikachuBmp ../media/pikaczu.bmp
+pikachuBmp ../media/pikaczu2.bmp
 pikachuPng ../media/pikaczu.png
 BMP_LOADER DevilImageLoader
 BMP_LOADER TinyImageLoader
