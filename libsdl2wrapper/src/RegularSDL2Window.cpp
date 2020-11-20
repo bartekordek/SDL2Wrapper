@@ -331,6 +331,7 @@ SurfaceImage RegularSDL2Window::createSurface(
         Assert( false, "File " + path.getPath() + " does not exist." );
     }
 
+    m_logger->log( "Loading: " + path );
     auto image = m_il->loadImage( path );
     Assert( nullptr != image, "Cannot load: " + path.getPath() );
 
@@ -383,6 +384,8 @@ ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& pa
     CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
     CUL::Assert::simple( nullptr != surface, "SURFACE IS NULL!\n" );
 
+    m_logger->log( "Creating texture from: " + path );
+
     auto texSDL = new TextureSDL();
 
     auto tex = SDL_CreateTextureFromSurface( m_renderer, surface );
@@ -412,6 +415,11 @@ void RegularSDL2Window::removeObject( IObject* object )
 ColorS RegularSDL2Window::getBackgroundColor() const
 {
     return m_backgroundColor;
+}
+
+CUL::Video::IFPSCounter* const RegularSDL2Window::getFpsCounter()
+{
+    return m_fpsCounter.get();
 }
 
 RegularSDL2Window::~RegularSDL2Window()

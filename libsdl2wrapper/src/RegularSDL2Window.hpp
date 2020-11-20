@@ -78,6 +78,8 @@ private:
 
     ColorS getBackgroundColor() const override;
 
+    CUL::Video::IFPSCounter* const getFpsCounter() override;
+
     WindowData m_windowData;
     bool m_openGL = false;
     ColorS m_backgroundColor;

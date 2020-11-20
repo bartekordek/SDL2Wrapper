@@ -13,6 +13,13 @@
 
 struct SDL_Window;
 
+NAMESPACE_BEGIN( CUL )
+NAMESPACE_BEGIN( Video )
+class IFPSCounter;
+NAMESPACE_END( Video )
+NAMESPACE_END( CUL )
+
+
 NAMESPACE_BEGIN( SDL2W )
 
 using CDbl = const double;
@@ -109,6 +116,8 @@ public:
 
     virtual void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) = 0;
 
+    virtual CUL::Video::IFPSCounter* const getFpsCounter() = 0;
+
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
@@ -119,7 +128,9 @@ private:
     unsigned int m_winId = 0;
 
     IWindow( const IWindow& wind ) = delete;
+    IWindow( IWindow&& wind ) = delete;
     IWindow& operator=( const IWindow& window ) = delete;
+    IWindow& operator=( IWindow&& window ) = delete;
 };
 
 #ifdef _MSC_VER
