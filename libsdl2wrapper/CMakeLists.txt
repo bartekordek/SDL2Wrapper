@@ -44,45 +44,54 @@ else()
 endif()
 
 add_library( ${EXEC} SHARED
-    src/Input/IKey.cpp
-    src/Input/KeySDL.cpp
-    src/Input/MouseDataSDL.cpp
-    src/IRender.cpp
-    src/ISDL2Wrapper.cpp
-    src/ISprite.cpp
-    src/IWindow.cpp
-    src/IWindowFactory.cpp
-    src/RegularSDL2Window.cpp
-    src/SDL2Wrapper.cpp
-    src/SDL2WrapperImpl.cpp
-    src/SimpleUtils.cpp
-    src/Sprite.cpp
-    src/TextureSDL.cpp
-    src/WindowFactoryConcrete.cpp
+src/Sprite.cpp
+src/TextureSDL.cpp
+src/RegularSDL2Window.cpp
+src/ISprite.cpp
+src/SDL2Wrapper.cpp
+src/IWindow.cpp
+src/SimpleUtils.cpp
+src/ISDL2Wrapper.cpp
+src/IRender.cpp
+src/SDL2WrapperImpl.cpp
+src/Input/MouseData.cpp
+src/Input/IKey.cpp
+src/Input/KeySDL.cpp
+src/WindowFactoryConcrete.cpp
+src/IWindowFactory.cpp
 )
 
 #set_target_properties(cul PROPERTIES PUBLIC_HEADER
 set( HEADERS_PUBLIC
-    inc/SDL2Wrapper/Gui/IGui.hpp
-    inc/SDL2Wrapper/Gui/IWindowEventObservable.hpp
-    inc/SDL2Wrapper/IEventLoop.hpp
-    inc/SDL2Wrapper/Import.hpp
-    inc/SDL2Wrapper/IMPORT_SDL.hpp
-    inc/SDL2Wrapper/IMPORT_SDL_renderer.hpp
-    inc/SDL2Wrapper/IMPORT_SDL_video.hpp
-    inc/SDL2Wrapper/Input/IKey.hpp
-    inc/SDL2Wrapper/Input/IKeyboardObservable.hpp
-    inc/SDL2Wrapper/Input/IKeyboardObserver.hpp
-    inc/SDL2Wrapper/Input/IMouseData.hpp
-    inc/SDL2Wrapper/Input/IMouseObservable.hpp
-    inc/SDL2Wrapper/Input/IMouseObserver.hpp
-    inc/SDL2Wrapper/IRender.hpp
-    inc/SDL2Wrapper/ISDL2Wrapper.hpp
-    inc/SDL2Wrapper/ISprite.hpp
-    inc/SDL2Wrapper/IWindow.hpp
-    inc/SDL2Wrapper/IWindowEventListener.hpp
-    inc/SDL2Wrapper/IWindowFactory.hpp
-    src/IMPORT_SDL_events.hpp
+src/SimpleUtils.hpp
+src/IMPORT_SDL_opengl.hpp
+src/Sprite.hpp
+src/SDL2WrapperImpl.hpp
+src/WindowFactoryConcrete.hpp
+src/IMPORT_SDL_events.hpp
+src/Input/KeySDL.hpp
+src/TextureSDL.hpp
+src/RegularSDL2Window.hpp
+inc/SDL2Wrapper/ISprite.hpp
+inc/SDL2Wrapper/IWindow.hpp
+inc/SDL2Wrapper/IRender.hpp
+inc/SDL2Wrapper/IMPORT_SDL_renderer.hpp
+inc/SDL2Wrapper/IMPORT_SDL_video.hpp
+inc/SDL2Wrapper/IWindowEventListener.hpp
+inc/SDL2Wrapper/IWindowFactory.hpp
+inc/SDL2Wrapper/IEventLoop.hpp
+inc/SDL2Wrapper/Input/IMouseObservable.hpp
+inc/SDL2Wrapper/Input/IKey.hpp
+inc/SDL2Wrapper/Input/IKeyboardObserver.hpp
+inc/SDL2Wrapper/Input/IMouseObserver.hpp
+inc/SDL2Wrapper/Input/IKeyboardObservable.hpp
+inc/SDL2Wrapper/Input/MouseData.hpp
+inc/SDL2Wrapper/ISDL2Wrapper.hpp
+inc/SDL2Wrapper/Import.hpp
+inc/SDL2Wrapper/Gui/IGui.hpp
+inc/SDL2Wrapper/Gui/IWindowEventObservable.hpp
+inc/SDL2Wrapper/IMPORT_SDL.hpp
+inc/SDL2Wrapper/ISDLEventObserver.hpp
 )
 
 if( MSVC )

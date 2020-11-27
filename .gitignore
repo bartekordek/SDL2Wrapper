@@ -47,3 +47,5 @@ runDir/*.dll
 runDir/*.so
 
 Build-*
+
+intermediate

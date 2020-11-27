@@ -4,7 +4,6 @@
 #include "SDL2Wrapper/ISDLEventObserver.hpp"
 #include "WindowFactoryConcrete.hpp"
 #include "CUL/CULInterface.hpp"
-#include "Input/MouseDataSDL.hpp"
 #include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/STL_IMPORTS/STD_vector.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
@@ -39,9 +38,9 @@ private:
     void registerSDLEventObserver( ISDLEventObserver* eventObserver ) override;
     void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver ) override;
 
-    CUL::CULInterface* const getCul() override;
+    CUL::CULInterface* getCul() override;
 
-    IConfigFile* const getConfig() override;
+    IConfigFile* getConfig() const override;
     void refreshScreen() override;
     void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
     void clearWindows() override;
@@ -72,20 +71,20 @@ private:
 
     void registerOnInitCallback( const InitCallback& callback ) override;
 
-    IMouseData& getMouseData() override;
+    MouseData& getMouseData() override;
 
     unsigned int getInputLatency() const override;
     void setInputLatency( Cunt latencyInUs ) override;
     bool isKeyUp( const String& keyName ) const override;
     Keys& getKeyStates() override;
 
-    IWindow* const getMainWindow() override;
+    IWindow* getMainWindow() const override;
 
-    IGui* const getGui() override;
+    IGui* getGui() const override;
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
     CUL::GUTILS::DumbPtr<CUL::CULInterface> m_culInterface;
-    Logger* const getLogger() override;
+    Logger* getLogger() const override;
 
     void handleEvent( const SDL_Event& event );
 
@@ -98,14 +97,14 @@ private:
 
     void notifyKeyboardCallbacks( const IKey& key );
     void notifyKeyboardListeners( const IKey& key );
-    void notifyMouseListerners( const IMouseData& md );
-    void notifyMouseCallbacks( const IMouseData& md );
+    void notifyMouseListerners( const MouseData& md );
+    void notifyMouseCallbacks( const MouseData& md );
     void notifyWindowEventListeners( const WindowEventType e );
     void notifyWindowEventCallbacks( const WindowEventType e );
 
-    ITexture* const createTexture( const Path& path, IWindow* targetWindow ) override;
-    ISprite* const createSprite( const Path& path, IWindow* targetWindow ) override;
-    ISprite* const createSprite( ITexture* tex, IWindow* targetWindow ) override;
+    ITexture* createTexture( const Path& path, IWindow* targetWindow ) const override;
+    ISprite* createSprite( const Path& path, IWindow* targetWindow ) const override;
+    ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) const override;
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
 
@@ -122,7 +121,7 @@ private:
 
     Logger* m_logger = nullptr;
 
-    DumbPtr<MouseDataSDL> m_mouseData;
+    MouseData m_mouseData;
 
     InitCallback m_onInitCallback;
 
@@ -131,7 +130,7 @@ private:
     std::mutex m_keyboardObserversMtx;
 
     std::set<IMouseObserver*> m_mouseObservers;
-    std::vector<std::function<void( const IMouseData& md )>> m_mouseCallbacks;
+    std::vector<std::function<void( const MouseData& md )>> m_mouseCallbacks;
     std::mutex m_mouseObserversMtx;
 
     std::vector<std::function<void( const WindowEventType wEt )>> m_winEventCallbacks;

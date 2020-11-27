@@ -116,7 +116,7 @@ public:
 
     virtual void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) = 0;
 
-    virtual CUL::Video::IFPSCounter* const getFpsCounter() = 0;
+    virtual CUL::Video::IFPSCounter* getFpsCounter() = 0;
 
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;

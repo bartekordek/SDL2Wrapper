@@ -120,7 +120,7 @@ public:
         }
     }
 
-    void onMouseEvent( const SDL2W::IMouseData& md ) override
+    void onMouseEvent( const SDL2W::MouseData& md ) override
     {
         m_obj5->setX( static_cast<double>( md.getX() ) );
         m_obj5->setY( static_cast<double>( md.getY() ) );
@@ -190,7 +190,6 @@ private:
 
             obj2Angle -= 1;
             obj3Angle += 1;
-            auto amp = 64;
             auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
             bckgroundColor.setGCU( greeVal );
             m_activeWindow->setBackgroundColor( bckgroundColor );

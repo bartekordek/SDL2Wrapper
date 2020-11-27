@@ -88,14 +88,15 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
         windowFlags |= SDL_WINDOW_OPENGL;
     }
 
-    const auto targetWidth = static_cast<int>( size.getWidth() );
-    const auto targetHeight = static_cast<int>( size.getHeight() );
+    const auto targetWidth = (int)( size.getWidth() );
+    const auto targetHeight = (int)( size.getHeight() );
 
     auto winTargetName = winName;
     if( winTargetName.empty() )
     {
         winTargetName = "Window: " + std::to_string( size.getWidth() ) + "x" + std::to_string( size.getHeight() );
     }
+
     result = SDL_CreateWindow(
         winTargetName.cStr(),
         static_cast<int>( pos.getX() ),
@@ -142,8 +143,8 @@ void RegularSDL2Window::infoLoop()
         CUL::ITimer::sleepSeconds( m_sleepTimeInfoLoop );
         const auto currentFpsCount = m_fpsCounter->getCurrentFps();
         const auto averageFpsCount = m_fpsCounter->getAverageFps();
-        const CUL::String messageCfps = "CURRENT FPS: " + CUL::String( currentFpsCount );
-        const CUL::String messageAfps = "AVERAGE FPS: " + CUL::String( averageFpsCount );
+        const auto messageCfps = "CURRENT FPS: " + CUL::String( currentFpsCount );
+        const auto messageAfps = "AVERAGE FPS: " + CUL::String( averageFpsCount );
         m_logger->log( messageCfps );
         m_logger->log( messageAfps );
     }
@@ -190,7 +191,7 @@ void RegularSDL2Window::renderAll()
         m_backgroundColor.getBUI(),
         m_backgroundColor.getAUI() );
     std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
-    for( auto& object : m_objects )
+    for( const auto& object : m_objects )
     {
         if( IObject::Type::SPRITE == object->getType() )
         {
@@ -417,7 +418,7 @@ ColorS RegularSDL2Window::getBackgroundColor() const
     return m_backgroundColor;
 }
 
-CUL::Video::IFPSCounter* const RegularSDL2Window::getFpsCounter()
+CUL::Video::IFPSCounter* RegularSDL2Window::getFpsCounter()
 {
     return m_fpsCounter.get();
 }

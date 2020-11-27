@@ -46,12 +46,12 @@ public:
     virtual const std::map<String, int>& getRenderersList() const = 0;
     virtual void printAvailableRenderers() const = 0;
 
-    virtual ITexture* const createTexture( const Path& path, IWindow* targetWindow ) = 0;
-    virtual ISprite* const createSprite( const Path& path, IWindow* targetWindow ) = 0;
+    virtual ITexture* createTexture( const Path& path, IWindow* targetWindow ) const = 0;
+    virtual ISprite* createSprite( const Path& path, IWindow* targetWindow ) const = 0;
 
-    virtual ISprite* const createSprite( ITexture* tex, IWindow* targetWindow ) = 0;
+    virtual ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) const = 0;
 
-    virtual IWindow* const getMainWindow() = 0;
+    virtual IWindow* getMainWindow() const = 0;
 
     virtual unsigned int getInputLatency() const = 0;
     virtual void setInputLatency( Cunt latencyInUs ) = 0;
@@ -65,12 +65,12 @@ public:
 
     virtual Keys& getKeyStates() = 0;
 
-    virtual IGui* const getGui() = 0;
+    virtual IGui* getGui() const = 0;
 
-    virtual IConfigFile* const getConfig() = 0;
+    virtual IConfigFile* getConfig() const = 0;
 
-    virtual Logger* const getLogger() = 0;
-    virtual CUL::CULInterface* const getCul() = 0;
+    virtual Logger* getLogger() const = 0;
+    virtual CUL::CULInterface* getCul() = 0;
 
     virtual ~ISDL2Wrapper();
 protected:

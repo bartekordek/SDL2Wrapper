@@ -3,21 +3,27 @@
 #include "CUL/ITimer.hpp"
 #include "CUL/ThreadUtils.hpp"
 #include "CUL/Filesystem/FS.hpp"
-#include "CUL/LckPrim.hpp"
+#include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/Math/Angle.hpp"
-#include "CUL/STD_thread.hpp"
-#include "CUL/STD_cmath.hpp"
+#include "CUL/STL_IMPORTS/STD_thread.hpp"
+#include "CUL/STL_IMPORTS/STD_cmath.hpp"
 #include "CUL/Log/ILogContainer.hpp"
 
 using Pos3D = CUL::Graphics::Position3DDMutexed;
+using SDL2WinData = SDL2W::WindowData;
+
 
 void logMsg(
-    CUL::CnstMyStr& msg,
+    const CUL::String& msg,
     const CUL::LOG::Severity severity = CUL::LOG::Severity::INFO )
 {
     CUL::LOG::LOG_CONTAINER::getLogger()->log( msg, severity );
 }
 
+#if _MSC_VER
+#pragma warning( push )
+#pragma warning( disable: 4820 )
+#endif
 class TestApp final:
     public SDL2W::IKeyboardObserver,
     public SDL2W::IMouseObserver,
@@ -25,11 +31,14 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper(
-            SDL2W::Vector3Di( 200, 200, 0 ),
-            SDL2W::Vector3Du( 1024, 768, 0 ),
-            "Test app.", true ) )
+        m_sdlW( SDL2W::createSDL2Wrapper() )
     {
+        SDL2WinData winData;
+        winData.name = "libsdl2wrapperTestAppGui";
+        winData.pos = { 600, 600, 0 };
+        winData.size = { 800, 600 };
+
+        m_sdlW->init( winData, "../media/Config.txt" );
         m_activeWindow = m_sdlW->getMainWindow();
         m_fpsCounter.reset( CUL::Video::FPSCounterFactory::getConcreteFPSCounter() );
         m_activeWindow->addFPSCounter( m_fpsCounter.get() );
@@ -97,14 +106,14 @@ public:
         }
     }
 
-    void onMouseEvent( const SDL2W::IMouseData& ) override
+    void onMouseEvent( const SDL2W::MouseData& ) override
     {
     }
 
-    void onWindowEvent( const WindowEventType windowEventType ) override
+    void onWindowEvent( const SDL2W::WindowEvent::Type windowEventType ) override
     {
-        logMsg( "Event Type: " + CUL::MyString( static_cast< short >( windowEventType ) ) );
-        if( WindowEventType::CLOSE == windowEventType )
+        logMsg( "Event Type: " + CUL::String( static_cast< short >( windowEventType ) ) );
+        if( SDL2W::WindowEvent::Type::CLOSE == windowEventType )
         {
             quitApp();
         }
@@ -125,8 +134,8 @@ private:
             CUL::ITimer::sleepSeconds( 2 );
             const auto currentFpsCount = m_fpsCounter->getCurrentFps();
             const auto averageFpsCount = m_fpsCounter->getAverageFps();
-            logMsg( "CURRENT FPS: " + CUL::MyString( currentFpsCount ) );
-            logMsg( "AVERAGE FPS: " + CUL::MyString( averageFpsCount ) );
+            logMsg( "CURRENT FPS: " + CUL::String( currentFpsCount ) );
+            logMsg( "AVERAGE FPS: " + CUL::String( averageFpsCount ) );
         }
     }
 
@@ -151,7 +160,7 @@ private:
 
     SDL2W::ColorS bckgroundColor;
 
-    CUL::LckPrim<bool> runLoop{ true };
+    CUL::GUTILS::LckPrim<bool> runLoop{ true };
 
     std::unique_ptr< SDL2W::ISDL2Wrapper> m_sdlW;
     std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
@@ -160,6 +169,9 @@ private:
     std::thread m_dataInfoThread;
 
 };
+#if _MSC_VER
+#pragma warning( pop )
+#endif
 
 int main( int, char** )
 {

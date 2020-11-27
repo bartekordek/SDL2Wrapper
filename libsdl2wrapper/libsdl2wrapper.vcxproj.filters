@@ -81,17 +81,11 @@
     <ClInclude Include="inc\SDL2Wrapper\Input\IKeyboardObserver.hpp">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\Input\IMouseData.hpp">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObservable.hpp">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\Input\IMouseObserver.hpp">
       <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input\MouseDataSDL.hpp">
-      <Filter>Source Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Input\KeySDL.hpp">
       <Filter>Source Files\Input</Filter>
@@ -113,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\ISDLEventObserver.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\Input\MouseData.hpp">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,14 +149,14 @@
     <ClCompile Include="src\Input\IKey.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input\MouseDataSDL.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
     <ClCompile Include="src\Input\KeySDL.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\SimpleUtils.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\MouseData.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

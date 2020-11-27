@@ -11,6 +11,8 @@
 #include "CUL/Video/IFPSCounter.hpp"
 #include "CUL/Graphics/IImageLoader.hpp"
 #include "CUL/CULInterface.hpp"
+#include "CUL/STL_IMPORTS/STD_atomic.hpp"
+#include "CUL/STL_IMPORTS/STD_thread.hpp"
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -78,7 +80,7 @@ private:
 
     ColorS getBackgroundColor() const override;
 
-    CUL::Video::IFPSCounter* const getFpsCounter() override;
+    CUL::Video::IFPSCounter*  getFpsCounter() override;
 
     WindowData m_windowData;
     bool m_openGL = false;

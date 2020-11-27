@@ -92,7 +92,13 @@ void SDL2WrapperImpl::init( const WindowData& wd, const Path& configPath )
 
     createKeys();
 
-    m_mouseData = new MouseDataSDL();
+
+    for( auto i = static_cast<MouseButtonIndex>( SDL_BUTTON_LEFT );
+         i <= static_cast<MouseButtonIndex>(SDL_BUTTON_X2);
+         ++i)
+    {
+        m_mouseData.setState( i, false );
+    }
 
     if( m_onInitCallback )
     {
@@ -100,12 +106,12 @@ void SDL2WrapperImpl::init( const WindowData& wd, const Path& configPath )
     }
 }
 
-CUL::CULInterface* const SDL2WrapperImpl::getCul()
+CUL::CULInterface* SDL2WrapperImpl::getCul()
 {
-    return m_culInterface;
+    return m_culInterface.get();
 }
 
-IConfigFile* const SDL2WrapperImpl::getConfig()
+IConfigFile* SDL2WrapperImpl::getConfig() const
 {
     return m_configFile;
 }
@@ -146,7 +152,7 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     return result;
 }
 
-Logger* const SDL2WrapperImpl::getLogger()
+Logger* SDL2WrapperImpl::getLogger() const
 {
     return m_logger;
 }
@@ -250,8 +256,8 @@ void SDL2WrapperImpl::handleEvent( const SDL_Event& event )
     if( isMouseEvent( event ) )
     {
         handleMouseEvent( event );
-        notifyMouseListerners( *m_mouseData );
-        notifyMouseCallbacks( *m_mouseData );
+        notifyMouseListerners( m_mouseData );
+        notifyMouseCallbacks( m_mouseData );
     }
 
     if( isWindowEvent( event ) )
@@ -262,17 +268,7 @@ void SDL2WrapperImpl::handleEvent( const SDL_Event& event )
 
 bool SDL2WrapperImpl::isMouseEvent( const SDL_Event& event )
 {
-    switch( event.type )
-    {
-    case SDL_MOUSEMOTION:
-    case SDL_MOUSEBUTTONDOWN:
-    case SDL_MOUSEBUTTONUP:
-    case SDL_MOUSEWHEEL:
-        return true;
-    default:
-        return false;
-        break;
-    }
+    return event.type >= SDL_MOUSEMOTION && event.type <= SDL_MOUSEWHEEL;
 }
 
 bool SDL2WrapperImpl::isWindowEvent( const SDL_Event& event )
@@ -304,6 +300,7 @@ void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 
 void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 {
+    m_mouseData.setType( (MouseData::EventType) event.type );
     if( event.type == SDL_MOUSEBUTTONDOWN ||
         event.type == SDL_MOUSEBUTTONUP )
     {
@@ -311,16 +308,16 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 
         const auto mb = event.button;
         const auto mbIndex = static_cast<unsigned short>( mb.button );
-        m_mouseData->setState( mbIndex, isUp );
+        m_mouseData.setState( mbIndex, isUp );
     }
     else if( event.type == SDL_MOUSEMOTION )
     {
-        m_mouseData->setPos( event.button.x, event.button.y );
+        m_mouseData.setPos( event.button.x, event.button.y );
     }
     else if( event.type == SDL_MOUSEWHEEL )
     {
         const auto we = event.wheel;
-        m_mouseData->setWheel(
+        m_mouseData.setWheel(
             we.x,
             we.y,
             we.direction == SDL_MOUSEWHEEL_NORMAL ? SDL2W::WheelDirection::UP : SDL2W::WheelDirection::DOWN );
@@ -399,7 +396,7 @@ void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
     }
 }
 
-void SDL2WrapperImpl::notifyMouseListerners( const IMouseData& md )
+void SDL2WrapperImpl::notifyMouseListerners( const MouseData& md )
 {
     std::lock_guard<std::mutex> lock( m_mouseObserversMtx );
     for( const auto& listener : m_mouseObservers )
@@ -408,7 +405,7 @@ void SDL2WrapperImpl::notifyMouseListerners( const IMouseData& md )
     }
 }
 
-void SDL2WrapperImpl::notifyMouseCallbacks( const IMouseData& md )
+void SDL2WrapperImpl::notifyMouseCallbacks( const MouseData& md )
 {
     std::lock_guard<std::mutex> lock( m_mouseObserversMtx );
     for( const auto& listener : m_mouseCallbacks )
@@ -451,9 +448,9 @@ void SDL2WrapperImpl::addMouseEventCallback( const MouseCallback& callback )
     m_mouseCallbacks.push_back( callback );
 }
 
-IMouseData& SDL2WrapperImpl::getMouseData()
+MouseData& SDL2WrapperImpl::getMouseData()
 {
-    return *m_mouseData;
+    return m_mouseData;
 }
 
 void SDL2WrapperImpl::notifyWindowEventListeners( const WindowEventType e )
@@ -492,16 +489,16 @@ Keys& SDL2WrapperImpl::getKeyStates()
     return m_keys;
 }
 
-ISprite* const SDL2WrapperImpl::createSprite(
+ISprite* SDL2WrapperImpl::createSprite(
     const Path& objPath,
-    IWindow* targetWindow )
+    IWindow* targetWindow ) const
 {
     return targetWindow->createSprite( objPath );
 }
 
-ITexture* const SDL2WrapperImpl::createTexture(
+ITexture* SDL2WrapperImpl::createTexture(
     const Path& objPath,
-    IWindow* targetWindow )
+    IWindow* targetWindow ) const
 {
     if( IWindow::Type::SDL_WIN == targetWindow->getType() )
     {
@@ -510,9 +507,9 @@ ITexture* const SDL2WrapperImpl::createTexture(
     return nullptr;
 }
 
-ISprite* const SDL2WrapperImpl::createSprite(
+ISprite* SDL2WrapperImpl::createSprite(
     ITexture* tex,
-    IWindow* targetWindow )
+    IWindow* targetWindow ) const
 {
     if( IWindow::Type::SDL_WIN == targetWindow->getType() )
     {
@@ -521,12 +518,12 @@ ISprite* const SDL2WrapperImpl::createSprite(
     return nullptr;
 }
 
-IWindow* const SDL2WrapperImpl::getMainWindow()
+IWindow* SDL2WrapperImpl::getMainWindow() const
 {
     return m_mainWindow;
 }
 
-IGui* const SDL2WrapperImpl::getGui()
+IGui* SDL2WrapperImpl::getGui() const
 {
     return nullptr;
 }
