@@ -41,7 +41,18 @@ RegularSDL2Window::RegularSDL2Window(
     setWindowID( SDL_GetWindowID( m_window ) );
 
     auto rendererId = m_wrapper->getRendererId( winData.rendererName );
-    m_renderer = SDL_CreateRenderer( m_window, rendererId, SDL_RENDERER_ACCELERATED );
+
+    auto rendererType = SDL_RENDERER_ACCELERATED;
+
+    if( winData.rendererName == "software" )
+    {
+        rendererType = SDL_RENDERER_SOFTWARE;
+    }
+
+    m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
+
+
+
     Assert( nullptr != m_renderer, "Cannot create renderer." );
     SDL_RendererInfo info;
     const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );

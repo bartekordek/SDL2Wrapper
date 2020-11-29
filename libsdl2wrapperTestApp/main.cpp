@@ -237,7 +237,7 @@ int main( int argc, char** argv )
 #if defined _MSC_VER
     winData.rendererName = "direct3d";
 #else
-    winData.rendererName = "opengl";
+    winData.rendererName = "software";
 #endif
 
     auto& console = CUL::GUTILS::ConsoleUtilities::getInstance();

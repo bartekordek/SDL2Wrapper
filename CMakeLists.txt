@@ -25,6 +25,22 @@ file( GLOB SOURCES libsdl2wrapperTestApp/*.cpp )
 
 add_executable(${EXEC} ${SOURCES})
 
+if (MSVC)
+    set_target_properties(
+        ${EXEC}
+        PROPERTIES
+            OUTPUT_NAME ${EXEC}
+            SUFFIX ".exe"
+    )
+else()
+    set_target_properties(
+        ${EXEC}
+        PROPERTIES
+            OUTPUT_NAME ${EXEC}
+            SUFFIX ".bin"
+    )
+endif()
+
 IF(NOT APPLE AND NOT MSVC)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 ENDIF()
@@ -39,7 +55,9 @@ endif()
 target_include_directories(${EXEC} PRIVATE inc)
 target_include_directories(${EXEC} PRIVATE src)
 
-set_property(TARGET ${EXEC} PROPERTY "VS_DEBUGGER_WORKING_DIRECTORY" "${CMAKE_SOURCE_DIR}/runDir")
+if( MSVC )
+    set_property(TARGET ${EXEC} PROPERTY "VS_DEBUGGER_WORKING_DIRECTORY" "${CMAKE_SOURCE_DIR}/runDir")
+endif()
 
 #add_custom_command(TARGET ${EXEC} POST_BUILD       # Adds a post-build event to MyTest
 #    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
