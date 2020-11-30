@@ -6,8 +6,11 @@
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 
+#include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
+
 #include "CUL/ITimer.hpp"
+#include "CUL/ThreadUtils.hpp"
 
 using namespace SDL2W;
 
@@ -29,14 +32,14 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 #pragma warning( disable: 5045 )
 #endif
 
-void SDL2WrapperImpl::init( const WindowData& wd, const Path& configPath )
+void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPath )
 {
     m_culInterface = CUL::CULInterface::createInstance();
     m_logger = m_culInterface->getLogger();
 
     if( configPath != "" )
     {
-        m_configFile = getCul()->createConfigFile( configPath );
+        m_configFile = getCul()->loadConfigFile( configPath );
     }
 
     m_logger->log( "Initializing SDL..." );
@@ -97,7 +100,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const Path& configPath )
          i <= static_cast<MouseButtonIndex>(SDL_BUTTON_X2);
          ++i)
     {
-        m_mouseData.setState( i, false );
+        m_mouseData.setState( i, true );
     }
 
     if( m_onInitCallback )
@@ -152,7 +155,7 @@ IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* s
     return result;
 }
 
-Logger* SDL2WrapperImpl::getLogger() const
+CUL::LOG::ILogger* SDL2WrapperImpl::getLogger() const
 {
     return m_logger;
 }
@@ -490,14 +493,14 @@ Keys& SDL2WrapperImpl::getKeyStates()
 }
 
 ISprite* SDL2WrapperImpl::createSprite(
-    const Path& objPath,
+    const CUL::FS::Path& objPath,
     IWindow* targetWindow ) const
 {
     return targetWindow->createSprite( objPath );
 }
 
-ITexture* SDL2WrapperImpl::createTexture(
-    const Path& objPath,
+CUL::Graphics::ITexture* SDL2WrapperImpl::createTexture(
+    const CUL::FS::Path& objPath,
     IWindow* targetWindow ) const
 {
     if( IWindow::Type::SDL_WIN == targetWindow->getType() )
@@ -508,7 +511,7 @@ ITexture* SDL2WrapperImpl::createTexture(
 }
 
 ISprite* SDL2WrapperImpl::createSprite(
-    ITexture* tex,
+    CUL::Graphics::ITexture* tex,
     IWindow* targetWindow ) const
 {
     if( IWindow::Type::SDL_WIN == targetWindow->getType() )
@@ -521,11 +524,6 @@ ISprite* SDL2WrapperImpl::createSprite(
 IWindow* SDL2WrapperImpl::getMainWindow() const
 {
     return m_mainWindow;
-}
-
-IGui* SDL2WrapperImpl::getGui() const
-{
-    return nullptr;
 }
 
 void SDL2WrapperImpl::registerSDLEventObserver( ISDLEventObserver* eventObserver )

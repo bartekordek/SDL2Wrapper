@@ -32,7 +32,7 @@ public:
     ~SDL2WrapperImpl();
 protected:
 private:
-    void init( const WindowData& wd, const Path& configPath = "" ) override;
+    void init( const WindowData& wd, const CUL::FS::Path& configPath = "" ) override;
 
 
     void registerSDLEventObserver( ISDLEventObserver* eventObserver ) override;
@@ -80,11 +80,10 @@ private:
 
     IWindow* getMainWindow() const override;
 
-    IGui* getGui() const override;
     void createKeys();
     IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
     CUL::GUTILS::DumbPtr<CUL::CULInterface> m_culInterface;
-    Logger* getLogger() const override;
+    CUL::LOG::ILogger* getLogger() const override;
 
     void handleEvent( const SDL_Event& event );
 
@@ -102,9 +101,9 @@ private:
     void notifyWindowEventListeners( const WindowEventType e );
     void notifyWindowEventCallbacks( const WindowEventType e );
 
-    ITexture* createTexture( const Path& path, IWindow* targetWindow ) const override;
-    ISprite* createSprite( const Path& path, IWindow* targetWindow ) const override;
-    ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) const override;
+    CUL::Graphics::ITexture* createTexture( const CUL::FS::Path& path, IWindow* targetWindow ) const override;
+    ISprite* createSprite( const CUL::FS::Path& path, IWindow* targetWindow ) const override;
+    ISprite* createSprite( CUL::Graphics::ITexture* tex, IWindow* targetWindow ) const override;
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
 
@@ -119,7 +118,7 @@ private:
 
     Keys m_keys;
 
-    Logger* m_logger = nullptr;
+    CUL::LOG::ILogger* m_logger = nullptr;
 
     MouseData m_mouseData;
 

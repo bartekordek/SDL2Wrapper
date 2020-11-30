@@ -1,11 +1,12 @@
 #pragma once
 
-#include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
-#include "SDL2Wrapper/Input/IKey.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
 #include "CUL/String.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
+
+class IKeyboardObserver;
+class IKey;
 
 class SDL2WAPI IKeyboardObservable
 {

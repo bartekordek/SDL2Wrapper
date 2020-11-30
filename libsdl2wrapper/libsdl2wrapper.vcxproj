@@ -339,10 +339,9 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\SDL2Wrapper\Gui\IGui.hpp" />
-    <ClInclude Include="inc\SDL2Wrapper\Gui\IWindowEventObservable.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_opengl.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_renderer.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_video.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\Input\IKey.hpp" />
@@ -356,11 +355,12 @@ xcopy "$(ProjectDir)..\deps\Others\$(Platform)\*.dll" "$(TargetDir)" /y</Command
     <ClInclude Include="inc\SDL2Wrapper\ISDLEventObserver.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\ISprite.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindow.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\IWindowEventObservable.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowFactory.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\IWindowEventListener.hpp" />
     <ClInclude Include="inc\SDL2Wrapper\Import.hpp" />
+    <ClInclude Include="inc\SDL2Wrapper\WindowData.hpp" />
     <ClInclude Include="src\IMPORT_SDL_events.hpp" />
-    <ClInclude Include="src\IMPORT_SDL_opengl.hpp" />
     <ClInclude Include="src\Input\KeySDL.hpp" />
     <ClInclude Include="src\RegularSDL2Window.hpp" />
     <ClInclude Include="src\SDL2WrapperImpl.hpp" />

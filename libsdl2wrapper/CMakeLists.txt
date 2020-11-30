@@ -6,12 +6,6 @@ project(sdl2wrapper LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(EXEC sdl2wrapper)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL ${CMAKE_CURRENT_BINARY_DIR}/../deps/CUL)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../deps/sdl2-repo ${CMAKE_CURRENT_BINARY_DIR}/../deps/sdl2-repo)
-
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL/libcul/inc)
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../deps/CUL/sdl2-repo/include)
-
 if( MSVC )
     # warning level 4 and all warnings as errors
     add_compile_options( /W4 /WX )
@@ -19,12 +13,21 @@ if( MSVC )
     set_target_properties(SDL2 PROPERTIES
         COMPILE_FLAGS "/MP" # Adjust as needed
     )
+
+    set( OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Build-Windows )
 else()
     # lots of warnings and all warnings as errors
     #add_compile_options(-Wall -Wextra -pedantic -Werror)
     add_compile_options( -Wall -Wextra -pedantic -Werror )
     add_definitions( -Wfatal-errors )
+
+    set( OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Build-Linux )
 endif()
+
+message( "Setting CMAKE_ARCHIVE_OUTPUT_DIRECTORY to: ${OUTPUT_DIR}" )
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
 
 add_library( ${EXEC} SHARED
 src/Sprite.cpp

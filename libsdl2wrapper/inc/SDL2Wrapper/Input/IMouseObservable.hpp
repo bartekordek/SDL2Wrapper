@@ -1,10 +1,11 @@
 #pragma once
 
 #include "SDL2Wrapper/Input/IMouseObserver.hpp"
-#include "SDL2Wrapper/Input/MouseData.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
+
+class MouseData;
 
 class SDL2WAPI IMouseObservable
 {
@@ -12,7 +13,6 @@ public:
     using MouseCallback = std::function<void( const MouseData& md )>;
 
     IMouseObservable() = default;
-    virtual ~IMouseObservable() = default;
 
     virtual void addMouseEventCallback( const MouseCallback& callback ) = 0;
 
@@ -20,6 +20,8 @@ public:
     virtual void unregisterMouseEventListener( IMouseObserver* observer ) = 0;
 
     virtual MouseData& getMouseData() = 0;
+
+    virtual ~IMouseObservable() = default;
 
 protected:
 private:

@@ -11,7 +11,7 @@
             "program": "enter program name, for example ${workspaceFolder}/a.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runDir",
             "environment": [],
             "externalConsole": true
         },
@@ -19,7 +19,7 @@
             "name": "Linux Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/Build-Test/sdl2wrapperTestApp",
+            "program": "${workspaceRoot}/Build-Linux/sdl2wrapperTestApp.bin",
             "args": ["-w", "1024", "-h", "800" ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/runDir",

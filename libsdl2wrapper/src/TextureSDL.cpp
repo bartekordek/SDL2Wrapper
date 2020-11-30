@@ -7,18 +7,12 @@ TextureSDL::TextureSDL()
 {
 }
 
-TextureSDL::~TextureSDL()
-{
-    SDL_DestroyTexture( m_texture );
-    m_texture = nullptr;
-}
-
 SDL_Texture* TextureSDL::getTexture() const
 {
     return m_texture;
 }
 
-void TextureSDL::setTexture( const SDL_Texture* texture, const Path& path )
+void TextureSDL::setTexture( const SDL_Texture* texture, const CUL::FS::Path& path )
 {
     m_texture = const_cast<SDL_Texture*>( texture );
     int w, h;
@@ -41,7 +35,13 @@ const Vector3Dd& TextureSDL::getSize() const
     return m_size;
 }
 
-const Path& TextureSDL::getPath() const
+const CUL::FS::Path& TextureSDL::getPath() const
 {
     return m_path;
+}
+
+TextureSDL::~TextureSDL()
+{
+    SDL_DestroyTexture( m_texture );
+    m_texture = nullptr;
 }

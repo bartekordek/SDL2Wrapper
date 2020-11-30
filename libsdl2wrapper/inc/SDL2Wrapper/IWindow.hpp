@@ -4,19 +4,28 @@
 #include "SDL2Wrapper/IRender.hpp"
 #include "CUL/Graphics/IObjectRegister.hpp"
 #include "CUL/Graphics/ITexture.hpp"
-#include "CUL/Filesystem/Path.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 #include "CUL/Graphics/Color.hpp"
 #include "CUL/IName.hpp"
-#include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/Graphics/Size2D.hpp"
 
 struct SDL_Window;
 
 NAMESPACE_BEGIN( CUL )
+
+
+NAMESPACE_BEGIN( Graphics )
+class ITexture;
+NAMESPACE_END( Graphics )
+
 NAMESPACE_BEGIN( Video )
 class IFPSCounter;
 NAMESPACE_END( Video )
+
+NAMESPACE_BEGIN( FS )
+class Path;
+NAMESPACE_END( FS )
+
 NAMESPACE_END( CUL )
 
 
@@ -39,7 +48,6 @@ using Vector3Du = CUL::MATH::Vector3Du;
 using ColorS = CUL::Graphics::ColorS;
 using ColorE = CUL::Graphics::ColorE;
 using IName = CUL::IName;
-using Path = CUL::FS::Path;
 using String = CUL::String;
 
 using TextureMap = std::map<CUL::String, std::unique_ptr<ITexture>>;
@@ -49,37 +57,7 @@ using TextureMap = std::map<CUL::String, std::unique_ptr<ITexture>>;
 #pragma warning( disable: 4820 )
 #endif
 
-struct SDL2WAPI WindowData
-{
-    Vector3Di pos = Vector3Di( 0, 0, 0 );
-    WindowSize size = WindowSize( 640, 480 );
-    String name = "";
-    String rendererName = "opengl";
-
-    WindowData() = default;
-
-    WindowData( const WindowData& arg ):
-        pos( arg.pos ),
-        size( arg.size ),
-        name( arg.name ),
-        rendererName( arg.rendererName )
-    {
-    }
-
-    WindowData& operator=( const WindowData& rhv )
-    {
-        if( this != &rhv )
-        {
-            pos = rhv.pos;
-            size = rhv.size;
-            name = rhv.name;
-            rendererName = rhv.rendererName;
-        }
-        return *this;
-    }
-
-    ~WindowData() = default;
-};
+struct WindowData;
 
 class SDL2WAPI IWindow:
     public IRender,
@@ -107,9 +85,9 @@ public:
 
     virtual Type getType() const = 0;
 
-    virtual ITexture* createTexture( const Path& path ) = 0;
-    virtual ISprite* createSprite( const Path& path ) = 0;
-    virtual ISprite* createSprite( ITexture* tex ) = 0;
+    virtual CUL::Graphics::ITexture* createTexture( const CUL::FS::Path& path ) = 0;
+    virtual ISprite* createSprite( const CUL::FS::Path& path ) = 0;
+    virtual ISprite* createSprite( CUL::Graphics::ITexture* tex ) = 0;
 
     void setWindowID( Cunt id );
     unsigned int getWindowID() const;
@@ -137,4 +115,4 @@ private:
 #pragma warning( pop )
 #endif
 
-NAMESPACE_END( CUL )
+NAMESPACE_END( SDL2W )

@@ -1,44 +1,65 @@
 #pragma once
 
-#include "SDL2Wrapper/Gui/IGui.hpp"
 #include "SDL2Wrapper/IEventLoop.hpp"
 #include "SDL2Wrapper/Input/IKey.hpp"
 #include "SDL2Wrapper/IWindowEventListener.hpp"
+#include "SDL2Wrapper/IWindowEventObservable.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObservable.hpp"
 #include "SDL2Wrapper/Input/IMouseObservable.hpp"
-#include "SDL2Wrapper/ISprite.hpp"
-#include "SDL2Wrapper/IWindowFactory.hpp"
 
-#include "CUL/CULInterface.hpp"
 #include "CUL/GenericUtils/IConfigFile.hpp"
 #include "CUL/Graphics/ITexture.hpp"
-#include "CUL/ThreadUtils.hpp"
-#include "CUL/Log/ILogger.hpp"
+
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
 
+NAMESPACE_BEGIN( CUL )
+
+
+class CULInterface;
+
+NAMESPACE_BEGIN( FS )
+class Path;
+NAMESPACE_END( FS )
+
+NAMESPACE_BEGIN( Graphics )
+class ITexture;
+NAMESPACE_END( Graphics )
+
+NAMESPACE_BEGIN( LOG )
+class ILogger;
+NAMESPACE_END( LOG )
+
+NAMESPACE_END( CUL )
+
+
 NAMESPACE_BEGIN( SDL2W )
 
 class ISDLEventObserver;
+class ISprite;
+class IWindow;
+struct WindowData;
 
 using Keys = std::map<CUL::String, std::unique_ptr<IKey>>;
 using WindowEventType = WindowEvent::Type;
 using Cbool = const bool;
-using WindowCallback = std::function<void( const WindowEventType wEt )>;
+
 using InitCallback = std::function<void()>;
 using IConfigFile = CUL::GUTILS::IConfigFile;
-using Logger = CUL::LOG::ILogger;
 
 class SDL2WAPI ISDL2Wrapper:
     public IKeyboardObservable,
     public IMouseObservable,
+    public IWindowEventObservable,
     public IEventLoop
 {
 public:
     ISDL2Wrapper();
 
-    virtual void init( const WindowData& wd, const Path& configPath = "" ) = 0;
+    virtual void init(
+        const WindowData& wd,
+        const CUL::FS::Path& configPath = "" ) = 0;
     virtual void refreshScreen() = 0;
     virtual void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
@@ -46,10 +67,10 @@ public:
     virtual const std::map<String, int>& getRenderersList() const = 0;
     virtual void printAvailableRenderers() const = 0;
 
-    virtual ITexture* createTexture( const Path& path, IWindow* targetWindow ) const = 0;
-    virtual ISprite* createSprite( const Path& path, IWindow* targetWindow ) const = 0;
+    virtual CUL::Graphics::ITexture* createTexture( const CUL::FS::Path& path, IWindow* targetWindow ) const = 0;
+    virtual ISprite* createSprite( const CUL::FS::Path& path, IWindow* targetWindow ) const = 0;
 
-    virtual ISprite* createSprite( ITexture* tex, IWindow* targetWindow ) const = 0;
+    virtual ISprite* createSprite( CUL::Graphics::ITexture* tex, IWindow* targetWindow ) const = 0;
 
     virtual IWindow* getMainWindow() const = 0;
 
@@ -58,19 +79,20 @@ public:
 
     virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
     virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;
-    virtual void registerWindowEventCallback( const WindowCallback& callback ) = 0;
+
     virtual void registerOnInitCallback( const InitCallback& callback ) = 0;
     virtual void registerSDLEventObserver( ISDLEventObserver* eventObserver )  = 0;
     virtual void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver )  = 0;
 
     virtual Keys& getKeyStates() = 0;
 
-    virtual IGui* getGui() const = 0;
-
     virtual IConfigFile* getConfig() const = 0;
 
-    virtual Logger* getLogger() const = 0;
+    virtual CUL::LOG::ILogger* getLogger() const = 0;
     virtual CUL::CULInterface* getCul() = 0;
+
+
+    static ISDL2Wrapper* createSDL2Wrapper();
 
     virtual ~ISDL2Wrapper();
 protected:
@@ -83,6 +105,5 @@ private: // Deleted
     ISDL2Wrapper& operator=( ISDL2Wrapper&& rhv ) = delete;
 };
 
-SDL2WAPI ISDL2Wrapper* createSDL2Wrapper();
 
 NAMESPACE_END( SDL2W )

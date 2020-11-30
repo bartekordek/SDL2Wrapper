@@ -280,7 +280,7 @@ IWindow::Type RegularSDL2Window::getType() const
     return IWindow::Type::SDL_WIN;
 }
 
-ISprite* RegularSDL2Window::createSprite( const Path& objPath )
+ISprite* RegularSDL2Window::createSprite( const CUL::FS::Path& objPath )
 {
     ISprite* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
@@ -298,9 +298,9 @@ ISprite* RegularSDL2Window::createSprite( const Path& objPath )
     return result;
 }
 
-ITexture* RegularSDL2Window::createTexture( const Path& objPath )
+CUL::Graphics::ITexture* RegularSDL2Window::createTexture( const CUL::FS::Path& objPath )
 {
-    ITexture* result = nullptr;
+    CUL::Graphics::ITexture* result = nullptr;
     CUL::Assert::simple( objPath.getPath() != "", "EMTPY PATH." );
     auto it = m_textures.find( objPath.getPath().string() );
     if( m_textures.end() == it )
@@ -322,7 +322,7 @@ ITexture* RegularSDL2Window::createTexture( const Path& objPath )
 }
 
 ISprite* RegularSDL2Window::createSprite(
-    ITexture* tex )
+    CUL::Graphics::ITexture* tex )
 {
     auto spritePtr = new Sprite();
     spritePtr->setTexture( tex );
@@ -331,7 +331,7 @@ ISprite* RegularSDL2Window::createSprite(
 }
 
 SurfaceImage RegularSDL2Window::createSurface(
-    const Path& path )
+    const CUL::FS::Path& path )
 {
     SurfaceImage surfaceImage;
 
@@ -391,7 +391,7 @@ SurfaceImage RegularSDL2Window::createSurface(
     return surfaceImage;
 }
 
-ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const Path& path )
+CUL::Graphics::ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const CUL::FS::Path& path )
 {
     CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
     CUL::Assert::simple( nullptr != surface, "SURFACE IS NULL!\n" );

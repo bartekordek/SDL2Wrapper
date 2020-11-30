@@ -66,9 +66,6 @@
     <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_video.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\IMPORT_SDL_opengl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\IEventLoop.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,9 +87,6 @@
     <ClInclude Include="src\Input\KeySDL.hpp">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\Gui\IGui.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\Import.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -102,14 +96,20 @@
     <ClInclude Include="src\SimpleUtils.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SDL2Wrapper\Gui\IWindowEventObservable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\ISDLEventObserver.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\SDL2Wrapper\Input\MouseData.hpp">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\WindowData.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IWindowEventObservable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SDL2Wrapper\IMPORT_SDL_opengl.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

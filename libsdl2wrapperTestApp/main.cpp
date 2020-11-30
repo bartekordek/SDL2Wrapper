@@ -1,4 +1,12 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
+#include "SDL2Wrapper/IWindow.hpp"
+#include "SDL2Wrapper/WindowData.hpp"
+#include "SDL2Wrapper/IWindowEventListener.hpp"
+#include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
+
+#include "CUL/Log/ILogger.hpp"
+#include "CUL/Graphics/Position3DDMutexed.hpp"
+#include "CUL/Graphics/Color.hpp"
 #include "CUL/Video/IFPSCounter.hpp"
 #include "CUL/ITimer.hpp"
 #include "CUL/ThreadUtils.hpp"
@@ -39,7 +47,7 @@ class TestApp final:
 {
 public:
     TestApp():
-        m_sdlW( SDL2W::createSDL2Wrapper() )
+        m_sdlW( SDL2W::ISDL2Wrapper::createSDL2Wrapper() )
     {
         sdlWrapper = m_sdlW.get();
         m_sdlW->init( winData, "../media/Config.txt" );
@@ -88,7 +96,7 @@ public:
         {
             return;
         }
-        
+
         m_logger->log( "KEY: " + key.getKeyName().string() );
 
         static int delta = 8;
@@ -200,7 +208,7 @@ private:
     SDL2W::IKeyboardObservable* m_keyObservable = nullptr;
     SDL2W::IWindow* m_activeWindow = nullptr;
 
-    SDL2W::ColorS bckgroundColor;
+    CUL::Graphics::ColorS bckgroundColor;
 
     CUL::GUTILS::LckPrim<bool> runLoop = true;
 
@@ -219,7 +227,7 @@ private:
     Pos3D obj3Pos;
     Pos3D obj4Pos;
 
-    SDL2W::Logger* m_logger;
+    CUL::LOG::ILogger* m_logger;
 
 private:
     TestApp& operator=( const TestApp& rhv ) = delete;

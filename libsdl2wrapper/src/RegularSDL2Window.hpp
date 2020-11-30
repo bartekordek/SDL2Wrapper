@@ -2,6 +2,7 @@
 
 #include "SDL2Wrapper/IWindow.hpp"
 #include "SDL2Wrapper/IRender.hpp"
+#include "SDL2Wrapper/WindowData.hpp"
 
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
@@ -17,6 +18,12 @@
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
+
+NAMESPACE_BEGIN( CUL )
+NAMESPACE_BEGIN( FS )
+class Path;
+NAMESPACE_END( FS )
+NAMESPACE_END( CUL )
 
 NAMESPACE_BEGIN( SDL2W )
 
@@ -41,8 +48,8 @@ public:
 protected:
 private:
     SDL_Window* createWindow( const WindowData& winDatae );
-    SurfaceImage createSurface( const Path& path );
-    ITexture* createTexture( SDL_Surface* surface, const Path& path );
+    SurfaceImage createSurface( const CUL::FS::Path& path );
+    CUL::Graphics::ITexture* createTexture( SDL_Surface* surface, const CUL::FS::Path& path );
     void destroyObjects();
 
     void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) override;
@@ -74,9 +81,9 @@ private:
 
     IWindow::Type getType() const override;
 
-    ITexture* createTexture( const Path& path ) override;
-    ISprite* createSprite( const Path& path ) override;
-    ISprite* createSprite( ITexture* tex ) override;
+    CUL::Graphics::ITexture* createTexture( const CUL::FS::Path& path ) override;
+    ISprite* createSprite( const CUL::FS::Path& path ) override;
+    ISprite* createSprite( CUL::Graphics::ITexture* tex ) override;
 
     ColorS getBackgroundColor() const override;
 
