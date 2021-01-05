@@ -80,11 +80,30 @@ inc/SDL2Wrapper/IMPORT_SDL.hpp
 inc/SDL2Wrapper/ISDLEventObserver.hpp
 )
 
+set( LIBS
+SDL2
+cul
+AdditionalDeps
+)
+
 if( MSVC )
-    target_link_libraries( ${EXEC} SDL2 cul AdditionalDeps )
+    target_link_libraries( ${EXEC} ${LIBS} )
 else()
-    target_link_libraries( ${EXEC} SDL2 cul AdditionalDeps stdc++fs  )
+    target_link_libraries( ${EXEC} ${LIBS} stdc++fs  )
 endif()
 
 target_include_directories(${EXEC} PUBLIC inc)
 target_include_directories(${EXEC} PRIVATE src)
+
+if (MSVC)
+    macro(CmakeToWindow InputPath ResultingPath)
+        string(REGEX REPLACE "/" "\\\\\\\\" ${ResultingPath} "${InputPath}")
+    endmacro()
+
+    # Copy SDL2
+    CmakeToWindow( "${OUTPUT_DIR}/deps/sdl2-repo/*" OUTPUT_DIR_WINDOWS )
+    CmakeToWindow( "${CMAKE_SOURCE_DIR}" CMAKE_SOURCE_DIR_WINDOWS )
+
+    add_custom_command(TARGET ${EXEC} POST_BUILD
+        COMMAND "xcopy" "${OUTPUT_DIR_WINDOWS}" "${CMAKE_SOURCE_DIR_WINDOWS}\\\\Build-Windows\\\\" "/y" "/s" )
+endif()

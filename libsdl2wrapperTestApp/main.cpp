@@ -248,7 +248,7 @@ int main( int argc, char** argv )
     winData.rendererName = "software";
 #endif
 
-    auto& console = CUL::GUTILS::ConsoleUtilities::getInstance();
+    CUL::GUTILS::ConsoleUtilities console;
     console.setArgs( argc, argv );
     console.printInputParameters();
 
