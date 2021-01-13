@@ -96,14 +96,17 @@ target_include_directories(${EXEC} PUBLIC inc)
 target_include_directories(${EXEC} PRIVATE src)
 
 if (MSVC)
-    macro(CmakeToWindow InputPath ResultingPath)
-        string(REGEX REPLACE "/" "\\\\\\\\" ${ResultingPath} "${InputPath}")
-    endmacro()
-
     # Copy SDL2
-    CmakeToWindow( "${OUTPUT_DIR}/deps/sdl2-repo/*" OUTPUT_DIR_WINDOWS )
-    CmakeToWindow( "${CMAKE_SOURCE_DIR}" CMAKE_SOURCE_DIR_WINDOWS )
+    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/deps/sdl2-repo/${CMAKE_BUILD_TYPE}/*.dll" SDL2_WINDOWS_DLL )
+    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/deps/sdl2-repo/${CMAKE_BUILD_TYPE}/*.pdb" SDL2_WINDOWS_PDB )
+
+    CmakeToWindow( "${SDL2W_TESTS_RUN_DIR}" SDL2W_TESTS_RUN_DIR_WINDOWS )
+    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE}/*.dll" SDL2W_DLLS )
+    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE}/*.pdb" SDL2W_PDBS )
 
     add_custom_command(TARGET ${EXEC} POST_BUILD
-        COMMAND "xcopy" "${OUTPUT_DIR_WINDOWS}" "${CMAKE_SOURCE_DIR_WINDOWS}\\\\Build-Windows\\\\" "/y" "/s" )
+        COMMAND "xcopy" "${SDL2W_DLLS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+        COMMAND "xcopy" "${SDL2W_PDBS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+        COMMAND "xcopy" "${SDL2_WINDOWS_DLL}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+        COMMAND "xcopy" "${SDL2_WINDOWS_PDB}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f" )
 endif()
