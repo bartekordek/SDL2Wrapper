@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0.0)
 project(sdl2wrapper LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(EXEC sdl2wrapper)
+set(EXEC ${PROJECT_NAME})
 
 if( MSVC )
     # warning level 4 and all warnings as errors
@@ -13,21 +13,19 @@ if( MSVC )
     set_target_properties(SDL2 PROPERTIES
         COMPILE_FLAGS "/MP" # Adjust as needed
     )
-
-    set( OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Build-Windows )
 else()
     # lots of warnings and all warnings as errors
     #add_compile_options(-Wall -Wextra -pedantic -Werror)
     add_compile_options( -Wall -Wextra -pedantic -Werror )
     add_definitions( -Wfatal-errors )
-
-    set( OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Build-Linux )
 endif()
 
-message( "Setting CMAKE_ARCHIVE_OUTPUT_DIRECTORY to: ${OUTPUT_DIR}" )
-set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
+message( "[libsdlwrapper] Setting CMAKE_ARCHIVE_OUTPUT_DIRECTORY to: ${SDL2W_OUTPUT_DIR}" )
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
+
+find_package( glm REQUIRED )
 
 add_library( ${EXEC} SHARED
 src/Sprite.cpp
