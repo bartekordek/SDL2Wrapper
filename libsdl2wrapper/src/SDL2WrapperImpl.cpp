@@ -44,9 +44,9 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
 
     m_logger->log( "Initializing SDL..." );
     const auto sdlInitSuccess = SDL_Init(
-        SDL_INIT_TIMER &
-        SDL_INIT_AUDIO &
-        SDL_INIT_VIDEO &
+        SDL_INIT_TIMER |
+        SDL_INIT_AUDIO |
+        SDL_INIT_VIDEO |
         SDL_INIT_EVENTS
     );
     if( 0 != sdlInitSuccess )
