@@ -102,9 +102,17 @@ if (MSVC)
     CmakeToWindow( "${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE}/*.dll" SDL2W_DLLS )
     CmakeToWindow( "${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE}/*.pdb" SDL2W_PDBS )
 
+    CmakeToWindow( "$ENV{CUL_DLL}/*.dll" CUL_DLLS )
+    CmakeToWindow( "$ENV{CUL_DLL}/*.pdb" CUL_PDBS )
+
     add_custom_command(TARGET ${EXEC} POST_BUILD
+        COMMAND "xcopy" "${CUL_DLLS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+        COMMAND "xcopy" "${CUL_PDBS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+
         COMMAND "xcopy" "${SDL2W_DLLS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
         COMMAND "xcopy" "${SDL2W_PDBS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+
         COMMAND "xcopy" "${SDL2_WINDOWS_DLL}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
-        COMMAND "xcopy" "${SDL2_WINDOWS_PDB}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f" )
+        COMMAND "xcopy" "${SDL2_WINDOWS_PDB}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+    )
 endif()

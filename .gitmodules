@@ -5,3 +5,6 @@
 	path = deps/sdl2-repo
 	url = git@github.com:spurious/SDL-mirror.git
 	ignore = dirty
+[submodule "deps/helpers"]
+	path = deps/helpers
+	url = git@github.com:bartekordek/helpers.git
