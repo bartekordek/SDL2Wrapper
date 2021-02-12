@@ -34,6 +34,8 @@ set( ENV{SDL2W_ROOT} ${SDL2W_ROOT} )
 set( ENV{SDL2W_DLL} ${SDL2W_TESTS_RUN_DIR} )
 message( "[sdl2wrapper] Setting SDL2W_TESTS_RUN_DIR to: ${SDL2W_TESTS_RUN_DIR}" )
 
+set( SDL2W_DEPS ${SDL2W_ROOT}/deps )
+
 # Add sub directories
 
 add_subdirectory( deps/sdl2-repo )

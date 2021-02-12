@@ -95,24 +95,14 @@ target_include_directories(${EXEC} PRIVATE src)
 
 if (MSVC)
     # Copy SDL2
-    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/deps/sdl2-repo/${CMAKE_BUILD_TYPE}/*.dll" SDL2_WINDOWS_DLL )
-    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/deps/sdl2-repo/${CMAKE_BUILD_TYPE}/*.pdb" SDL2_WINDOWS_PDB )
+    CmakeToWindow( "SDL2W_OUTPUT_DIR" SDL2W_OUTPUT_DIR_WINDOWS )
+    CmakeToWindow( "${SDL2W_DEPS}" SDL2W_DEPS_WINDOWS )
 
-    CmakeToWindow( "${SDL2W_TESTS_RUN_DIR}" SDL2W_TESTS_RUN_DIR_WINDOWS )
-    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE}/*.dll" SDL2W_DLLS )
-    CmakeToWindow( "${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE}/*.pdb" SDL2W_PDBS )
+    CmakeToWindow( "${SDL2W_TESTS_RUN_DIR}" SDL2W_RUN_DIR_WINDOWS )
 
-    CmakeToWindow( "$ENV{CUL_DLL}/*.dll" CUL_DLLS )
-    CmakeToWindow( "$ENV{CUL_DLL}/*.pdb" CUL_PDBS )
-
+    set( CopyCommand ${SDL2W_DEPS}\\helpers\\CopyLibraryBinaryAndSymbolsRecursive.bat )
     add_custom_command(TARGET ${EXEC} POST_BUILD
-        COMMAND "xcopy" "${CUL_DLLS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
-        COMMAND "xcopy" "${CUL_PDBS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
-
-        COMMAND "xcopy" "${SDL2W_DLLS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
-        COMMAND "xcopy" "${SDL2W_PDBS}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
-
-        COMMAND "xcopy" "${SDL2_WINDOWS_DLL}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
-        COMMAND "xcopy" "${SDL2_WINDOWS_PDB}" "${SDL2W_TESTS_RUN_DIR_WINDOWS}" "/y" "/f"
+        COMMAND ${CopyCommand} ${SDL2W_OUTPUT_DIR_WINDOWS} ${SDL2W_RUN_DIR_WINDOWS}
+        COMMAND ${CopyCommand} ${SDL2W_DEPS_WINDOWS} ${SDL2W_RUN_DIR_WINDOWS}
     )
 endif()
