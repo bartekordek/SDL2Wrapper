@@ -27,10 +27,7 @@ find_package( glm REQUIRED )
 
 file( GLOB_RECURSE SOURCES inc/*.hpp src/*.hpp src/*.cpp )
 source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES} )
-
-add_library( ${EXEC} SHARED
-${SOURCES}
-)
+add_library( ${EXEC} SHARED ${SOURCES} )
 
 set( LIBS
 SDL2
