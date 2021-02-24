@@ -88,6 +88,7 @@ private:
     ColorS getBackgroundColor() const override;
 
     CUL::Video::IFPSCounter*  getFpsCounter() override;
+    void setFullscreen( bool fullscreen ) override;
 
     WindowData m_windowData;
     bool m_openGL = false;

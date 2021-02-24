@@ -14,7 +14,9 @@ struct SDL2WAPI WindowData
 {
 public:
     Vector3Di pos = Vector3Di( 0, 0, 0 );
-    WindowSize size = WindowSize( 640, 480 );
+    WindowSize currentRes = WindowSize( 640, 480 );
+    WindowSize nativeRes;
+    WindowSize windowRes;
     String name = "";
     String rendererName = "opengl";
 
@@ -22,7 +24,7 @@ public:
 
     WindowData( const WindowData& arg ):
         pos( arg.pos ),
-        size( arg.size ),
+        currentRes( arg.currentRes ),
         name( arg.name ),
         rendererName( arg.rendererName )
     {
@@ -33,7 +35,7 @@ public:
         if( this != &rhv )
         {
             pos = rhv.pos;
-            size = rhv.size;
+            currentRes = rhv.currentRes;
             name = rhv.name;
             rendererName = rhv.rendererName;
         }

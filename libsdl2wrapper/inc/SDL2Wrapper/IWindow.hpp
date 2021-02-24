@@ -92,6 +92,8 @@ public:
     void setWindowID( Cunt id );
     unsigned int getWindowID() const;
 
+    virtual void setFullscreen( bool fullscreen ) = 0;
+
     virtual void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) = 0;
 
     virtual CUL::Video::IFPSCounter* getFpsCounter() = 0;

@@ -38,7 +38,16 @@ RegularSDL2Window::RegularSDL2Window(
 {
     m_window = createWindow( winData );
 
-    setWindowID( SDL_GetWindowID( m_window ) );
+    const auto winId = SDL_GetWindowID( m_window );
+
+    SDL_DisplayMode displayMode;
+    const auto displayIndex = SDL_GetWindowDisplayIndex( m_window );
+    SDL_GetCurrentDisplayMode( displayIndex, &displayMode );
+
+    setWindowID( winId );
+
+    m_windowData.nativeRes.setSize( displayMode.w, displayMode.h );
+    m_windowData.windowRes = m_windowData.currentRes;
 
     auto rendererId = m_wrapper->getRendererId( winData.rendererName );
 
@@ -85,13 +94,13 @@ RegularSDL2Window::RegularSDL2Window(
 SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 {
     auto& pos = winData.pos;
-    auto& size = winData.size;
+    auto& currentRes = winData.currentRes;
     auto& rendererName = winData.rendererName;
     auto& winName = winData.name;
 
     m_logger->log( "Creating window with:", CUL::LOG::Severity::INFO );
     m_logger->log( "Pos.x = " + CUL::String( pos.getX() ) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
-    m_logger->log( "Width = " + CUL::String( size.getWidth() ) + ", height = " + CUL::String( size.getHeight() ), CUL::LOG::Severity::INFO );
+    m_logger->log( "Width = " + CUL::String( currentRes.getWidth() ) + ", height = " + CUL::String( currentRes.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN;
     if( rendererName.contains( "opengl" ) )
@@ -99,13 +108,13 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
         windowFlags |= SDL_WINDOW_OPENGL;
     }
 
-    const auto targetWidth = (int)( size.getWidth() );
-    const auto targetHeight = (int)( size.getHeight() );
+    const auto targetWidth = (int)( currentRes.getWidth() );
+    const auto targetHeight = (int)( currentRes.getHeight() );
 
     auto winTargetName = winName;
     if( winTargetName.empty() )
     {
-        winTargetName = "Window: " + std::to_string( size.getWidth() ) + "x" + std::to_string( size.getHeight() );
+        winTargetName = "Window: " + std::to_string( currentRes.getWidth() ) + "x" + std::to_string( currentRes.getHeight() );
     }
 
     result = SDL_CreateWindow(
@@ -267,12 +276,12 @@ void RegularSDL2Window::setPos( const Vector3Di& pos )
 
 const WindowSize& RegularSDL2Window::getSize() const
 {
-    return m_windowData.size;
+    return m_windowData.currentRes;
 }
 
 void RegularSDL2Window::setSize( const WindowSize& size )
 {
-    m_windowData.size = size;
+    m_windowData.currentRes = size;
 }
 
 IWindow::Type RegularSDL2Window::getType() const
@@ -432,6 +441,26 @@ ColorS RegularSDL2Window::getBackgroundColor() const
 CUL::Video::IFPSCounter* RegularSDL2Window::getFpsCounter()
 {
     return m_fpsCounter.get();
+}
+
+void RegularSDL2Window::setFullscreen(bool fullscreen)
+{
+    const auto flag = fullscreen ? SDL_WINDOW_FULLSCREEN: 0;
+
+    if( fullscreen )
+    {
+        const auto targetRes = m_windowData.nativeRes;
+        SDL_SetWindowSize( m_window, targetRes.getWidth(), targetRes.getHeight() );
+    }
+
+    SDL_SetWindowFullscreen( m_window, flag );
+
+    if( !fullscreen )
+    {
+        const auto targetRes = m_windowData.windowRes;
+    }
+
+    SDL_ShowCursor(fullscreen);
 }
 
 RegularSDL2Window::~RegularSDL2Window()

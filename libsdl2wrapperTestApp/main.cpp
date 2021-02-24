@@ -239,7 +239,7 @@ private:
 
 int main( int argc, char** argv )
 {
-    winData.size.setSize( 800, 600 );
+    winData.currentRes.setSize( 800, 600 );
     winData.pos.setXYZ( 480, 480, 0 );
 
 #if defined _MSC_VER
