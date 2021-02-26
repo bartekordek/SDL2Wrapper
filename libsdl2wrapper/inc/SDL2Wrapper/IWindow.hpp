@@ -2,6 +2,8 @@
 
 #include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IRender.hpp"
+#include "SDL2Wrapper/WindowData.hpp"
+
 #include "CUL/Graphics/IObjectRegister.hpp"
 #include "CUL/Graphics/ITexture.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
@@ -36,7 +38,6 @@ using CShrt = const unsigned short;
 using SmallCount = CShrt;
 using Size2Du = CUL::Graphics::Size2Du;
 using Size2Di = CUL::Graphics::Size2Di;
-using WindowSize = Size2Di;
 
 #ifdef _MSC_VER
 class SDL2WAPI CUL::IName;
@@ -57,8 +58,6 @@ using TextureMap = std::map<CUL::String, std::unique_ptr<ITexture>>;
 #pragma warning( disable: 4820 )
 #endif
 
-struct WindowData;
-
 class SDL2WAPI IWindow:
     public IRender,
     public IName,
@@ -77,8 +76,8 @@ public:
 
     virtual ~IWindow();
 
-    virtual const Vector3Di& getPos() const = 0;
-    virtual void setPos( const Vector3Di& pos ) = 0;
+    virtual const CUL::Graphics::Pos2Di& getPos() const = 0;
+    virtual void setPos( const CUL::Graphics::Pos2Di& pos ) = 0;
 
     virtual const WindowSize& getSize() const = 0;
     virtual void setSize( const WindowSize& size ) = 0;

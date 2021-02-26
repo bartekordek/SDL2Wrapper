@@ -4,6 +4,10 @@
 #include "SDL2Wrapper/IRender.hpp"
 #include "SDL2Wrapper/WindowData.hpp"
 
+#include "SDL2Wrapper/IMPORT_SDL.hpp"
+#include "SDL2Wrapper/IMPORT_SDL_video.hpp"
+
+
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
 #include "CUL/STL_IMPORTS/STD_mutex.hpp"
@@ -67,8 +71,8 @@ private:
     operator SDL_Window*( ) override;
     operator const SDL_Window*( ) override;
 
-    const Vector3Di& getPos() const override;
-    void setPos( const Vector3Di& pos ) override;
+    const CUL::Graphics::Pos2Di& getPos() const override;
+    void setPos( const CUL::Graphics::Pos2Di& pos ) override;
 
     const WindowSize& getSize() const override;
     void setSize( const WindowSize& size ) override;
@@ -103,6 +107,7 @@ private:
     CUL::CULInterface* m_culInterface = nullptr;
     CUL::FS::FSApi* m_fsApi = nullptr;
     CUL::LOG::ILogger* m_logger = nullptr;
+    SDL_DisplayMode m_nativeDisplayMode;
 
 // Deleted:
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;

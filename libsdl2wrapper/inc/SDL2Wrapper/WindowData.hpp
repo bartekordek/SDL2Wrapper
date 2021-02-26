@@ -1,20 +1,51 @@
 #pragma once
 
 #include "SDL2Wrapper/Import.hpp"
+
+#include "CUL/Graphics/Pos2D.hpp"
 #include "CUL/Math/Vector3D.hpp"
 #include "CUL/Graphics/Size2D.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
+struct WinSize
+{
+    int w = 800;
+    int h = 600;
+
+    void setSize( int iW, int iH )
+    {
+        w = iW;
+        h = iH;
+    }
+
+    int getWidth() const
+    {
+        return w;
+    }
+
+    int getHeight() const
+    {
+        return h;
+    }
+
+    operator CUL::Graphics::Size2Di()
+    {
+        CUL::Graphics::Size2Di result;
+        result.setSize( w, h );
+        return result;
+    }
+};
+
 using Vector3Di = CUL::MATH::Vector3Di;
-using WindowSize = CUL::Graphics::Size2Di;
+using WindowSize = WinSize;
 using String = CUL::String;
 
 struct SDL2WAPI WindowData
 {
 public:
-    Vector3Di pos = Vector3Di( 0, 0, 0 );
-    WindowSize currentRes = WindowSize( 640, 480 );
+    CUL::Graphics::Pos2Di pos = CUL::Graphics::Pos2Di( 0, 0 );
+    WindowSize currentRes = { 640, 480 };
     WindowSize nativeRes;
     WindowSize windowRes;
     String name = "";

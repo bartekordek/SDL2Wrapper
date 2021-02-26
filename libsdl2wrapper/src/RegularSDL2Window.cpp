@@ -2,10 +2,6 @@
 #include "TextureSDL.hpp"
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
-
-#include "SDL2Wrapper/IMPORT_SDL.hpp"
-#include "SDL2Wrapper/IMPORT_SDL_video.hpp"
-
 #include "SimpleUtils.hpp"
 
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
@@ -40,13 +36,12 @@ RegularSDL2Window::RegularSDL2Window(
 
     const auto winId = SDL_GetWindowID( m_window );
 
-    SDL_DisplayMode displayMode;
     const auto displayIndex = SDL_GetWindowDisplayIndex( m_window );
-    SDL_GetCurrentDisplayMode( displayIndex, &displayMode );
+    SDL_GetCurrentDisplayMode( displayIndex, &m_nativeDisplayMode );
 
     setWindowID( winId );
 
-    m_windowData.nativeRes.setSize( displayMode.w, displayMode.h );
+    m_windowData.nativeRes.setSize( m_nativeDisplayMode.w, m_nativeDisplayMode.h );
     m_windowData.windowRes = m_windowData.currentRes;
 
     auto rendererId = m_wrapper->getRendererId( winData.rendererName );
@@ -102,7 +97,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     m_logger->log( "Pos.x = " + CUL::String( pos.getX() ) + ", Pos.y = " + CUL::String( pos.getY() ), CUL::LOG::Severity::INFO );
     m_logger->log( "Width = " + CUL::String( currentRes.getWidth() ) + ", height = " + CUL::String( currentRes.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
-    Uint32 windowFlags = SDL_WINDOW_SHOWN;
+    Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
     if( rendererName.contains( "opengl" ) )
     {
         windowFlags |= SDL_WINDOW_OPENGL;
@@ -264,12 +259,12 @@ void RegularSDL2Window::setBackgroundColor( const ColorS& color )
     m_backgroundColor = color;
 }
 
-const Vector3Di& RegularSDL2Window::getPos() const
+const CUL::Graphics::Pos2Di& RegularSDL2Window::getPos() const
 {
     return m_windowData.pos;
 }
 
-void RegularSDL2Window::setPos( const Vector3Di& pos )
+void RegularSDL2Window::setPos( const CUL::Graphics::Pos2Di& pos )
 {
     m_windowData.pos = pos;
 }
@@ -282,6 +277,9 @@ const WindowSize& RegularSDL2Window::getSize() const
 void RegularSDL2Window::setSize( const WindowSize& size )
 {
     m_windowData.currentRes = size;
+    SDL_SetWindowSize( m_window, size.w, size.h );
+    //SDL_SetWindowDisplayMode( m_window, &m_nativeDisplayMode  );
+    //SDL_RenderSetLogicalSize( m_renderer, size.w, size.h );
 }
 
 IWindow::Type RegularSDL2Window::getType() const
@@ -446,20 +444,7 @@ CUL::Video::IFPSCounter* RegularSDL2Window::getFpsCounter()
 void RegularSDL2Window::setFullscreen(bool fullscreen)
 {
     const auto flag = fullscreen ? SDL_WINDOW_FULLSCREEN: 0;
-
-    if( fullscreen )
-    {
-        const auto targetRes = m_windowData.nativeRes;
-        SDL_SetWindowSize( m_window, targetRes.getWidth(), targetRes.getHeight() );
-    }
-
     SDL_SetWindowFullscreen( m_window, flag );
-
-    if( !fullscreen )
-    {
-        const auto targetRes = m_windowData.windowRes;
-    }
-
     SDL_ShowCursor(fullscreen);
 }
 
