@@ -62,20 +62,21 @@ if( MSVC )
     set_property(TARGET ${EXEC} PROPERTY "VS_DEBUGGER_WORKING_DIRECTORY" "${SDL2W_TESTS_RUN_DIR}")
 endif()
 
-if (MSVC)
-    CmakeToWindow( ${SDL2W_TESTS_RUN_DIR} SDL2W_TESTS_RUN_DIR_WINDOWS )
-    CmakeToWindow( ${SDL2W_OUTPUT_DIR} SDL2W_OUTPUT_DIR_WINDOWS )
-    CmakeToWindow( ${SDL2W_DEPS} SDL2W_DEPS_WINDOWS )
-
-
-    set( CleanCommand ${SDL2W_DEPS}\\helpers\\RemoveBinAndSymbols.bat )
-    add_custom_command(TARGET ${EXEC} PRE_BUILD
-        COMMAND ${CleanCommand} ${SDL2W_TESTS_RUN_DIR_WINDOWS}
-    )
-
-    set( CopyCommand ${SDL2W_DEPS}\\helpers\\CopyLibraryBinaryAndSymbolsRecursive.bat )
-    add_custom_command(TARGET ${EXEC} POST_BUILD
-        COMMAND ${CopyCommand} ${SDL2W_OUTPUT_DIR_WINDOWS} ${SDL2W_TESTS_RUN_DIR_WINDOWS}
-        COMMAND ${CopyCommand} ${SDL2W_DEPS_WINDOWS} ${SDL2W_TESTS_RUN_DIR_WINDOWS}
-    )
-endif()
+# TODO: Do I need to copy it?
+#if (MSVC)
+#    CmakeToWindow( ${SDL2W_TESTS_RUN_DIR} SDL2W_TESTS_RUN_DIR_WINDOWS )
+#    CmakeToWindow( ${SDL2W_OUTPUT_DIR} SDL2W_OUTPUT_DIR_WINDOWS )
+#    CmakeToWindow( ${SDL2W_DEPS} SDL2W_DEPS_WINDOWS )
+#
+#
+#    set( CleanCommand ${SDL2W_DEPS}\\helpers\\RemoveBinAndSymbols.bat )
+#    add_custom_command(TARGET ${EXEC} PRE_BUILD
+#        COMMAND ${CleanCommand} ${SDL2W_TESTS_RUN_DIR_WINDOWS}
+#    )
+#
+#    set( CopyCommand ${SDL2W_DEPS}\\helpers\\CopyLibraryBinaryAndSymbolsRecursive.bat )
+#    add_custom_command(TARGET ${EXEC} POST_BUILD
+#        COMMAND ${CopyCommand} ${SDL2W_OUTPUT_DIR_WINDOWS} ${SDL2W_TESTS_RUN_DIR_WINDOWS}
+#        COMMAND ${CopyCommand} ${SDL2W_DEPS_WINDOWS} ${SDL2W_TESTS_RUN_DIR_WINDOWS}
+#    )
+#endif()

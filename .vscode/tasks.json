@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Recreate Cmake",
+            "label": "[LINUX] CMake create",
             "type": "shell",
-            "command": "clear;cd Build-Linux;rm -rf *; cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug ..;time make -j22",
+            "command": "pwd;rm -rf Build-Linux; mkdir Build-Linux; cd Build-Linux; cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -16,15 +16,66 @@
             ]
         },
         {
-            "label": "Make Debug",
+            "label": "[LINUX] Make Debug",
             "type":"shell",
-            "command": "clear;cd Build-Linux;time make -j",
+            "command": "clear;cd Build-Linux;time make -j12",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
                 "$gcc"
+            ]
+        },
+        {
+            "label": "[WINDOWS] CMake create",
+            "type": "shell",
+            "command": "CreateDebugCmake",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "[WINDOWS] Build All",
+            "type":"shell",
+            "command": "BuildDebug",
+            "args": [ "Build-Windows\\sdl2wrapper_main.sln" ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "[WINDOWS] Build libsdl",
+            "type":"shell",
+            "command": "BuildDebug",
+            "args": [ "Build-Windows\\libsdl2wrapper\\sdl2wrapper.vcxproj" ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "[WINDOWS] Build libsdl test app",
+            "type":"shell",
+            "command": "BuildDebug",
+            "args": [ "Build-Windows\\libsdl2wrapperTestApp\\sdl2wrapperTestApp.vcxproj" ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
             ]
         }
     ]

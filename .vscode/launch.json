@@ -5,33 +5,39 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Windows Launch",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "enter program name, for example ${workspaceFolder}/a.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/runDir",
-            "environment": [],
-            "externalConsole": true
-        },
-        {
-            "name": "Linux Debug",
+            "name": "[Linux] Run test app",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/Build-Linux/sdl2wrapperTestApp.bin",
-            "args": ["-w", "1024", "-h", "800" ],
+            "program": "${workspaceFolder}/Build-Linux/Debug/sdl2wrapperTestApp.bin",
+            "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/runDir",
+            "cwd": "${workspaceFolder}/deps/OpenGLWrapper/runDir",
             "environment": [],
             "externalConsole": false,
+            "MIMode": "gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            //"preLaunchTask": "g++ build active file",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "[Windows] Run test app",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\Build-Windows\\Debug\\sdl2wrapperTestApp.exe",
+            "cwd": "${workspaceRoot}/runDir",
+            "symbolSearchPath": "${workspaceRoot}/runDir",
+            "args": [ "-w", "1680", "-h", "900" ],
+            "externalConsole": false,
+            "logging": {
+                "moduleLoad": false,
+                "trace": true,
+            }
         }
     ]
 }
