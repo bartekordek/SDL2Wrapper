@@ -240,7 +240,7 @@ private:
 int main( int argc, char** argv )
 {
     winData.currentRes.setSize( 800, 600 );
-    winData.pos.setXYZ( 480, 480, 0 );
+    winData.pos.setXY( 128, 128 );
 
 #if defined _MSC_VER
     winData.rendererName = "direct3d";
