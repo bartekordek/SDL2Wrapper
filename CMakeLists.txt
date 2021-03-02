@@ -19,6 +19,8 @@ else()
     set( SDL2W_OUTPUT_DIR ${SDL2W_ROOT}/Build-Linux )
 endif()
 
+set( SDL2W_BINARY_DIRECTORY ${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE} )
+
 set( SDL2W_TESTS_RUN_DIR ${SDL2W_ROOT}/runDir )
 set( ENV{SDL2W_TESTS_RUN_DIR} ${SDL2W_TESTS_RUN_DIR} )
 set( ENV{SDL2W_ROOT} ${SDL2W_ROOT} )
@@ -27,6 +29,7 @@ message( "[sdl2wrapper] Setting SDL2W_TESTS_RUN_DIR to: ${SDL2W_TESTS_RUN_DIR}" 
 
 set( SDL2W_DEPS ${SDL2W_ROOT}/deps )
 
+option(LIBC "Use the system C library" true )
 add_subdirectory( deps/sdl2-repo )
 add_subdirectory( libsdl2wrapper )
 add_subdirectory( libsdl2wrapperTestApp )

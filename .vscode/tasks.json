@@ -66,6 +66,20 @@
             ]
         },
         {
+            "label": "[WINDOWS] CMake + build libsdl",
+            "type":"shell",
+            "command": "BuildDebug",
+            "args": [ "Build-Windows\\libsdl2wrapper\\sdl2wrapper.vcxproj" ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "dependsOn": "[WINDOWS] CMake create"
+        },
+        {
             "label": "[WINDOWS] Build libsdl test app",
             "type":"shell",
             "command": "BuildDebug",

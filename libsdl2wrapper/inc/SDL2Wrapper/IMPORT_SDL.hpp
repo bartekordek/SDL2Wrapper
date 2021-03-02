@@ -19,6 +19,7 @@
 #pragma warning( disable: 5039 )
 #pragma warning( disable: 5045 )
 #endif
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_mouse.h>
 #include <SDL_surface.h>

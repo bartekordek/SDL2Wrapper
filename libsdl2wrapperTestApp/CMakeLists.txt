@@ -15,6 +15,9 @@ else()
     add_definitions(-Wfatal-errors)
 endif()
 
+include_directories( $ENV{cul_INCLUDE_DIR} )
+find_package( cul REQUIRED )
+
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
@@ -44,9 +47,8 @@ IF(NOT APPLE AND NOT MSVC)
 ENDIF()
 
 set( DEPENDENCIES
-cul
-sdl2wrapper
-AdditionalDeps
+    ${cul_LIBRARY}
+    sdl2wrapper
 )
 
 if( MSVC )
