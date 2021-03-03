@@ -29,7 +29,8 @@ message( "[sdl2wrapper] Setting SDL2W_TESTS_RUN_DIR to: ${SDL2W_TESTS_RUN_DIR}" 
 
 set( SDL2W_DEPS ${SDL2W_ROOT}/deps )
 
-option(LIBC "Use the system C library" true )
+#option(LIBC "Use the system C library" true )
+option( SDL_STATIC_PIC "PIC for SDL" true )
 add_subdirectory( deps/sdl2-repo )
 add_subdirectory( libsdl2wrapper )
 add_subdirectory( libsdl2wrapperTestApp )

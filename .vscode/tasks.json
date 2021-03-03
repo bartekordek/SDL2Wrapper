@@ -6,7 +6,7 @@
         {
             "label": "[LINUX] CMake create",
             "type": "shell",
-            "command": "pwd;rm -rf Build-Linux; mkdir Build-Linux; cd Build-Linux; cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
+            "command": "clear && cd Build-Linux && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -18,7 +18,19 @@
         {
             "label": "[LINUX] Make Debug",
             "type":"shell",
-            "command": "clear;cd Build-Linux;time make -j12",
+            "command": "clear && cd Build-Linux && time make -j12",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "[LINUX] CMake + Make debug",
+            "type":"shell",
+            "command": "clear && cd Build-Linux && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug && time make -j12",
             "group": {
                 "kind": "build",
                 "isDefault": true

@@ -17,7 +17,7 @@ if( MSVC )
         COMPILE_FLAGS "/MP" # Adjust as needed
     )
 else()
-    add_compile_options( -Wall -Wextra -pedantic -Werror )
+    add_compile_options( -Wall -Wextra -pedantic -Werror -fPIC )
     add_definitions( -Wfatal-errors )
 endif()
 
@@ -35,10 +35,10 @@ source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES} )
 add_library( ${EXEC} SHARED ${SOURCES} )
 
 set( LIBS
-PRIVATE AdditionalDeps
-PRIVATE cul
-PRIVATE SDL2-static
-PRIVATE SDL2main
+AdditionalDeps
+cul
+SDL2-static
+SDL2main
 )
 
 if( MSVC )
@@ -59,7 +59,7 @@ if (MSVC)
     CmakeToWindow( ${cul_BINARY} cul_BINARY_WINDOWS )
     CmakeToWindow( ${cul_SYMBOLS} cul_SYMBOLS_WINDOWS )
 
-    set( CopyCommand xcopy /s /f )
+    set( CopyCommand xcopy /s /f /d /y )
     add_custom_command(TARGET ${EXEC} POST_BUILD
         COMMAND ${CopyCommand} ${cul_LIBRARY_WINDOWS} ${SDL2W_BINARY_DIRECTORY_WINDOWS}
         COMMAND ${CopyCommand} ${cul_BINARY_WINDOWS} ${SDL2W_BINARY_DIRECTORY_WINDOWS}

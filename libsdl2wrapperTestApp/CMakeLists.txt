@@ -47,7 +47,7 @@ IF(NOT APPLE AND NOT MSVC)
 ENDIF()
 
 set( DEPENDENCIES
-    ${cul_LIBRARY}
+    cul
     sdl2wrapper
 )
 
