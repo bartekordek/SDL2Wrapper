@@ -22,7 +22,7 @@ jobs:
       run: cmake -E make_directory ${{github.workspace}}//Build-Linux
 
     - name: Check env
-      run: gcc -v
+      run: gcc -v && sudo apt install g++ g++-7 g++-8 gcc && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
     - name: Prepare fetch
       uses: MrSquaare/ssh-setup-action@v1
@@ -30,12 +30,19 @@ jobs:
         host: github.com
         private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Fetch dependencies
+    - name: Fetch dependencies - begin
       shell: bash
       working-directory: ${{github.workspace}}
       env:
                     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: time git submodule update --recursive --init
+      run: time git submodule update --recursive --init && find . -name '*.git'
+
+    - name: Fetch dependencies - second
+      shell: bash
+      working-directory: ${{github.workspace}}
+      env:
+                    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: time git submodule update --recursive --init && find . -name '*.git'
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
