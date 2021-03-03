@@ -40,6 +40,18 @@
             ]
         },
         {
+            "label": "[LINUX] Clean CMake + Make debug",
+            "type":"shell",
+            "command": "clear && cd Build-Linux && rm -rfv * && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug && time make -j12",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
             "label": "[WINDOWS] CMake create",
             "type": "shell",
             "command": "CreateDebugCmake",
