@@ -1,7 +1,6 @@
 .vs
 *.bin
 *.check_cache
-*.cmake
 *.d
 *.exe
 *.exp
