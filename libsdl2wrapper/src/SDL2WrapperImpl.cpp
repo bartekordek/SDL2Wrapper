@@ -116,7 +116,6 @@ CUL::CULInterface* SDL2WrapperImpl::getCul()
 
 IConfigFile* SDL2WrapperImpl::getConfig() const
 {
-    CUL::Assert::simple( m_configFile != nullptr, "SDL2WrapperImpl: Config is null! Specified non existing file." );
     return m_configFile;
 }
 
