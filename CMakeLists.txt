@@ -14,13 +14,19 @@ list( APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules )
 
 set( SDL2W_ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
 set( ENV{SDL2W_ROOT} ${CMAKE_CURRENT_SOURCE_DIR} )
+set( SDL2W_BUILD_ROOT ${CMAKE_SOURCE_DIR} )
+message( "SDL2W_BUILD_ROOT: ${SDL2W_BUILD_ROOT}" )
 if( MSVC )
-    set( SDL2W_OUTPUT_DIR ${SDL2W_ROOT}/Build-Windows )
-    set( MAIN_OUTPUT_DIR ${SDL2W_ROOT}/Build-Windows )
+    set( SDL2W_OUTPUT_DIR ${SDL2W_BUILD_ROOT}/Build-Windows )
+    set( MAIN_OUTPUT_DIR ${SDL2W_BUILD_ROOT}/Build-Windows )
 else()
-    set( SDL2W_OUTPUT_DIR ${SDL2W_ROOT}/Build-Linux )
-    set( MAIN_OUTPUT_DIR ${SDL2W_ROOT}/Build-Linux )
+    set( SDL2W_OUTPUT_DIR ${SDL2W_BUILD_ROOT}/Build-Linux )
+    set( MAIN_OUTPUT_DIR ${SDL2W_BUILD_ROOT}/Build-Linux )
 endif()
+
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
 
 
 set( SDL2W_BINARY_DIRECTORY ${SDL2W_OUTPUT_DIR}/${CMAKE_BUILD_TYPE} )
@@ -34,7 +40,7 @@ message( "[sdl2wrapper] Setting SDL2W_TESTS_RUN_DIR to: ${SDL2W_TESTS_RUN_DIR}" 
 
 set( SDL2W_DEPS ${SDL2W_ROOT}/deps )
 
-option(LIBC "Use the system C library" true )
+option( LIBC "Use the system C library" true )
 option( SDL_STATIC_PIC "PIC for SDL" true )
 add_subdirectory( deps/sdl2-repo )
 add_subdirectory( libsdl2wrapper )
