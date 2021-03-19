@@ -24,6 +24,9 @@ jobs:
     - name: Check env
       run: gcc -v && sudo apt install g++ g++-7 g++-8 gcc && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
+    - name: Install Linux prequisities
+      run: sudo apt install mesa-common-dev libxi-dev libglu1-mesa-dev
+
     - name: Prepare fetch
       uses: MrSquaare/ssh-setup-action@v1
       with:
