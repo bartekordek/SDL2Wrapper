@@ -52,9 +52,21 @@
             ]
         },
         {
-            "label": "[WINDOWS] CMake create",
+            "label": "[WINDOWS] Clear screen",
+            "type":"shell",
+            "command": "cls",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        }
+        {
+            "label": "[WINDOWS] CMake",
             "type": "shell",
-            "command": "CreateDebugCmake",
+            "command": "cd Build-Windows && cmake  --clean-first -DCMAKE_BUILD_TYPE=Debug .. -G \"Visual Studio 16 2019\"",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -62,38 +74,37 @@
             "problemMatcher": [
                 "$gradle"
             ]
+            ,"dependsOn": "[WINDOWS] Clear screen"
         },
+,
         {
             "label": "[WINDOWS] Build All",
             "type":"shell",
-            "command": "BuildDebug",
-            "args": [ "Build-Windows\\sdl2wrapper_main.sln" ],
+            "command": "cls & cmake --build Build-Windows --config DEBUG -j16",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+            ,"problemMatcher": ["$msCompile"]
+            ,"dependsOn": "[WINDOWS] Clear screen"
+        },
+        {
+            "label": "[WINDOWS] Build Tests",
+            "type":"shell",
+            "command": "cmake --build Build-Windows --config DEBUG -j16 --target culTests",
+            "args": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
                 "$msCompile"
-            ]
+            ],"dependsOn": "[WINDOWS] Clear screen"
         },
         {
-            "label": "[WINDOWS] Build libsdl",
+            "label": "[WINDOWS] CMake + Build All ",
             "type":"shell",
-            "command": "BuildDebug",
-            "args": [ "Build-Windows\\libsdl2wrapper\\sdl2wrapper.vcxproj" ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ]
-        },
-        {
-            "label": "[WINDOWS] CMake + build libsdl",
-            "type":"shell",
-            "command": "BuildDebug",
-            "args": [ "Build-Windows\\libsdl2wrapper\\sdl2wrapper.vcxproj" ],
+            "command": "cmake --build Build-Windows --config DEBUG -j16",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -104,17 +115,24 @@
             "dependsOn": "[WINDOWS] CMake create"
         },
         {
-            "label": "[WINDOWS] Build libsdl test app",
+            "label": "[WINDOWS] CMake + Build CUL ",
             "type":"shell",
-            "command": "BuildDebug",
-            "args": [ "Build-Windows\\libsdl2wrapperTestApp\\sdl2wrapperTestApp.vcxproj" ],
+            "command": "cmake",
+            "args":[
+                "--build", "Build-Windows",
+                "--config", "DEBUG",
+                "-j18",
+                "--target",
+                "cul"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
                 "$msCompile"
-            ]
+            ],
+            "dependsOn": "[WINDOWS] CMake create"
         }
     ]
 }

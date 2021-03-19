@@ -7,13 +7,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(EXEC ${PROJECT_NAME})
 
 if( MSVC )
-    # warning level 4 and all warnings as errors
     add_compile_options( /W4 /WX )
     add_compile_options( /MP )
     set_target_properties(SDL2 PROPERTIES
-        COMPILE_FLAGS "/MP" # Adjust as needed
-    )
-    set_target_properties(SDL2-static PROPERTIES
         COMPILE_FLAGS "/MP" # Adjust as needed
     )
 else()
