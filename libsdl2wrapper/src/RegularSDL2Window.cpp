@@ -228,7 +228,8 @@ void RegularSDL2Window::renderAll()
             std::unique_ptr<SDL_Rect> srcRect;
 
             auto tex = sprite->getTexture();
-            const auto texSDLW = static_cast<TextureSDL*>( tex );
+            // TODO: WTF?
+            auto const texSDLW = dynamic_cast<TextureSDL*>( tex );
 
             const double angle = sprite->getAngle().getValueD();
 
@@ -411,7 +412,7 @@ CUL::Graphics::ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface,
 
     auto texSDL = new TextureSDL();
 
-    auto tex = SDL_CreateTextureFromSurface( m_renderer, surface );
+    auto const tex = SDL_CreateTextureFromSurface( m_renderer, surface );
     CUL::Assert::simple(
         nullptr != tex,
         "Cannot create texture from " +

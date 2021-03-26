@@ -14,7 +14,7 @@
 
 using namespace SDL2W;
 
-bool SDLBoolToCppBool( const SDL_bool value )
+constexpr bool SDLBoolToCppBool( const SDL_bool value )
 {
     return value == 1 ? true : false;
 }

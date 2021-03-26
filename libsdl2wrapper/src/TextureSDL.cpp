@@ -15,7 +15,8 @@ SDL_Texture* TextureSDL::getTexture() const
 void TextureSDL::setTexture( const SDL_Texture* texture, const CUL::FS::Path& path )
 {
     m_texture = const_cast<SDL_Texture*>( texture );
-    int w, h;
+    int w = 0;
+    int h = 0;
     const auto sdlQuerySuccess = SDL_QueryTexture(
         m_texture,
         nullptr,

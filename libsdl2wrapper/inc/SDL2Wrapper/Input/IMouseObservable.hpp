@@ -25,6 +25,10 @@ public:
 
 protected:
 private:
+    IMouseObservable( const IMouseObservable& arg ) = delete;
+    IMouseObservable( IMouseObservable&& arg ) = delete;
+    IMouseObservable& operator=( const IMouseObservable& arg ) = delete;
+    IMouseObservable& operator=( IMouseObservable&& arg ) = delete;
 };
 
 NAMESPACE_END( SDL2W )

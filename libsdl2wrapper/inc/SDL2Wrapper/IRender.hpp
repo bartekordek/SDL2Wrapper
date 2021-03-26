@@ -14,10 +14,7 @@ class SDL2WAPI IRender:
     public CUL::Video::IFPSObservable
 {
 public:
-    IRender();
-    IRender( const IRender& rhv ) = delete;
-    virtual ~IRender();
-    IRender& operator=( const IRender& rhv ) = delete;
+    IRender() noexcept;
 
     virtual void setBackgroundColor( const ColorS& color ) = 0;
     virtual void setBackgroundColor( const ColorE color ) = 0;
@@ -26,8 +23,13 @@ public:
     virtual void renderAll() = 0;
     virtual void updateScreenBuffers() = 0;
 
+    virtual ~IRender();
 protected:
 private:
+    IRender( const IRender& arg ) = delete;
+    IRender( IRender&& arg ) = delete;
+    IRender& operator=( const IRender& arg ) = delete;
+    IRender& operator=( IRender&& arg ) = delete;
 };
 
 NAMESPACE_END( SDL2W )

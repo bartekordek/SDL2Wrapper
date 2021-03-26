@@ -2,7 +2,7 @@
 
 using namespace SDL2W;
 
-IRender::IRender()
+IRender::IRender() noexcept
 {
 }
 

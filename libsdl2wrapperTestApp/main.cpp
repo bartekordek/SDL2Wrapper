@@ -198,8 +198,7 @@ private:
 
             obj2Angle -= 1;
             obj3Angle += 1;
-            auto greeVal = static_cast<uint8_t>( 127 + 127 * sin( i / 2 ) );
-            bckgroundColor.setGCU( greeVal );
+            bckgroundColor.setGF( sin( i / 2 ) * 0.5f + 0.5f );
             m_activeWindow->setBackgroundColor( bckgroundColor );
             i += 0.02;
         }
