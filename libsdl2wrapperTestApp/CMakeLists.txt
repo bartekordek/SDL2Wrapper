@@ -1,7 +1,7 @@
 #cmake -DCMAKE_BUILD_TYPE=Debug
-cmake_minimum_required(VERSION 3.0.0)
 
-project(sdl2wrapperTestApp LANGUAGES CXX)
+get_filename_component( basename ${CMAKE_CURRENT_SOURCE_DIR} NAME )
+project( ${basename} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(EXEC ${PROJECT_NAME})
 
@@ -17,10 +17,6 @@ endif()
 
 include_directories( $ENV{cul_INCLUDE_DIR} )
 find_package( cul REQUIRED )
-
-set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SDL2W_OUTPUT_DIR} )
 
 file( GLOB SOURCES *.cpp )
 
@@ -47,15 +43,18 @@ IF(NOT APPLE AND NOT MSVC)
 ENDIF()
 
 set( DEPENDENCIES
-    cul
     sdl2wrapper
 )
+
+
 
 if( MSVC )
     target_link_libraries( ${EXEC} ${DEPENDENCIES} )
 else()
     target_link_libraries( ${EXEC} ${DEPENDENCIES} stdc++fs  )
 endif()
+
+add_dependencies( ${EXEC} libculTests )
 
 target_include_directories(${EXEC} PRIVATE inc)
 target_include_directories(${EXEC} PRIVATE src)
