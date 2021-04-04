@@ -34,15 +34,9 @@ RegularSDL2Window::RegularSDL2Window(
 {
     m_window = createWindow( winData );
 
-    const auto winId = SDL_GetWindowID( m_window );
+    fetchSreenData();
 
-    const auto displayIndex = SDL_GetWindowDisplayIndex( m_window );
-    SDL_GetCurrentDisplayMode( displayIndex, &m_nativeDisplayMode );
 
-    setWindowID( winId );
-
-    m_windowData.nativeRes.setSize( m_nativeDisplayMode.w, m_nativeDisplayMode.h );
-    m_windowData.windowRes = m_windowData.currentRes;
 
     auto rendererId = m_wrapper->getRendererId( winData.rendererName );
 
@@ -54,8 +48,6 @@ RegularSDL2Window::RegularSDL2Window(
     }
 
     m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
-
-
 
     Assert( nullptr != m_renderer, "Cannot create renderer." );
     SDL_RendererInfo info;
@@ -129,6 +121,18 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     }
 
     return result;
+}
+
+void RegularSDL2Window::fetchSreenData()
+{
+    const auto winId = SDL_GetWindowID( m_window );
+    const auto displayIndex = SDL_GetWindowDisplayIndex( m_window );
+    SDL_GetCurrentDisplayMode( displayIndex, &m_nativeDisplayMode );
+
+    setWindowID( winId );
+
+    m_windowData.nativeRes.setSize( m_nativeDisplayMode.w, m_nativeDisplayMode.h );
+    m_windowData.windowRes = m_windowData.currentRes;
 }
 
 void RegularSDL2Window::toggleFpsCounter( const bool on, const short unsigned everyNsecond )

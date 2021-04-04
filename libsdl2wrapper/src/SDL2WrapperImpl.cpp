@@ -1,6 +1,5 @@
 #include "SimpleUtils.hpp"
 #include "SDL2WrapperImpl.hpp"
-#include "RegularSDL2Window.hpp"
 #include "Input/KeySDL.hpp"
 
 #include "Sprite.hpp"
@@ -90,7 +89,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
 
 
     m_windowFactory = new WindowCreatorConcrete( m_logger );
-    m_mainWindow = m_windowFactory->createWindow( wd, this );
+    m_mainWindow = dynamic_cast< RegularSDL2Window*>( m_windowFactory->createWindow( wd, this ) );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();
@@ -332,14 +331,15 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )
 {
     auto eventType = WindowEventType::NONE;
-    switch( sdlEvent.type )
+    switch( sdlEvent.window.event )
     {
     case SDL_QUIT:
         eventType = WindowEventType::CLOSE; break;
 
     case SDL_WINDOWEVENT_MOVED:
-        eventType = WindowEventType::MOVED; break;
-
+        eventType = WindowEventType::MOVED;
+        m_mainWindow->fetchSreenData();
+        break;
     case SDL_WINDOWEVENT_ENTER:
         eventType = WindowEventType::MOUSE_ENTERED; break;
 

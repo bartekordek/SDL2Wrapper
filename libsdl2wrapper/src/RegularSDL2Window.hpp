@@ -47,8 +47,9 @@ public:
         ISDL2Wrapper* wrapper,
         CUL::CULInterface* culInterface );
 
-    ~RegularSDL2Window();
+    void fetchSreenData();
 
+    ~RegularSDL2Window();
 protected:
 private:
     SDL_Window* createWindow( const WindowData& winDatae );

@@ -2,7 +2,10 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 #include "SDL2Wrapper/ISDLEventObserver.hpp"
+
 #include "WindowFactoryConcrete.hpp"
+#include "RegularSDL2Window.hpp"
+
 #include "CUL/CULInterface.hpp"
 #include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/STL_IMPORTS/STD_vector.hpp"
@@ -113,7 +116,7 @@ private:
     LckPrim<unsigned int> m_eventLatencyUs = 256;
 
     std::set<IWindowEventObserver*> m_windowEventObservers;
-    IWindow* m_mainWindow = nullptr;
+    RegularSDL2Window* m_mainWindow = nullptr;
     WindowCollection m_windows;
 
     Keys m_keys;
