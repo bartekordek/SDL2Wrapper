@@ -36,8 +36,6 @@ RegularSDL2Window::RegularSDL2Window(
 
     fetchSreenData();
 
-
-
     auto rendererId = m_wrapper->getRendererId( winData.rendererName );
 
     auto rendererType = SDL_RENDERER_ACCELERATED;

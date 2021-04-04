@@ -331,23 +331,18 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
 void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )
 {
     auto eventType = WindowEventType::NONE;
-    switch( sdlEvent.window.event )
+
+    if( sdlEvent.type == SDL_QUIT )
     {
-    case SDL_QUIT:
-        eventType = WindowEventType::CLOSE; break;
-
-    case SDL_WINDOWEVENT_MOVED:
-        eventType = WindowEventType::MOVED;
-        m_mainWindow->fetchSreenData();
-        break;
-    case SDL_WINDOWEVENT_ENTER:
-        eventType = WindowEventType::MOUSE_ENTERED; break;
-
-    case SDL_WINDOWEVENT_LEAVE:
-        eventType = WindowEventType::MOUSE_LEAVED; break;
-
-    default:
-        return;
+        eventType = WindowEventType::CLOSE;
+    }
+    else if( sdlEvent.type == SDL_WINDOWEVENT )
+    {
+        if( sdlEvent.window.event == SDL_WINDOWEVENT_MOVED )
+        {
+            eventType = WindowEventType::MOVED;
+            m_mainWindow->fetchSreenData();
+        }
     }
 
     notifyWindowEventListeners( eventType );
