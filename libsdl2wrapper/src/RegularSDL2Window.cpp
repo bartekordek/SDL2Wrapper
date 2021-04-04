@@ -133,7 +133,7 @@ void RegularSDL2Window::fetchSreenData()
     m_windowData.windowRes = m_windowData.currentRes;
 }
 
-void RegularSDL2Window::toggleFpsCounter( const bool on, const short unsigned everyNsecond )
+void RegularSDL2Window::toggleFpsCounter( bool on, short unsigned everyNsecond )
 {
     if( on )
     {

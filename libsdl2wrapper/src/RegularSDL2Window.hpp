@@ -58,7 +58,7 @@ private:
     void destroyObjects();
     WindowSize getCurrentScreenNativeResolution() const override;
 
-    void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) override;
+    void toggleFpsCounter( bool on, short unsigned everyNsecond = 2 ) override;
     void closeInfoLoop();
     void infoLoop();
     std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;

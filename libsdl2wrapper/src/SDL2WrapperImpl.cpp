@@ -324,8 +324,6 @@ void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
             we.y,
             we.direction == SDL_MOUSEWHEEL_NORMAL ? SDL2W::WheelDirection::UP : SDL2W::WheelDirection::DOWN );
     }
-
-
 }
 
 void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )

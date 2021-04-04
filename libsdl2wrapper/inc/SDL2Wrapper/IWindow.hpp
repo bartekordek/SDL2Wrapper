@@ -94,7 +94,7 @@ public:
 
     virtual void setFullscreen( bool fullscreen ) = 0;
 
-    virtual void toggleFpsCounter( const bool on, const short unsigned everyNsecond = 2 ) = 0;
+    virtual void toggleFpsCounter( bool on, short unsigned everyNsecond = 2 ) = 0;
 
     virtual CUL::Video::IFPSCounter* getFpsCounter() = 0;
 
