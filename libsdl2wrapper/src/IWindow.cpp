@@ -15,7 +15,7 @@ IWindow::~IWindow()
 {
 }
 
-void IWindow::setWindowID( Cunt id )
+void IWindow::setWindowID( unsigned id )
 {
     m_winId = id;
 }

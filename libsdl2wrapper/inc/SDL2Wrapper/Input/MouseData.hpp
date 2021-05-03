@@ -49,9 +49,9 @@ public:
     WheelDirection getWheelDirection() const;
     EventType getEventType() const;
 
-    void setPos( Cint x, Cint y );
+    void setPos( int x, int y );
     void setState( const MouseButtonIndex buttonIndex, const bool isUp );
-    void setWheel( Cint x, Cint y, const WheelDirection direction );
+    void setWheel( int x, int y, const WheelDirection direction );
     void setType( const EventType et );
 
     virtual ~MouseData();

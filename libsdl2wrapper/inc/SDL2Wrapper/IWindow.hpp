@@ -89,7 +89,7 @@ public:
     virtual ISprite* createSprite( const CUL::FS::Path& path ) = 0;
     virtual ISprite* createSprite( CUL::Graphics::ITexture* tex ) = 0;
 
-    void setWindowID( Cunt id );
+    void setWindowID( unsigned id );
     unsigned int getWindowID() const;
 
     virtual void setFullscreen( bool fullscreen ) = 0;

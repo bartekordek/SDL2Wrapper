@@ -43,7 +43,6 @@ struct WindowData;
 
 using Keys = std::map<CUL::String, std::unique_ptr<IKey>>;
 using WindowEventType = WindowEvent::Type;
-using Cbool = const bool;
 
 using InitCallback = std::function<void()>;
 using IConfigFile = CUL::GUTILS::IConfigFile;
@@ -61,7 +60,7 @@ public:
         const WindowData& wd,
         const CUL::FS::Path& configPath = "" ) = 0;
     virtual void refreshScreen() = 0;
-    virtual void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) = 0;
+    virtual void renderFrame( bool clearContext = true, bool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
     virtual int getRendererId( const String& name ) const = 0;
     virtual const std::map<String, int>& getRenderersList() const = 0;
@@ -75,7 +74,7 @@ public:
     virtual IWindow* getMainWindow() const = 0;
 
     virtual unsigned int getInputLatency() const = 0;
-    virtual void setInputLatency( Cunt latencyInUs ) = 0;
+    virtual void setInputLatency( unsigned latencyInUs ) = 0;
 
     virtual void registerWindowEventListener( IWindowEventObserver* observer ) = 0;
     virtual void unregisterWindowEventListener( IWindowEventObserver* observer ) = 0;

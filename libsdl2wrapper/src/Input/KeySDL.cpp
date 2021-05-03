@@ -16,7 +16,7 @@ const String& KeySDL::getKeyName() const
     return m_keyName;
 }
 
-void KeySDL::setKeyIsDown( Cbool keyIsDow )
+void KeySDL::setKeyIsDown( bool keyIsDow )
 {
     m_keyIsDown = keyIsDow;
 }

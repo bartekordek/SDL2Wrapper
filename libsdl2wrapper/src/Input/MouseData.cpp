@@ -110,7 +110,7 @@ MouseData::EventType MouseData::getEventType() const
     return m_eventType;
 }
 
-void MouseData::setPos( Cint x, Cint y )
+void MouseData::setPos( int x, int y )
 {
     m_x = x;
     m_y = y;
@@ -121,7 +121,7 @@ void MouseData::setState( const MouseButtonIndex buttonIndex, const bool isUp )
     m_buttonStates[ buttonIndex ] = isUp;
 }
 
-void MouseData::setWheel( Cint x, Cint y, const WheelDirection direction )
+void MouseData::setWheel( int x, int y, const WheelDirection direction )
 {
     m_wheelX = x;
     m_wheelY = y;

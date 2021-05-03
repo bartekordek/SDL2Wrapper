@@ -45,7 +45,7 @@ private:
 
     IConfigFile* getConfig() const override;
     void refreshScreen() override;
-    void renderFrame( Cbool clearContext = true, Cbool refreshWindow = true ) override;
+    void renderFrame( bool clearContext = true, bool refreshWindow = true ) override;
     void clearWindows() override;
 
     int getRendererId( const String& name ) const override;
@@ -77,7 +77,7 @@ private:
     MouseData& getMouseData() override;
 
     unsigned int getInputLatency() const override;
-    void setInputLatency( Cunt latencyInUs ) override;
+    void setInputLatency( unsigned latencyInUs ) override;
     bool isKeyUp( const String& keyName ) const override;
     Keys& getKeyStates() override;
 

@@ -159,7 +159,7 @@ CUL::LOG::ILogger* SDL2WrapperImpl::getLogger() const
     return m_logger;
 }
 
-void SDL2WrapperImpl::renderFrame( Cbool clearContext, Cbool refreshWindow )
+void SDL2WrapperImpl::renderFrame( bool clearContext, bool refreshWindow )
 {
     if( true == clearContext )
     {
@@ -470,7 +470,7 @@ unsigned int SDL2WrapperImpl::getInputLatency() const
     return m_eventLatencyUs.getValCopy();
 }
 
-void SDL2WrapperImpl::setInputLatency( Cunt latencyInUs )
+void SDL2WrapperImpl::setInputLatency( unsigned latencyInUs )
 {
     m_eventLatencyUs = latencyInUs;
 }

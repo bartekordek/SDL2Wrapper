@@ -19,7 +19,7 @@ protected:
 private:
     void setKeyName( const String& keyName ) override;
     const String& getKeyName() const override;
-    void setKeyIsDown( Cbool keyIsDown ) override;
+    void setKeyIsDown( bool keyIsDown ) override;
     bool getKeyIsDown() const override;
 
     CUL::String m_keyName;

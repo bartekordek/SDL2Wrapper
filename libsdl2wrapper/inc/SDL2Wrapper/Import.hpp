@@ -29,11 +29,3 @@
 #pragma comment(lib, "libsdl2wrapper.a")
 #endif
 */
-
-NAMESPACE_BEGIN( SDL2W )
-
-using Cunt = const unsigned int;
-using Cint = const int;
-using Cbool = const bool;
-
-NAMESPACE_END( SDL2W )
