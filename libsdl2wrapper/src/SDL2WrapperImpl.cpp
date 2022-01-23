@@ -33,7 +33,7 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 
 void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPath )
 {
-    m_culInterface = CUL::CULInterface::createInstance();
+    m_culInterface = CUL::CULInterface::createInstance( configPath );
     m_logger = m_culInterface->getLogger();
 
     if( configPath != "" )

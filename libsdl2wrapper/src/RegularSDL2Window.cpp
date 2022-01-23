@@ -70,7 +70,7 @@ RegularSDL2Window::RegularSDL2Window(
     }
 
     setName( winData.name );
-    m_il = CUL::Graphics::IImageLoader::createConcrete( m_wrapper->getConfig() );
+    m_il = m_culInterface->getImageLoader();
 }
 #ifdef _MSC_VER
 #pragma warning( pop )
