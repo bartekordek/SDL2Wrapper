@@ -16,7 +16,7 @@ WindowCreatorConcrete::WindowCreatorConcrete( CUL::LOG::ILogger* logger ):
 
 IWindow* WindowCreatorConcrete::createWindow( const WindowData& winData, ISDL2Wrapper* wrapper )
 {
-    CUL::Assert::simple( "SDL WRAPPER IS NULL!", wrapper );
+    CUL::Assert::simple( wrapper != nullptr, "SDL WRAPPER IS NULL!");
     return new RegularSDL2Window(
         winData,
         wrapper, wrapper->getCul() );

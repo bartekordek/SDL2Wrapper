@@ -7,8 +7,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(EXEC ${PROJECT_NAME})
 
 if( MSVC )
-    add_compile_options( /W4 /WX )
+    add_compile_options( /Wall /WX )
     add_compile_options( /MP )
+    add_compile_options( "/wd4266" )
+    add_compile_options( "/wd4514" )
+    add_compile_options( "/wd4820" )
     set_target_properties(SDL2 PROPERTIES
         COMPILE_FLAGS "/MP" # Adjust as needed
     )

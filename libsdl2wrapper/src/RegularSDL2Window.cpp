@@ -210,12 +210,10 @@ void RegularSDL2Window::updateScreenBuffers()
 
 void RegularSDL2Window::renderAll()
 {
-    SDL_SetRenderDrawColor(
-        m_renderer,
-        m_backgroundColor.getRUI(),
-        m_backgroundColor.getGUI(),
-        m_backgroundColor.getBUI(),
-        m_backgroundColor.getAUI() );
+    SDL_SetRenderDrawColor( m_renderer, (Uint8)m_backgroundColor.getRUI(),
+                            (Uint8)m_backgroundColor.getGUI(),
+                            (Uint8)m_backgroundColor.getBUI(),
+                            (Uint8)m_backgroundColor.getAUI() );
     std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
     for( const auto& object : m_objects )
     {
@@ -456,7 +454,7 @@ CUL::Video::IFPSCounter* RegularSDL2Window::getFpsCounter()
 
 void RegularSDL2Window::setFullscreen(bool fullscreen)
 {
-    const auto flag = fullscreen ? SDL_WINDOW_FULLSCREEN: 0;
+    const Uint32 flag = fullscreen ? (Uint32) SDL_WINDOW_FULLSCREEN : 0u;
     SDL_SetWindowFullscreen( m_window, flag );
     SDL_ShowCursor(fullscreen);
 }
