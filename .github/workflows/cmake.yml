@@ -21,6 +21,9 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{github.workspace}}//Build-Linux
 
+    - name: Update env
+      run: sudo apt-get update -y
+
     - name: Check env
       run: gcc -v && sudo apt install g++ g++-7 g++-8 gcc && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
