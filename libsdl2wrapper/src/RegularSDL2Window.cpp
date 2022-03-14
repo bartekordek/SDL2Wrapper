@@ -3,6 +3,7 @@
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 #include "SimpleUtils.hpp"
+#include "CUL/Filesystem/FSApi.hpp"
 
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 
