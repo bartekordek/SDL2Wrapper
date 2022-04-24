@@ -215,7 +215,7 @@ void SDL2WrapperImpl::refreshScreen()
 #include "CUL/STL_IMPORTS/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {
-    CUL::ThreadUtils::setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
+    m_culInterface->getThreadUtils().setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
     m_logger->log( "SDL2WrapperImpl::runEventLoop()::Begin" );
 
     while( eventLoopActive )
