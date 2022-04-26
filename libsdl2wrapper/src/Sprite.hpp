@@ -72,7 +72,7 @@ private:
     Position3DDMutexed scale = Position3DDMutexed( 1.0, 1.0, 0.0 );
     Position3DDMutexed m_pivotNormalised = Position3DDMutexed( 0.5, 0.5, 0.5 );
     Position3DDMutexed m_pivotAbsolute = Position3DDMutexed( 0.5, 0.5, 0.5 );
-    CUL::MATH::Angle yaw = 0.0;
+    CUL::MATH::Angle yaw;
 };
 
 NAMESPACE_END( SDL2W )

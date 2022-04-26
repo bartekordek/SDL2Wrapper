@@ -237,7 +237,7 @@ void RegularSDL2Window::renderAll()
             // TODO: WTF?
             auto const texSDLW = dynamic_cast<TextureSDL*>( tex );
 
-            const double angle = sprite->getAngle().getValueD();
+            const double angle = sprite->getAngle().getValueD(CUL::MATH::Angle::Type::DEGREE);
 
             SDL_Point center;
             center.x = static_cast<int>( pivot.getX() );
