@@ -157,7 +157,7 @@ private:
 
     void objectManagmentFun()
     {
-        CUL::ThreadUtils::setCurrentThreadName( "TestApp::objectManagmentFun" );
+        m_sdlW->getCul()->getThreadUtils().setCurrentThreadName( "TestApp::objectManagmentFun" );
 
         CUL::MATH::Vector3Dd someScale;
         m_obj1.sprite->setScale( someScale );
