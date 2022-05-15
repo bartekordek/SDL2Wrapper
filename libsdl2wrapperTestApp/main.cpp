@@ -9,7 +9,7 @@
 #include "CUL/Graphics/Color.hpp"
 #include "CUL/Video/IFPSCounter.hpp"
 #include "CUL/ITimer.hpp"
-#include "CUL/ThreadUtils.hpp"
+#include "CUL/Threading/ThreadUtils.hpp"
 #include "CUL/Filesystem/FS.hpp"
 #include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/Math/Angle.hpp"

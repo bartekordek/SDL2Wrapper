@@ -9,7 +9,7 @@
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 
 #include "CUL/ITimer.hpp"
-#include "CUL/ThreadUtils.hpp"
+#include "CUL/Threading/ThreadUtils.hpp"
 
 using namespace SDL2W;
 
