@@ -4,16 +4,54 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "[LINUX] CMake create",
+            "label": "[LINUX][CMAKE][CREATE][DEBUG]",
             "type": "shell",
-            "command": "clear && cd Build-Linux && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
+            "command": "cd Build-Linux && cmake .. -DCMAKE_BUILD_TYPE=Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "[LINUX][DEBUG][BUILLD][libsdl2wrapper]",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "Build-Linux",
+                "--config",
+                "DEBUG",
+                "-j16",
+                "--target",
+                "libsdl2wrapper"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "dependsOn": "[LINUX][CMAKE][CREATE][DEBUG]"
         },
         {
             "label": "[LINUX] Make Debug",
@@ -62,7 +100,7 @@
             "problemMatcher": [
                 "$msCompile"
             ]
-        }
+        },
         {
             "label": "[WINDOWS] CMake",
             "type": "shell",

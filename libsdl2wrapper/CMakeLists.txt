@@ -31,13 +31,14 @@ add_library( ${EXEC} SHARED ${SOURCES} )
 set( LIBS
 AdditionalDeps
 cul
-SDL2
 SDL2main
 )
 
 if( MSVC )
+    list(APPEND LIBS SDL2)
     target_link_libraries( ${EXEC} ${LIBS} )
 else()
+    list(APPEND LIBS SDL2-static)
     target_link_libraries( ${EXEC} ${LIBS} stdc++fs  )
 endif()
 
