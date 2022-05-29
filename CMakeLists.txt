@@ -42,6 +42,7 @@ set( SDL2W_DEPS ${SDL2W_ROOT}/deps )
 
 #option( LIBC "Use the system C library" true )
 option( SDL_STATIC_PIC "PIC for SDL" true )
+set(SDL_SHARED ON CACHE BOOL "" FORCE)
 add_subdirectory( deps/sdl2-repo )
 add_subdirectory( libsdl2wrapper )
 add_subdirectory( libsdl2wrapperTestApp )
