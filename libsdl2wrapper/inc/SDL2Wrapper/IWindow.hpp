@@ -79,9 +79,9 @@ public:
     virtual const CUL::Graphics::Pos2Di& getPos() const = 0;
     virtual void setPos( const CUL::Graphics::Pos2Di& pos ) = 0;
 
-    virtual const WindowSize& getSize() const = 0;
-    virtual WindowSize getCurrentScreenNativeResolution() const = 0;
-    virtual void setSize( const WindowSize& size ) = 0;
+    virtual const WinSize& getSize() const = 0;
+    virtual WinSize getCurrentScreenNativeResolution() const = 0;
+    virtual void setSize( const WinSize& size ) = 0;
 
     virtual Type getType() const = 0;
 

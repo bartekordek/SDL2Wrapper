@@ -56,7 +56,7 @@ private:
     SurfaceImage createSurface( const CUL::FS::Path& path );
     CUL::Graphics::ITexture* createTexture( SDL_Surface* surface, const CUL::FS::Path& path );
     void destroyObjects();
-    WindowSize getCurrentScreenNativeResolution() const override;
+    WinSize getCurrentScreenNativeResolution() const override;
 
     void toggleFpsCounter( bool on, short unsigned everyNsecond = 2 ) override;
     void closeInfoLoop();
@@ -76,8 +76,8 @@ private:
     const CUL::Graphics::Pos2Di& getPos() const override;
     void setPos( const CUL::Graphics::Pos2Di& pos ) override;
 
-    const WindowSize& getSize() const override;
-    void setSize( const WindowSize& size ) override;
+    const WinSize& getSize() const override;
+    void setSize( const WinSize& size ) override;
 
     void setBackgroundColor( const ColorE color ) override;
     void setBackgroundColor( const ColorS& color ) override;

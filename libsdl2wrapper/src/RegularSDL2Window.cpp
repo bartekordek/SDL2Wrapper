@@ -188,7 +188,7 @@ void RegularSDL2Window::destroyObjects()
     m_textures.clear();
 }
 
-WindowSize RegularSDL2Window::getCurrentScreenNativeResolution() const
+WinSize RegularSDL2Window::getCurrentScreenNativeResolution() const
 {
     return m_windowData.nativeRes;
 }
@@ -281,12 +281,12 @@ void RegularSDL2Window::setPos( const CUL::Graphics::Pos2Di& pos )
     SDL_SetWindowPosition( m_window, pos.getX(), pos.getY() );
 }
 
-const WindowSize& RegularSDL2Window::getSize() const
+const WinSize& RegularSDL2Window::getSize() const
 {
     return m_windowData.currentRes;
 }
 
-void RegularSDL2Window::setSize( const WindowSize& size )
+void RegularSDL2Window::setSize( const WinSize& size )
 {
     m_windowData.currentRes = size;
     SDL_SetWindowSize( m_window, size.w, size.h );

@@ -38,16 +38,15 @@ struct WinSize
 };
 
 using Vector3Di = CUL::MATH::Vector3Di;
-using WindowSize = WinSize;
 using String = CUL::String;
 
 struct SDL2WAPI WindowData
 {
 public:
     CUL::Graphics::Pos2Di pos = CUL::Graphics::Pos2Di( 0, 0 );
-    WindowSize currentRes = { 640, 480 };
-    WindowSize nativeRes;
-    WindowSize windowRes;
+    WinSize currentRes = { 640, 480 };
+    WinSize nativeRes;
+    WinSize windowRes;
     String name = "";
     String rendererName = "opengl";
 
