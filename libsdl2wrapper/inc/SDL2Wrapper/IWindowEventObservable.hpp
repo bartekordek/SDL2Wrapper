@@ -1,14 +1,9 @@
 #pragma once
 
-#include "SDL2Wrapper/Import.hpp"
+#include "SDL2Wrapper/WindowEventType.hpp"
 
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
 
-NAMESPACE_BEGIN( WindowEvent )
-
-enum class Type: short;
-
-NAMESPACE_END( WindowEvent )
 
 NAMESPACE_BEGIN( SDL2W )
 
