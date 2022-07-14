@@ -4,9 +4,91 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "[LINUX][CMAKE][CREATE DIR]",
+            "type": "shell",
+            "command": "mkdir -p Build-Linux",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "[WINDOWS][CMAKE][CREATE DIR]",
+            "type": "shell",
+            "command": "if not exist \"Build-Windows\" mkdir \"Build-Windows\"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
             "label": "[LINUX][CMAKE][CREATE][DEBUG]",
             "type": "shell",
-            "command": "cd Build-Linux && cmake .. -DCMAKE_BUILD_TYPE=Debug",
+            "command": "cmake .. -DCMAKE_BUILD_TYPE=Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/Build-Linux"
+            },
+            "dependsOn": "[LINUX][CMAKE][CREATE DIR]"
+        },
+        {
+            "label": "[WINDOWS][CMAKE][CREATE][DEBUG]",
+            "type": "shell",
+            "command": "cmake .. -DCMAKE_BUILD_TYPE=Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "options": {
+                "cwd": "Build-Windows"
+            },
+            "dependsOn": "[WINDOWS][CMAKE][CREATE DIR]"
+        },
+        {
+            "label": "[LINUX][BUILD][DEBUG]",
+            "type": "shell",
+            "command": "clear && cmake --build Build-Linux --config DEBUG -j64",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -21,27 +103,21 @@
             },
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "dependsOn": "[LINUX][CMAKE][CREATE]"
         },
         {
-            "label": "[LINUX][DEBUG][BUILLD][libsdl2wrapper]",
+            "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapper]",
             "type": "shell",
             "command": "cmake",
             "args": [
                 "--build",
-                "Build-Linux",
+                "Build-Windows",
                 "--config",
                 "DEBUG",
                 "-j16",
                 "--target",
-                "libsdl2wrapper"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gcc"
+                "libsdl2wrapperTestApp"
             ],
             "presentation": {
                 "echo": true,
@@ -51,126 +127,36 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "dependsOn": "[LINUX][CMAKE][CREATE][DEBUG]"
-        },
-        {
-            "label": "[LINUX] Make Debug",
-            "type":"shell",
-            "command": "clear && cd Build-Linux && time make -j12",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gcc"
-            ]
-        },
-        {
-            "label": "[LINUX] CMake + Make debug",
-            "type":"shell",
-            "command": "clear && cd Build-Linux && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug && time make -j12",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gcc"
-            ]
-        },
-        {
-            "label": "[LINUX] Clean CMake + Make debug",
-            "type":"shell",
-            "command": "clear && cd Build-Linux && rm -rfv * && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug && time make -j12",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gcc"
-            ]
-        },
-        {
-            "label": "[WINDOWS] Clear screen",
-            "type":"shell",
-            "command": "cls",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
             "problemMatcher": [
                 "$msCompile"
-            ]
+            ],
+            "dependsOn":"[WINDOWS][CMAKE][CREATE][DEBUG]"
         },
         {
-            "label": "[WINDOWS] CMake",
+            "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapperTestApp]",
             "type": "shell",
-            "command": "cd Build-Windows && cmake  --clean-first -DCMAKE_BUILD_TYPE=Debug .. -G \"Visual Studio 16 2019\"",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gradle"
-            ]
-            ,"dependsOn": "[WINDOWS] Clear screen"
-        },
-,
-        {
-            "label": "[WINDOWS] Build All",
-            "type":"shell",
-            "command": "cls & cmake --build Build-Windows --config DEBUG -j16",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-            ,"problemMatcher": ["$msCompile"]
-            ,"dependsOn": "[WINDOWS] Clear screen"
-        },
-        {
-            "label": "[WINDOWS] Build Tests",
-            "type":"shell",
-            "command": "cmake --build Build-Windows --config DEBUG -j16 --target culTests",
-            "args": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ],"dependsOn": "[WINDOWS] Clear screen"
-        },
-        {
-            "label": "[WINDOWS] CMake + Build All ",
-            "type":"shell",
-            "command": "cmake --build Build-Windows --config DEBUG -j16",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ],
-            "dependsOn": "[WINDOWS] CMake create"
-        },
-        {
-            "label": "[WINDOWS] CMake + Build CUL ",
-            "type":"shell",
             "command": "cmake",
-            "args":[
-                "--build", "Build-Windows",
-                "--config", "DEBUG",
-                "-j18",
+            "args": [
+                "--build",
+                "Build-Windows",
+                "--config",
+                "DEBUG",
+                "-j16",
                 "--target",
-                "cul"
+                "libsdl2wrapperTestApp"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
             },
             "problemMatcher": [
                 "$msCompile"
             ],
-            "dependsOn": "[WINDOWS] CMake create"
+            "dependsOn":"[WINDOWS][CMAKE][CREATE][DEBUG]"
         }
     ]
 }
