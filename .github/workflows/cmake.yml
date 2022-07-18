@@ -1,6 +1,6 @@
-name: CMake
+name: Linux build
 
-on: [push]
+on: [push, pull_request]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -24,8 +24,14 @@ jobs:
     - name: Update env
       run: sudo apt-get update -y
 
-    - name: Check env
-      run: gcc -v && sudo apt install g++ g++-7 g++-8 gcc && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
+    - name: Check env 0
+      run: gcc -v
+
+    - name: Update gcc
+      run: sudo apt install g++ g++-8 g++-9 gcc && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 800 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+
+    - name: Check env 1
+      run: gcc -v
 
     - name: Install Linux prequisities
       run: sudo apt install mesa-common-dev libxi-dev libglu1-mesa-dev
@@ -58,10 +64,10 @@ jobs:
       # Note the current convention is to use the -S and -B options here to specify source
       # and build directories, but this is only available with CMake 3.13 and higher.
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: time cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      run: time cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 
     - name: Build
       working-directory: ${{github.workspace}}//Build-Linux
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --config $BUILD_TYPE -j16
+      run: cmake --build . --config ${BUILD_TYPE} -j16 --target libsdl2wrapperTestApp

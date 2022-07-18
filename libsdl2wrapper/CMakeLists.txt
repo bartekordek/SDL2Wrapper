@@ -37,17 +37,19 @@ add_library( ${PROJECT_NAME_STATIC} STATIC ${SOURCES} )
 set( DEPENDENCIES
 cul
 SDL2main
-SDL2
 )
+
+set( DEPENDENCIES_WINDOWS ${DEPENDENCIES} SDL2 )
+set( DEPENDENCIES_LINUX ${DEPENDENCIES} SDL2-static stdc++fs )
 
 set_property( TARGET ${PROJECT_NAME_DYNAMIC} PROPERTY "LINK_LIBRARY_DEPENDENCIES" true )
 set_property( TARGET ${PROJECT_NAME_STATIC} PROPERTY "LINK_LIBRARY_DEPENDENCIES" true )
 
 if( MSVC )
     list(APPEND LIBS msvcmrtd )
-    target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES} )
+    target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_WINDOWS} )
 else()
-    target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES} stdc++fs )
+    target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_LINUX} stdc++fs )
 endif()
 
 target_include_directories(${EXEC} PUBLIC inc)
