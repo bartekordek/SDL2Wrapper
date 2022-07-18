@@ -1,5 +1,8 @@
 #include "TextureSDL.hpp"
+
 #include "CUL/GenericUtils/SimpleAssert.hpp"
+
+#include "SDL2Wrapper/IMPORT_SDL_renderer.hpp"
 
 using namespace SDL2W;
 

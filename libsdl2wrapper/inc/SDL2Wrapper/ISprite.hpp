@@ -2,8 +2,11 @@
 
 #include "SDL2Wrapper/Import.hpp"
 
-#include "CUL/Graphics/ITexture.hpp"
 #include "CUL/Graphics/IObject.hpp"
+
+NAMESPACE_BEGIN( CUL::Graphics )
+class ITexture;
+NAMESPACE_END( CUL::Graphics )
 
 NAMESPACE_BEGIN( SDL2W )
 
@@ -23,4 +26,4 @@ public:
 private:
 };
 
-NAMESPACE_END( CUL )
+NAMESPACE_END( SDL2W )

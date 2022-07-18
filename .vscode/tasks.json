@@ -155,8 +155,7 @@
             },
             "problemMatcher": [
                 "$msCompile"
-            ],
-            "dependsOn":"[WINDOWS][CMAKE][CREATE][DEBUG]"
+            ]
         }
     ]
 }

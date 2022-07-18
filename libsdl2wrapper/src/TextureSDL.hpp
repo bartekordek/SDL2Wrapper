@@ -1,12 +1,11 @@
 #pragma once
 
-#include "SDL2Wrapper/IMPORT_SDL_renderer.hpp"
-
-#include "CUL/Graphics/ITexture.hpp"
 #include "CUL/Filesystem/Path.hpp"
-
+#include "CUL/Graphics/ITexture.hpp"
 #include <CUL/STL_IMPORTS/STD_memory.hpp>
 #include <CUL/STL_IMPORTS/STD_mutex.hpp>
+
+struct SDL_Texture;
 
 NAMESPACE_BEGIN( SDL2W )
 
