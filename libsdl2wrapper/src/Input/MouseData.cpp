@@ -70,11 +70,14 @@ unsigned int MouseData::getMouseButtonCount() const
 #endif
 bool MouseData::isButtonDown( const MouseButtonIndex buttonIndex ) const
 {
-    if( m_buttonStates.size() > buttonIndex )
+    if( m_buttonStates.find(buttonIndex) == m_buttonStates.end() )
+    {
+        return false;
+    }
+    else
     {
         return !m_buttonStates.at( buttonIndex );
     }
-    return false;
 }
 #ifdef _MSC_VER
 #pragma warning( pop )
