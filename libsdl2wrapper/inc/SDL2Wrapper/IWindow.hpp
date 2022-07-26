@@ -21,7 +21,7 @@ class ITexture;
 NAMESPACE_END( Graphics )
 
 NAMESPACE_BEGIN( Video )
-class IFPSCounter;
+class FPSCounter;
 NAMESPACE_END( Video )
 
 NAMESPACE_BEGIN( FS )
@@ -96,7 +96,7 @@ public:
 
     virtual void toggleFpsCounter( bool on, short unsigned everyNsecond = 2 ) = 0;
 
-    virtual CUL::Video::IFPSCounter* getFpsCounter() = 0;
+    virtual CUL::Video::FPSCounter* getFpsCounter() = 0;
 
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;

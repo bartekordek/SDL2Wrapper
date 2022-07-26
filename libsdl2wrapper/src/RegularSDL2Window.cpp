@@ -134,6 +134,7 @@ void RegularSDL2Window::fetchSreenData()
     m_windowData.windowRes = m_windowData.currentRes;
 }
 
+#include "CUL/STL_IMPORTS/STD_iostream.hpp"
 void RegularSDL2Window::toggleFpsCounter( bool on, short unsigned everyNsecond )
 {
     if( on )
@@ -142,10 +143,18 @@ void RegularSDL2Window::toggleFpsCounter( bool on, short unsigned everyNsecond )
         {
             m_sleepTimeInfoLoop = everyNsecond;
             m_runInfoLoop = true;
-            auto fpsCounterPtr = CUL::Video::FPSCounterFactory::getConcreteFPSCounter();
-            fpsCounterPtr->setSampleSize( 4 );
-            CUL::Assert::simple( fpsCounterPtr != nullptr, "Cannot create fps counter." );
-            m_fpsCounter = std::move( std::unique_ptr<CUL::Video::IFPSCounter>( fpsCounterPtr ) );
+
+            std::cout << "Sizeof m_fpsCounter: " << sizeof( CUL::Video::FPSCounter ) << "\n";
+            m_fpsCounter.create(
+                []( void* ptr)
+                {
+                    return new( ptr ) CUL::Video::FPSCounter();
+                },
+                [](CUL::Video::FPSCounter* ptr)
+                {
+                    ptr->~FPSCounter();
+                } );
+            m_fpsCounter->setSampleSize( 4 );
             addFPSCounter( m_fpsCounter.get() );
             m_fpsCounter->start();
             m_infoPrintLoop = std::thread( &RegularSDL2Window::infoLoop, this );
@@ -448,7 +457,7 @@ ColorS RegularSDL2Window::getBackgroundColor() const
     return m_backgroundColor;
 }
 
-CUL::Video::IFPSCounter* RegularSDL2Window::getFpsCounter()
+CUL::Video::FPSCounter* RegularSDL2Window::getFpsCounter()
 {
     return m_fpsCounter.get();
 }

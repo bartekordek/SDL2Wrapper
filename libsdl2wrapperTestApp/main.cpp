@@ -7,7 +7,6 @@
 #include "CUL/Log/ILogger.hpp"
 #include "CUL/Graphics/Position3DDMutexed.hpp"
 #include "CUL/Graphics/Color.hpp"
-#include "CUL/Video/IFPSCounter.hpp"
 #include "CUL/ITimer.hpp"
 #include "CUL/Threading/ThreadUtils.hpp"
 #include "CUL/Filesystem/FS.hpp"
@@ -212,7 +211,6 @@ private:
     CUL::GUTILS::LckPrim<bool> runLoop = true;
 
     std::unique_ptr< SDL2W::ISDL2Wrapper> m_sdlW;
-    std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
 
     std::thread m_objectMoveThread;
 

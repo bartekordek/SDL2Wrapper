@@ -8,25 +8,30 @@
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 
 
+#include "CUL/Video/FPSCounter.hpp"
+#include "CUL/Graphics/IImageLoader.hpp"
+
+#include "CUL/Memory/UniquePtrOnStack.hpp"
+
+#include "CUL/CULInterface.hpp"
+
+#include "CUL/STL_IMPORTS/STD_atomic.hpp"
+#include "CUL/STL_IMPORTS/STD_thread.hpp"
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_set.hpp"
 #include "CUL/STL_IMPORTS/STD_mutex.hpp"
 #include "CUL/STL_IMPORTS/STD_utility.hpp"
-
-#include "CUL/Video/IFPSCounter.hpp"
-#include "CUL/Graphics/IImageLoader.hpp"
-#include "CUL/CULInterface.hpp"
-#include "CUL/STL_IMPORTS/STD_atomic.hpp"
-#include "CUL/STL_IMPORTS/STD_thread.hpp"
 
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
 
 NAMESPACE_BEGIN( CUL )
+
 NAMESPACE_BEGIN( FS )
 class Path;
 NAMESPACE_END( FS )
+
 NAMESPACE_END( CUL )
 
 NAMESPACE_BEGIN( SDL2W )
@@ -61,7 +66,8 @@ private:
     void toggleFpsCounter( bool on, short unsigned everyNsecond = 2 ) override;
     void closeInfoLoop();
     void infoLoop();
-    std::unique_ptr<CUL::Video::IFPSCounter> m_fpsCounter;
+
+    CUL::Memory::UniquePtrOnStack<CUL::Video::FPSCounter, 1552> m_fpsCounter;
     std::atomic<bool> m_runInfoLoop = false;
     std::atomic<unsigned int> m_sleepTimeInfoLoop = 2u;
     std::thread m_infoPrintLoop;
@@ -93,7 +99,7 @@ private:
 
     ColorS getBackgroundColor() const override;
 
-    CUL::Video::IFPSCounter*  getFpsCounter() override;
+    CUL::Video::FPSCounter* getFpsCounter() override;
     void setFullscreen( bool fullscreen ) override;
 
     WindowData m_windowData;
