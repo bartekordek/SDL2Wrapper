@@ -47,6 +47,7 @@ set_property( TARGET ${PROJECT_NAME_STATIC} PROPERTY "LINK_LIBRARY_DEPENDENCIES"
 
 if( MSVC )
     list(APPEND LIBS msvcmrtd )
+    message( "DEBUG: ${PROJECT_NAME_DYNAMIC} dependencies: ${DEPENDENCIES_WINDOWS} " )
     target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_WINDOWS} )
 else()
     target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_LINUX} stdc++fs )
