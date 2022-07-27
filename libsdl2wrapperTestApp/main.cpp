@@ -3,6 +3,7 @@
 #include "SDL2Wrapper/WindowData.hpp"
 #include "SDL2Wrapper/IWindowEventListener.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
+#include "SDL2Wrapper/ISprite.hpp"
 
 #include "CUL/Log/ILogger.hpp"
 #include "CUL/Graphics/Position3DDMutexed.hpp"

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "SDL2Wrapper/ISprite.hpp"
-#include "CUL/Graphics/ITexture.hpp"
-#include "CUL/Math/IPivotObserver.hpp"
 #include "CUL/Math/Angle.hpp"
-#include "CUL/STL_IMPORTS/STD_memory.hpp"
-#include "CUL/STL_IMPORTS/STD_mutex.hpp"
+
+NAMESPACE_BEGIN( CUL::Graphics )
+class ITexture;
+NAMESPACE_END( CUL::Graphics )
 
 NAMESPACE_BEGIN( SDL2W )
 
@@ -26,8 +26,8 @@ public:
     Sprite();
     ~Sprite();
 
-    ITexture* getTexture() override;
-    void setTexture( ITexture* texutre ) override;
+    CUL::Graphics::ITexture* getTexture() override;
+    void setTexture( CUL::Graphics::ITexture* texutre ) override;
     Type getType() const override;
 
     const Position3DDMutexed& getPosition() const override;
@@ -64,7 +64,7 @@ private:
     void calculatePivotNormalised();
     void calculateSpriteAbsoluteSize();
 
-    ITexture* m_texture = nullptr;
+    CUL::Graphics::ITexture* m_texture = nullptr;
     Position3DDMutexed position;
     Position3DDMutexed positionWithOffset;
     Position3DDMutexed m_textureRealSize;

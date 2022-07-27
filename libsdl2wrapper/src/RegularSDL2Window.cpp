@@ -10,6 +10,8 @@
 #include "CUL/Filesystem/FS.hpp"
 #include "CUL/ITimer.hpp"
 
+#include "SDL2Wrapper/IMPORT_SDL.hpp"
+
 using namespace SDL2W;
 
 using IPivot = CUL::MATH::IPivot;
@@ -124,13 +126,14 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 
 void RegularSDL2Window::fetchSreenData()
 {
+    SDL_DisplayMode nativeDisplayMode;
     const auto winId = SDL_GetWindowID( m_window );
     const auto displayIndex = SDL_GetWindowDisplayIndex( m_window );
-    SDL_GetCurrentDisplayMode( displayIndex, &m_nativeDisplayMode );
+    SDL_GetCurrentDisplayMode( displayIndex, &nativeDisplayMode );
 
     setWindowID( winId );
 
-    m_windowData.nativeRes.setSize( m_nativeDisplayMode.w, m_nativeDisplayMode.h );
+    m_windowData.nativeRes.setSize( nativeDisplayMode.w, nativeDisplayMode.h );
     m_windowData.windowRes = m_windowData.currentRes;
 }
 
@@ -227,7 +230,7 @@ void RegularSDL2Window::renderAll()
     std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
     for( const auto& object : m_objects )
     {
-        if( IObject::Type::SPRITE == object->getType() )
+        if( CUL::Graphics::IObject::Type::SPRITE == object->getType() )
         {
             auto sprite = static_cast<Sprite*>( object );
             auto& pos = object->getRenderPosition();
@@ -440,13 +443,13 @@ CUL::Graphics::ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface,
     return texSDL;
 }
 
-void RegularSDL2Window::addObject( IObject* object )
+void RegularSDL2Window::addObject( CUL::Graphics::IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
     m_objects.insert( object );
 }
 
-void RegularSDL2Window::removeObject( IObject* object )
+void RegularSDL2Window::removeObject( CUL::Graphics::IObject* object )
 {
     std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
     m_objects.erase( object );

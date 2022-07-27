@@ -1,12 +1,7 @@
 #pragma once
 
 #include "SDL2Wrapper/IWindow.hpp"
-#include "SDL2Wrapper/IRender.hpp"
 #include "SDL2Wrapper/WindowData.hpp"
-
-#include "SDL2Wrapper/IMPORT_SDL.hpp"
-#include "SDL2Wrapper/IMPORT_SDL_video.hpp"
-
 
 #include "CUL/Video/FPSCounter.hpp"
 #include "CUL/Graphics/IImageLoader.hpp"
@@ -26,13 +21,9 @@ struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Surface;
 
-NAMESPACE_BEGIN( CUL )
-
-NAMESPACE_BEGIN( FS )
+NAMESPACE_BEGIN( CUL::FS )
 class Path;
-NAMESPACE_END( FS )
-
-NAMESPACE_END( CUL )
+NAMESPACE_END( CUL::FS )
 
 NAMESPACE_BEGIN( SDL2W )
 
@@ -73,8 +64,8 @@ private:
     std::thread m_infoPrintLoop;
 
     // Inherited via IWindow
-    void addObject( IObject* object ) override;
-    void removeObject( IObject* object ) override;
+    void addObject( CUL::Graphics::IObject* object ) override;
+    void removeObject( CUL::Graphics::IObject* object ) override;
 
     operator SDL_Window*( ) override;
     operator const SDL_Window*( ) override;
@@ -107,7 +98,7 @@ private:
     ColorS m_backgroundColor;
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;
-    std::set<IObject*> m_objects;
+    std::set<CUL::Graphics::IObject*> m_objects;
     std::mutex m_objectsMtx;
     TextureMap m_textures;
     CUL::Graphics::IImageLoader* m_il = nullptr;
@@ -115,7 +106,6 @@ private:
     CUL::CULInterface* m_culInterface = nullptr;
     CUL::FS::FSApi* m_fsApi = nullptr;
     CUL::LOG::ILogger* m_logger = nullptr;
-    SDL_DisplayMode m_nativeDisplayMode;
 
 // Deleted:
     RegularSDL2Window( const RegularSDL2Window& win ) = delete;

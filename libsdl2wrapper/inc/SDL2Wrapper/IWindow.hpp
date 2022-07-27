@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SDL2Wrapper/ISprite.hpp"
 #include "SDL2Wrapper/IRender.hpp"
 #include "SDL2Wrapper/WindowData.hpp"
 
@@ -43,6 +42,7 @@ using Size2Di = CUL::Graphics::Size2Di;
 class SDL2WAPI CUL::IName;
 #endif
 class ISDL2Wrapper;
+class ISprite;
 
 using Vector3Di = CUL::MATH::Vector3Di;
 using Vector3Du = CUL::MATH::Vector3Du;
@@ -51,7 +51,7 @@ using ColorE = CUL::Graphics::ColorE;
 using IName = CUL::IName;
 using String = CUL::String;
 
-using TextureMap = std::map<CUL::String, std::unique_ptr<ITexture>>;
+using TextureMap = std::map<CUL::String, std::unique_ptr<CUL::Graphics::ITexture>>;
 
 #ifdef _MSC_VER
 #pragma warning( push )

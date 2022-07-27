@@ -8,12 +8,12 @@ Sprite::Sprite()
 {
 }
 
-ITexture* Sprite::getTexture()
+CUL::Graphics::ITexture* Sprite::getTexture()
 {
     return m_texture;
 }
 
-void Sprite::setTexture( ITexture* inputTexture )
+void Sprite::setTexture( CUL::Graphics::ITexture* inputTexture )
 {
     m_texture = inputTexture;
     m_textureRealSize = inputTexture->getSize();
@@ -21,7 +21,7 @@ void Sprite::setTexture( ITexture* inputTexture )
     calculateSpriteAbsoluteSize();
 }
 
-IObject::Type Sprite::getType() const
+CUL::Graphics::IObject::Type Sprite::getType() const
 {
     return IObject::Type::SPRITE;
 }

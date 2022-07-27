@@ -10,17 +10,13 @@ NAMESPACE_END( CUL::Graphics )
 
 NAMESPACE_BEGIN( SDL2W )
 
-using ITexture = CUL::Graphics::ITexture;
-using IObject = CUL::Graphics::IObject;
-
-class SDL2WAPI ISprite:
-    public IObject
+class SDL2WAPI ISprite: public CUL::Graphics::IObject
 {
 public:
     ISprite();
 
-    virtual ITexture* getTexture() = 0;
-    virtual void setTexture( ITexture* texture ) = 0;
+    virtual CUL::Graphics::ITexture* getTexture() = 0;
+    virtual void setTexture( CUL::Graphics::ITexture* texture ) = 0;
 
     virtual ~ISprite();
 private:
