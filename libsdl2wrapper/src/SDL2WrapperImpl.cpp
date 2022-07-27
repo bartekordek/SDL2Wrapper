@@ -36,10 +36,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     m_culInterface = CUL::CULInterface::createInstance( configPath );
     m_logger = m_culInterface->getLogger();
 
-    if( configPath != "" )
-    {
-        m_configFile = getCul()->loadConfigFile( configPath );
-    }
+    m_configFile = m_culInterface->getConfig();
 
     m_logger->log( "Initializing SDL..." );
     const auto sdlInitSuccess = SDL_Init(
