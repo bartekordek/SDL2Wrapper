@@ -2,8 +2,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 
 set(PROJECT_NAME_DYNAMIC sdl2wrapper)
-set(PROJECT_NAME_DYNAMIC_STATIC sdl2wrapper_static)
-set(EXEC ${PROJECT_NAME_DYNAMIC})
+set(PROJECT_NAME_STATIC sdl2wrapper_static)
 
 project(sdl2wrapper LANGUAGES CXX)
 
@@ -34,27 +33,41 @@ source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES} )
 add_library( ${PROJECT_NAME_DYNAMIC} SHARED ${SOURCES} )
 add_library( ${PROJECT_NAME_STATIC} STATIC ${SOURCES} )
 
-set( DEPENDENCIES
-cul
-SDL2main
+set( DEPENDENCIES_DYNAMIC
+PUBLIC cul
+PRIVATE SDL2main
 )
 
-set( DEPENDENCIES_WINDOWS ${DEPENDENCIES} SDL2 )
-set( DEPENDENCIES_LINUX ${DEPENDENCIES} SDL2-static stdc++fs )
+set( DEPENDENCIES_STATIC
+PUBLIC cul-static
+PRIVATE SDL2main
+)
+
+if( MSVC )
+    set( DEPENDENCIES_WINDOWS_DYNAMIC ${DEPENDENCIES_DYNAMIC} SDL2 )
+    set( DEPENDENCIES_WINDOWS_STATIC ${DEPENDENCIES_STATIC} SDL2-static )
+else()
+    set( DEPENDENCIES_LINUX ${DEPENDENCIES_DYNAMIC} SDL2-static stdc++fs )
+endif()
+
 
 set_property( TARGET ${PROJECT_NAME_DYNAMIC} PROPERTY "LINK_LIBRARY_DEPENDENCIES" true )
 set_property( TARGET ${PROJECT_NAME_STATIC} PROPERTY "LINK_LIBRARY_DEPENDENCIES" true )
 
 if( MSVC )
-    list(APPEND LIBS msvcmrtd )
     message( "DEBUG: ${PROJECT_NAME_DYNAMIC} dependencies: ${DEPENDENCIES_WINDOWS} " )
-    target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_WINDOWS} )
+    target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_WINDOWS_DYNAMIC} )
+    target_link_libraries( ${PROJECT_NAME_STATIC} ${DEPENDENCIES_WINDOWS_STATIC} )
 else()
     target_link_libraries( ${PROJECT_NAME_DYNAMIC} ${DEPENDENCIES_LINUX} stdc++fs )
 endif()
 
-target_include_directories(${EXEC} PUBLIC inc)
-target_include_directories(${EXEC} PRIVATE src)
+target_include_directories(${PROJECT_NAME_DYNAMIC} PUBLIC inc)
+target_include_directories(${PROJECT_NAME_DYNAMIC} PRIVATE src)
+
+
+target_include_directories(${PROJECT_NAME_STATIC} PUBLIC inc)
+target_include_directories(${PROJECT_NAME_STATIC} PRIVATE src)
 
 if (MSVC)
     set_target_properties(${EXEC} PROPERTIES LINK_FLAGS "/INCREMENTAL:NO")

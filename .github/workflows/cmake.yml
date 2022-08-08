@@ -66,8 +66,12 @@ jobs:
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: time cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 
-    - name: Build
+    - name: Build static
       working-directory: ${{github.workspace}}//Build-Linux
       shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --config ${BUILD_TYPE} -j16 --target libsdl2wrapperTestApp
+      run: cmake --build . --config ${BUILD_TYPE} -j16 --target libsdl2wrapperTestApp_static
+
+    - name: Build dynamic
+      working-directory: ${{github.workspace}}//Build-Linux
+      shell: bash
+      run: cmake --build . --config ${BUILD_TYPE} -j16 --target libsdl2wrapperTestApp_dynamic

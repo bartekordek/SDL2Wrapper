@@ -37,12 +37,10 @@ jobs:
         working-directory: ${{github.workspace}}/Build-Windows
         run: cmake .. -DCMAKE_BUILD_TYPE=Debug
 
-      - name: Build
-        # Build your program with the given configuration
+      - name: Build static
         working-directory: ${{github.workspace}}/Build-Windows
-        run: cmake --build . --config Debug --target libsdl2wrapperTestApp
+        run: cmake --build . --config Debug --target libsdl2wrapperTestApp_static
 
-      - name: Check binary
-        shell: cmd
-        working-directory: ${{github.workspace}}/Build-Windows/Debug
-        run: tree /F /A
+      - name: Build dynamic
+        working-directory: ${{github.workspace}}/Build-Windows
+        run: cmake --build . --config Debug --target libsdl2wrapperTestApp_dynamic
