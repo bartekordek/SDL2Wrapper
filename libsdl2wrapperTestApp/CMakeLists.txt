@@ -62,7 +62,7 @@ set( DEPENDENCIES_STATIC
 )
 
 set( DEPENDENCIES_DYNAMIC
-    PRIVATE sdl2wrapper
+    PRIVATE sdl2wrapper_dynamic
 )
 
 
