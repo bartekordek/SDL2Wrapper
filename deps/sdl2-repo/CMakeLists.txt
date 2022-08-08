@@ -2756,7 +2756,10 @@ if(SDL_STATIC)
   # TODO: Win32 platforms keep the same suffix .lib for import and static
   # libraries - do we need to consider this?
   set(_INSTALL_LIBS "SDL2-static" ${_INSTALL_LIBS})
-  target_link_libraries(SDL2-static PRIVATE ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
+
+  SET(EXTRA_LIBS_STATIC ${EXTRA_LIBS})
+  list(REMOVE_ITEM EXTRA_LIBS_STATIC msvcrt)
+  target_link_libraries(SDL2-static PRIVATE ${EXTRA_LIBS_STATIC} ${EXTRA_LDFLAGS})
   target_include_directories(SDL2-static BEFORE PRIVATE "${SDL2_BINARY_DIR}/include")
   target_include_directories(SDL2-static PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include> $<INSTALL_INTERFACE:include/SDL2>)
   # This picks up all the compiler options and such we've accumulated up to here.
