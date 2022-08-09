@@ -58,6 +58,22 @@ using TextureMap = std::map<CUL::String, std::unique_ptr<CUL::Graphics::ITexture
 #pragma warning( disable: 4820 )
 #endif
 
+enum class GLProfileMask: short
+{
+    NONE = -1,
+    CORE =  0x0001,
+    COMPATIBILITY  = 0x0002,
+    ES             = 0x0004
+};
+
+enum class GLContextFlag
+{
+    DEBUG_FLAG              = 0x0001,
+    FORWARD_COMPATIBLE_FLAG = 0x0002,
+    ROBUST_ACCESS_FLAG      = 0x0004,
+    RESET_ISOLATION_FLAG    = 0x0008
+};
+
 class SDL2WAPI IWindow:
     public IRender,
     public IName,
@@ -92,16 +108,31 @@ public:
     void setWindowID( unsigned id );
     unsigned int getWindowID() const;
 
+    void toggleDoubleBuffer( bool enable );
+    void setDepthSize( int value );
+    void setStencilSize( int value );
+    void setGLContextVersion( int major, int minor );
+    void setProfileMask( GLProfileMask value );
+    void setContextFlag( GLContextFlag value );
+
+    void* createContext();
+    void destroyContext( void* context );
+
     virtual void setFullscreen( bool fullscreen ) = 0;
 
     virtual void toggleFpsCounter( bool on, short unsigned everyNsecond = 2 ) = 0;
 
     virtual CUL::Video::FPSCounter* getFpsCounter() = 0;
 
+    SDL_Window* getSDLWindow();
+
+    void setSize( uint16_t width, uint16_t height );
+
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
 protected:
+    SDL_Window* m_window = nullptr;
 
 private:
 

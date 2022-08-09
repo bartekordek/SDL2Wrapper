@@ -9,13 +9,13 @@ project(sdl2wrapper_dynamic LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-
 if( MSVC )
     add_compile_options( /Wall /WX )
     add_compile_options( /MP )
     add_compile_options( "/wd4266" )
     add_compile_options( "/wd4514" )
     add_compile_options( "/wd4820" )
+    add_compile_options("/wd4100")
     set_target_properties(SDL2 PROPERTIES
         COMPILE_FLAGS "/MP" # Adjust as needed
     )
@@ -40,12 +40,12 @@ PRIVATE SDL2main
 )
 
 set( DEPENDENCIES_STATIC
-PUBLIC cul-static
+PUBLIC cul_static
 PRIVATE SDL2main
 )
 
 if( MSVC )
-    set( DEPENDENCIES_WINDOWS_DYNAMIC ${DEPENDENCIES_DYNAMIC} SDL2 )
+    set( DEPENDENCIES_WINDOWS_DYNAMIC ${DEPENDENCIES_DYNAMIC} PUBLIC SDL2 )
     set( DEPENDENCIES_WINDOWS_STATIC ${DEPENDENCIES_STATIC} SDL2-static )
 else()
     set( DEPENDENCIES_LINUX ${DEPENDENCIES_DYNAMIC} SDL2-static stdc++fs )
