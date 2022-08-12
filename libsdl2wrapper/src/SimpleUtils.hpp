@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CUL/Log/ILogContainer.hpp"
 #include "CUL/GenericUtils/SimpleAssert.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
