@@ -107,8 +107,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 
     result = SDL_CreateWindow(
         winTargetName.cStr(),
-        static_cast<int>( pos.getX() ),
-        static_cast<int>( pos.getY() ),
+        pos.getX(),
+        pos.getY(),
         targetWidth,
         targetHeight,
         windowFlags );
