@@ -2,6 +2,7 @@
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
 #include "SDL2Wrapper/IWindow.hpp"
 #include "SDL2Wrapper/ISDLEventObserver.hpp"
+#include "SDL2Wrapper/Input/MouseData.hpp"
 
 #include "WindowFactoryConcrete.hpp"
 #include "RegularSDL2Window.hpp"

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "SDL2Wrapper/Input/IKey.hpp"
-#include "CUL/UselessMacros.hpp"
+#include "SDL2Wrapper/Import.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
+
+class IKey;
 
 class SDL2WAPI IKeyboardObserver
 {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SDL2Wrapper/Import.hpp"
-#include "CUL/CUL.hpp"
 
 union SDL_Event;
 

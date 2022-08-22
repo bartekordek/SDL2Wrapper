@@ -1,6 +1,9 @@
 #include "SimpleUtils.hpp"
 #include "SDL2WrapperImpl.hpp"
 #include "Input/KeySDL.hpp"
+#include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
+#include "SDL2Wrapper/Input/IMouseObserver.hpp"
+#include "SDL2Wrapper/IWindowEventListener.hpp"
 
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"

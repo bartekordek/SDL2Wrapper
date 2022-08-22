@@ -41,13 +41,29 @@
             },
             "options": {
                 "cwd": "${workspaceFolder}/Build-Linux"
-            },
-            "dependsOn": "[LINUX][CMAKE][CREATE DIR]"
+            }
         },
         {
             "label": "[WINDOWS][CMAKE][CREATE][DEBUG]",
             "type": "shell",
             "command": "CreateProjects.bat Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "[WINDOWS][CMAKE][CREATE][RELEASE]",
+            "type": "shell",
+            "command": "CreateProjects.bat Release",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -83,7 +99,7 @@
             "dependsOn": "[LINUX][CMAKE][CREATE]"
         },
         {
-            "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapper]",
+            "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapper_dynamic]",
             "type": "shell",
             "command": "cmake",
             "args": [
@@ -93,7 +109,7 @@
                 "DEBUG",
                 "-j16",
                 "--target",
-                "libsdl2wrapperTestApp"
+                "sdl2wrapper_dynamic"
             ],
             "presentation": {
                 "echo": true,
@@ -105,8 +121,32 @@
             },
             "problemMatcher": [
                 "$msCompile"
+            ]
+        },
+        {
+            "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapper_static]",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "Build-Windows",
+                "--config",
+                "DEBUG",
+                "-j16",
+                "--target",
+                "sdl2wrapper_static"
             ],
-            "dependsOn":"[WINDOWS][CMAKE][CREATE][DEBUG]"
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
         },
         {
             "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapperTestApp_dynamic]",
@@ -131,7 +171,7 @@
             },
             "problemMatcher": [
                 "$msCompile"
-            ]
+            ],
         },
         {
             "label": "[WINDOWS][DEBUG][BUILLD][libsdl2wrapperTestApp_static]",

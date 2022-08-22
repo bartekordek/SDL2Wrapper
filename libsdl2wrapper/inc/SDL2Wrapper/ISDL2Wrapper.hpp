@@ -1,14 +1,13 @@
 #pragma once
 
 #include "SDL2Wrapper/IEventLoop.hpp"
-#include "SDL2Wrapper/Input/IKey.hpp"
-#include "SDL2Wrapper/IWindowEventListener.hpp"
 #include "SDL2Wrapper/IWindowEventObservable.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObservable.hpp"
 #include "SDL2Wrapper/Input/IMouseObservable.hpp"
 
 #include "CUL/GenericUtils/IConfigFile.hpp"
 #include "CUL/Graphics/ITexture.hpp"
+#include "CUL/String.hpp"
 
 #include "CUL/STL_IMPORTS/STD_memory.hpp"
 #include "CUL/STL_IMPORTS/STD_map.hpp"
@@ -37,8 +36,10 @@ NAMESPACE_END( CUL )
 NAMESPACE_BEGIN( SDL2W )
 
 class ISDLEventObserver;
+class IWindowEventObserver;
 class ISprite;
 class IWindow;
+class IKey;
 struct WindowData;
 
 using Keys = std::map<CUL::String, std::unique_ptr<IKey>>;
@@ -62,8 +63,8 @@ public:
     virtual void refreshScreen() = 0;
     virtual void renderFrame( bool clearContext = true, bool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
-    virtual int getRendererId( const String& name ) const = 0;
-    virtual const std::map<String, int>& getRenderersList() const = 0;
+    virtual int getRendererId( const CUL::String& name ) const = 0;
+    virtual const std::map<CUL::String, int>& getRenderersList() const = 0;
     virtual void printAvailableRenderers() const = 0;
 
     virtual CUL::Graphics::ITexture* createTexture( const CUL::FS::Path& path, IWindow* targetWindow ) const = 0;

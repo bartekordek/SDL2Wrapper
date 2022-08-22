@@ -1,11 +1,12 @@
 #pragma once
 
-#include "SDL2Wrapper/Input/IMouseObserver.hpp"
+#include "SDL2Wrapper/Import.hpp"
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
 class MouseData;
+class IMouseObserver;
 
 class SDL2WAPI IMouseObservable
 {

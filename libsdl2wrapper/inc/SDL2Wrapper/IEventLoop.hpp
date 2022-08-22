@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CUL/UselessMacros.hpp"
 #include "SDL2Wrapper/Import.hpp"
 
 NAMESPACE_BEGIN( SDL2W )

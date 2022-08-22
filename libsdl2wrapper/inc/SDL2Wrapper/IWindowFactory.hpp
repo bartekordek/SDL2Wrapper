@@ -1,8 +1,12 @@
 #pragma once
 
-#include "SDL2Wrapper/IWindow.hpp"
+#include "SDL2Wrapper/Import.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
+
+class IWindow;
+class ISDL2Wrapper;
+struct WindowData;
 
 class SDL2WAPI IWindowFactory
 {

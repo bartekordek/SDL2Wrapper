@@ -4,11 +4,11 @@
 #include "SDL2Wrapper/WindowData.hpp"
 
 #include "CUL/Graphics/IObjectRegister.hpp"
-#include "CUL/Graphics/ITexture.hpp"
-#include "CUL/STL_IMPORTS/STD_map.hpp"
-#include "CUL/Graphics/Color.hpp"
+
 #include "CUL/IName.hpp"
 #include "CUL/Graphics/Size2D.hpp"
+
+#include "CUL/STL_IMPORTS/STD_map.hpp"
 
 struct SDL_Window;
 
