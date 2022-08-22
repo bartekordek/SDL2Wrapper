@@ -74,8 +74,8 @@ else()
     target_link_libraries( ${EXEC_STATIC} ${DEPENDENCIES_DYNAMIC} stdc++fs  )
 endif()
 
-add_dependencies( ${EXEC_DYNAMIC} libculTests )
-add_dependencies( ${EXEC_STATIC} libculTests )
+add_dependencies( ${EXEC_DYNAMIC} libculTests_dynamic )
+add_dependencies( ${EXEC_STATIC} libculTests_static )
 
 target_include_directories(${EXEC_DYNAMIC} PRIVATE inc)
 target_include_directories(${EXEC_DYNAMIC} PRIVATE src)
