@@ -1,4 +1,5 @@
 #include "SDL2Wrapper/IWindow.hpp"
+#include "SDL2Wrapper/WindowData.hpp"
 
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"

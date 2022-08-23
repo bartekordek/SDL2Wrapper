@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SDL2Wrapper/Import.hpp"
+#include "SDL2Wrapper/WinSize.hpp"
 
 #include "CUL/Graphics/Pos2D.hpp"
 #include "CUL/Math/Vector3D.hpp"
@@ -8,37 +8,7 @@
 
 NAMESPACE_BEGIN( SDL2W )
 
-struct WinSize
-{
-    int w = 800;
-    int h = 600;
-
-    void setSize( int iW, int iH )
-    {
-        w = iW;
-        h = iH;
-    }
-
-    int getWidth() const
-    {
-        return w;
-    }
-
-    int getHeight() const
-    {
-        return h;
-    }
-
-    operator CUL::Graphics::Size2Di()
-    {
-        CUL::Graphics::Size2Di result;
-        result.setSize( w, h );
-        return result;
-    }
-};
-
 using Vector3Di = CUL::MATH::Vector3Di;
-using String = CUL::String;
 
 struct SDL2WAPI WindowData
 {
@@ -47,8 +17,8 @@ public:
     WinSize currentRes = { 640, 480 };
     WinSize nativeRes;
     WinSize windowRes;
-    String name = "";
-    String rendererName = "opengl";
+    CUL::String name = "";
+    CUL::String rendererName = "opengl";
 
     WindowData() = default;
 

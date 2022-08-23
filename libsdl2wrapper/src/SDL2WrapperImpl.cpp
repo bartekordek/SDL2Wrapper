@@ -36,6 +36,8 @@ SDL2WrapperImpl::SDL2WrapperImpl()
 
 void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPath )
 {
+    m_windowData = wd;
+
     m_culInterface = CUL::CULInterface::createInstance( configPath );
     m_logger = m_culInterface->getLogger();
 
@@ -88,8 +90,21 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     }
 
 
+    if(m_windowData.rendererName.empty() )
+    {
+        const auto& rendererName = m_configFile->getValue( "RENDERER" );
+        if( rendererName.empty() )
+        {
+            m_windowData.rendererName = "software";
+        }
+        else
+        {
+            m_windowData.rendererName = rendererName;
+        }
+    }
+
     m_windowFactory = new WindowCreatorConcrete( m_logger );
-    m_mainWindow = dynamic_cast< RegularSDL2Window*>( m_windowFactory->createWindow( wd, this ) );
+    m_mainWindow = dynamic_cast< RegularSDL2Window*>( m_windowFactory->createWindow( m_windowData, this ) );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
 
     createKeys();

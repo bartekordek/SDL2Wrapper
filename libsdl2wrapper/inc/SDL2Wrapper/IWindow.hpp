@@ -1,12 +1,11 @@
 #pragma once
 
 #include "SDL2Wrapper/IRender.hpp"
-#include "SDL2Wrapper/WindowData.hpp"
-
 #include "CUL/Graphics/IObjectRegister.hpp"
 
 #include "CUL/IName.hpp"
 #include "CUL/Graphics/Size2D.hpp"
+#include "CUL/Graphics/Pos2D.hpp"
 
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 
@@ -43,6 +42,7 @@ class SDL2WAPI CUL::IName;
 #endif
 class ISDL2Wrapper;
 class ISprite;
+struct WinSize;
 
 using Vector3Di = CUL::MATH::Vector3Di;
 using Vector3Du = CUL::MATH::Vector3Du;
@@ -88,7 +88,7 @@ public:
     };
 
     IWindow();
-    IWindow( const WindowData& data ) = delete;
+    IWindow( const struct WindowData& data ) = delete;
 
     virtual ~IWindow();
 
@@ -96,7 +96,7 @@ public:
     virtual void setPos( const CUL::Graphics::Pos2Di& pos ) = 0;
 
     virtual const WinSize& getSize() const = 0;
-    virtual WinSize getCurrentScreenNativeResolution() const = 0;
+    virtual const WinSize& getCurrentScreenNativeResolution() const = 0;
     virtual void setSize( const WinSize& size ) = 0;
 
     virtual Type getType() const = 0;

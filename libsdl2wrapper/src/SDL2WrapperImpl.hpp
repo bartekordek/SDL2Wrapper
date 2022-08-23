@@ -110,6 +110,7 @@ private:
     ISprite* createSprite( CUL::Graphics::ITexture* tex, IWindow* targetWindow ) const override;
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
+    WindowData m_windowData;
 
     std::map<String, int> m_renderers;
 

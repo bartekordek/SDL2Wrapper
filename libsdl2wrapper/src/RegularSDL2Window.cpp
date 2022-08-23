@@ -200,7 +200,7 @@ void RegularSDL2Window::destroyObjects()
     m_textures.clear();
 }
 
-WinSize RegularSDL2Window::getCurrentScreenNativeResolution() const
+const WinSize& RegularSDL2Window::getCurrentScreenNativeResolution() const
 {
     return m_windowData.nativeRes;
 }
