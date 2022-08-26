@@ -17,7 +17,6 @@
 #include "CUL/STL_IMPORTS/STD_mutex.hpp"
 #include "CUL/STL_IMPORTS/STD_utility.hpp"
 
-struct SDL_Renderer;
 struct SDL_Surface;
 
 NAMESPACE_BEGIN( CUL::FS )
@@ -95,7 +94,6 @@ private:
     WindowData m_windowData;
     bool m_openGL = false;
     ColorS m_backgroundColor;
-    SDL_Renderer* m_renderer = nullptr;
     std::set<CUL::Graphics::IObject*> m_objects;
     std::mutex m_objectsMtx;
     TextureMap m_textures;

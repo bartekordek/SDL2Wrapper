@@ -5,6 +5,10 @@
 #include "SDL2Wrapper/IMPORT_SDL_video.hpp"
 #include "SDL2Wrapper/IMPORT_SDL_opengl.hpp"
 
+#ifdef _MSC_VER
+#include "SDL2Wrapper/IMPORT_DX9.hpp"
+#endif
+
 #include "CUL/Log/ILogContainer.hpp"
 
 using namespace SDL2W;
@@ -67,10 +71,6 @@ void IWindow::setSize( uint16_t width, uint16_t height )
     setSize( winSize );
 }
 
-IWindow::~IWindow()
-{
-}
-
 void IWindow::setWindowID( unsigned id )
 {
     m_winId = id;
@@ -79,4 +79,22 @@ void IWindow::setWindowID( unsigned id )
 unsigned int IWindow::getWindowID() const
 {
     return m_winId;
+}
+
+IDirect3DDevice9* IWindow::createDX9Device()
+{
+#ifdef _MSC_VER
+    m_d9xDevice = SDL_RenderGetD3D9Device( m_renderer );
+#endif // _MSC_VER
+    return m_d9xDevice;
+}
+
+IDirect3DDevice9* IWindow::gertDX9Device() const
+{
+    return m_d9xDevice;
+}
+
+
+IWindow::~IWindow()
+{
 }

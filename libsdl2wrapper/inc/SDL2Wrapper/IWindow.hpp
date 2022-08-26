@@ -10,6 +10,8 @@
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 
 struct SDL_Window;
+struct IDirect3DDevice9;
+struct SDL_Renderer;
 
 NAMESPACE_BEGIN( CUL )
 
@@ -131,11 +133,16 @@ public:
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
+
+    IDirect3DDevice9* createDX9Device();
+    IDirect3DDevice9* gertDX9Device() const;
+
 protected:
     SDL_Window* m_window = nullptr;
+    SDL_Renderer* m_renderer = nullptr;
 
 private:
-
+    IDirect3DDevice9* m_d9xDevice = nullptr;
     unsigned int m_winId = 0;
 
     IWindow( const IWindow& wind ) = delete;
