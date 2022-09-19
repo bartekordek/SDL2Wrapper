@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -149,7 +149,7 @@ X11_SafetyNetErrHandler(Display * d, XErrorEvent * e)
 }
 
 static SDL_VideoDevice *
-X11_CreateDevice(int devindex)
+X11_CreateDevice(void)
 {
     SDL_VideoDevice *device;
     SDL_VideoData *data;

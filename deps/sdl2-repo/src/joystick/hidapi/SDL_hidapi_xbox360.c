@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -83,7 +83,7 @@ HIDAPI_DriverXbox360_IsSupportedDevice(const char *name, SDL_GameControllerType 
 }
 
 static const char *
-HIDAPI_DriverXbox360_GetDeviceName(Uint16 vendor_id, Uint16 product_id)
+HIDAPI_DriverXbox360_GetDeviceName(const char *name, Uint16 vendor_id, Uint16 product_id)
 {
     return NULL;
 }
@@ -263,16 +263,16 @@ HIDAPI_DriverXbox360_HandleStatePacket(SDL_Joystick *joystick, SDL_DriverXbox360
     SDL_PrivateJoystickAxis(joystick, SDL_CONTROLLER_AXIS_TRIGGERLEFT, axis);
     axis = ((int)data[5] * 257) - 32768;
     SDL_PrivateJoystickAxis(joystick, SDL_CONTROLLER_AXIS_TRIGGERRIGHT, axis);
-    axis = *(Sint16*)(&data[6]);
+    axis = SDL_SwapLE16(*(Sint16*)(&data[6]));
     SDL_PrivateJoystickAxis(joystick, SDL_CONTROLLER_AXIS_LEFTX, axis);
-    axis = *(Sint16*)(&data[8]);
+    axis = SDL_SwapLE16(*(Sint16*)(&data[8]));
     if (invert_y_axes) {
         axis = ~axis;
     }
     SDL_PrivateJoystickAxis(joystick, SDL_CONTROLLER_AXIS_LEFTY, axis);
-    axis = *(Sint16*)(&data[10]);
+    axis = SDL_SwapLE16(*(Sint16*)(&data[10]));
     SDL_PrivateJoystickAxis(joystick, SDL_CONTROLLER_AXIS_RIGHTX, axis);
-    axis = *(Sint16*)(&data[12]);
+    axis = SDL_SwapLE16(*(Sint16*)(&data[12]));
     if (invert_y_axes) {
         axis = ~axis;
     }

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -44,7 +44,6 @@ typedef struct
 {
     SDL_Window *window;
     Window xwindow;
-    Window fswindow;  /* used if we can't have the WM handle fullscreen. */
     Visual *visual;
     Colormap colormap;
 #ifndef NO_SHARED_MEMORY
@@ -60,6 +59,7 @@ typedef struct
     int border_right;
     int border_top;
     int border_bottom;
+    SDL_bool mouse_grabbed;
     Uint32 last_focus_event_time;
     PendingFocusEnum pending_focus;
     Uint32 pending_focus_time;

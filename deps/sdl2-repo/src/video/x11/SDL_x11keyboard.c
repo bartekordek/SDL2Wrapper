@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -37,7 +37,7 @@
 #include <locale.h>
 #endif
 
-/* *INDENT-OFF* */
+/* *INDENT-OFF* */ /* clang-format off */
 static const struct {
     KeySym keysym;
     SDL_Scancode scancode;
@@ -160,7 +160,7 @@ static const struct
     { xfree86_scancode_table2, SDL_arraysize(xfree86_scancode_table2) },
     { xvnc_scancode_table, SDL_arraysize(xvnc_scancode_table) },
 };
-/* *INDENT-OFF* */
+/* *INDENT-OFF* */ /* clang-format off */
 
 /* This function only works for keyboards in US QWERTY layout */
 static SDL_Scancode
@@ -267,11 +267,6 @@ X11_InitKeyboard(_THIS)
     int best_index;
     int distance;
     Bool xkb_repeat = 0;
-    XKeyboardState values = { .global_auto_repeat = AutoRepeatModeOff };
-    
-    X11_XGetKeyboardControl(data->display, &values);
-    if (values.global_auto_repeat != AutoRepeatModeOn)
-        X11_XAutoRepeatOn(data->display);
 
 #if SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM
     {
@@ -399,7 +394,7 @@ X11_InitKeyboard(_THIS)
         }
     }
 
-    X11_UpdateKeymap(_this);
+    X11_UpdateKeymap(_this, SDL_FALSE);
 
     SDL_SetScancodeName(SDL_SCANCODE_APPLICATION, "Menu");
 
@@ -407,11 +402,13 @@ X11_InitKeyboard(_THIS)
     SDL_IME_Init();
 #endif
 
+    X11_ReconcileKeyboardState(_this);
+
     return 0;
 }
 
 void
-X11_UpdateKeymap(_THIS)
+X11_UpdateKeymap(_THIS, SDL_bool send_event)
 {
     SDL_VideoData *data = (SDL_VideoData *) _this->driverdata;
     int i;
@@ -471,7 +468,7 @@ X11_UpdateKeymap(_THIS)
             }
         }
     }
-    SDL_SetKeymap(0, keymap, SDL_NUM_SCANCODES);
+    SDL_SetKeymap(0, keymap, SDL_NUM_SCANCODES, send_event);
 }
 
 void
@@ -529,7 +526,7 @@ X11_StopTextInput(_THIS)
 }
 
 void
-X11_SetTextInputRect(_THIS, SDL_Rect *rect)
+X11_SetTextInputRect(_THIS, const SDL_Rect *rect)
 {
     if (!rect) {
         SDL_InvalidParamError("rect");
