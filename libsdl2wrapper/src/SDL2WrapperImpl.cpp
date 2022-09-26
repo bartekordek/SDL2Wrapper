@@ -75,10 +75,10 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
         m_logger->log( "#################################################################################" );
         Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
         String rendererName( renderInfo.name );
-        m_logger->log( "Renderer name:" + rendererName );
+        m_logger->log( "Renderer name: " + rendererName );
         m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
         m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
-        m_logger->log( "Available texture formats:" );
+        m_logger->log( "Available texture formats: " );
         for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
         {
             m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[ iTexFormat ] ) ) );
@@ -89,8 +89,16 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
         m_renderers[ rendererName ] = i;
     }
 
+    m_logger->log( "#################################################################################" );
+    m_logger->log( "#################################################################################" );
+    m_logger->log( "Renderers:" );
 
-    if(m_windowData.rendererName.empty() )
+    for( const auto [name, value]: m_renderers )
+    {
+        m_logger->log( "Renderer name: " + name );
+    }
+
+    if( m_windowData.rendererName.empty() )
     {
         const auto& rendererName = m_configFile->getValue( "RENDERER" );
         if( rendererName.empty() )

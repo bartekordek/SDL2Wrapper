@@ -128,6 +128,9 @@ public:
 
     void setSize( uint16_t width, uint16_t height );
 
+    const String& getRenderName() const;
+    void setRenderName( const String& name );
+
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
@@ -135,7 +138,7 @@ protected:
     SDL_Window* m_window = nullptr;
 
 private:
-
+    String m_rendererName;
     unsigned int m_winId = 0;
 
     IWindow( const IWindow& wind ) = delete;

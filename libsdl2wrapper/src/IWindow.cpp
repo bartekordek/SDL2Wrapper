@@ -67,6 +67,16 @@ void IWindow::setSize( uint16_t width, uint16_t height )
     setSize( winSize );
 }
 
+const String& IWindow::getRenderName() const
+{
+    return m_rendererName;
+}
+
+void IWindow::setRenderName( const String& name )
+{
+    m_rendererName = name;
+}
+
 IWindow::~IWindow()
 {
 }
