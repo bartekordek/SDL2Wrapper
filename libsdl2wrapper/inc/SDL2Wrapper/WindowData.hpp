@@ -18,7 +18,7 @@ public:
     WinSize nativeRes;
     WinSize windowRes;
     CUL::String name = "";
-    CUL::String rendererName = "opengl";
+    CUL::String rendererName = "";
 
     WindowData() = default;
 

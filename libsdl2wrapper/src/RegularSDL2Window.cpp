@@ -465,7 +465,7 @@ CUL::Video::FPSCounter* RegularSDL2Window::getFpsCounter()
     return m_fpsCounter.get();
 }
 
-void RegularSDL2Window::setFullscreen(bool fullscreen)
+void RegularSDL2Window::setFullscreen( bool fullscreen )
 {
     const Uint32 flag = fullscreen ? (Uint32) SDL_WINDOW_FULLSCREEN : 0u;
     SDL_SetWindowFullscreen( m_window, flag );
