@@ -39,10 +39,8 @@ class ISDLEventObserver;
 class IWindowEventObserver;
 class ISprite;
 class IWindow;
-class IKey;
 struct WindowData;
 
-using Keys = std::map<CUL::String, std::unique_ptr<IKey>>;
 using WindowEventType = WindowEvent::Type;
 
 using InitCallback = std::function<void()>;
@@ -84,7 +82,7 @@ public:
     virtual void registerSDLEventObserver( ISDLEventObserver* eventObserver )  = 0;
     virtual void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver )  = 0;
 
-    virtual Keys& getKeyStates() = 0;
+    virtual KeyboardState& getKeyStates() = 0;
 
     virtual IConfigFile* getConfig() const = 0;
 
@@ -104,6 +102,5 @@ private: // Deleted
     ISDL2Wrapper& operator=( const ISDL2Wrapper& rhv ) = delete;
     ISDL2Wrapper& operator=( ISDL2Wrapper&& rhv ) = delete;
 };
-
 
 NAMESPACE_END( SDL2W )

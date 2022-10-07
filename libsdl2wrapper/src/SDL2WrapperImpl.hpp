@@ -59,7 +59,7 @@ private:
 
     void notifySDLEventObservers( SDL_Event& event );
 
-    void registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) override;
+    void registerKeyboardEventCallback( const std::function<void( const KeyboardState& key )>& callback ) override;
     void registerWindowEventCallback( const WindowCallback& callback ) override;
 
     void registerKeyboardEventListener( IKeyboardObserver* observer ) override;
@@ -80,12 +80,12 @@ private:
     unsigned int getInputLatency() const override;
     void setInputLatency( unsigned latencyInUs ) override;
     bool isKeyUp( const String& keyName ) const override;
-    Keys& getKeyStates() override;
+    KeyboardState& getKeyStates() override;
 
     IWindow* getMainWindow() const override;
 
     void createKeys();
-    IKey* createKey( const int keySignature, const unsigned char* sdlKey ) const;
+
     CUL::GUTILS::DumbPtr<CUL::CULInterface> m_culInterface;
     CUL::LOG::ILogger* getLogger() const override;
 
@@ -98,8 +98,8 @@ private:
     void handleMouseEvent( const SDL_Event& sdlEvent );
     void handleWindowEvent( const SDL_Event& sdlEvent );
 
-    void notifyKeyboardCallbacks( const IKey& key );
-    void notifyKeyboardListeners( const IKey& key );
+    void notifyKeyboardCallbacks( const KeyboardState& key );
+    void notifyKeyboardListeners( const KeyboardState& key );
     void notifyMouseListerners( const MouseData& md );
     void notifyMouseCallbacks( const MouseData& md );
     void notifyWindowEventListeners( const WindowEventType e );
@@ -121,7 +121,7 @@ private:
     RegularSDL2Window* m_mainWindow = nullptr;
     WindowCollection m_windows;
 
-    Keys m_keys;
+    KeyboardState m_keys;
 
     CUL::LOG::ILogger* m_logger = nullptr;
 
@@ -130,7 +130,7 @@ private:
     InitCallback m_onInitCallback;
 
     std::set<IKeyboardObserver*> m_keyboardObservers;
-    std::vector<std::function<void( const IKey& key )>> m_keyCallbacks;
+    std::vector<std::function<void( const KeyboardState& key )>> m_keyCallbacks;
     std::mutex m_keyboardObserversMtx;
 
     std::set<IMouseObserver*> m_mouseObservers;

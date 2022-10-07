@@ -1,21 +1,19 @@
 #pragma once
 
-#include "SDL2Wrapper/Import.hpp"
+#include "SDL2Wrapper/Input/KeyboardDefines.hpp"
 
 #include "CUL/STL_IMPORTS/STD_functional.hpp"
-#include "CUL/String.hpp"
 
 NAMESPACE_BEGIN( SDL2W )
 
 class IKeyboardObserver;
-class IKey;
 
 class SDL2WAPI IKeyboardObservable
 {
 public:
     IKeyboardObservable() = default;
 
-    virtual void registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback ) = 0;
+    virtual void registerKeyboardEventCallback( const std::function<void( const KeyboardState& key )>& callback ) = 0;
 
     virtual void registerKeyboardEventListener( IKeyboardObserver* observer ) = 0;
     virtual void unregisterKeyboardEventListener( IKeyboardObserver* observer ) = 0;
