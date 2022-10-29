@@ -89,6 +89,14 @@ IDirect3DDevice9* IWindow::createDX9Device()
     return m_d9xDevice;
 }
 
+ID3D11Device* IWindow::createDX11Device()
+{
+#ifdef _MSC_VER
+    m_dx11Device = SDL_RenderGetD3D11Device( m_renderer );
+#endif
+    return m_dx11Device;
+}
+
 IDirect3DDevice9* IWindow::gertDX9Device() const
 {
     return m_d9xDevice;
