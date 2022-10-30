@@ -1,6 +1,5 @@
 #include "SimpleUtils.hpp"
 #include "SDL2WrapperImpl.hpp"
-#include "Input/KeySDL.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/Input/IMouseObserver.hpp"
 #include "SDL2Wrapper/IWindowEventListener.hpp"
@@ -75,10 +74,10 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
         m_logger->log( "#################################################################################" );
         Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
         String rendererName( renderInfo.name );
-        m_logger->log( "Renderer name:" + rendererName );
+        m_logger->log( "Renderer name: " + rendererName );
         m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
         m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
-        m_logger->log( "Available texture formats:" );
+        m_logger->log( "Available texture formats: " );
         for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
         {
             m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[ iTexFormat ] ) ) );
@@ -89,13 +88,21 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
         m_renderers[ rendererName ] = i;
     }
 
+    m_logger->log( "#################################################################################" );
+    m_logger->log( "#################################################################################" );
+    m_logger->log( "Renderers:" );
 
-    if(m_windowData.rendererName.empty() )
+    for( const auto [name, value]: m_renderers )
+    {
+        m_logger->log( "Renderer name: " + name );
+    }
+
+    if( m_windowData.rendererName.empty() )
     {
         const auto& rendererName = m_configFile->getValue( "RENDERER" );
         if( rendererName.empty() )
         {
-            m_windowData.rendererName = "software";
+            m_windowData.rendererName = "opengl";
         }
         else
         {
@@ -136,22 +143,30 @@ IConfigFile* SDL2WrapperImpl::getConfig() const
 
 void SDL2WrapperImpl::createKeys()
 {
-    m_logger->log( "SDL2WrapperImpl::createKeys()::Begin" );
-    int keyCount = 0;
-    auto kbrdState = SDL_GetKeyboardState( &keyCount );
-    // Basically keyCount is the same as SDL_NUM_SCANCODES.
-    for( int i = 0; i < keyCount; ++i )
+    auto isKeyDown = []( const Uint8* sdlKey, size_t index )
     {
-        const auto key = createKey( i, kbrdState );
-        if( "" == key->getKeyName() )
+        SDL_Scancode scanCode = static_cast<SDL_Scancode>( index );
+        return 0 != sdlKey[scanCode];
+    };
+
+    auto getKeyName = []( size_t index )
+    {
+        SDL_Scancode scanCode = static_cast<SDL_Scancode>( index );
+        CUL::String result = SDL_GetScancodeName( scanCode );
+        return result;
+    };
+
+    m_logger->log( "SDL2WrapperImpl::createKeys()::Begin" );
+    size_t keyCount = 0;
+    auto kbrdState = SDL_GetKeyboardState( (int*)&keyCount );
+    // Basically keyCount is the same as SDL_NUM_SCANCODES.
+    for( size_t i = 0; i < keyCount; ++i )
+    {
+        const auto keyName = getKeyName( i );
+        if( !keyName.empty() )
         {
-            delete key;
-        }
-        else
-        {
-            const auto keyName = key->getKeyName();
-            m_keys[keyName] = std::unique_ptr<IKey>( key );
-            m_logger->log( "Name:" + key->getKeyName() + ", id: " + String( i ) );
+            m_keys[keyName] = isKeyDown( kbrdState, i );
+            m_logger->log( "Name:" + keyName + ", id: " + CUL::String( (int)i ) );
         }
     }
     m_logger->log( "SDL2WrapperImpl::createKeys()::End" );
@@ -159,15 +174,6 @@ void SDL2WrapperImpl::createKeys()
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
-
-IKey* SDL2WrapperImpl::createKey( const int keySignature, const unsigned char* sdlKey ) const
-{
-    IKey* result = new KeySDL();
-    SDL_Scancode scanCode = static_cast<SDL_Scancode>( keySignature );
-    result->setKeyName( SDL_GetScancodeName( scanCode ) );
-    result->setKeyIsDown( ( 0 == sdlKey[scanCode] ) ? false : true );
-    return result;
-}
 
 CUL::LOG::ILogger* SDL2WrapperImpl::getLogger() const
 {
@@ -309,10 +315,10 @@ void SDL2WrapperImpl::handleKeyboardEvent( const SDL_Event& sdlEvent )
 {
     const bool keyIsDown = ( SDL_KEYDOWN == sdlEvent.type ) ? true : false;
     auto& key = m_keys.at( SDL_GetScancodeName( sdlEvent.key.keysym.scancode ) );
-    key->setKeyIsDown( keyIsDown );
+    key = keyIsDown;
 
-    notifyKeyboardCallbacks( *key );
-    notifyKeyboardListeners( *key );
+    notifyKeyboardCallbacks( m_keys );
+    notifyKeyboardListeners( m_keys );
 }
 
 void SDL2WrapperImpl::handleMouseEvent( const SDL_Event& event )
@@ -362,7 +368,7 @@ void SDL2WrapperImpl::handleWindowEvent( const SDL_Event& sdlEvent )
     notifyWindowEventCallbacks( eventType );
 }
 
-void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
+void SDL2WrapperImpl::notifyKeyboardCallbacks( const KeyboardState& key )
 {
     for( auto callback : m_keyCallbacks )
     {
@@ -370,7 +376,7 @@ void SDL2WrapperImpl::notifyKeyboardCallbacks( const IKey& key )
     }
 }
 
-void SDL2WrapperImpl::registerKeyboardEventCallback( const std::function<void( const IKey& key )>& callback )
+void SDL2WrapperImpl::registerKeyboardEventCallback( const std::function<void( const KeyboardState& key )>& callback )
 {
     m_keyCallbacks.push_back( callback );
 }
@@ -398,7 +404,7 @@ void SDL2WrapperImpl::unregisterKeyboardEventListener( IKeyboardObserver* observ
     m_keyboardObservers.erase( observer );
 }
 
-void SDL2WrapperImpl::notifyKeyboardListeners( const IKey& key )
+void SDL2WrapperImpl::notifyKeyboardListeners( const KeyboardState& key )
 {
     std::lock_guard<std::mutex> lock( m_keyboardObserversMtx );
     for( auto listener : m_keyboardObservers )
@@ -492,10 +498,10 @@ void SDL2WrapperImpl::setInputLatency( unsigned latencyInUs )
 
 bool SDL2WrapperImpl::isKeyUp( const String& keyName ) const
 {
-    return m_keys.at( keyName )->getKeyIsDown();
+    return !m_keys.at( keyName );
 }
 
-Keys& SDL2WrapperImpl::getKeyStates()
+KeyboardState& SDL2WrapperImpl::getKeyStates()
 {
     return m_keys;
 }

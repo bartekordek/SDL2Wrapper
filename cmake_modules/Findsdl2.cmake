@@ -1,4 +1,4 @@
-set( sdl2_repo_name sdl2-repo )
+set( sdl2_repo_name SDL2 )
 set( sdl2_root CMAKE_CURRENT_SOURCE_DIR/../deps/${sdl2_repo_name} )
 set( sdl2_include ${sdl2_ROOT}/include )
 set( sdl2_binary_dir ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE} )

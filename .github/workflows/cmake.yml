@@ -69,9 +69,9 @@ jobs:
     - name: Build static
       working-directory: ${{github.workspace}}//Build-Linux
       shell: bash
-      run: cmake --build . --config ${BUILD_TYPE} -j16 --target libsdl2wrapperTestApp_static
+      run: cmake --build . --config ${BUILD_TYPE} -j4 --target libsdl2wrapperTestApp_static
 
     - name: Build dynamic
       working-directory: ${{github.workspace}}//Build-Linux
       shell: bash
-      run: cmake --build . --config ${BUILD_TYPE} -j16 --target libsdl2wrapperTestApp_dynamic
+      run: cmake --build . --config ${BUILD_TYPE} -j4 --target libsdl2wrapperTestApp_dynamic

@@ -83,7 +83,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 {
     auto& pos = winData.pos;
     auto& currentRes = winData.currentRes;
-    auto& rendererName = winData.rendererName;
+    setRenderName( winData.rendererName );
     auto& winName = winData.name;
 
     m_logger->log( "Creating window with:", CUL::LOG::Severity::INFO );
@@ -91,7 +91,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     m_logger->log( "Width = " + CUL::String( currentRes.getWidth() ) + ", height = " + CUL::String( currentRes.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
-    if( rendererName.contains( "opengl" ) )
+    if( getRenderName().contains( "opengl" ) )
     {
         windowFlags |= SDL_WINDOW_OPENGL;
     }
@@ -465,7 +465,7 @@ CUL::Video::FPSCounter* RegularSDL2Window::getFpsCounter()
     return m_fpsCounter.get();
 }
 
-void RegularSDL2Window::setFullscreen(bool fullscreen)
+void RegularSDL2Window::setFullscreen( bool fullscreen )
 {
     const Uint32 flag = fullscreen ? (Uint32) SDL_WINDOW_FULLSCREEN : 0u;
     SDL_SetWindowFullscreen( m_window, flag );

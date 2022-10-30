@@ -6,7 +6,6 @@
 #include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/Input/MouseData.hpp"
 #include "SDL2Wrapper/ISprite.hpp"
-#include "SDL2Wrapper/Input/IKey.hpp"
 
 #include "CUL/Log/ILogger.hpp"
 #include "CUL/Graphics/Position3DDMutexed.hpp"
@@ -93,15 +92,8 @@ public:
         m_sdlW->runEventLoop();
     }
 
-    void onKeyBoardEvent( const SDL2W::IKey& key ) override
+    void onKeyBoardEvent( const SDL2W::KeyboardState& key ) override
     {
-        if( false == key.getKeyIsDown() )
-        {
-            return;
-        }
-
-        m_logger->log( "KEY: " + key.getKeyName().string() );
-
         static int delta = 8;
 
         if( m_keyObservable->isKeyUp( "D" ) )
@@ -124,7 +116,7 @@ public:
             obj4Pos.setY( obj4Pos.getY() + delta );
         }
 
-        if( ( key.getKeyName() == "q" ) || ( key.getKeyName() == "Q" ) )
+        if( key.at( "Q" ) )
         {
             m_sdlW->stopEventLoop();
             runLoop = false;

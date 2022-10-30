@@ -131,6 +131,9 @@ public:
 
     void setSize( uint16_t width, uint16_t height );
 
+    const String& getRenderName() const;
+    void setRenderName( const String& name );
+
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
@@ -144,6 +147,7 @@ protected:
     SDL_Renderer* m_renderer = nullptr;
 
 private:
+    String m_rendererName;
     IDirect3DDevice9* m_d9xDevice = nullptr;
     ID3D11Device* m_dx11Device = nullptr;
     unsigned int m_winId = 0;

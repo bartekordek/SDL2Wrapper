@@ -71,14 +71,14 @@ void IWindow::setSize( uint16_t width, uint16_t height )
     setSize( winSize );
 }
 
-void IWindow::setWindowID( unsigned id )
+const String& IWindow::getRenderName() const
 {
-    m_winId = id;
+    return m_rendererName;
 }
 
-unsigned int IWindow::getWindowID() const
+void IWindow::setRenderName( const String& name )
 {
-    return m_winId;
+    m_rendererName = name;
 }
 
 IDirect3DDevice9* IWindow::createDX9Device()
@@ -102,7 +102,16 @@ IDirect3DDevice9* IWindow::gertDX9Device() const
     return m_d9xDevice;
 }
 
-
 IWindow::~IWindow()
 {
+}
+
+void IWindow::setWindowID( unsigned id )
+{
+    m_winId = id;
+}
+
+unsigned int IWindow::getWindowID() const
+{
+    return m_winId;
 }

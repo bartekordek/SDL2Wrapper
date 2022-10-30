@@ -4,3 +4,6 @@
 [submodule "deps/helpers"]
 	path = deps/helpers
 	url = git@github.com:bartekordek/helpers.git
+[submodule "deps/SDL2"]
+	path = deps/SDL2
+	url = git@github.com:libsdl-org/SDL.git
