@@ -4,3 +4,6 @@
 [submodule "deps/helpers"]
 	path = deps/helpers
 	url = git@github.com:bartekordek/helpers.git
+[submodule "deps/Microsoft-DirectX-SDK-June-2010-"]
+	path = deps/Microsoft-DirectX-SDK-June-2010-
+	url = git@github.com:MarilynDafa/Microsoft-DirectX-SDK-June-2010-.git

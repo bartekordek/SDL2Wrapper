@@ -7,6 +7,7 @@
 #include <d3dx11.h>
 #include <d3dcompiler.h>
 #include <dxerr.h>
+#include "DXGI.h"
 
 #ifdef _MSC_VER
 #pragma warning( pop )
