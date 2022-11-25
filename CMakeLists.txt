@@ -39,10 +39,11 @@ set( ENV{SDL2W_DLL} ${SDL2W_TESTS_RUN_DIR} )
 message( "[sdl2wrapper] Setting SDL2W_TESTS_RUN_DIR to: ${SDL2W_TESTS_RUN_DIR}" )
 
 set( SDL2W_DEPS ${SDL2W_ROOT}/deps )
+set(SDL2_REPO_ROOT ${SDL2W_DEPS}/sdl2-repo )
 
 #option( LIBC "Use the system C library" true )
 option( SDL_STATIC_PIC "PIC for SDL" true )
 set(SDL_SHARED ON CACHE BOOL "" FORCE)
-add_subdirectory( deps/sdl2-repo )
+add_subdirectory(${SDL2_REPO_ROOT})
 add_subdirectory( libsdl2wrapper )
 add_subdirectory( libsdl2wrapperTestApp )
