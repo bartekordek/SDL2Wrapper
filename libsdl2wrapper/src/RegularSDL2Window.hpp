@@ -57,7 +57,7 @@ private:
     void closeInfoLoop();
     void infoLoop();
 
-    CUL::Memory::UniquePtrOnStack<CUL::Video::FPSCounter, 1552> m_fpsCounter;
+    std::unique_ptr< CUL::Video::FPSCounter> m_fpsCounter;
     std::atomic<bool> m_runInfoLoop = false;
     std::atomic<unsigned int> m_sleepTimeInfoLoop = 2u;
     std::thread m_infoPrintLoop;
