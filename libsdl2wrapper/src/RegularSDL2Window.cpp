@@ -148,15 +148,7 @@ void RegularSDL2Window::toggleFpsCounter( bool on, short unsigned everyNsecond )
             m_runInfoLoop = true;
 
             std::cout << "Sizeof m_fpsCounter: " << sizeof( CUL::Video::FPSCounter ) << "\n";
-            m_fpsCounter.create(
-                []( void* ptr)
-                {
-                    return new( ptr ) CUL::Video::FPSCounter();
-                },
-                [](CUL::Video::FPSCounter* ptr)
-                {
-                    ptr->~FPSCounter();
-                } );
+            m_fpsCounter = std::make_unique< CUL::Video::FPSCounter>( m_logger );
             m_fpsCounter->setSampleSize( 4 );
             addFPSCounter( m_fpsCounter.get() );
             m_fpsCounter->start();
