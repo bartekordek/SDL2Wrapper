@@ -81,6 +81,16 @@ void IWindow::setRenderName( const String& name )
     m_rendererName = name;
 }
 
+void IWindow::setWindowID( unsigned id )
+{
+    m_winId = id;
+}
+
+unsigned int IWindow::getWindowID() const
+{
+    return m_winId;
+}
+
 IDirect3DDevice9* IWindow::createDX9Device()
 {
 #ifdef _MSC_VER
@@ -104,14 +114,4 @@ IDirect3DDevice9* IWindow::gertDX9Device() const
 
 IWindow::~IWindow()
 {
-}
-
-void IWindow::setWindowID( unsigned id )
-{
-    m_winId = id;
-}
-
-unsigned int IWindow::getWindowID() const
-{
-    return m_winId;
 }
