@@ -81,10 +81,6 @@ void IWindow::setRenderName( const String& name )
     m_rendererName = name;
 }
 
-IWindow::~IWindow()
-{
-}
-
 void IWindow::setWindowID( unsigned id )
 {
     m_winId = id;
@@ -114,4 +110,8 @@ ID3D11Device* IWindow::createDX11Device()
 IDirect3DDevice9* IWindow::gertDX9Device() const
 {
     return m_d9xDevice;
+}
+
+IWindow::~IWindow()
+{
 }
