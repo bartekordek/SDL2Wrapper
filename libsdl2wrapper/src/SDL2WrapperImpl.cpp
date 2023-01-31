@@ -7,7 +7,6 @@
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
 
-#include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 
 #include "CUL/ITimer.hpp"
