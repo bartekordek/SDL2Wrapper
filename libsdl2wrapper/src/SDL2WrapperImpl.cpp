@@ -12,6 +12,11 @@
 #include "CUL/ITimer.hpp"
 #include "CUL/Threading/ThreadUtils.hpp"
 
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#pragma warning( disable: 4710 )
+#endif
+
 using namespace SDL2W;
 
 constexpr bool SDLBoolToCppBool( const SDL_bool value )
@@ -43,7 +48,6 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
 
     m_logger->log( "Initializing SDL..." );
     const auto sdlInitSuccess = SDL_Init(
-        SDL_INIT_TIMER |
         SDL_INIT_AUDIO |
         SDL_INIT_VIDEO |
         SDL_INIT_EVENTS
@@ -556,3 +560,7 @@ SDL2WrapperImpl::~SDL2WrapperImpl()
     m_keys.clear();
     SDL_Quit();
 }
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
