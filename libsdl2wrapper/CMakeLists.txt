@@ -16,6 +16,7 @@ if( MSVC )
     add_compile_options("/wd4266")
     add_compile_options("/wd4514")
     add_compile_options("/wd4710")
+    add_compile_options("/wd4711")
     add_compile_options("/wd4820")
     set_target_properties(SDL2 PROPERTIES
         COMPILE_FLAGS "/MP" # Adjust as needed
