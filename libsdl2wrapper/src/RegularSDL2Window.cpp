@@ -120,6 +120,15 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
             "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "The Window has not been initialized." );
     }
+    else
+    {
+        SDL_SysWMinfo wmInfo;
+        SDL_VERSION( &wmInfo.version );
+        SDL_GetWindowWMInfo( result, &wmInfo );
+        HWND hwnd = wmInfo.info.win.window;
+
+        m_logger->log("HWND? " + CUL::String( hwnd->unused ));
+    }
 
     return result;
 }
