@@ -125,9 +125,9 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
         SDL_SysWMinfo wmInfo;
         SDL_VERSION( &wmInfo.version );
         SDL_GetWindowWMInfo( result, &wmInfo );
-        HWND hwnd = wmInfo.info.win.window;
+        m_hwnd = wmInfo.info.win.window;
 
-        m_logger->log("HWND? " + CUL::String( hwnd->unused ));
+        m_logger->log("HWND? " + CUL::String( m_hwnd->unused ));
     }
 
     return result;

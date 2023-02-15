@@ -91,6 +91,7 @@ unsigned int IWindow::getWindowID() const
     return m_winId;
 }
 
+#if defined(SDL2W_WINDOWS)
 IDirect3DDevice9* IWindow::createDX9Device()
 {
 #ifdef _MSC_VER
@@ -111,6 +112,12 @@ IDirect3DDevice9* IWindow::gertDX9Device() const
 {
     return m_d9xDevice;
 }
+
+HWND IWindow::getHWND() const
+{
+    return m_hwnd;
+}
+#endif
 
 IWindow::~IWindow()
 {
