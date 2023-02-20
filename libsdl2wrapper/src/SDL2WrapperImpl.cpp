@@ -68,8 +68,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     const auto hasRDTSC = SDLBoolToCppBool( SDL_HasRDTSC() );
     m_logger->log( "CPU has the RDTSC instruction: " + String( hasRDTSC ) );
 
-    const auto renderDriversCount = SDL_GetNumRenderDrivers();
-    m_logger->log( "Available render drivers count: " + String( renderDriversCount ) + "\n" );
+    auto renderDriversCount = SDL_GetNumRenderDrivers();
 
     SDL_RendererInfo renderInfo;
     for( auto i = 0; i < renderDriversCount; ++i )
@@ -90,6 +89,14 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
 
         m_renderers[ rendererName ] = i;
     }
+
+#if defined(SDL2W_WINDOWS)
+    m_renderers["DX12"] = renderDriversCount;
+    ++renderDriversCount;
+#endif // SDL2W_WINDOWS
+
+    m_logger->log( "Available render drivers count: " + String( renderDriversCount ) + "\n" );
+
 
     m_logger->log( "#################################################################################" );
     m_logger->log( "#################################################################################" );
