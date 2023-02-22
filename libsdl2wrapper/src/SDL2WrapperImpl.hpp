@@ -37,7 +37,7 @@ public:
 protected:
 private:
     void init( const WindowData& wd, const CUL::FS::Path& configPath = "" ) override;
-
+    size_t fetchRenderTypes();
 
     void registerSDLEventObserver( ISDLEventObserver* eventObserver ) override;
     void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver ) override;

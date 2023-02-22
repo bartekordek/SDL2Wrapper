@@ -68,34 +68,8 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     const auto hasRDTSC = SDLBoolToCppBool( SDL_HasRDTSC() );
     m_logger->log( "CPU has the RDTSC instruction: " + String( hasRDTSC ) );
 
-    auto renderDriversCount = SDL_GetNumRenderDrivers();
-
-    SDL_RendererInfo renderInfo;
-    for( auto i = 0; i < renderDriversCount; ++i )
-    {
-        m_logger->log( "#################################################################################" );
-        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
-        String rendererName( renderInfo.name );
-        m_logger->log( "Renderer name: " + rendererName );
-        m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
-        m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
-        m_logger->log( "Available texture formats: " );
-        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
-        {
-            m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[ iTexFormat ] ) ) );
-        }
-
-        m_logger->log( "#################################################################################\n" );
-
-        m_renderers[ rendererName ] = i;
-    }
-
-#if defined(SDL2W_WINDOWS)
-    m_renderers["DX12"] = renderDriversCount;
-    ++renderDriversCount;
-#endif // SDL2W_WINDOWS
-
-    m_logger->log( "Available render drivers count: " + String( renderDriversCount ) + "\n" );
+    const size_t renderDriversCount = fetchRenderTypes();
+    m_logger->log( "Available render drivers count: " + String( (int)renderDriversCount ) + "\n" );
 
 
     m_logger->log( "#################################################################################" );
@@ -138,6 +112,38 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     {
         m_onInitCallback();
     }
+}
+
+size_t SDL2WrapperImpl::fetchRenderTypes()
+{
+    size_t renderDriversCount = SDL_GetNumRenderDrivers();
+
+    SDL_RendererInfo renderInfo;
+    for( auto i = 0; i < renderDriversCount; ++i )
+    {
+        m_logger->log( "#################################################################################" );
+        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
+        String rendererName( renderInfo.name );
+        m_logger->log( "Renderer name: " + rendererName );
+        m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
+        m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
+        m_logger->log( "Available texture formats: " );
+        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
+        {
+            m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[iTexFormat] ) ) );
+        }
+
+        m_logger->log( "#################################################################################\n" );
+
+        m_renderers[rendererName] = i;
+    }
+
+#if defined(SDL2W_WINDOWS)
+    m_renderers["DX12"] = renderDriversCount;
+    ++renderDriversCount;
+#endif // SDL2W_WINDOWS
+
+    return renderDriversCount;
 }
 
 CUL::CULInterface* SDL2WrapperImpl::getCul()
