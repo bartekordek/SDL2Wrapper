@@ -48,29 +48,34 @@ RegularSDL2Window::RegularSDL2Window(
         rendererType = SDL_RENDERER_SOFTWARE;
     }
 
-    m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
-
-    Assert( nullptr != m_renderer, "Cannot create renderer." );
-    SDL_RendererInfo info;
-    const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
-    Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
-    m_logger->log( "Selected renderer INFO:" );
-    m_logger->log( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
-    m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ) );
-    m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ) );
-
-    int w = 0, h = 0;
-    auto operationResult = SDL_GetRendererOutputSize( m_renderer, &w, &h );
-    Assert( 0 == operationResult, "Cannot get renderer output size." );
-    m_logger->log( "Renderer output size, w: " + CUL::String( w ) );
-    m_logger->log( "Renderer output size, h: " + CUL::String( h ) );
-
-    m_logger->log( "Available texture formats:" );
-
-    for( Uint32 i = 0; i < info.num_texture_formats; ++i )
+    if( winData.rendererName != "DX12" )
     {
-        m_logger->log( String( SDL_GetPixelFormatName( info.texture_formats[i] ) ) );
+        m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
+
+        Assert( nullptr != m_renderer, "Cannot create renderer." );
+        SDL_RendererInfo info;
+        const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
+        Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
+        m_logger->log( "Selected renderer INFO:" );
+        m_logger->log( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
+        m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ) );
+        m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ) );
+
+        int w = 0, h = 0;
+        auto operationResult = SDL_GetRendererOutputSize( m_renderer, &w, &h );
+        Assert( 0 == operationResult, "Cannot get renderer output size." );
+        m_logger->log( "Renderer output size, w: " + CUL::String( w ) );
+        m_logger->log( "Renderer output size, h: " + CUL::String( h ) );
+
+        m_logger->log( "Available texture formats:" );
+
+        for( Uint32 i = 0; i < info.num_texture_formats; ++i )
+        {
+            m_logger->log( String( SDL_GetPixelFormatName( info.texture_formats[i] ) ) );
+        }
     }
+
+
 
     setName( winData.name );
     m_il = m_culInterface->getImageLoader();
@@ -214,8 +219,11 @@ void RegularSDL2Window::updateScreenBuffers()
     }
     else
     {
-        Assert( nullptr != m_renderer, "The Renderer is not initialized." );
-        SDL_RenderPresent( m_renderer );
+        if( m_renderer )
+        {
+            SDL_RenderPresent( m_renderer );
+        }
+
     }
     frameHasEnded();
 }
@@ -272,8 +280,10 @@ void RegularSDL2Window::setBackgroundColor( const ColorE color )
 
 void RegularSDL2Window::clearBuffers()
 {
-    CUL::Assert::simple( nullptr != m_renderer, "The Renderer has been deleted somwhere else." );
-    SDL_RenderClear( m_renderer );
+    if( m_renderer )
+    {
+        SDL_RenderClear( m_renderer );
+    }
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorS& color )
@@ -478,9 +488,11 @@ RegularSDL2Window::~RegularSDL2Window()
     m_logger->log( "RegularSDL2Window::~RegularSDL2Window()" );
     destroyObjects();
 
-    Assert( nullptr != m_renderer, "The Renderer has been destroyed somwhere else." );
-    SDL_DestroyRenderer( m_renderer );
-    m_renderer = nullptr;
+    if( m_renderer )
+    {
+        SDL_DestroyRenderer( m_renderer );
+        m_renderer = nullptr;
+    }
 
     Assert( nullptr != m_window, "The Window has been destroyed somwhere else." );
     SDL_DestroyWindow( m_window );
