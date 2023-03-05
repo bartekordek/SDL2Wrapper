@@ -119,10 +119,10 @@ size_t SDL2WrapperImpl::fetchRenderTypes()
     size_t renderDriversCount = SDL_GetNumRenderDrivers();
 
     SDL_RendererInfo renderInfo;
-    for( auto i = 0; i < renderDriversCount; ++i )
+    for( size_t i = 0; i < renderDriversCount; ++i )
     {
         m_logger->log( "#################################################################################" );
-        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
+        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( (int)i ) );
         String rendererName( renderInfo.name );
         m_logger->log( "Renderer name: " + rendererName );
         m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );

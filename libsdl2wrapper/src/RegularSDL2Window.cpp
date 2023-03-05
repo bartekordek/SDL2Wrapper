@@ -127,10 +127,13 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     }
     else
     {
+
         SDL_SysWMinfo wmInfo;
         SDL_VERSION( &wmInfo.version );
         SDL_GetWindowWMInfo( result, &wmInfo );
+#if defined(SDL2W_WINDOWS)
         m_hwnd = wmInfo.info.win.window;
+#endif // #if defined(SDL2W_WINDOWS)
     }
 
     return result;
