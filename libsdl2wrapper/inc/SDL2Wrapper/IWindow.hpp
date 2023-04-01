@@ -66,9 +66,9 @@ using TextureMap = std::map<CUL::String, std::unique_ptr<CUL::Graphics::ITexture
 enum class GLProfileMask: short
 {
     NONE = -1,
-    CORE =  0x0001,
-    COMPATIBILITY  = 0x0002,
-    ES             = 0x0004
+    CORE =  0x0001, // SDL_GL_CONTEXT_PROFILE_CORE
+    COMPATIBILITY  = 0x0002, // SDL_GL_CONTEXT_PROFILE_COMPATIBILITY
+    ES             = 0x0004 // SDL_GL_CONTEXT_PROFILE_ES
 };
 
 enum class GLContextFlag
