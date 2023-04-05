@@ -29,7 +29,6 @@ RegularSDL2Window::RegularSDL2Window(
     ISDL2Wrapper* wrapper,
     CUL::CULInterface* culInterface ):
     m_windowData( winData ),
-    m_openGL( winData.rendererName.contains( "opengl" ) ),
     m_wrapper( wrapper ),
     m_culInterface( culInterface ),
     m_fsApi( culInterface->getFS() ),
@@ -39,16 +38,14 @@ RegularSDL2Window::RegularSDL2Window(
 
     fetchSreenData();
 
-    m_wrapper->getRendererId( winData.rendererName );
-
     auto rendererType = SDL_RENDERER_ACCELERATED;
 
-    if( winData.rendererName == "software" )
+    if( winData.rendererType == RenderTypes::RendererType::SOFTWARE )
     {
         rendererType = SDL_RENDERER_SOFTWARE;
     }
 
-    if( winData.rendererName != "DX12" )
+    if( winData.rendererType != RenderTypes::RendererType::DIRECTX_12 )
     {
         //m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
 
@@ -88,7 +85,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 {
     auto& pos = winData.pos;
     auto& currentRes = winData.currentRes;
-    setRenderName( winData.rendererName );
+    setCurrentRendererType( winData.rendererType );
+    setCurrentRendererType( winData.rendererType );
     auto& winName = winData.name;
 
     m_logger->log( "Creating window with:", CUL::LOG::Severity::INFO );
@@ -96,7 +94,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     m_logger->log( "Width = " + CUL::String( currentRes.getWidth() ) + ", height = " + CUL::String( currentRes.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
-    if( getRenderName().contains( "opengl" ) )
+    if( getCurrentRendererType() == RenderTypes::RendererType::OPENGL_LEGACY ||
+        getCurrentRendererType() == RenderTypes::RendererType::OPENGL_MODERN )
     {
         windowFlags |= SDL_WINDOW_OPENGL;
     }
@@ -214,7 +213,8 @@ const WinSize& RegularSDL2Window::getCurrentScreenNativeResolution() const
 
 void RegularSDL2Window::updateScreenBuffers()
 {
-    if( m_openGL )
+    if( ( m_windowData.rendererType == RenderTypes::RendererType::OPENGL_LEGACY ) ||
+        ( m_windowData.rendererType == RenderTypes::RendererType::OPENGL_MODERN ) )
     {
         Assert( nullptr != m_window, "The Window is not initialized." );
         SDL_GL_SwapWindow( m_window );

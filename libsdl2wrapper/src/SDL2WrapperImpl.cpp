@@ -76,21 +76,16 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     m_logger->log( "#################################################################################" );
     m_logger->log( "Renderers:" );
 
-    for( const auto [name, value]: m_renderers )
-    {
-        m_logger->log( "Renderer name: " + name );
-    }
-
-    if( m_windowData.rendererName.empty() )
+    if( m_windowData.rendererType == RenderTypes::RendererType::NONE )
     {
         const auto& rendererName = m_configFile->getValue( "RENDERER" );
         if( rendererName.empty() )
         {
-            m_windowData.rendererName = "opengl";
+            m_windowData.rendererType = RenderTypes::RendererType::OPENGL_MODERN;
         }
         else
         {
-            m_windowData.rendererName = rendererName;
+            m_windowData.rendererType = RenderTypes::convertToEnum( rendererName );
         }
     }
 
@@ -135,11 +130,16 @@ size_t SDL2WrapperImpl::fetchRenderTypes()
 
         m_logger->log( "#################################################################################\n" );
 
-        m_renderers[rendererName] = i;
+
+        m_renderers[RenderTypes::convertToEnum( renderInfo.name )] = i;
     }
 
+    m_renderers[RenderTypes::RendererType::OPENGL_LEGACY] = 2;
+    m_renderers[RenderTypes::RendererType::OPENGL_MODERN] = 2;
+
+
 #if defined(SDL2W_WINDOWS)
-    m_renderers["DX12"] = renderDriversCount;
+    m_renderers[RenderTypes::RendererType::DIRECTX_12] = renderDriversCount;
     ++renderDriversCount;
 #endif // SDL2W_WINDOWS
 
@@ -221,22 +221,12 @@ void SDL2WrapperImpl::clearWindows()
     }
 }
 
-int SDL2WrapperImpl::getRendererId( const String& name ) const
-{
-    return m_renderers.at( name );
-}
-
-const std::map<String, int>& SDL2WrapperImpl::getRenderersList() const
-{
-    return m_renderers;
-}
-
 void SDL2WrapperImpl::printAvailableRenderers() const
 {
     m_logger->log( "SDL2WrapperImpl::printAvailableRenderers():" );
     for( const auto& renderer: m_renderers )
     {
-        m_logger->log( "Name: " + renderer.first + ", id: " + String( renderer.second ) );
+        //m_logger->log( "Name: " + renderer.first + ", id: " + String( renderer.second ) );
     }
 }
 

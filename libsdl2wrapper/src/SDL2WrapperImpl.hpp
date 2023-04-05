@@ -49,8 +49,6 @@ private:
     void renderFrame( bool clearContext = true, bool refreshWindow = true ) override;
     void clearWindows() override;
 
-    int getRendererId( const String& name ) const override;
-    const std::map<String, int>& getRenderersList() const override;
     void printAvailableRenderers() const override;
 
     void runEventLoop() override;
@@ -111,8 +109,6 @@ private:
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
     WindowData m_windowData;
-
-    std::map<String, int> m_renderers;
 
     LckPrim<bool> eventLoopActive = true;
     LckPrim<unsigned int> m_eventLatencyUs = 256;

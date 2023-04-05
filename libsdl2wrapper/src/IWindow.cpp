@@ -71,14 +71,14 @@ void IWindow::setSize( uint16_t width, uint16_t height )
     setSize( winSize );
 }
 
-const String& IWindow::getRenderName() const
+RenderTypes::RendererType IWindow::getCurrentRendererType() const
 {
-    return m_rendererName;
+    return m_currentRenderer;
 }
 
-void IWindow::setRenderName( const String& name )
+void IWindow::setCurrentRendererType( const RenderTypes::RendererType type )
 {
-    m_rendererName = name;
+    m_currentRenderer = type;
 }
 
 void IWindow::setWindowID( unsigned id )

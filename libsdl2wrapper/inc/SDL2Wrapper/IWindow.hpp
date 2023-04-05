@@ -1,6 +1,8 @@
 #pragma once
 
 #include "SDL2Wrapper/IRender.hpp"
+#include "SDL2Wrapper/RendererTypes.hpp"
+
 #include "CUL/Graphics/IObjectRegister.hpp"
 
 #include "CUL/IName.hpp"
@@ -133,8 +135,8 @@ public:
 
     void setSize( uint16_t width, uint16_t height );
 
-    const String& getRenderName() const;
-    void setRenderName( const String& name );
+    RenderTypes::RendererType getCurrentRendererType() const;
+    void setCurrentRendererType( const RenderTypes::RendererType type );
 
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
@@ -145,7 +147,7 @@ public:
     IDirect3DDevice9* gertDX9Device() const;
 
     HWND getHWND() const;
-#endif 
+#endif
 
 protected:
     SDL_Window* m_window = nullptr;
@@ -158,6 +160,7 @@ protected:
 #endif
 
 private:
+    RenderTypes::RendererType m_currentRenderer{ RenderTypes::RendererType::NONE };
     String m_rendererName;
     unsigned int m_winId = 0;
 
