@@ -14,6 +14,7 @@
 #include "CUL/GenericUtils/DumbPtr.hpp"
 
 struct SDL_Surface;
+struct SDL_Renderer;
 union SDL_Event;
 
 NAMESPACE_BEGIN( SDL2W )
@@ -109,6 +110,7 @@ private:
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
     WindowData m_windowData;
+    SDL_Renderer* m_renderer = nullptr;
 
     LckPrim<bool> eventLoopActive = true;
     LckPrim<unsigned int> m_eventLatencyUs = 256;

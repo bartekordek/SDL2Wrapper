@@ -95,7 +95,7 @@ unsigned int IWindow::getWindowID() const
 IDirect3DDevice9* IWindow::createDX9Device()
 {
 #ifdef _MSC_VER
-    m_d9xDevice = SDL_RenderGetD3D9Device( m_renderer );
+    //m_d9xDevice = SDL_RenderGetD3D9Device( m_renderer );
 #endif // _MSC_VER
     return m_d9xDevice;
 }
@@ -103,7 +103,7 @@ IDirect3DDevice9* IWindow::createDX9Device()
 ID3D11Device* IWindow::createDX11Device()
 {
 #ifdef _MSC_VER
-    m_dx11Device = SDL_RenderGetD3D11Device( m_renderer );
+    //m_dx11Device = SDL_RenderGetD3D11Device( m_renderer );
 #endif
     return m_dx11Device;
 }

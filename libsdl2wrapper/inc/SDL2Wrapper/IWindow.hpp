@@ -16,11 +16,8 @@
 struct SDL_Window;
 struct IDirect3DDevice9;
 struct ID3D11Device;
-struct SDL_Renderer;
 
 NAMESPACE_BEGIN( CUL )
-
-
 NAMESPACE_BEGIN( Graphics )
 class ITexture;
 NAMESPACE_END( Graphics )
@@ -151,7 +148,6 @@ public:
 
 protected:
     SDL_Window* m_window = nullptr;
-    SDL_Renderer* m_renderer = nullptr;
 
 #if defined(SDL2W_WINDOWS)
     IDirect3DDevice9* m_d9xDevice = nullptr;

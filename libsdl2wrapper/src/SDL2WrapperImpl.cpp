@@ -89,9 +89,17 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
         }
     }
 
+
     m_windowFactory = new WindowCreatorConcrete( m_logger );
     m_mainWindow = dynamic_cast< RegularSDL2Window*>( m_windowFactory->createWindow( m_windowData, this ) );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
+
+    if( ( m_windowData.rendererType == RenderTypes::RendererType::DIRECTX_9 ) ||
+        ( m_windowData.rendererType == RenderTypes::RendererType::DIRECTX_11 ) )
+    {
+        Uint32 flags = 0u;
+        m_renderer = SDL_CreateRenderer( m_mainWindow->getSDLWindow(), m_renderers[m_windowData.rendererType], flags );
+    }
 
     createKeys();
 
