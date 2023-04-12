@@ -38,42 +38,6 @@ RegularSDL2Window::RegularSDL2Window(
 
     fetchSreenData();
 
-    auto rendererType = SDL_RENDERER_ACCELERATED;
-
-    if( winData.rendererType == RenderTypes::RendererType::SOFTWARE )
-    {
-        rendererType = SDL_RENDERER_SOFTWARE;
-    }
-
-    if( winData.rendererType != RenderTypes::RendererType::DIRECTX_12 )
-    {
-        //m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
-
-        //Assert( nullptr != m_renderer, "Cannot create renderer." );
-        //SDL_RendererInfo info;
-        //const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
-        //Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
-        //m_logger->log( "Selected renderer INFO:" );
-        //m_logger->log( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
-        //m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ) );
-        //m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ) );
-
-        //int w = 0, h = 0;
-        //auto operationResult = SDL_GetRendererOutputSize( m_renderer, &w, &h );
-        //Assert( 0 == operationResult, "Cannot get renderer output size." );
-        //m_logger->log( "Renderer output size, w: " + CUL::String( w ) );
-        //m_logger->log( "Renderer output size, h: " + CUL::String( h ) );
-
-        //m_logger->log( "Available texture formats:" );
-
-        //for( Uint32 i = 0; i < info.num_texture_formats; ++i )
-        //{
-        //    m_logger->log( String( SDL_GetPixelFormatName( info.texture_formats[i] ) ) );
-        //}
-    }
-
-
-
     setName( winData.name );
     m_il = m_culInterface->getImageLoader();
 }

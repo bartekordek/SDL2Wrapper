@@ -226,7 +226,8 @@ void SDL2WrapperImpl::printAvailableRenderers() const
     m_logger->log( "SDL2WrapperImpl::printAvailableRenderers():" );
     for( const auto& renderer: m_renderers )
     {
-        //m_logger->log( "Name: " + renderer.first + ", id: " + String( renderer.second ) );
+        m_logger->log( "Name: " + 
+                       RenderTypes::convertToString( renderer.first ) + ", id: " + String( renderer.second ) );
     }
 }
 
