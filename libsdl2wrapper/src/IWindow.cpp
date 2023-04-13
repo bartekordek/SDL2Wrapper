@@ -71,14 +71,14 @@ void IWindow::setSize( uint16_t width, uint16_t height )
     setSize( winSize );
 }
 
-const String& IWindow::getRenderName() const
+RenderTypes::RendererType IWindow::getCurrentRendererType() const
 {
-    return m_rendererName;
+    return m_currentRenderer;
 }
 
-void IWindow::setRenderName( const String& name )
+void IWindow::setCurrentRendererType( const RenderTypes::RendererType type )
 {
-    m_rendererName = name;
+    m_currentRenderer = type;
 }
 
 void IWindow::setWindowID( unsigned id )
@@ -91,10 +91,11 @@ unsigned int IWindow::getWindowID() const
     return m_winId;
 }
 
+#if defined(SDL2W_WINDOWS)
 IDirect3DDevice9* IWindow::createDX9Device()
 {
 #ifdef _MSC_VER
-    m_d9xDevice = SDL_RenderGetD3D9Device( m_renderer );
+    //m_d9xDevice = SDL_RenderGetD3D9Device( m_renderer );
 #endif // _MSC_VER
     return m_d9xDevice;
 }
@@ -102,7 +103,7 @@ IDirect3DDevice9* IWindow::createDX9Device()
 ID3D11Device* IWindow::createDX11Device()
 {
 #ifdef _MSC_VER
-    m_dx11Device = SDL_RenderGetD3D11Device( m_renderer );
+    //m_dx11Device = SDL_RenderGetD3D11Device( m_renderer );
 #endif
     return m_dx11Device;
 }
@@ -111,6 +112,12 @@ IDirect3DDevice9* IWindow::gertDX9Device() const
 {
     return m_d9xDevice;
 }
+
+HWND IWindow::getHWND() const
+{
+    return m_hwnd;
+}
+#endif
 
 IWindow::~IWindow()
 {

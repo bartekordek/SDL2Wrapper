@@ -29,7 +29,6 @@ RegularSDL2Window::RegularSDL2Window(
     ISDL2Wrapper* wrapper,
     CUL::CULInterface* culInterface ):
     m_windowData( winData ),
-    m_openGL( winData.rendererName.contains( "opengl" ) ),
     m_wrapper( wrapper ),
     m_culInterface( culInterface ),
     m_fsApi( culInterface->getFS() ),
@@ -38,39 +37,6 @@ RegularSDL2Window::RegularSDL2Window(
     m_window = createWindow( winData );
 
     fetchSreenData();
-
-    auto rendererId = m_wrapper->getRendererId( winData.rendererName );
-
-    auto rendererType = SDL_RENDERER_ACCELERATED;
-
-    if( winData.rendererName == "software" )
-    {
-        rendererType = SDL_RENDERER_SOFTWARE;
-    }
-
-    m_renderer = SDL_CreateRenderer( m_window, rendererId, rendererType );
-
-    Assert( nullptr != m_renderer, "Cannot create renderer." );
-    SDL_RendererInfo info;
-    const auto rendererInfoResult = SDL_GetRendererInfo( m_renderer, &info );
-    Assert( 0 == rendererInfoResult, "Cannot get renderer info." );
-    m_logger->log( "Selected renderer INFO:" );
-    m_logger->log( "Name = " + CUL::String( info.name ), CUL::LOG::Severity::INFO );
-    m_logger->log( "Max texture width = " + CUL::String( info.max_texture_width ) );
-    m_logger->log( "Max texture height = " + CUL::String( info.max_texture_width ) );
-
-    int w = 0, h = 0;
-    auto operationResult = SDL_GetRendererOutputSize( m_renderer, &w, &h );
-    Assert( 0 == operationResult, "Cannot get renderer output size." );
-    m_logger->log( "Renderer output size, w: " + CUL::String( w ) );
-    m_logger->log( "Renderer output size, h: " + CUL::String( h ) );
-
-    m_logger->log( "Available texture formats:" );
-
-    for( Uint32 i = 0; i < info.num_texture_formats; ++i )
-    {
-        m_logger->log( String( SDL_GetPixelFormatName( info.texture_formats[i] ) ) );
-    }
 
     setName( winData.name );
     m_il = m_culInterface->getImageLoader();
@@ -83,7 +49,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
 {
     auto& pos = winData.pos;
     auto& currentRes = winData.currentRes;
-    setRenderName( winData.rendererName );
+    setCurrentRendererType( winData.rendererType );
+    setCurrentRendererType( winData.rendererType );
     auto& winName = winData.name;
 
     m_logger->log( "Creating window with:", CUL::LOG::Severity::INFO );
@@ -91,7 +58,8 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
     m_logger->log( "Width = " + CUL::String( currentRes.getWidth() ) + ", height = " + CUL::String( currentRes.getHeight() ), CUL::LOG::Severity::INFO );
     SDL_Window* result = nullptr;
     Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
-    if( getRenderName().contains( "opengl" ) )
+    if( getCurrentRendererType() == RenderTypes::RendererType::OPENGL_LEGACY ||
+        getCurrentRendererType() == RenderTypes::RendererType::OPENGL_MODERN )
     {
         windowFlags |= SDL_WINDOW_OPENGL;
     }
@@ -119,6 +87,16 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
         m_logger->log(
             "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
         Assert( false, "The Window has not been initialized." );
+    }
+    else
+    {
+
+        SDL_SysWMinfo wmInfo;
+        SDL_VERSION( &wmInfo.version );
+        SDL_GetWindowWMInfo( result, &wmInfo );
+#if defined(SDL2W_WINDOWS)
+        m_hwnd = wmInfo.info.win.window;
+#endif // #if defined(SDL2W_WINDOWS)
     }
 
     return result;
@@ -199,7 +177,8 @@ const WinSize& RegularSDL2Window::getCurrentScreenNativeResolution() const
 
 void RegularSDL2Window::updateScreenBuffers()
 {
-    if( m_openGL )
+    if( ( m_windowData.rendererType == RenderTypes::RendererType::OPENGL_LEGACY ) ||
+        ( m_windowData.rendererType == RenderTypes::RendererType::OPENGL_MODERN ) )
     {
         Assert( nullptr != m_window, "The Window is not initialized." );
         SDL_GL_SwapWindow( m_window );
@@ -207,55 +186,58 @@ void RegularSDL2Window::updateScreenBuffers()
     }
     else
     {
-        Assert( nullptr != m_renderer, "The Renderer is not initialized." );
-        SDL_RenderPresent( m_renderer );
+        //if( m_renderer )
+        //{
+        //    SDL_RenderPresent( m_renderer );
+        //}
+
     }
     frameHasEnded();
 }
 
 void RegularSDL2Window::renderAll()
 {
-    SDL_SetRenderDrawColor( m_renderer, (Uint8)m_backgroundColor.getRUI(),
-                            (Uint8)m_backgroundColor.getGUI(),
-                            (Uint8)m_backgroundColor.getBUI(),
-                            (Uint8)m_backgroundColor.getAUI() );
-    std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
-    for( const auto& object : m_objects )
-    {
-        if( CUL::Graphics::IObject::Type::SPRITE == object->getType() )
-        {
-            auto sprite = static_cast<Sprite*>( object );
-            auto& pos = object->getRenderPosition();
-            auto& size = object->getSizeAbs();
-            auto pivot = object->getPivot( IPivot::PivotType::ABSOLUTE );
+    //SDL_SetRenderDrawColor( m_renderer, (Uint8)m_backgroundColor.getRUI(),
+    //                        (Uint8)m_backgroundColor.getGUI(),
+    //                        (Uint8)m_backgroundColor.getBUI(),
+    //                        (Uint8)m_backgroundColor.getAUI() );
+    //std::lock_guard<std::mutex> objectsMutexGuard( m_objectsMtx );
+    //for( const auto& object : m_objects )
+    //{
+    //    if( CUL::Graphics::IObject::Type::SPRITE == object->getType() )
+    //    {
+    //        auto sprite = static_cast<Sprite*>( object );
+    //        auto& pos = object->getRenderPosition();
+    //        auto& size = object->getSizeAbs();
+    //        auto pivot = object->getPivot( IPivot::PivotType::ABSOLUTE );
 
-            SDL_Rect renderQuad;
-            renderQuad.x = static_cast<int>( pos.getX() );
-            renderQuad.y = static_cast<int>( pos.getY() );
-            renderQuad.w = static_cast<int>( size.getX() );
-            renderQuad.h = static_cast<int>( size.getY() );
+    //        SDL_Rect renderQuad;
+    //        renderQuad.x = static_cast<int>( pos.getX() );
+    //        renderQuad.y = static_cast<int>( pos.getY() );
+    //        renderQuad.w = static_cast<int>( size.getX() );
+    //        renderQuad.h = static_cast<int>( size.getY() );
 
-            std::unique_ptr<SDL_Rect> srcRect;
+    //        std::unique_ptr<SDL_Rect> srcRect;
 
-            auto tex = sprite->getTexture();
-            // TODO: WTF?
-            auto const texSDLW = dynamic_cast<TextureSDL*>( tex );
+    //        auto tex = sprite->getTexture();
+    //        // TODO: WTF?
+    //        auto const texSDLW = dynamic_cast<TextureSDL*>( tex );
 
-            const double angle = sprite->getAngle().getValueD(CUL::MATH::Angle::Type::DEGREE);
+    //        const double angle = sprite->getAngle().getValueD(CUL::MATH::Angle::Type::DEGREE);
 
-            SDL_Point center;
-            center.x = static_cast<int>( pivot.getX() );
-            center.y = static_cast<int>( pivot.getY() );
+    //        SDL_Point center;
+    //        center.x = static_cast<int>( pivot.getX() );
+    //        center.y = static_cast<int>( pivot.getY() );
 
-            auto result = SDL_RenderCopyEx(
-                m_renderer,
-                texSDLW->getTexture(),
-                srcRect.get(),
-                &renderQuad,
-                angle, &center, SDL_RendererFlip::SDL_FLIP_NONE );
-            CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
-        }
-    }
+    //        auto result = SDL_RenderCopyEx(
+    //            m_renderer,
+    //            texSDLW->getTexture(),
+    //            srcRect.get(),
+    //            &renderQuad,
+    //            angle, &center, SDL_RendererFlip::SDL_FLIP_NONE );
+    //        CUL::Assert::simple( result == 0, "Cannot render SDL texture..." );
+    //    }
+    //}
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorE color )
@@ -265,8 +247,10 @@ void RegularSDL2Window::setBackgroundColor( const ColorE color )
 
 void RegularSDL2Window::clearBuffers()
 {
-    CUL::Assert::simple( nullptr != m_renderer, "The Renderer has been deleted somwhere else." );
-    SDL_RenderClear( m_renderer );
+    //if( m_renderer )
+    //{
+    //    SDL_RenderClear( m_renderer );
+    //}
 }
 
 void RegularSDL2Window::setBackgroundColor( const ColorS& color )
@@ -416,23 +400,25 @@ SurfaceImage RegularSDL2Window::createSurface(
 
 CUL::Graphics::ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface, const CUL::FS::Path& path )
 {
-    CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
+    m_logger->log( "Creating texture from: " + path );
+    //CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
     CUL::Assert::simple( nullptr != surface, "SURFACE IS NULL!\n" );
 
-    m_logger->log( "Creating texture from: " + path );
+    
 
-    auto texSDL = new TextureSDL();
+    //auto texSDL = new TextureSDL();
 
-    auto const tex = SDL_CreateTextureFromSurface( m_renderer, surface );
-    CUL::Assert::simple(
-        nullptr != tex,
-        "Cannot create texture from " +
-        path.getPath() +
-        " does not exist." );
+    //auto const tex = SDL_CreateTextureFromSurface( m_renderer, surface );
+    //CUL::Assert::simple(
+    //    nullptr != tex,
+    //    "Cannot create texture from " +
+    //    path.getPath() +
+    //    " does not exist." );
 
-    texSDL->setTexture( tex, path );
-    m_textures[path.getPath()] = std::unique_ptr<ITexture>( texSDL );
-    return texSDL;
+    //texSDL->setTexture( tex, path );
+    //m_textures[path.getPath()] = std::unique_ptr<ITexture>( texSDL );
+    //return texSDL;
+    return nullptr;
 }
 
 void RegularSDL2Window::addObject( CUL::Graphics::IObject* object )
@@ -471,13 +457,15 @@ RegularSDL2Window::~RegularSDL2Window()
     m_logger->log( "RegularSDL2Window::~RegularSDL2Window()" );
     destroyObjects();
 
-    Assert( nullptr != m_renderer, "The Renderer has been destroyed somwhere else." );
-    SDL_DestroyRenderer( m_renderer );
-    m_renderer = nullptr;
+    //if( m_renderer )
+    //{
+    //    SDL_DestroyRenderer( m_renderer );
+    //    m_renderer = nullptr;
+    //}
 
-    Assert( nullptr != m_window, "The Window has been destroyed somwhere else." );
-    SDL_DestroyWindow( m_window );
-    m_window = nullptr;
+    //Assert( nullptr != m_window, "The Window has been destroyed somwhere else." );
+    //SDL_DestroyWindow( m_window );
+    //m_window = nullptr;
 }
 
 void RegularSDL2Window::closeInfoLoop()

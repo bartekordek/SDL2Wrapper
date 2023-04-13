@@ -41,7 +41,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
 {
     m_windowData = wd;
 
-    m_culInterface = CUL::CULInterface::createInstance( configPath );
+    m_culInterface = CUL::CULInterface::getInstance( configPath );
     m_logger = m_culInterface->getLogger();
 
     m_configFile = m_culInterface->getConfig();
@@ -68,54 +68,38 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     const auto hasRDTSC = SDLBoolToCppBool( SDL_HasRDTSC() );
     m_logger->log( "CPU has the RDTSC instruction: " + String( hasRDTSC ) );
 
-    const auto renderDriversCount = SDL_GetNumRenderDrivers();
-    m_logger->log( "Available render drivers count: " + String( renderDriversCount ) + "\n" );
+    const size_t renderDriversCount = fetchRenderTypes();
+    m_logger->log( "Available render drivers count: " + String( (int)renderDriversCount ) + "\n" );
 
-    SDL_RendererInfo renderInfo;
-    for( auto i = 0; i < renderDriversCount; ++i )
-    {
-        m_logger->log( "#################################################################################" );
-        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( i ) );
-        String rendererName( renderInfo.name );
-        m_logger->log( "Renderer name: " + rendererName );
-        m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
-        m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
-        m_logger->log( "Available texture formats: " );
-        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
-        {
-            m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[ iTexFormat ] ) ) );
-        }
-
-        m_logger->log( "#################################################################################\n" );
-
-        m_renderers[ rendererName ] = i;
-    }
 
     m_logger->log( "#################################################################################" );
     m_logger->log( "#################################################################################" );
     m_logger->log( "Renderers:" );
 
-    for( const auto [name, value]: m_renderers )
-    {
-        m_logger->log( "Renderer name: " + name );
-    }
-
-    if( m_windowData.rendererName.empty() )
+    if( m_windowData.rendererType == RenderTypes::RendererType::NONE )
     {
         const auto& rendererName = m_configFile->getValue( "RENDERER" );
         if( rendererName.empty() )
         {
-            m_windowData.rendererName = "opengl";
+            m_windowData.rendererType = RenderTypes::RendererType::OPENGL_MODERN;
         }
         else
         {
-            m_windowData.rendererName = rendererName;
+            m_windowData.rendererType = RenderTypes::convertToEnum( rendererName );
         }
     }
+
 
     m_windowFactory = new WindowCreatorConcrete( m_logger );
     m_mainWindow = dynamic_cast< RegularSDL2Window*>( m_windowFactory->createWindow( m_windowData, this ) );
     m_windows[m_mainWindow->getWindowID()] = std::unique_ptr<IWindow>( m_mainWindow );
+
+    if( ( m_windowData.rendererType == RenderTypes::RendererType::DIRECTX_9 ) ||
+        ( m_windowData.rendererType == RenderTypes::RendererType::DIRECTX_11 ) )
+    {
+        Uint32 flags = 0u;
+        m_renderer = SDL_CreateRenderer( m_mainWindow->getSDLWindow(), m_renderers[m_windowData.rendererType], flags );
+    }
 
     createKeys();
 
@@ -133,6 +117,43 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     }
 }
 
+size_t SDL2WrapperImpl::fetchRenderTypes()
+{
+    size_t renderDriversCount = SDL_GetNumRenderDrivers();
+
+    SDL_RendererInfo renderInfo;
+    for( size_t i = 0; i < renderDriversCount; ++i )
+    {
+        m_logger->log( "#################################################################################" );
+        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( (int)i ) );
+        String rendererName( renderInfo.name );
+        m_logger->log( "Renderer name: " + rendererName );
+        m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
+        m_logger->log( "Max texture height = " + CUL::String( renderInfo.max_texture_width ) );
+        m_logger->log( "Available texture formats: " );
+        for( Uint32 iTexFormat = 0; iTexFormat < renderInfo.num_texture_formats; ++iTexFormat )
+        {
+            m_logger->log( String( SDL_GetPixelFormatName( renderInfo.texture_formats[iTexFormat] ) ) );
+        }
+
+        m_logger->log( "#################################################################################\n" );
+
+
+        m_renderers[RenderTypes::convertToEnum( renderInfo.name )] = i;
+    }
+
+    m_renderers[RenderTypes::RendererType::OPENGL_LEGACY] = 2;
+    m_renderers[RenderTypes::RendererType::OPENGL_MODERN] = 2;
+
+
+#if defined(SDL2W_WINDOWS)
+    m_renderers[RenderTypes::RendererType::DIRECTX_12] = renderDriversCount;
+    ++renderDriversCount;
+#endif // SDL2W_WINDOWS
+
+    return renderDriversCount;
+}
+
 CUL::CULInterface* SDL2WrapperImpl::getCul()
 {
     return m_culInterface.get();
@@ -142,7 +163,6 @@ IConfigFile* SDL2WrapperImpl::getConfig() const
 {
     return m_configFile;
 }
-
 
 void SDL2WrapperImpl::createKeys()
 {
@@ -209,22 +229,13 @@ void SDL2WrapperImpl::clearWindows()
     }
 }
 
-int SDL2WrapperImpl::getRendererId( const String& name ) const
-{
-    return m_renderers.at( name );
-}
-
-const std::map<String, int>& SDL2WrapperImpl::getRenderersList() const
-{
-    return m_renderers;
-}
-
 void SDL2WrapperImpl::printAvailableRenderers() const
 {
     m_logger->log( "SDL2WrapperImpl::printAvailableRenderers():" );
     for( const auto& renderer: m_renderers )
     {
-        m_logger->log( "Name: " + renderer.first + ", id: " + String( renderer.second ) );
+        m_logger->log( "Name: " + 
+                       RenderTypes::convertToString( renderer.first ) + ", id: " + String( renderer.second ) );
     }
 }
 

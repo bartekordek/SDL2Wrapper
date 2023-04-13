@@ -92,7 +92,6 @@ private:
     void setFullscreen( bool fullscreen ) override;
 
     WindowData m_windowData;
-    bool m_openGL = false;
     ColorS m_backgroundColor;
     std::set<CUL::Graphics::IObject*> m_objects;
     std::mutex m_objectsMtx;

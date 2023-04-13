@@ -236,9 +236,9 @@ int main( int argc, char** argv )
     winData.pos.setXY( 128, 128 );
 
 #if defined _MSC_VER
-    winData.rendererName = "direct3d";
+    winData.rendererType = SDL2W::RenderTypes::RendererType::DIRECTX_9;
 #else
-    winData.rendererName = "software";
+    winData.rendererType = SDL2W::RenderTypes::RendererType::SOFTWARE;
 #endif
 
     CUL::GUTILS::ConsoleUtilities console;

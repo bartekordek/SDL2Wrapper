@@ -15,3 +15,13 @@ ISDL2Wrapper* ISDL2Wrapper::createSDL2Wrapper()
 ISDL2Wrapper::~ISDL2Wrapper()
 {
 }
+
+int ISDL2Wrapper::getRendererId( const RenderTypes::RendererType type ) const
+{
+    return m_renderers.at( type );
+}
+
+const std::map<RenderTypes::RendererType, int>& ISDL2Wrapper::getRenderersList() const
+{
+    return m_renderers;
+}

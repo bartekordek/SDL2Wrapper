@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL2Wrapper/WinSize.hpp"
+#include "SDL2Wrapper/RendererTypes.hpp"
 
 #include "CUL/Graphics/Pos2D.hpp"
 #include "CUL/Math/Vector3D.hpp"
@@ -18,15 +19,13 @@ public:
     WinSize nativeRes;
     WinSize windowRes;
     CUL::String name = "";
-    CUL::String rendererName = "";
+    RenderTypes::RendererType rendererType{ RenderTypes::RendererType::NONE };
 
     WindowData() = default;
 
     WindowData( const WindowData& arg ):
         pos( arg.pos ),
-        currentRes( arg.currentRes ),
-        name( arg.name ),
-        rendererName( arg.rendererName )
+        currentRes( arg.currentRes ), name( arg.name ), rendererType( arg.rendererType )
     {
     }
 
@@ -37,7 +36,7 @@ public:
             pos = rhv.pos;
             currentRes = rhv.currentRes;
             name = rhv.name;
-            rendererName = rhv.rendererName;
+            rendererType = rhv.rendererType;
         }
         return *this;
     }

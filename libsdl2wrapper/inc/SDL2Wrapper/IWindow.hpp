@@ -1,6 +1,8 @@
 #pragma once
 
 #include "SDL2Wrapper/IRender.hpp"
+#include "SDL2Wrapper/RendererTypes.hpp"
+
 #include "CUL/Graphics/IObjectRegister.hpp"
 
 #include "CUL/IName.hpp"
@@ -9,14 +11,13 @@
 
 #include "CUL/STL_IMPORTS/STD_map.hpp"
 
+#include "SDL2Wrapper/IMPORT_Windows.hpp"
+
 struct SDL_Window;
 struct IDirect3DDevice9;
 struct ID3D11Device;
-struct SDL_Renderer;
 
 NAMESPACE_BEGIN( CUL )
-
-
 NAMESPACE_BEGIN( Graphics )
 class ITexture;
 NAMESPACE_END( Graphics )
@@ -64,9 +65,9 @@ using TextureMap = std::map<CUL::String, std::unique_ptr<CUL::Graphics::ITexture
 enum class GLProfileMask: short
 {
     NONE = -1,
-    CORE =  0x0001,
-    COMPATIBILITY  = 0x0002,
-    ES             = 0x0004
+    CORE =  0x0001, // SDL_GL_CONTEXT_PROFILE_CORE
+    COMPATIBILITY  = 0x0002, // SDL_GL_CONTEXT_PROFILE_COMPATIBILITY
+    ES             = 0x0004 // SDL_GL_CONTEXT_PROFILE_ES
 };
 
 enum class GLContextFlag
@@ -131,25 +132,32 @@ public:
 
     void setSize( uint16_t width, uint16_t height );
 
-    const String& getRenderName() const;
-    void setRenderName( const String& name );
+    RenderTypes::RendererType getCurrentRendererType() const;
+    void setCurrentRendererType( const RenderTypes::RendererType type );
 
     virtual operator ::SDL_Window*( ) = 0;
     virtual operator const ::SDL_Window*( ) = 0;
 
-
+#if defined(SDL2W_WINDOWS)
     IDirect3DDevice9* createDX9Device();
     ID3D11Device* createDX11Device();
     IDirect3DDevice9* gertDX9Device() const;
 
+    HWND getHWND() const;
+#endif
+
 protected:
     SDL_Window* m_window = nullptr;
-    SDL_Renderer* m_renderer = nullptr;
 
-private:
-    String m_rendererName;
+#if defined(SDL2W_WINDOWS)
     IDirect3DDevice9* m_d9xDevice = nullptr;
     ID3D11Device* m_dx11Device = nullptr;
+    HWND m_hwnd;
+#endif
+
+private:
+    RenderTypes::RendererType m_currentRenderer{ RenderTypes::RendererType::NONE };
+    String m_rendererName;
     unsigned int m_winId = 0;
 
     IWindow( const IWindow& wind ) = delete;

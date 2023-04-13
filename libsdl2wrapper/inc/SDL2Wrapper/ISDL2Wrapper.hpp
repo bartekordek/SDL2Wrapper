@@ -4,6 +4,7 @@
 #include "SDL2Wrapper/IWindowEventObservable.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObservable.hpp"
 #include "SDL2Wrapper/Input/IMouseObservable.hpp"
+#include "SDL2Wrapper/RendererTypes.hpp"
 
 #include "CUL/GenericUtils/IConfigFile.hpp"
 #include "CUL/Graphics/ITexture.hpp"
@@ -60,8 +61,8 @@ public:
     virtual void refreshScreen() = 0;
     virtual void renderFrame( bool clearContext = true, bool refreshWindow = true ) = 0;
     virtual void clearWindows() = 0;
-    virtual int getRendererId( const CUL::String& name ) const = 0;
-    virtual const std::map<CUL::String, int>& getRenderersList() const = 0;
+    int getRendererId( const RenderTypes::RendererType type ) const;
+    const std::map<RenderTypes::RendererType, int>& getRenderersList() const;
     virtual void printAvailableRenderers() const = 0;
 
     virtual CUL::Graphics::ITexture* createTexture( const CUL::FS::Path& path, IWindow* targetWindow ) const = 0;
@@ -93,6 +94,8 @@ public:
 
     virtual ~ISDL2Wrapper();
 protected:
+    std::map<RenderTypes::RendererType, int> m_renderers;
+
 private:
 
 private: // Deleted

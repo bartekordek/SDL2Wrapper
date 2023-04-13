@@ -14,6 +14,7 @@
 #include "CUL/GenericUtils/DumbPtr.hpp"
 
 struct SDL_Surface;
+struct SDL_Renderer;
 union SDL_Event;
 
 NAMESPACE_BEGIN( SDL2W )
@@ -37,7 +38,7 @@ public:
 protected:
 private:
     void init( const WindowData& wd, const CUL::FS::Path& configPath = "" ) override;
-
+    size_t fetchRenderTypes();
 
     void registerSDLEventObserver( ISDLEventObserver* eventObserver ) override;
     void unRegisterSDLEventObserver( ISDLEventObserver* eventObserver ) override;
@@ -49,8 +50,6 @@ private:
     void renderFrame( bool clearContext = true, bool refreshWindow = true ) override;
     void clearWindows() override;
 
-    int getRendererId( const String& name ) const override;
-    const std::map<String, int>& getRenderersList() const override;
     void printAvailableRenderers() const override;
 
     void runEventLoop() override;
@@ -111,8 +110,7 @@ private:
 
     DumbPtr<WindowCreatorConcrete> m_windowFactory;
     WindowData m_windowData;
-
-    std::map<String, int> m_renderers;
+    SDL_Renderer* m_renderer = nullptr;
 
     LckPrim<bool> eventLoopActive = true;
     LckPrim<unsigned int> m_eventLatencyUs = 256;
