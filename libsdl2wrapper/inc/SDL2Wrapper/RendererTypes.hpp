@@ -14,6 +14,7 @@ public:
         SOFTWARE,
         OPENGL_LEGACY,
         OPENGL_MODERN,
+        OPENGL_ES2,
         DIRECTX_9,
         DIRECTX_11,
         DIRECTX_12

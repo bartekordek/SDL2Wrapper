@@ -28,6 +28,10 @@ RenderTypes::RendererType RenderTypes::convertToEnum( const CUL::String& name )
     {
         return RendererType::OPENGL_MODERN;
     }
+    else if( name.toLowerR() == "opengl_es2" )
+    {
+        return RendererType::OPENGL_ES2;
+    }
 
     return RendererType::NONE;
 }
@@ -47,6 +51,9 @@ const CUL::String RenderTypes::convertToString( RendererType type )
             break;
         case SDL2W::RenderTypes::RendererType::OPENGL_MODERN:
             return "OPENGL_MODERN";
+            break;
+        case SDL2W::RenderTypes::RendererType::OPENGL_ES2:
+            return "OPENGL_ES2";
             break;
         case SDL2W::RenderTypes::RendererType::DIRECTX_9:
             return "DIRECTX_9";
