@@ -41,7 +41,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
 {
     m_windowData = wd;
 
-    m_culInterface = CUL::CULInterface::getInstance( configPath );
+    m_culInterface = CUL::CULInterface::createInstance( configPath );
     m_logger = m_culInterface->getLogger();
 
     m_configFile = m_culInterface->getConfig();
