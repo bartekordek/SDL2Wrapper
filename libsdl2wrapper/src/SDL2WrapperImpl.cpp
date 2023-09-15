@@ -10,7 +10,7 @@
 #include "SDL2Wrapper/IMPORT_SDL.hpp"
 
 #include "CUL/ITimer.hpp"
-#include "CUL/Threading/ThreadUtils.hpp"
+#include "CUL/Threading/ThreadUtil.hpp"
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -250,7 +250,7 @@ void SDL2WrapperImpl::refreshScreen()
 #include "CUL/STL_IMPORTS/STD_iostream.hpp"
 void SDL2WrapperImpl::runEventLoop()
 {
-    m_culInterface->getThreadUtils().setCurrentThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
+    m_culInterface->getThreadUtils().setThreadName( "SDL2WrapperImpl::runEventLoop()/main" );
     m_logger->log( "SDL2WrapperImpl::runEventLoop()::Begin" );
 
     while( eventLoopActive )

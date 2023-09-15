@@ -11,7 +11,7 @@
 #include "CUL/Graphics/Position3DDMutexed.hpp"
 #include "CUL/Graphics/Color.hpp"
 #include "CUL/ITimer.hpp"
-#include "CUL/Threading/ThreadUtils.hpp"
+#include "CUL/Threading/ThreadUtil.hpp"
 #include "CUL/Filesystem/FS.hpp"
 #include "CUL/GenericUtils/LckPrim.hpp"
 #include "CUL/Math/Angle.hpp"
@@ -152,7 +152,7 @@ private:
 
     void objectManagmentFun()
     {
-        m_sdlW->getCul()->getThreadUtils().setCurrentThreadName( "TestApp::objectManagmentFun" );
+        m_sdlW->getCul()->getThreadUtils().setThreadName( "TestApp::objectManagmentFun" );
 
         CUL::MATH::Vector3Dd someScale;
         m_obj1.sprite->setScale( someScale );
