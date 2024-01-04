@@ -14,6 +14,10 @@ class SDL2WAPI ISprite: public CUL::Graphics::IObject
 {
 public:
     ISprite();
+    ISprite( const ISprite& ) = delete;
+    ISprite( ISprite&& ) = delete;
+    ISprite& operator=( const ISprite& ) = delete;
+    ISprite& operator=( ISprite&& ) = delete;
 
     virtual CUL::Graphics::ITexture* getTexture() = 0;
     virtual void setTexture( CUL::Graphics::ITexture* texture ) = 0;

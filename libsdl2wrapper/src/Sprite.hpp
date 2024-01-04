@@ -24,6 +24,10 @@ class Sprite final:
 {
 public:
     Sprite();
+    Sprite( const Sprite& ) = delete;
+    Sprite( Sprite&& ) = delete;
+    Sprite& operator=( const Sprite& ) = delete;
+    Sprite& operator=( Sprite&& ) = delete;
     ~Sprite();
 
     CUL::Graphics::ITexture* getTexture() override;
