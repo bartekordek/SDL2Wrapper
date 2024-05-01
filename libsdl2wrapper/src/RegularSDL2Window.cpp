@@ -404,8 +404,6 @@ CUL::Graphics::ITexture* RegularSDL2Window::createTexture( SDL_Surface* surface,
     //CUL::Assert::simple( nullptr != m_renderer, "RENDERER NOT READY!\n" );
     CUL::Assert::simple( nullptr != surface, "SURFACE IS NULL!\n" );
 
-    
-
     //auto texSDL = new TextureSDL();
 
     //auto const tex = SDL_CreateTextureFromSurface( m_renderer, surface );

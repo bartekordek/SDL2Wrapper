@@ -44,9 +44,29 @@
             }
         },
         {
+            "label": "[WINDOWS][CMAKE][CREATE DIR]",
+            "type": "shell",
+            "command": "if not exist \"Build-Windows\" mkdir \"Build-Windows\"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+        },
+        {
             "label": "[WINDOWS][CMAKE][CREATE][DEBUG]",
             "type": "shell",
-            "command": "CreateProjects.bat Debug",
+            "command": "cmake -S . -B Build-Windows",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -58,7 +78,8 @@
                 "panel": "dedicated",
                 "showReuseMessage": false,
                 "clear": true
-            }
+            },
+            "dependsOn":"[WINDOWS][CMAKE][CREATE DIR]",
         },
         {
             "label": "[WINDOWS][CMAKE][CREATE][RELEASE]",
