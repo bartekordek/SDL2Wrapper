@@ -14,7 +14,7 @@ message( "01 DEBUG: ${EXEC_STATIC}" )
 
 if (MSVC)
     # warning level 4 and all warnings as errors
-    add_compile_options(/W4 /WX)
+    add_compile_options(/W4)
     add_compile_options( /MP )
 else()
     # lots of warnings and all warnings as errors

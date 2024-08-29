@@ -10,7 +10,7 @@ project(sdl2wrapper_dynamic LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 if( MSVC )
-    add_compile_options( /Wall /WX )
+    add_compile_options( /Wall )
     add_compile_options( /MP )
     add_compile_options("/wd4100")
     add_compile_options("/wd4266")

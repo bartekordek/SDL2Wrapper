@@ -2,7 +2,6 @@
 #include "TextureSDL.hpp"
 #include "Sprite.hpp"
 #include "TextureSDL.hpp"
-#include "SimpleUtils.hpp"
 #include "CUL/Filesystem/FSApi.hpp"
 
 #include "SDL2Wrapper/ISDL2Wrapper.hpp"
@@ -86,7 +85,7 @@ SDL_Window* RegularSDL2Window::createWindow( const WindowData& winData )
         CUL::String s_sdlError( sdlError );
         m_logger->log(
             "SDL ERROR: [ " + s_sdlError + " ] ", CUL::LOG::Severity::CRITICAL );
-        Assert( false, "The Window has not been initialized." );
+        CUL::Assert::simple( false, "The Window has not been initialized." );
     }
     else
     {
@@ -180,7 +179,7 @@ void RegularSDL2Window::updateScreenBuffers()
     if( ( m_windowData.rendererType == RenderTypes::RendererType::OPENGL_LEGACY ) ||
         ( m_windowData.rendererType == RenderTypes::RendererType::OPENGL_MODERN ) )
     {
-        Assert( nullptr != m_window, "The Window is not initialized." );
+        CUL::Assert::simple( nullptr != m_window, "The Window is not initialized." );
         SDL_GL_SwapWindow( m_window );
         // ^ https://forums.libsdl.org/viewtopic.php?p=52399
     }
@@ -347,12 +346,12 @@ SurfaceImage RegularSDL2Window::createSurface(
     if( false == path.exists() )
     {
         m_logger->log( "Checking for path FAILED: ", CUL::LOG::Severity::CRITICAL );
-        Assert( false, "File " + path.getPath() + " does not exist." );
+        CUL::Assert::simple( false, "File " + path.getPath() + " does not exist." );
     }
 
     m_logger->log( "Loading: " + path );
     auto image = m_il->loadImage( path );
-    Assert( nullptr != image, "Cannot load: " + path.getPath() );
+    CUL::Assert::simple( nullptr != image, "Cannot load: " + path.getPath() );
 
     const auto& imageInfo = image->getImageInfo();
 
@@ -369,7 +368,7 @@ SurfaceImage RegularSDL2Window::createSurface(
             pixelFormat = SDL_PIXELFORMAT_RGBA32;
         break;
         case CUL::Graphics::PixelFormat::NONE:
-            Assert( false, "Pixel format of surface not set." );
+            CUL::Assert::simple( false, "Pixel format of surface not set." );
         break;
         case CUL::Graphics::PixelFormat::BGR:
             pixelFormat = SDL_PIXELFORMAT_BGR24;
@@ -390,8 +389,8 @@ SurfaceImage RegularSDL2Window::createSurface(
         imageInfo.size.width, imageInfo.size.height,
         imageInfo.depth, imageInfo.pitch, pixelFormat );
 
-    Assert( nullptr != surfaceImage.first, "Cannot create surf: " + path.getPath() );
-    Assert( 0 != surfaceImage.first->pixels, "Cannot create surf: " + path.getPath() );
+    CUL::Assert::simple( nullptr != surfaceImage.first, "Cannot create surf: " + path.getPath() );
+    CUL::Assert::simple( 0 != surfaceImage.first->pixels, "Cannot create surf: " + path.getPath() );
 
     surfaceImage.second = image;
 
