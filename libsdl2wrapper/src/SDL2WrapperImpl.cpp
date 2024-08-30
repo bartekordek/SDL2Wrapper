@@ -1,4 +1,3 @@
-#include "SimpleUtils.hpp"
 #include "SDL2WrapperImpl.hpp"
 #include "SDL2Wrapper/Input/IKeyboardObserver.hpp"
 #include "SDL2Wrapper/Input/IMouseObserver.hpp"
@@ -54,7 +53,7 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     );
     if( 0 != sdlInitSuccess )
     {
-        Assert( false, SDL_GetError() );
+        CUL::Assert::simple( false, SDL_GetError() );
     }
     m_logger->log( "Initializing SDL... Done." );
 
@@ -125,7 +124,7 @@ size_t SDL2WrapperImpl::fetchRenderTypes()
     for( size_t i = 0; i < renderDriversCount; ++i )
     {
         m_logger->log( "#################################################################################" );
-        Assert( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( (int)i ) );
+        CUL::Assert::simple( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( (int)i ) );
         String rendererName( renderInfo.name );
         m_logger->log( "Renderer name: " + rendererName );
         m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
