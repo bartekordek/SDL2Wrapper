@@ -58,8 +58,9 @@ void SDL2WrapperImpl::init( const WindowData& wd, const CUL::FS::Path& configPat
     m_logger->log( "Initializing SDL... Done." );
 
 
-    const auto cpuCount = SDL_GetCPUCount();
-    m_logger->log( "Available cpu cores: " + String( cpuCount ) );
+    const std::int32_t cpuCount = SDL_GetCPUCount();
+    const String count( cpuCount );
+    m_logger->log( "Available cpu cores: " + count );
 
     const auto cpuCacheSize = SDL_GetCPUCacheLineSize();
     m_logger->log( "Available cache size: " + String( cpuCacheSize ) );
@@ -124,7 +125,8 @@ size_t SDL2WrapperImpl::fetchRenderTypes()
     for( size_t i = 0; i < renderDriversCount; ++i )
     {
         m_logger->log( "#################################################################################" );
-        CUL::Assert::simple( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, "Cannnot get driver info for index = " + String( (int)i ) );
+        String cannotGet = "Cannnot get driver info for index = " + String( (int)i );
+        CUL::Assert::simple( SDL_GetRenderDriverInfo( i, &renderInfo ) == 0, cannotGet );
         String rendererName( renderInfo.name );
         m_logger->log( "Renderer name: " + rendererName );
         m_logger->log( "Max texture width = " + CUL::String( renderInfo.max_texture_width ) );
